@@ -12,7 +12,7 @@
 <title>D&amp;M</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Montserrat:wght@400;500;600;700&family=Pinyon+Script&family=Dancing+Script:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,500;1,600&family=Montserrat:wght@400;500;600;700&family=Great+Vibes&family=Dancing+Script:wght@500;600;700&display=swap">
 <style>
 /* D&M · rosa claro de carta de amor, títulos em Playfair cor de ameixa, filete dourado, corações rosa caindo.
    Inspirado nas referências: bilhete pautado, polaroids com legenda manuscrita, cartões brancos arredondados, teclado de coraçõezinhos. */
@@ -39,7 +39,7 @@
   --x-pine:#173a30; --x-deep:#0e231d; --x-gold:#e7c785; --x-snow:#f7efe4;
   --f-display:"Playfair Display","Lora",Georgia,serif;
   --f-body:"Montserrat","Poppins",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --f-script:"Pinyon Script","TeX Gyre Chorus","Segoe Script",cursive;
+  --f-script:"Great Vibes","TeX Gyre Chorus","Segoe Script",cursive;
   --f-hand:"Dancing Script","TeX Gyre Chorus","Segoe Script",cursive;
   color-scheme:light;
 }
@@ -132,7 +132,7 @@ input::placeholder,textarea::placeholder{color:#c9aab3}
 .daily h1 em{display:block;font-family:var(--f-script);font-style:normal;font-weight:400;color:var(--pink);font-size:1.4em;line-height:1.1}
 .dquote{margin:10px 0 0;width:100%;background:#fff;border-radius:6px;padding:26px 22px 22px;text-align:left;font-family:var(--f-hand);font-size:24px;line-height:36px;color:var(--ink);box-shadow:0 18px 36px -22px rgba(74,18,36,.35);
   background-image:repeating-linear-gradient(transparent 0 35px, rgba(74,18,36,.07) 35px 36px);background-position:0 18px}
-.dquote::before{content:"Meu amor,";display:block;color:var(--plum)}
+.dquote::before{content:"Meu amor,";display:block;color:var(--olive)}
 .dsign{font-family:var(--f-script);font-size:30px;color:var(--plum);margin:0}
 .daily button{margin-top:10px;padding-inline:34px}
 
@@ -523,6 +523,122 @@ textarea:focus,.card-form input:focus,.addopt input:focus{border-color:var(--pin
 .dots i.on{background:var(--olive)}
 .gate input[type=text]{background:var(--sage);color:var(--olive-d)}
 
+/* =================== sistema final: medidas consistentes =================== */
+:root{
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px;
+  --r1:14px; --r2:20px; --r3:28px;
+  --w:440px;
+  --t-xs:12px; --t-sm:13px; --t-md:15px; --t-lg:18px; --t-xl:30px;
+}
+body{font-size:var(--t-md);line-height:1.6;font-weight:500;-webkit-font-smoothing:antialiased}
+.lead,.vhead p,.btext{font-size:var(--t-md);line-height:1.6}
+small{font-size:var(--t-sm)!important}
+.eyebrow{font-size:var(--t-xs);letter-spacing:.18em}
+
+/* títulos: Playfair itálico (legível) no lugar da letra cursiva */
+.btitle,.vhead h2{font-family:var(--f-display)!important;font-style:italic;font-weight:600!important;color:var(--olive)!important;font-size:var(--t-xl)!important;line-height:1.15!important;letter-spacing:-.005em}
+.btitle::after,.vhead h2::after{content:"";display:block;width:36px;height:2px;background:var(--gold);margin:var(--s3) auto 0;border-radius:2px}
+.q{font-size:26px;line-height:1.2}
+.qcard h3,.overlay h3,.tk-main h3{font-size:var(--t-lg);line-height:1.3}
+
+/* letra manuscrita mais firme e maior */
+.note p,.paper,.qtext,.dquote,.xnote p,.ans p,.postit p,.sinfo p,.reveal,.pola .face span,.pola .backf,.mini,.scratch p,.envl .label,.msg{font-family:var(--f-hand);font-weight:600}
+.note p,.paper,.dquote{font-size:21px;line-height:34px}
+
+/* faixas e larguras iguais */
+.band{padding:var(--s7) var(--s5);gap:var(--s5)}
+.band > *{max-width:var(--w)}
+.view{max-width:var(--w);gap:var(--s5)}
+.gate{max-width:var(--w)}
+.daily{max-width:var(--w)}
+
+/* cartões com o mesmo raio, sombra e respiro */
+.note,.qcard,.card-form,.who,.oldq,.wopts,.capsule,.gift-wrap,.pensei,.mom,.song,.mesitem,.plans label,.vale,.xcard,.sheet{border-radius:var(--r2)}
+.qcard,.card-form,.who,.oldq,.wopts,.capsule,.pensei,.xcard{padding:var(--s5)}
+.note{padding:var(--s5) var(--s5) var(--s4)}
+.sheet{border-radius:var(--r3);padding:56px var(--s5) var(--s5);gap:var(--s3)}
+
+/* botões: mesma altura em todo lugar */
+button{min-height:48px;font-size:var(--t-md)}
+.pill,.note-btn,.mini,.mc,.pola,.envl,.gift,.wcard,.tab,.vback,.linkbtn,.del,.logo,.key,.whobtn,.seg button,.spin,.pbtn,.opt{min-height:0}
+.vback{min-height:40px}
+
+/* início */
+.hero{padding-top:calc(var(--s5) + env(safe-area-inset-top,0px));gap:var(--s4)}
+.htop{display:flex;align-items:center;justify-content:space-between;gap:var(--s3)}
+.hero .logo{font-family:var(--f-script);font-size:26px;color:var(--olive);padding:0;background:none;box-shadow:none}
+.hhello{margin:0;font-size:var(--t-sm);color:var(--olive-d)}
+.hhello b{font-weight:700}
+.names{display:flex;flex-direction:column;align-items:center;gap:0;font-size:clamp(68px,20vw,96px);line-height:.9}
+.names span{display:block;animation:nameIn 1.1s cubic-bezier(.2,.8,.2,1) both}
+.names .n2{font-size:.4em;line-height:1.2;animation-delay:.25s}
+.names .n3{animation-delay:.45s}
+@keyframes nameIn{from{opacity:0;transform:translateY(18px) scale(.96);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+.hdate{font-size:var(--t-xs);letter-spacing:.2em;animation:rise .8s both .7s}
+.flower{width:min(240px,66vw)}
+.flower.small{width:min(180px,50vw)}
+.float{animation:float 6s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-8px)}}
+.sway{transform-origin:50% 30%;animation:sway 4s ease-in-out infinite}
+.flower .ribbon.sway{animation:sway2 4s ease-in-out infinite}
+@keyframes sway{50%{transform:rotate(6deg)}}
+@keyframes sway2{0%,100%{transform:rotate(-14deg)}50%{transform:rotate(-6deg)}}
+.hcounter{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s2)}
+.hcounter div{background:rgba(255,255,255,.7);border-radius:var(--r1);padding:var(--s3) var(--s1)}
+.hcounter b{display:block;font-family:var(--f-display);font-weight:700;font-size:26px;line-height:1.1;color:var(--plum);font-variant-numeric:tabular-nums}
+.hcounter b.tick{animation:pop .4s}
+.hcounter span{font-size:var(--t-xs);letter-spacing:.12em;text-transform:uppercase;color:var(--olive);font-weight:600}
+.note h3{font-size:var(--t-lg)}
+.note .to{color:var(--olive)}
+.note .sign{font-family:var(--f-script);font-weight:400;font-size:32px;text-align:right}
+.miles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s2)}
+.mile{background:#fff;border-radius:var(--r1);padding:var(--s4) var(--s2) var(--s3);display:flex;flex-direction:column;gap:var(--s1);box-shadow:0 10px 20px -16px rgba(74,18,36,.5)}
+.mile .md{font-family:var(--f-display);font-weight:700;font-size:var(--t-lg);color:var(--plum)}
+.mile b{font-size:var(--t-sm);font-weight:700;color:var(--olive-d);line-height:1.3}
+.mile small{font-size:var(--t-xs)!important;color:var(--muted)}
+.wcards{gap:var(--s2)}
+.wcard{padding:var(--s6) var(--s2) var(--s4);border-radius:var(--r1)}
+.wcard b{font-family:var(--f-display);font-style:italic;font-weight:600;font-size:var(--t-lg);color:var(--olive)}
+.wcard small{font-size:var(--t-xs)!important}
+.pensei{gap:var(--s4)}
+.pbtn{width:52px;height:52px}
+.ptxt > b{font-size:var(--t-lg)}
+.pills{gap:var(--s2)}
+.pill{grid-template-columns:56px 1fr;gap:var(--s2)}
+.pill .pl{min-height:56px;font-size:22px}
+.pill .pr{min-height:56px;padding:var(--s2) var(--s5)}
+.pill .pr b{font-size:var(--t-md)}
+.pill:active .pl,.pill:active .pr{transform:scale(.98)}
+.pill .pl,.pill .pr{transition:transform .2s, background .2s}
+.pill:hover .pr{background:#fff7f8}
+.polrow{padding:var(--s2) 0 var(--s4)}
+.mini{font-size:14px}
+.lastbtn{min-height:56px;width:100%}
+.endband{gap:var(--s2)}
+.endtitle{font-size:56px}
+
+/* revelar ao rolar (só onde o navegador suporta; sem isso, tudo já aparece) */
+@supports (animation-timeline: view()){
+  .rv{animation:rvIn linear both;animation-timeline:view();animation-range:entry 0% cover 22%}
+  @keyframes rvIn{from{opacity:0;transform:translateY(28px) scale(.98)}to{opacity:1;transform:none}}
+}
+/* telas internas deslizam */
+.view.page{animation:slideIn .5s cubic-bezier(.2,.8,.2,1) both}
+@keyframes slideIn{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
+
+/* quem está aí */
+.whos{display:grid;grid-template-columns:1fr 1fr;gap:var(--s3);margin-top:var(--s2)}
+.whobtn{display:flex;flex-direction:column;align-items:center;gap:var(--s1);background:var(--bg);color:var(--plum);box-shadow:none;border:2px solid transparent;border-radius:var(--r2);padding:var(--s5) var(--s2) var(--s4);transition:transform .25s, border-color .25s, background .25s}
+.whobtn:hover{border-color:var(--pink-2)}
+.whobtn.chosen{border-color:var(--olive);background:var(--sage);transform:scale(1.04)}
+.wb-ini{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-script);font-size:40px;color:#fff;background:var(--rose-fill);margin-bottom:var(--s2)}
+.whobtn:last-child .wb-ini{background:linear-gradient(180deg,#a7b07e,#6f764b)}
+.whobtn b{font-family:var(--f-display);font-size:var(--t-lg)}
+.whobtn small{color:var(--muted)}
+.wax{font-size:20px;width:60px;height:60px;margin-left:-30px;top:-30px}
+.vstatus{margin-top:auto;font-size:var(--t-sm);color:var(--olive);background:var(--sage);border-radius:999px;padding:var(--s2) var(--s3)}
+.vale.used .vstatus{background:var(--pink-band);color:var(--plum)}
+
 /* ---------- Natal: tela própria, verde-pinheiro, creme e vermelho-cranberry ---------- */
 .xapp{position:fixed;inset:0;z-index:3;overflow-y:auto;overflow-x:hidden;background:#fbf6ec;color:#3b3a2c;text-align:center;animation:xin .8s ease both}
 .xapp.out{animation:xout .7s ease forwards}
@@ -851,7 +967,7 @@ const Sync = (() => {
   const ts = () => firebase.firestore.FieldValue.serverTimestamp();
   const loadScript = src => new Promise((ok, no) => { const sc = document.createElement('script'); sc.src = src; sc.onload = ok; sc.onerror = no; document.head.append(sc); });
   state = {planos:store.get('planos', {}), vales:store.get('vales', {}), pensei:store.get('pensei', {})};
-  async function whoAmI(){ try{ const d = await fdb.doc('pessoas/' + user.uid).get(); quem = d.exists ? (d.data().quem || '') : ''; }catch(e){ quem = ''; } }
+  async function whoAmI(){ const local = store.get('quem', ''); try{ const d = await fdb.doc('pessoas/' + user.uid).get(); quem = (d.exists && d.data().quem) || local; }catch(e){ quem = local; } if(quem && !local) store.set('quem', quem); }
   function attachAll(){
     if(!online()) return;
     if(!stateUnsub) stateUnsub = fdb.doc('compartilhado/estado').onSnapshot(d => { const v = d.data() || {}; state = {planos:v.planos || {}, vales:v.vales || {}, pensei:v.pensei || {}}; emitState(); }, () => {});
@@ -946,7 +1062,7 @@ function renderStep(i){
   const s = steps[i]; let wrong = 0;
   app.innerHTML = `
     <div class="gate page"><div class="sheet" id="card">
-      <div class="wax">D</div>
+      <div class="wax">D&amp;M</div>
       <div class="dots st" style="--i:0">${steps.map((_,k)=>`<i class="${k<=i?'on':''}"></i>`).join('')}</div>
       <p class="eyebrow st" style="--i:1">${i===0 ? 'um presente pra você' : 'pergunta ' + (i+1) + ' de ' + steps.length}</p>
       <h1 class="q st" style="--i:2">${s.q}</h1>
@@ -1000,7 +1116,7 @@ function renderSuccess(){
   const H = 'M55 92 C 20 66, 6 46, 6 28 C 6 14, 18 4, 31 4 C 42 4, 51 11, 55 20 C 59 11, 68 4, 79 4 C 92 4, 104 14, 104 28 C 104 46, 90 66, 55 92 Z';
   app.innerHTML = `
     <div class="gate page"><div class="sheet">
-      <div class="wax">D</div>
+      <div class="wax">D&amp;M</div>
       <svg class="drawheart" viewBox="0 0 110 100" aria-hidden="true"><path class="fill" d="${H}"/><path d="${H}"/></svg>
       <p class="yay st" style="--i:6">Ai sim!</p>
       <p class="lead"><span id="typed" class="typed"></span></p>
@@ -1014,10 +1130,10 @@ const GLOGO = `<svg viewBox="0 0 24 24" aria-hidden="true" class="g"><path d="M2
 function renderLogin(){
   app.innerHTML = `
     <div class="gate page"><div class="sheet">
-      <div class="wax">D</div>
+      <div class="wax">D&amp;M</div>
       <p class="eyebrow st" style="--i:0">só mais um passinho</p>
       <h1 class="q st" style="--i:1">Entra com a sua conta Google</h1>
-      <p class="lead st" style="--i:2">Assim tudo o que a gente fizer aqui fica guardado. O que eu escrever você vê, e o que você escrever eu vejo.</p>
+      <p class="lead st" style="--i:2">Assim tudo o que a gente fizer aqui fica guardado. O que um escreve, o outro vê.</p>
       <button class="glogin st" style="--i:3" id="glogin">${GLOGO}<span>Entrar com Google</span></button>
       <p class="msg" id="lmsg" role="status"></p>
     </div></div>`;
@@ -1028,20 +1144,38 @@ function renderLogin(){
       const r = await Sync.login();
       if(r === 'redirect') return;
       if(r === 'offline'){ msg.textContent = 'O login ainda não está ligado, então por enquanto fica salvo só neste aparelho.'; await new Promise(ok => setTimeout(ok, 1800)); }
+      if(!Sync.quem && store.get('quem','')) await Sync.setQuem(store.get('quem',''));
       Sync.quem ? firstScreen() : renderWho();
     }catch(e){ msg.textContent = 'Não deu pra entrar agora. Tenta de novo.'; btn.disabled = false; }
   };
 }
 function renderWho(){
   app.innerHTML = `
-    <div class="gate page"><div class="sheet">
-      <div class="wax">D</div>
-      <p class="eyebrow st" style="--i:0">pra eu saber quem escreveu</p>
-      <h1 class="q st" style="--i:1">Quem é você?</h1>
-      <div class="duo st" style="--i:2"><button data-q="Di">Di</button><button data-q="Mihzinha">Mihzinha</button></div>
-      <p class="lead st" style="--i:3">Isso fica salvo na sua conta.</p>
+    <div class="gate page"><div class="sheet who-sheet">
+      <div class="wax">D&amp;M</div>
+      <p class="eyebrow st" style="--i:0">bem-vindo ao nosso cantinho</p>
+      <h1 class="q st" style="--i:1">Quem está aí?</h1>
+      <p class="lead st" style="--i:2">Escolhe você, e o app guarda tudo do seu jeito.</p>
+      <div class="whos st" style="--i:3">
+        <button class="whobtn" data-q="Di"><span class="wb-ini">D</span><b>Di</b><small>o Diogo</small></button>
+        <button class="whobtn" data-q="Mihzinha"><span class="wb-ini">M</span><b>Mihzinha</b><small>a Milena</small></button>
+      </div>
     </div></div>`;
-  app.querySelectorAll('[data-q]').forEach(b => b.onclick = async () => { b.disabled = true; try{ await Sync.setQuem(b.dataset.q); }catch(e){} sparkle(b); firstScreen(); });
+  app.querySelectorAll('[data-q]').forEach(b => b.onclick = async () => {
+    app.querySelectorAll('[data-q]').forEach(x => x.disabled = true); b.classList.add('chosen'); sparkle(b);
+    try{ await Sync.setQuem(b.dataset.q); }catch(e){}
+    setTimeout(nextStep, 450);
+  });
+}
+/* decide a próxima tela: perguntas (só pro Di, uma vez) → login → Natal ou mensagem do dia */
+async function nextStep(){
+  const q = Sync.quem || store.get('quem', '');
+  if(!q) return renderWho();
+  if(q === 'Di' && !store.get('entrou', false)) return renderStep(0);
+  await Sync.ready;
+  if(Sync.mode === 'online' && !Sync.user) return renderLogin();
+  if(!Sync.quem) await Sync.setQuem(q);
+  firstScreen();
 }
 function typeText(el, text, delay){
   if(reduce){ el.textContent = text; el.classList.remove('typed'); return; }
@@ -1128,7 +1262,7 @@ function renderDaily(){
       <p class="eyebrow st" style="--i:1">${data}</p>
       <h1 class="st" style="--i:2">${saud},<em>${nome}</em></h1>
       <blockquote class="dquote st" style="--i:4">${esc(mensagemDoDia())}</blockquote>
-      <p class="dsign st" style="--i:5">${Sync.quem === 'Mihzinha' ? 'pra você também, meu amor' : 'com amor, Mihzinha'}</p>
+      <p class="dsign st" style="--i:5">${Sync.quem === 'Mihzinha' ? 'D&amp;M' : 'Mihzinha'}</p>
       <button class="st" style="--i:6" id="dgo">Entrar no D&amp;M</button>
     </div>`;
   document.getElementById('dgo').onclick = () => renderHome();
@@ -1163,7 +1297,7 @@ const LISTS = {
     {id:'cartas',   ico:'mail',     t:'Cartas pro futuro',   s:'Abrem em datas especiais'},
     {id:'capsula',  ico:'hourglass',t:'Cápsula do tempo',    s:'Abre no Natal de 2027'},
     {id:'filhos',   ico:'baby',     t:'Ao nosso primeiro filho', s:'Cartas que nós dois escrevemos'},
-    {id:'vales',    ico:'ticket',   t:'Vales-presente',      s:'Pra resgatar comigo'}]
+    {id:'vales',    ico:'ticket',   t:'Vales-presente',      s:'Pra resgatar juntos'}]
 };
 let homeTab = 'hoje';
 let timer;
@@ -1178,65 +1312,72 @@ const RIBBON = `<svg viewBox="0 0 120 120" aria-hidden="true"><path d="M60 46C46
 const DAISY = (c, m) => `<svg viewBox="0 0 40 40" aria-hidden="true">${[0,1,2,3,4,5].map(k => `<ellipse cx="20" cy="9" rx="6" ry="9" fill="${c}" transform="rotate(${k*60} 20 20)"/>`).join('')}<circle cx="20" cy="20" r="5.5" fill="${m}"/></svg>`;
 const pills = list => `<div class="pills">${list.map(r => `<button class="pill" data-go="${r.id}"><span class="pl">${icon(r.ico)}</span><span class="pr"><b>${r.t}</b><small>${r.s}</small></span></button>`).join('')}</div>`;
 function renderHome(y = 0){
-  const outro = Sync.quem === 'Mihzinha' ? 'Di' : 'Mihzinha';
+  const eu = Sync.quem || 'Di', outro = eu === 'Mihzinha' ? 'Di' : 'Mihzinha';
   const f0 = C.polaroids[0] || {}, f1 = C.polaroids[1] || {};
+  const h = new Date().getHours(), saud = h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite';
   app.innerHTML = `
   <div class="home page">
     <section class="band b-sage hero">
-      <button class="logo" id="logo" aria-label="D&amp;M">D&amp;M</button>
-      <h1 class="names st" style="--i:0">Diogo<small>e</small>Milena</h1>
-      <p class="hdate st" style="--i:1">12 de abril de 2026</p>
-      <div class="flower st" style="--i:2">${FLOWER('fl1','nós dois', f0.foto)}<span class="ribbon">${RIBBON}</span></div>
-      <p class="hcount-l st" style="--i:3">juntos há</p>
-      <p class="hcount st" style="--i:3"><span id="cd">0</span>d : <span id="ch">0</span>h : <span id="cm">0</span>m : <span id="cs">0</span>s</p>
+      <div class="htop"><button class="logo" id="logo" aria-label="D&amp;M">D&amp;M</button><p class="hhello">${saud}, <b>${eu}</b></p></div>
+      <h1 class="names" aria-label="Diogo e Milena"><span class="n1">Diogo</span><span class="n2">e</span><span class="n3">Milena</span></h1>
+      <p class="hdate">desde 12 de abril de 2026</p>
+      <div class="flower float">${FLOWER('fl1','nós dois', f0.foto)}<span class="ribbon sway">${RIBBON}</span></div>
+      <div class="hcounter" aria-label="Tempo juntos">
+        <div><b id="cd">0</b><span>dias</span></div><div><b id="ch">0</b><span>horas</span></div>
+        <div><b id="cm">0</b><span>min</span></div><div><b id="cs">0</b><span>seg</span></div>
+      </div>
       ${natalAberto() ? `<button class="xbanner" id="toxmas"><span class="rico">${icon('tree')}</span><span class="rtxt"><b>É época do nosso Natal</b><small>Toca pra abrir</small></span></button>` : ''}
     </section>
 
     <section class="band b-stripes">
-      <button class="note-btn" data-go="mensagem"><div class="note">
+      <button class="note-btn rv" data-go="mensagem"><div class="note">
         <h3>Um bilhete pra hoje</h3>
-        <p>Meu Di,</p><p>${esc(mensagemDoDia())}</p><p class="sign">Mihzinha</p>
+        <p class="to">${eu === 'Mihzinha' ? 'Meu amor,' : 'Meu Di,'}</p><p>${esc(mensagemDoDia())}</p><p class="sign">${eu === 'Mihzinha' ? 'D&amp;M' : 'Mihzinha'}</p>
       </div></button>
     </section>
 
     <section class="band b-sage">
-      <h2 class="btitle">a nossa história</h2>
-      <p class="btext">A gente se conheceu numa mensagem de WhatsApp, se viu pela primeira vez dois dias depois no shopping, e desde 12 de abril você é o meu namorado.</p>
-      <div class="flower" style="width:min(200px,58vw)">${FLOWER('fl2','o primeiro encontro', f1.foto)}</div>
+      <h2 class="btitle rv">A nossa história</h2>
+      <div class="miles rv">
+        <div class="mile"><span class="md">15/02</span><b>A primeira mensagem</b><small>um "oi" no WhatsApp</small></div>
+        <div class="mile"><span class="md">17/02</span><b>O primeiro encontro</b><small>no shopping</small></div>
+        <div class="mile"><span class="md">12/04</span><b>Começamos a namorar</b><small>o nosso dia</small></div>
+      </div>
+      <div class="flower small float rv">${FLOWER('fl2','o primeiro encontro', f1.foto)}</div>
     </section>
 
     <section class="band b-pink">
-      <h2 class="btitle">todo dia</h2>
-      <div class="wcards">
-        <button class="wcard" data-go="pergunta"><span class="fl-ic">${DAISY('#f0bac6','#fff')}</span><b>Pergunta</b><small>do dia, os dois respondem</small><i class="badge" id="badge-pergunta" hidden></i></button>
-        <button class="wcard" data-go="bilhetes"><span class="fl-ic">${DAISY('#dfe6c6','#fff')}</span><b>Bilhetes</b><small>recados de um pro outro</small><i class="badge" id="badge-bilhetes" hidden></i></button>
-        <button class="wcard" data-go="mes"><span class="fl-ic">${DAISY('#f0bac6','#fff')}</span><b>Dia 12</b><small>surpresa todo mês</small></button>
+      <h2 class="btitle rv">Todo dia</h2>
+      <div class="wcards rv">
+        <button class="wcard" data-go="pergunta"><span class="fl-ic">${DAISY('#f0bac6','#fff')}</span><b>Pergunta</b><small>do dia</small><i class="badge" id="badge-pergunta" hidden></i></button>
+        <button class="wcard" data-go="bilhetes"><span class="fl-ic">${DAISY('#cfd9ad','#fff')}</span><b>Bilhetes</b><small>um pro outro</small><i class="badge" id="badge-bilhetes" hidden></i></button>
+        <button class="wcard" data-go="mes"><span class="fl-ic">${DAISY('#f0bac6','#fff')}</span><b>Dia 12</b><small>todo mês</small></button>
       </div>
-      <div class="pensei">
+      <div class="pensei rv">
         <button class="pbtn" id="pbtn" aria-label="Pensei em você">${icon('heart')}</button>
-        <div class="ptxt"><b>Pensei em você</b><span id="pinfo">toca no coração quando lembrar de mim</span></div>
+        <div class="ptxt"><b>Pensei em você</b><span id="pinfo">toca no coração quando lembrar de ${outro === 'Di' ? 'mim' : 'mim'}</span></div>
       </div>
     </section>
 
     <section class="band b-sage">
-      <h2 class="btitle">nossas memórias</h2>
-      <div class="polrow">${C.polaroids.slice(0,3).map((p,k) => `<button class="mini" data-go="fotos">${photo(p.foto, p.cls, '♥︎')}<span>${esc(p.legenda)}</span></button>`).join('')}</div>
-      ${pills(LISTS.nos)}
+      <h2 class="btitle rv">Nossas memórias</h2>
+      <div class="polrow rv">${C.polaroids.slice(0,3).map(p => `<button class="mini" data-go="fotos">${photo(p.foto, p.cls, '♥︎')}<span>${esc(p.legenda)}</span></button>`).join('')}</div>
+      <div class="rv">${pills(LISTS.nos)}</div>
     </section>
 
     <section class="band b-pink">
-      <h2 class="btitle">pra gente brincar</h2>
-      ${pills(LISTS.brincar)}
+      <h2 class="btitle rv">Pra gente brincar</h2>
+      <div class="rv">${pills(LISTS.brincar)}</div>
     </section>
 
     <section class="band b-sage">
-      <h2 class="btitle">cartas pra você</h2>
-      ${pills(LISTS.cartas)}
-      <button class="lastbtn" data-go="carta">${icon('gift')}A última surpresa</button>
+      <h2 class="btitle rv">Nossas cartas</h2>
+      <div class="rv">${pills(LISTS.cartas)}</div>
+      <button class="lastbtn rv" data-go="carta">${icon('gift')}A última surpresa</button>
     </section>
 
     <section class="band b-light endband">
-      <span class="ribbon-sm">${RIBBON}</span>
+      <span class="ribbon-sm sway">${RIBBON}</span>
       <p class="endsub">com todo o meu amor,</p>
       <p class="endtitle">Mihzinha</p>
     </section>
@@ -1651,8 +1792,8 @@ VIEWS.filhos = () => {
 
 /* ---------- vales ---------- */
 VIEWS.vales = () => {
-  shell('pra usar comigo','Vales-presente','Cada vale só pode ser resgatado uma vez. Quando resgatar, me manda o ticket',
-    `<div class="vales">${C.vales.map((v,k)=>`<div class="vale st" style="--i:${k}"><span class="ico">${icon(v.i)}</span><b>${esc(v.t)}</b><button data-k="${k}">Resgatar</button></div>`).join('')}</div>`);
+  shell('pra usar comigo','Vales-presente', Sync.quem === 'Mihzinha' ? 'Os vales que você deu pro Di. Aqui você vê quais ele já usou' : 'Cada vale só pode ser resgatado uma vez. Quando resgatar, me manda o ticket',
+    `<div class="vales">${C.vales.map((v,k)=>`<div class="vale st" style="--i:${k}"><span class="ico">${icon(v.i)}</span><b>${esc(v.t)}</b>${Sync.quem === 'Mihzinha' ? `<span class="vstatus" data-s="${k}">ainda não resgatado</span>` : `<button data-k="${k}">Resgatar</button>`}</div>`).join('')}</div>`);
   let used = {};
   const btns = [...app.querySelectorAll('.vale button')];
   const paint = () => btns.forEach(b => {
@@ -1660,7 +1801,8 @@ VIEWS.vales = () => {
     b.parentElement.classList.toggle('used', !!u);
     if(!b.dataset.sure) b.textContent = u ? 'Ver ticket' : 'Resgatar';
   });
-  const off = Sync.on('state', st => { used = st.vales || {}; paint(); });
+  const off = Sync.on('state', st => { used = st.vales || {}; paint();
+    app.querySelectorAll('.vstatus').forEach(e => { const u = used[e.dataset.s]; e.parentElement.classList.toggle('used', !!u); e.textContent = u ? `resgatado em ${new Date(u.em || Date.now()).toLocaleDateString('pt-BR')}` : 'ainda não resgatado'; }); });
   btns.forEach(b => b.onclick = async () => {
     const k = b.dataset.k, u = used[k];
     if(u){ showTicket(k, u); return; }
@@ -2008,13 +2150,9 @@ function heroSnow(){
   })();
 }
 
-/* se ele já entrou antes neste celular, vai direto pro Natal */
+/* começa perguntando quem é; depois o app lembra */
 (async () => {
-  if(!store.get('entrou', false)) return renderStep(0);
-  await Sync.ready;
-  if(Sync.mode === 'online' && !Sync.user) return renderLogin();
-  if(!Sync.quem) return renderWho();
-  firstScreen();
+  nextStep();
 })();
 </script>
 
