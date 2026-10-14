@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#f5efe6">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="D&amp;M">
@@ -904,6 +904,72 @@ button,.lastbtn{background:var(--wine);color:#fff}
 .hero .logo,.wax,.dlogo,.endlogo,.bk-mono{border-radius:22%!important;overflow:hidden;background:#fff!important}
 .wax{border:0}
 
+*{-webkit-tap-highlight-color:transparent}
+button,a,input,textarea,summary{-webkit-tap-highlight-color:transparent;outline:none}
+button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
+button:focus-visible{outline:2px solid rgba(122,20,36,.35);outline-offset:3px}
+input,textarea{-webkit-user-select:text;user-select:text}
+button{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+
+.hero{padding-top:calc(14px + env(safe-area-inset-top,0px))!important;gap:10px!important}
+.hhello{margin:0;text-align:center;font-size:var(--t-sm);letter-spacing:.04em}
+button.n2{display:block;background:none;border:0;box-shadow:none;padding:0;min-height:0;cursor:pointer;margin:.06em auto}
+button.n2.tap .rheart{animation:pop .3s}
+
+.stitle-a{font-weight:700;color:var(--ink);text-decoration:none}
+.slink{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;margin:4px 0 6px;padding:6px 12px;border-radius:999px;border:1px solid var(--wine);color:var(--wine);font-size:13px;font-weight:600;text-decoration:none}
+.slink .icn{font-size:16px}
+
+.wheelbox canvas{border:0!important;box-shadow:0 24px 40px -22px rgba(31,26,23,.55)!important}
+.pointer{background:var(--wine)!important;width:26px;height:30px;margin-left:-13px;top:-10px}
+.spin{width:68px!important;height:68px!important;margin:-34px 0 0 -34px!important;background:var(--wine)!important;color:#fbf7f0;font-family:var(--f-display);font-style:italic;font-size:17px!important;box-shadow:0 8px 16px -8px rgba(122,20,36,.7)}
+.wo-t{margin:0 0 4px;font-family:var(--f-display);font-style:italic;font-size:var(--t-lg);color:var(--ink)}
+.wlist{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.wlist li{display:flex;align-items:center;gap:8px}
+.wlist input{flex:1;min-width:0;font:500 15px var(--f-body);color:var(--ink);background:var(--ivory);border:1px solid var(--line2);border-radius:12px;padding:10px 12px;outline:none}
+.wlist input:focus{border-color:var(--wine);background:#fff}
+.wdel{flex:none;width:40px;height:40px;min-height:40px;padding:0;border-radius:50%;display:grid;place-items:center;background:transparent;border:1px solid var(--line2);color:var(--wine);font-size:18px;box-shadow:none}
+.wdel .icn{transform:rotate(45deg)}
+.addopt input{background:var(--ivory)!important}
+
+.inst-card{position:relative;width:100%;max-width:360px;background:var(--paper2);border:1px solid var(--line2);border-radius:18px;padding:30px 22px 22px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;box-shadow:0 30px 60px -24px rgba(31,26,23,.5);animation:rise .4s both}
+.tk-wrap.out{animation:xout .25s ease forwards}
+.inst-x{position:absolute;top:10px;right:10px;width:38px;height:38px;min-height:38px;padding:0;border-radius:50%;display:grid;place-items:center;background:transparent;color:var(--ink);border:1px solid var(--line2);box-shadow:none;font-size:18px}
+.inst-x .icn{transform:rotate(45deg)}
+.inst-logo{display:block;width:76px;height:76px;border-radius:22%;overflow:hidden;box-shadow:0 10px 20px -12px rgba(31,26,23,.5)}
+.inst-card h3{margin:6px 0 0;font-family:var(--f-display);font-style:italic;font-size:22px;color:var(--ink)}
+.inst-card p{margin:0;color:var(--ink2);font-size:var(--t-md)}
+.inst-steps{margin:6px 0 0;padding:0 0 0 20px;text-align:left;display:flex;flex-direction:column;gap:6px;color:var(--ink2);font-size:var(--t-md)}
+.inst-steps b{color:var(--wine)}
+#instbtn{width:100%}
+
+.addopt{flex-direction:row!important;align-items:center}
+.addopt button{width:46px!important;height:46px;min-height:46px;border-radius:50%;flex:none}
+.play{background:var(--wine)!important}
+.hdate{margin-top:6px!important;position:relative;z-index:2}
+.flower{margin-top:22px!important}
+
+html,body{max-width:100%;overflow-x:clip}
+.ans{background:#fff!important;border-left:3px solid var(--ink)}
+.ans.mine{background:#fff!important;border-left-color:var(--wine)}
+.ans small{color:var(--wine)!important}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;touch-action:manipulation}
+input,textarea,select{font-size:16px!important}
+.hqwrap{display:flex;flex-direction:column;gap:12px}
+.hq-head{display:flex;align-items:baseline;justify-content:space-between;margin-top:8px;border-bottom:1px solid var(--line2);padding-bottom:8px}
+.hq-head h3{margin:0;font-family:var(--f-display);font-style:italic;font-weight:600;font-size:22px;color:var(--ink)}
+.hq-head span{font-size:var(--t-sm);color:var(--muted)}
+.hq{background:var(--paper2);border:1px solid var(--line2);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:10px;box-shadow:0 14px 26px -24px rgba(31,26,23,.5)}
+.hq-date{margin:0;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--wine);font-weight:700}
+.hq h4{margin:0;font-family:var(--f-display);font-weight:600;font-size:17px;line-height:1.35;color:var(--ink)}
+.hq-a{border-radius:10px;padding:10px 12px;background:#fff;border-left:3px solid var(--ink)}
+.hq-a.mi{border-left-color:var(--wine)}
+.hq-who{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--ink)}
+.hq-a.mi .hq-who{color:var(--wine)}
+.hq-a p{margin:4px 0 0;font-family:var(--f-hand);font-weight:600;font-size:20px;line-height:1.35;color:var(--ink)}
+.hq-a p.hq-none{font-family:var(--f-body);font-weight:500;font-size:13px;color:var(--muted)}
+.hq-empty{text-align:center}
+
 /* ---------- Natal: tela própria, verde-pinheiro, creme e vermelho-cranberry ---------- */
 .xapp{position:fixed;inset:0;z-index:3;overflow-y:auto;overflow-x:hidden;background:#fbf6ec;color:#3b3a2c;text-align:center;animation:xin .8s ease both}
 .xapp.out{animation:xout .7s ease forwards}
@@ -1232,11 +1298,11 @@ const Sync = (() => {
   const emitState = () => SL.forEach(f => f(state));
   const ts = () => firebase.firestore.FieldValue.serverTimestamp();
   const loadScript = src => new Promise((ok, no) => { const sc = document.createElement('script'); sc.src = src; sc.onload = ok; sc.onerror = no; document.head.append(sc); });
-  state = {planos:store.get('planos', {}), vales:store.get('vales', {}), pensei:store.get('pensei', {}), lidas:store.get('lidas', {})};
+  state = {planos:store.get('planos', {}), vales:store.get('vales', {}), pensei:store.get('pensei', {}), lidas:store.get('lidas', {}), datesEdit:store.get('datesEdit', {})};
   async function whoAmI(){ const local = store.get('quem', ''); try{ const d = await fdb.doc('pessoas/' + user.uid).get(); quem = (d.exists && d.data().quem) || local; }catch(e){ quem = local; } if(quem && !local) store.set('quem', quem); }
   function attachAll(){
     if(!online()) return;
-    if(!stateUnsub) stateUnsub = fdb.doc('compartilhado/estado').onSnapshot(d => { const v = d.data() || {}; state = {planos:v.planos || {}, vales:v.vales || {}, pensei:v.pensei || {}, lidas:v.lidas || {}}; emitState(); }, () => {});
+    if(!stateUnsub) stateUnsub = fdb.doc('compartilhado/estado').onSnapshot(d => { const v = d.data() || {}; state = {planos:v.planos || {}, vales:v.vales || {}, pensei:v.pensei || {}, lidas:v.lidas || {}, datesEdit:v.datesEdit || {}}; emitState(); }, () => {});
     Object.values(cols).forEach(c => c.attach());
   }
   const ready = (async () => {
@@ -1532,7 +1598,7 @@ function renderDaily(){
       <p class="dsign st" style="--i:5">${Sync.quem === 'Mihzinha' ? 'D&amp;M' : 'Mihzinha'}</p>
       <button class="st" style="--i:6" id="dgo">Entrar no D&amp;M</button>
     </div>`;
-  document.getElementById('dgo').onclick = () => renderHome();
+  document.getElementById('dgo').onclick = () => { renderHome(); setTimeout(maybeInstallPrompt, 900); };
 }
 
 /* ---------- tela inicial ---------- */
@@ -1615,8 +1681,8 @@ function renderHome(y = 0){
   app.innerHTML = `
   <div class="home page">
     <section class="band b-sage hero"><span class="deco d1">${RHEART()}</span><span class="deco d2">${RHEART()}</span><span class="deco d3">${RHEART()}</span>
-      <div class="htop"><button class="logo" id="logo" aria-label="D&amp;M">${LOGO()}</button><p class="hhello">${saud}, <b>${eu}</b></p></div>
-      <h1 class="names" aria-label="Diogo e Milena"><span class="n1">Diogo</span><span class="n2">${RHEART()}</span><span class="n3">Milena</span></h1>
+      <p class="hhello">${saud}, <b>${eu}</b></p>
+      <h1 class="names" aria-label="Diogo e Milena"><span class="n1">Diogo</span><button class="n2" id="logo" aria-label="coração">${RHEART()}</button><span class="n3">Milena</span></h1>
       <p class="hdate">desde 12 de abril de 2026</p>
       <div class="flower float">${FLOWER('fl1','nós dois', f0.foto).replace('#fbe6ea','#f1e6dc').replace('#e9b3c0','#d2b8a9')}<span class="ribbon sway">${RIBBON}</span></div>
       <div class="hcounter" aria-label="Tempo juntos">
@@ -1690,7 +1756,7 @@ function renderHome(y = 0){
   let taps = 0, tapT;
   document.getElementById('logo').onclick = e => {
     taps++; clearTimeout(tapT); tapT = setTimeout(() => taps = 0, 1500);
-    const l = e.currentTarget; l.classList.remove('tap'); void l.offsetWidth; l.classList.add('tap');
+    const l = e.currentTarget; l.classList.remove('tap'); void l.offsetWidth; l.classList.add('tap'); sparkle(l);
     if(taps >= 5){ taps = 0; showSecret(); }
   };
   const pinfo = document.getElementById('pinfo');
@@ -1722,6 +1788,29 @@ function showSecret(){
 const natalAberto = (d = new Date()) => location.hash === '#natal' || (d.getMonth() === 11 && d.getDate() >= 18 && d.getDate() <= 26);
 const XMAS = (() => { const d = new Date(); return new Date(d.getFullYear(), 11, 25); })();
 function firstScreen(){ natalAberto() ? renderXmas() : renderDaily(); }
+/* convite pra baixar o app: aparece uma vez, some no X */
+let deferredInstall = null;
+addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredInstall = e; const b = document.getElementById('instbtn'); if(b) b.hidden = false; });
+function maybeInstallPrompt(){
+  const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+  if(standalone || store.get('installSeen', false) || document.getElementById('inst')) return;
+  const ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const w = document.createElement('div'); w.className = 'tk-wrap'; w.id = 'inst';
+  w.innerHTML = `<div class="inst-card">
+    <button class="inst-x" id="instx" aria-label="Fechar">${icon('plus')}</button>
+    <span class="inst-logo">${LOGO()}</span>
+    <h3>Baixa o D&amp;M no seu celular</h3>
+    <p>Assim ele fica na sua tela inicial, com ícone, igual um app.</p>
+    <button id="instbtn" ${deferredInstall ? '' : 'hidden'}>Instalar o app</button>
+    <ol class="inst-steps">${ios
+      ? `<li>Toca no botão <b>Compartilhar</b> lá embaixo (o quadradinho com a setinha)</li><li>Escolhe <b>Adicionar à Tela de Início</b></li><li>Toca em <b>Adicionar</b></li>`
+      : `<li>Toca nos <b>três pontinhos</b> do navegador, lá em cima</li><li>Escolhe <b>Instalar app</b> ou <b>Adicionar à tela inicial</b></li><li>Confirma em <b>Instalar</b></li>`}</ol>
+  </div>`;
+  document.body.append(w);
+  const close = () => { store.set('installSeen', true); w.classList.add('out'); setTimeout(() => w.remove(), 250); };
+  document.getElementById('instx').onclick = close;
+  document.getElementById('instbtn').onclick = async () => { if(!deferredInstall) return; deferredInstall.prompt(); try{ await deferredInstall.userChoice; }catch(e){} deferredInstall = null; close(); };
+}
 function setNum(id, v){ const b = document.getElementById(id); if(b && b.textContent !== String(v)){ b.textContent = v; b.classList.remove('tick'); void b.offsetWidth; b.classList.add('tick'); } }
 function split(sec){ const d = Math.floor(sec/86400); sec -= d*86400; const h = Math.floor(sec/3600); sec -= h*3600; const m = Math.floor(sec/60); return [d,h,m,Math.floor(sec-m*60)]; }
 function xtick(){
@@ -1967,18 +2056,19 @@ VIEWS.quiz = () => {
 /* ---------- quem é mais provável ---------- */
 VIEWS.provavel = () => {
   let i = 0, hits = 0;
-  shell('você ou eu?','Quem é mais provável…','Escolhe, depois vê o que eu respondi', `<div id="pv"></div>`);
+  const souEla = Sync.quem === 'Mihzinha';
+  shell('você ou eu?','Quem é mais provável…', souEla ? 'Escolhe e vê se bate com a resposta que ficou guardada' : 'Escolhe, depois vê o que a Mihzinha respondeu', `<div id="pv"></div>`);
   const pv = document.getElementById('pv');
   function q(){
     const it = C.provavel[i];
     pv.innerHTML = `<div class="qcard center page"><p class="eyebrow">${i+1} de ${C.provavel.length}</p><h3>${esc(it.p)}</h3>
-      <div class="duo three"><button data-r="diogo">Eu</button><button data-r="milena">A Mihzinha</button><button data-r="ambos">Os dois</button></div><p class="reveal" id="rv"></p></div>`;
+      <div class="duo three"><button data-r="diogo">O Di</button><button data-r="milena">A Mihzinha</button><button data-r="ambos">Os dois</button></div><p class="reveal" id="rv"></p></div>`;
     pv.querySelectorAll('[data-r]').forEach(b => b.onclick = () => {
       pv.querySelectorAll('[data-r]').forEach(o => o.disabled = true);
       const ok = b.dataset.r === it.r; if(ok){ hits++; sparkle(b); }
       const rv = document.getElementById('rv'); rv.classList.add('unfold');
-      rv.innerHTML = `${ok ? 'Concordamos!' : 'Discordo!'} Eu disse: ${({diogo:'você', milena:'eu', ambos:'os dois'})[it.r]}<br><small style="font-size:19px;color:var(--muted)">${esc(it.obs)}</small>`;
-      setTimeout(()=>{ i++; i < C.provavel.length ? q() : pv.innerHTML = `<div class="qcard center page"><p class="score">${hits}/${C.provavel.length}</p><p class="lead">vezes que a gente concordou</p></div>`; }, 2300);
+      rv.innerHTML = `${ok ? 'Acertou!' : 'Hmm, não…'} A resposta é: ${({diogo:'o Di', milena:'a Mihzinha', ambos:'os dois'})[it.r]}<br><small style="font-size:19px;color:var(--muted)">${esc(it.obs)}</small>`;
+      setTimeout(()=>{ i++; i < C.provavel.length ? q() : pv.innerHTML = `<div class="qcard center page"><p class="score">${hits}/${C.provavel.length}</p><p class="lead">respostas iguais às da Mihzinha</p></div>`; }, 2300);
     });
   }
   q();
@@ -2162,7 +2252,7 @@ VIEWS.pergunta = () => {
     `<div class="qcard"><p class="eyebrow">${new Date().toLocaleDateString('pt-BR',{day:'numeric',month:'long'})}</p><h3>${esc(pq)}</h3>
       <form class="write" id="qf"><textarea id="qta" rows="4" placeholder="Sua resposta…" aria-label="Sua resposta"></textarea><button type="submit">Responder</button><p class="werr" id="qerr" role="status"></p></form>
       <div id="qans"></div></div>
-     <div id="qold"></div>`);
+     <section class="hqwrap" id="qold"></section>`);
   const col = Sync.col('respostas');
   const off = col.on(list => {
     const box = document.getElementById('qans'); if(!box) return;
@@ -2171,10 +2261,13 @@ VIEWS.pergunta = () => {
     box.innerHTML = (minha ? `<div class="ans mine"><small>você respondeu</small><p>${esc(minha.texto)}</p></div>` : '') +
       (dele ? (minha ? `<div class="ans unfold"><small>${outro} respondeu</small><p>${esc(dele.texto)}</p></div>` : `<p class="lead locked-ans">${icon('lock')} ${outro} já respondeu. Responde pra ver!</p>`)
             : (minha ? `<p class="lead">${outro} ainda não respondeu. Volta mais tarde!</p>` : ''));
-    const dias = [...new Set(list.filter(r => r.dia < hoje()).map(r => r.dia))].sort().reverse().slice(0, 10);
-    document.getElementById('qold').innerHTML = dias.length ? `<p class="gtitle">dias anteriores</p>` + dias.map(d => {
-      const rs = list.filter(r => r.dia === d); return `<div class="oldq"><small>${d.split('-').reverse().join('/')} · ${esc(rs[0].pergunta || '')}</small>${rs.map(r => `<p><b>${esc(r.quem)}:</b> ${esc(r.texto)}</p>`).join('')}</div>`;
-    }).join('') : '';
+    const dias = [...new Set(list.filter(r => r.dia < hoje()).map(r => r.dia))].sort().reverse();
+    const fmtD = d => new Date(d + 'T12:00:00').toLocaleDateString('pt-BR', {day:'numeric', month:'long', year:'numeric'});
+    const resp = (rs, nome) => { const r = rs.find(x => x.quem === nome); return `<div class="hq-a ${nome === 'Di' ? 'di' : 'mi'}"><span class="hq-who">${nome}</span>${r ? `<p>${esc(r.texto)}</p>` : `<p class="hq-none">não respondeu</p>`}</div>`; };
+    document.getElementById('qold').innerHTML = `<div class="hq-head"><h3>Nosso histórico</h3><span>${dias.length} ${dias.length === 1 ? 'dia' : 'dias'}</span></div>` + (dias.length ? dias.map(d => {
+      const rs = list.filter(r => r.dia === d);
+      return `<article class="hq"><p class="hq-date">${fmtD(d)}</p><h4>${esc((rs[0] && rs[0].pergunta) || '')}</h4>${resp(rs,'Di')}${resp(rs,'Mihzinha')}</article>`;
+    }).join('') : `<p class="lead hq-empty">A partir de amanhã, as perguntas e as respostas de vocês dois ficam guardadas aqui pra sempre.</p>`);
   });
   document.getElementById('qf').onsubmit = async e => {
     e.preventDefault(); const t = document.getElementById('qta').value.trim();
@@ -2268,10 +2361,11 @@ VIEWS.playlist = () => {
   const off = col.on(list => {
     const box = document.getElementById('songs'); if(!box) return;
     box.innerHTML = list.length ? [...list].reverse().map((m,k) => {
-      const link = /^https?:\/\//.test(m.link || '') ? m.link : '';
+      const raw = (m.link || '').trim(), link = !raw ? '' : /^https?:\/\//i.test(raw) ? raw : 'https://' + raw.replace(/^\/+/, '');
+      const fonte = /spotify/i.test(link) ? 'Ouvir no Spotify' : /youtu/i.test(link) ? 'Ver no YouTube' : /deezer/i.test(link) ? 'Ouvir no Deezer' : 'Abrir link';
       return `<div class="song st" style="--i:${k}">
         ${link ? `<a class="play" href="${esc(link)}" target="_blank" rel="noopener" aria-label="Ouvir">${icon('play')}</a>` : `<span class="play off">${icon('music')}</span>`}
-        <div class="sinfo"><b>${esc(m.titulo)}</b><small>${esc(m.artista || '')}</small>${m.porque ? `<p>${esc(m.porque)}</p>` : ''}<small class="by">${esc(m.autor)}${m.autor === eu ? ` · <button class="linkbtn" data-del="${m.id}">tirar</button>` : ''}</small></div></div>`;
+        <div class="sinfo">${link ? `<a class="stitle-a" href="${esc(link)}" target="_blank" rel="noopener">${esc(m.titulo)}</a>` : `<b>${esc(m.titulo)}</b>`}<small>${esc(m.artista || '')}</small>${m.porque ? `<p>${esc(m.porque)}</p>` : ''}${link ? `<a class="slink" href="${esc(link)}" target="_blank" rel="noopener">${icon('play')}${fonte}</a>` : ''}<small class="by">${esc(m.autor)}${m.autor === eu ? ` · <button class="linkbtn" data-del="${m.id}">tirar</button>` : ''}</small></div></div>`;
     }).join('') : `<p class="lead empty">A playlist ainda está vazia. Qual é a primeira música de vocês?</p>`;
     box.querySelectorAll('[data-del]').forEach(d => d.onclick = () => { if(d.dataset.sure) col.remove(d.dataset.del); else { d.dataset.sure = 1; d.textContent = 'toca de novo'; } });
   });
@@ -2452,34 +2546,70 @@ VIEWS.roleta = () => {
   shell('próximo encontro','Roleta do date','Gira e o destino escolhe o nosso próximo programa',
     `<div class="wheelbox"><div class="pointer" aria-hidden="true"></div><canvas id="wh" aria-label="Roleta"></canvas><button class="spin" id="spin">Girar</button></div>
      <div id="wres" aria-live="polite"></div>
-     <details class="wopts"><summary>Opções da roleta</summary>
-       <form class="addopt" id="of"><input type="text" id="ot" placeholder="Adicionar uma ideia de date" aria-label="Nova opção"><button type="submit" aria-label="Adicionar">${icon('plus')}</button></form>
-       <ul id="ol"></ul></details>`);
+     <div class="wopts">
+       <p class="wo-t">Ideias de date</p>
+       <form class="addopt" id="of"><input type="text" id="ot" maxlength="40" placeholder="Adicionar uma ideia" aria-label="Nova ideia"><button type="submit" aria-label="Adicionar">${icon('plus')}</button></form>
+       <ul class="wlist" id="ol"></ul>
+     </div>`);
   const cv = document.getElementById('wh'), x = cv.getContext('2d'), col = Sync.col('roleta');
-  let opts = [], extra = [], ang = 0, spinning = false;
-  const COLS = ['#e48aa3','#8a9160','#fbe6ea','#eaf0dc'];
+  let opts = [], items = [], extra = [], edits = {}, ang = 0, spinning = false;
+  const COLS = ['#7a1424','#efe3d8','#b3122c','#fbf7f0'];
+  const TXT  = ['#fbf7f0','#1f1a17','#fbf7f0','#1f1a17'];
+  const FONT = '600 12px Montserrat, Poppins, system-ui, sans-serif';
+  function lines(t, maxW){
+    x.font = FONT;
+    if(x.measureText(t).width <= maxW) return [t];
+    const w = t.split(' '); let a = '', out = [];
+    for(const word of w){ const tryA = a ? a + ' ' + word : word; if(x.measureText(tryA).width <= maxW || !a) a = tryA; else { out.push(a); a = word; } }
+    out.push(a);
+    if(out.length > 2){ out = [out[0], out.slice(1).join(' ')]; }
+    return out.map(l => { if(x.measureText(l).width <= maxW) return l; while(l.length > 1 && x.measureText(l + '…').width > maxW) l = l.slice(0,-1); return l + '…'; });
+  }
   function draw(){
     const S = cv.clientWidth, d = devicePixelRatio; if(!S) return; cv.width = cv.height = S*d; x.setTransform(d,0,0,d,0,0);
-    const r = S/2, n = opts.length, seg = Math.PI*2/n;
+    const r = S/2, n = Math.max(1, opts.length), seg = Math.PI*2/n;
     x.clearRect(0,0,S,S); x.save(); x.translate(r,r); x.rotate(ang);
     opts.forEach((o,i) => {
-      x.beginPath(); x.moveTo(0,0); x.arc(0,0,r-4,i*seg,(i+1)*seg); x.closePath(); x.fillStyle = COLS[i % (n % 4 === 1 ? 3 : 4)]; x.fill();
-      x.strokeStyle = '#fffaf9'; x.lineWidth = 2; x.stroke();
-      x.save(); x.rotate(i*seg + seg/2); x.textAlign = 'right'; x.textBaseline = 'middle';
-      x.fillStyle = (i % 4) < 2 ? '#fff' : '#4a1224'; x.font = `600 ${n > 12 ? 10 : 12}px Jost, system-ui`;
-      const t = o.length > 22 ? o.slice(0,21) + '…' : o; x.fillText(t, r - 16, 0); x.restore();
+      const ci = n % 2 && i === n - 1 && n > 1 ? 1 : i % 4;
+      x.beginPath(); x.moveTo(0,0); x.arc(0,0,r-2,i*seg,(i+1)*seg); x.closePath(); x.fillStyle = COLS[ci]; x.fill();
+      x.strokeStyle = 'rgba(201,169,106,.55)'; x.lineWidth = 1; x.stroke();
+      const mid = i*seg + seg/2, world = ang + mid, flip = Math.cos(world) < 0;
+      x.save(); x.rotate(mid);
+      x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillStyle = TXT[ci]; x.font = FONT;
+      let cxp = (r - 2 + 34) / 2 + 4; const maxW = (r - 2) - 34 - 18;
+      if(flip){ x.rotate(Math.PI); cxp = -cxp; }
+      const ls = lines(o, maxW), lh = 14;
+      ls.forEach((l, k) => x.fillText(l, cxp, (k - (ls.length - 1) / 2) * lh));
+      x.restore();
     });
     x.restore();
-    x.beginPath(); x.arc(r,r,26,0,Math.PI*2); x.fillStyle = '#fffaf9'; x.fill();
+    x.beginPath(); x.arc(r,r,r-2,0,Math.PI*2); x.strokeStyle = '#c9a96a'; x.lineWidth = 3; x.stroke();
+    x.beginPath(); x.arc(r,r,34,0,Math.PI*2); x.fillStyle = '#fbf7f0'; x.fill(); x.strokeStyle = '#c9a96a'; x.lineWidth = 1.5; x.stroke();
   }
-  const rebuild = () => {
-    opts = [...C.dates, ...extra.map(e => e.texto)]; draw();
-    document.getElementById('ol').innerHTML = C.dates.map(t => `<li>${esc(t)}</li>`).join('') + extra.map(e => `<li>${esc(e.texto)} <button class="linkbtn" data-del="${e.id}">tirar</button></li>`).join('');
-    document.querySelectorAll('#ol [data-del]').forEach(b => b.onclick = () => col.remove(b.dataset.del));
-  };
-  const off = col.on(list => { if(!document.getElementById('wh')) return; extra = list; rebuild(); });
+  function rebuild(){
+    items = [
+      ...C.dates.map((t,k) => ({key:'d'+k, def:true, texto: edits['d'+k] === undefined ? t : edits['d'+k]})).filter(i => i.texto),
+      ...extra.map(e => ({key:e.id, def:false, texto:e.texto}))
+    ];
+    opts = items.map(i => i.texto); draw();
+    const ol = document.getElementById('ol'); if(!ol) return;
+    ol.innerHTML = items.map(i => `<li data-k="${esc(i.key)}" data-def="${i.def ? 1 : 0}">
+      <input type="text" maxlength="40" value="${esc(i.texto)}" aria-label="Editar ideia">
+      <button class="wdel" type="button" aria-label="Excluir ideia">${icon('plus')}</button></li>`).join('');
+    ol.querySelectorAll('li').forEach(li => {
+      const key = li.dataset.k, def = li.dataset.def === '1', inp = li.querySelector('input');
+      const save = () => { const t = inp.value.trim(); const cur = items.find(i => i.key === key); if(!t || !cur || t === cur.texto) { if(!t) inp.value = cur ? cur.texto : ''; return; }
+        def ? Sync.setFlag('datesEdit', key, t) : col.set(key, {texto:t, autor:eu}); sparkle(inp); };
+      inp.addEventListener('change', save);
+      inp.addEventListener('keydown', e => { if(e.key === 'Enter'){ e.preventDefault(); inp.blur(); } });
+      li.querySelector('.wdel').onclick = () => { if(items.length <= 2) return; def ? Sync.setFlag('datesEdit', key, '') : col.remove(key); };
+    });
+  }
+  const offC = col.on(list => { if(!document.getElementById('wh')) return; extra = list; rebuild(); });
+  const offS = Sync.on('state', st => { if(!document.getElementById('wh')) return; edits = st.datesEdit || {}; rebuild(); });
+  const off = () => { offC(); offS(); };
   addEventListener('resize', draw);
-  document.getElementById('of').onsubmit = async e => { e.preventDefault(); const i = document.getElementById('ot'), t = i.value.trim(); if(!t) return; await col.add({texto:t, autor:eu}); i.value = ''; };
+  document.getElementById('of').onsubmit = async e => { e.preventDefault(); const i = document.getElementById('ot'), t = i.value.trim(); if(!t) return; await col.add({texto:t, autor:eu}); i.value = ''; sparkle(i); };
   document.getElementById('spin').onclick = () => {
     if(spinning) return; spinning = true; document.getElementById('wres').innerHTML = '';
     const n = opts.length, seg = Math.PI*2/n, pick = Math.floor(Math.random()*n);
