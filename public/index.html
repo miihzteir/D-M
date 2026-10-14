@@ -1,0 +1,2022 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#eaf0dc">
+<meta name="apple-mobile-web-app-title" content="D&amp;M">
+<meta name="application-name" content="D&amp;M">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>D&amp;M</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Montserrat:wght@400;500;600;700&family=Pinyon+Script&family=Dancing+Script:wght@400;500;600&display=swap">
+<style>
+/* D&M · rosa claro de carta de amor, títulos em Playfair cor de ameixa, filete dourado, corações rosa caindo.
+   Inspirado nas referências: bilhete pautado, polaroids com legenda manuscrita, cartões brancos arredondados, teclado de coraçõezinhos. */
+:root{
+  --bg:#fcf4f6;
+  --sage:#eaf0dc;
+  --sage-2:#dfe6c6;
+  --olive:#6f764b;
+  --olive-d:#565c38;
+  --plum:#4a1224;
+  --ink:#4b3b3d;
+  --muted:#9d8f8c;
+  --pink:#e0789a;
+  --pink-2:#f0bac6;
+  --pink-3:#fbe6ea;
+  --pink-band:#f6d3d6;
+  --stripe:#f3c8ce;
+  --gold:#c9a96a;
+  --card:#ffffff;
+  --line:rgba(74,18,36,.08);
+  --shadow:0 14px 30px -20px rgba(111,118,75,.55);
+  --rose-fill:linear-gradient(180deg,#f0b0c0,#e48aa3);
+  --berry:var(--plum); --rose:var(--pink); --petal:var(--pink-2); --blush:var(--pink-3); --paper:#fffafb; --cream:#fff; --bg-2:#fffafb;
+  --x-pine:#173a30; --x-deep:#0e231d; --x-gold:#e7c785; --x-snow:#f7efe4;
+  --f-display:"Playfair Display","Lora",Georgia,serif;
+  --f-body:"Montserrat","Poppins",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-script:"Pinyon Script","TeX Gyre Chorus","Segoe Script",cursive;
+  --f-hand:"Dancing Script","TeX Gyre Chorus","Segoe Script",cursive;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+html,body,.xapp{scrollbar-width:none;-ms-overflow-style:none}
+html::-webkit-scrollbar,body::-webkit-scrollbar,.xapp::-webkit-scrollbar{width:0;height:0;background:transparent}
+body{
+  background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;font-weight:500;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));overflow-x:hidden;
+}
+[hidden]{display:none!important}
+#petals{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:7}
+main{position:relative;z-index:1;min-height:100%;display:grid;place-items:center;padding-block:24px}
+
+/* animações */
+.page{animation:pageIn .6s cubic-bezier(.2,.8,.2,1) both}
+@keyframes pageIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.st{animation:rise .6s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0) * 70ms + 80ms)}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.shake{animation:shake .45s}
+@keyframes shake{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+@keyframes pop{40%{transform:scale(1.15)}}
+@keyframes xin{from{opacity:0}to{opacity:1}}
+@keyframes xout{to{opacity:0;transform:scale(1.04)}}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fillin{to{opacity:1}}
+@keyframes unfold{from{transform:perspective(800px) rotateX(-60deg);opacity:0}to{transform:none;opacity:1}}
+.unfold{transform-origin:top center;animation:unfold .8s cubic-bezier(.2,.8,.2,1) both}
+
+/* tipografia */
+h1,h2,h3{font-family:var(--f-display);font-weight:700;color:var(--plum);margin:0;line-height:1.15;text-wrap:balance}
+.eyebrow{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin:0;font-weight:600}
+.lead{color:var(--muted);margin:0}
+.script{font-family:var(--f-script);font-weight:400}
+.gold-line,.stitle::after{content:"";display:block;width:44px;height:2px;background:var(--gold);margin:12px auto 0;border-radius:2px}
+
+/* botões */
+button{font:600 15px var(--f-body);letter-spacing:.02em;color:#fff;background:var(--olive);border:0;border-radius:999px;padding:14px 22px;cursor:pointer;
+  box-shadow:0 10px 20px -12px rgba(86,92,56,.8);transition:transform .2s, box-shadow .2s, background .2s}
+button:hover{transform:translateY(-1px)}
+button:active{transform:scale(.97)}
+button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+button:disabled{opacity:.6}
+.ghost{background:var(--pink-band);color:var(--plum);box-shadow:none}
+.linkbtn{background:none;color:var(--pink);box-shadow:none;padding:0;font-size:12px;text-decoration:underline}
+.del{position:absolute;top:10px;right:10px;background:var(--pink-3);color:var(--pink);box-shadow:none;font-size:11px;padding:4px 10px}
+
+/* ---------- entrada ---------- */
+.gate{width:100%;max-width:400px}
+.sheet{position:relative;background:var(--card);border-radius:28px;padding:48px 24px 26px;text-align:center;box-shadow:0 30px 60px -30px rgba(224,120,154,.55);display:flex;flex-direction:column;gap:12px}
+.wax{position:absolute;top:-28px;left:50%;width:56px;height:56px;margin-left:-28px;border-radius:50%;display:grid;place-items:center;
+  background:linear-gradient(180deg,#f7a8bc,#ec6a8d);color:#fff;font-family:var(--f-script);font-size:28px;box-shadow:0 10px 20px -8px rgba(224,120,154,.8);border:4px solid #fff}
+.dots{display:flex;gap:6px;justify-content:center}
+.dots i{width:18px;height:4px;border-radius:2px;background:var(--pink-3)}
+.dots i.on{background:var(--pink)}
+.q{font-size:clamp(24px,7vw,30px)}
+form{display:flex;flex-direction:column;gap:12px;margin:0}
+.gate input[type=text]{width:100%;font:600 20px var(--f-body);text-align:center;color:var(--plum);background:var(--pink-3);border:2px solid transparent;border-radius:18px;padding:14px;outline:none}
+.gate input[type=text]:focus{border-color:var(--pink-2)}
+input::placeholder,textarea::placeholder{color:#c9aab3}
+.msg{min-height:22px;margin:0;color:var(--pink);font-family:var(--f-hand);font-size:21px}
+/* teclado de coraçõezinhos */
+.hearts{display:flex;justify-content:center;align-items:center;gap:4px;margin:4px 0}
+.hearts svg{width:22px;height:20px}
+.hearts path{fill:#f3d5dd;transition:fill .2s, transform .2s}
+.hearts .on path{fill:#de6f98}
+.hearts .on{animation:pop .3s}
+.hearts .sep{color:#e5c3cc;font-weight:700;margin:0 2px}
+.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:4px}
+.key{background:#fbe3ec;color:#de6f98;box-shadow:none;font-size:24px;font-weight:600;border-radius:18px;padding:12px 0}
+.key:hover{background:#fbd3de}
+.key.blank{visibility:hidden}
+.drawheart{width:100px;height:90px;margin:0 auto}
+.drawheart path{fill:none;stroke:var(--pink);stroke-width:3;stroke-linecap:round;stroke-dasharray:420;stroke-dashoffset:420;animation:draw 1.5s ease forwards .2s}
+.drawheart .fill{fill:var(--pink-2);stroke:none;opacity:0;animation:fillin .6s ease forwards 1.4s}
+.yay{font-family:var(--f-script);font-size:clamp(52px,15vw,66px);color:var(--plum);line-height:1;margin:0}
+.typed::after{content:"|";animation:blink .8s steps(1) infinite;color:var(--pink)}
+@keyframes blink{50%{opacity:0}}
+.glogin{display:flex;align-items:center;justify-content:center;gap:12px;background:#fff;color:var(--ink);border:1.5px solid var(--pink-3);box-shadow:none}
+.glogin .g{width:20px;height:20px}
+.gate .duo{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+/* ---------- mensagem do dia ---------- */
+.daily{width:100%;max-width:440px;min-height:calc(100vh - 48px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center}
+.dlogo,.logo{border-radius:50%;display:grid;place-items:center;font-family:var(--f-script);color:var(--pink);background:#fff;box-shadow:var(--shadow);padding:0;border:0}
+.dlogo{width:76px;height:76px;font-size:30px}
+.daily h1{font-size:clamp(30px,8.5vw,40px)}
+.daily h1 em{display:block;font-family:var(--f-script);font-style:normal;font-weight:400;color:var(--pink);font-size:1.4em;line-height:1.1}
+.dquote{margin:10px 0 0;width:100%;background:#fff;border-radius:6px;padding:26px 22px 22px;text-align:left;font-family:var(--f-hand);font-size:24px;line-height:36px;color:var(--ink);box-shadow:0 18px 36px -22px rgba(74,18,36,.35);
+  background-image:repeating-linear-gradient(transparent 0 35px, rgba(74,18,36,.07) 35px 36px);background-position:0 18px}
+.dquote::before{content:"Meu amor,";display:block;color:var(--plum)}
+.dsign{font-family:var(--f-script);font-size:30px;color:var(--plum);margin:0}
+.daily button{margin-top:10px;padding-inline:34px}
+
+/* ---------- início ---------- */
+.home{width:100%;max-width:560px;display:flex;flex-direction:column;gap:22px;padding-block:4px 120px;align-self:start}
+.hbar{display:flex;align-items:center;gap:12px;padding-top:6px}
+.logo{width:48px;height:48px;font-size:20px}
+.logo.tap{animation:pop .3s}
+.hhi{display:flex;flex-direction:column;line-height:1.2}
+.hhi small{color:var(--muted);font-size:13px}
+.hhi b{font-family:var(--f-display);font-size:22px;color:var(--plum)}
+.tabbody{display:flex;flex-direction:column;gap:18px}
+.stitle{font-family:var(--f-display);font-weight:700;color:var(--plum);font-size:26px;text-align:center;margin:10px 0 2px}
+.hero-b{position:relative;overflow:hidden;border-radius:26px;padding:30px 16px 26px;text-align:center;color:var(--plum);
+  background:radial-gradient(30px 26px at 12% 30%, rgba(255,255,255,.55), transparent 70%),radial-gradient(44px 40px at 85% 22%, rgba(255,255,255,.45), transparent 70%),
+             radial-gradient(36px 32px at 70% 80%, rgba(255,255,255,.4), transparent 70%),radial-gradient(26px 24px at 25% 85%, rgba(255,255,255,.35), transparent 70%),
+             linear-gradient(160deg,#f6c3cf,#fbe1e7 60%,#f9d2dc)}
+.hero-b::before,.hero-b::after{content:"♥\FE0E";position:absolute;color:rgba(255,255,255,.55);filter:blur(2px);font-size:64px;line-height:1}
+.hero-b::before{left:6%;top:8%;transform:rotate(-12deg)}
+.hero-b::after{right:5%;bottom:-6%;font-size:90px;transform:rotate(14deg);filter:blur(4px)}
+.hb-top{margin:0;font-size:13px;font-weight:700;color:var(--plum)}
+.hb-count{margin:6px 0 0;font-family:var(--f-display);font-weight:700;font-size:clamp(26px,8vw,34px);color:var(--plum);font-variant-numeric:tabular-nums;position:relative;z-index:1}
+.hb-sub{margin:8px 0 0;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#a96d81;position:relative;z-index:1}
+.hb-big{margin:18px 0 0;font-family:var(--f-script);font-size:34px;color:var(--pink);position:relative;z-index:1}
+.quote{display:block;width:100%;text-align:left;background:#fff;color:var(--ink);border-radius:6px;padding:22px 22px 20px;box-shadow:0 18px 36px -24px rgba(74,18,36,.4);
+  background-image:repeating-linear-gradient(transparent 0 33px, rgba(74,18,36,.07) 33px 34px);background-position:0 46px}
+.quote:hover{transform:rotate(-.4deg)}
+.qlabel{display:block;font-family:var(--f-display);font-weight:700;color:var(--plum);font-size:18px;margin-bottom:6px}
+.qtext{display:block;font-family:var(--f-hand);font-size:22px;line-height:34px;color:var(--ink)}
+.pensei{display:flex;align-items:center;gap:14px;background:#fff;border-radius:22px;padding:14px 16px;box-shadow:var(--shadow)}
+.pbtn{width:52px;height:52px;flex:none;border-radius:50%;padding:0;display:grid;place-items:center;font-size:24px;animation:glow 2.4s ease-in-out infinite}
+.pbtn .icn{fill:#fff;stroke:#fff}
+.pbtn.beat{animation:beat .5s}
+@keyframes beat{30%{transform:scale(1.2)}60%{transform:scale(.95)}}
+@keyframes glow{0%,100%{box-shadow:0 0 0 0 rgba(224,120,154,.35)}50%{box-shadow:0 0 0 10px rgba(224,120,154,0)}}
+.ptxt{display:flex;flex-direction:column;min-width:0}
+.ptxt > b{font-family:var(--f-display);font-size:18px;color:var(--plum)}
+.ptxt span{font-size:13px;color:var(--muted)}
+.ptxt span b{color:var(--pink)}
+.rows{display:flex;flex-direction:column;gap:10px}
+.row{width:100%;display:flex;align-items:center;gap:14px;background:#fff;color:var(--ink);border-radius:20px;padding:14px 16px;text-align:left;box-shadow:0 8px 20px -16px rgba(224,120,154,.6)}
+.rico{width:42px;height:42px;flex:none;border-radius:14px;display:grid;place-items:center;font-size:21px;color:var(--pink);background:var(--pink-3)}
+.rtxt{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.25}
+.rtxt b{font-weight:700;font-size:16px;color:var(--plum)}
+.rtxt small{font-size:13px;color:var(--muted)}
+.chev{font-size:18px;color:var(--pink-2);flex:none}
+.badge{min-width:22px;height:22px;padding:0 8px;border-radius:999px;background:var(--pink);color:#fff;font-style:normal;font-size:11px;font-weight:700;display:grid;place-items:center}
+.xbanner,.last{width:100%;display:flex;align-items:center;gap:14px;text-align:left;border-radius:20px;padding:14px 16px}
+.xbanner{background:var(--x-pine);color:var(--x-snow);box-shadow:0 12px 24px -14px rgba(14,35,29,.7)}
+.xbanner .rico{background:rgba(255,255,255,.1);color:var(--x-gold)}
+.xbanner .rtxt b{color:#fff}.xbanner small{color:rgba(247,239,228,.7)}
+.last{margin-top:4px}
+.last .rico{background:rgba(255,255,255,.22);color:#fff}
+.last .rtxt b{color:#fff}.last small{color:rgba(255,255,255,.85)}
+.timeline{list-style:none;margin:0;background:#fff;border-radius:22px;padding:22px 18px 22px 48px;position:relative;display:flex;flex-direction:column;gap:22px;box-shadow:var(--shadow)}
+.timeline::before{content:"";position:absolute;left:27px;top:28px;bottom:28px;width:2px;background:var(--pink-3)}
+.timeline li{position:relative}
+.timeline li::before{content:"♥\FE0E";position:absolute;left:-30px;top:0;width:20px;height:20px;display:grid;place-items:center;font-size:11px;color:#fff;background:var(--pink);border-radius:50%;box-shadow:0 0 0 4px #fff}
+.timeline time{font-size:12px;letter-spacing:.14em;color:var(--pink);font-weight:700;font-variant-numeric:tabular-nums}
+.timeline h3{font-size:19px;margin:2px 0 2px}
+.timeline p{margin:0;color:var(--muted);font-size:15px}
+.timeline .by{font-size:12px}
+.emptyli::before{display:none}
+.tabbar{position:fixed;left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:5;display:grid;grid-template-columns:repeat(4,1fr);
+  padding:6px;background:rgba(255,255,255,.95);border-radius:24px;box-shadow:0 14px 34px -14px rgba(224,120,154,.6);animation:xin .4s ease both;max-width:520px;margin:0 auto}
+.tab{display:flex;flex-direction:column;align-items:center;gap:2px;background:none;box-shadow:none;color:var(--muted);padding:8px 0;border-radius:18px;font-size:11px;font-weight:700}
+.tab .icn{font-size:22px}
+.tab.on{color:var(--pink);background:var(--pink-3)}
+footer{text-align:center;color:var(--muted);display:flex;flex-direction:column;gap:0;padding-top:10px}
+footer .script{font-size:40px;color:var(--plum);line-height:1.1}
+.icn{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;display:block}
+
+/* ---------- telas internas ---------- */
+.view{width:100%;max-width:560px;display:flex;flex-direction:column;gap:20px;padding-block:0 48px;align-self:start}
+.vbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:4;margin:0 calc(-1 * max(16px, env(safe-area-inset-left,0px)));padding:10px max(16px, env(safe-area-inset-left,0px));background:rgba(253,238,241,.9);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.vback{display:inline-flex;align-items:center;gap:2px;background:#fff;color:var(--pink);box-shadow:0 6px 14px -10px rgba(224,120,154,.7);padding:8px 14px 8px 8px;font-size:14px}
+.vback .icn{font-size:20px}
+.vhead{text-align:center;display:flex;flex-direction:column;gap:8px}
+.vhead h2{font-family:var(--f-script);font-weight:400;color:var(--olive);font-size:clamp(44px,13vw,58px);line-height:1}
+.vhead p{margin:0 auto;color:var(--muted);max-width:36ch;font-size:15px}
+
+/* cartões genéricos */
+.qcard,.card-form,.who,.oldq,.wopts,.capsule,.gift-wrap{background:#fff;border-radius:24px;padding:20px;box-shadow:var(--shadow)}
+.qcard{display:flex;flex-direction:column;gap:14px}
+.qcard h3{font-size:22px}
+.center{text-align:center;align-items:center}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{background:var(--pink-3);color:var(--plum);box-shadow:none;text-align:left;border-radius:16px;font-weight:600}
+.opt.ok{background:#dff1e4;color:#25603a}
+.opt.no{background:#ffd7df;color:var(--pink)}
+.bar{height:5px;border-radius:99px;background:var(--pink-3);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--pink);transition:width .5s}
+.score{font-family:var(--f-display);font-size:64px;color:var(--plum);margin:0;line-height:1;font-weight:700}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%}
+.duo.three button:last-child{grid-column:1/-1}
+.reveal{min-height:56px;text-align:center;font-family:var(--f-hand);font-size:24px;color:var(--plum);margin:0}
+.write{display:flex;flex-direction:column;gap:10px}
+textarea,.card-form input[type=text],.card-form input[type=date],.addopt input[type=text]{width:100%;font:500 16px var(--f-body);color:var(--ink);background:var(--bg-2);border:1.5px solid var(--pink-3);border-radius:16px;padding:12px 14px;outline:none;resize:vertical}
+textarea:focus,.card-form input:focus,.addopt input:focus{border-color:var(--pink-2)}
+.werr{margin:0;color:var(--pink);font-size:14px}
+.werr:empty{display:none}
+.savenote{text-align:center;color:var(--muted);font-size:13px;margin:0}
+.empty{text-align:center;grid-column:1/-1}
+
+/* papel de carta pautado */
+.paper{width:100%;background:#fff;color:var(--ink);border-radius:6px;padding:26px 22px 22px;font-family:var(--f-hand);font-size:22px;line-height:34px;text-align:left;position:relative;
+  box-shadow:0 18px 36px -22px rgba(74,18,36,.4);background-image:repeating-linear-gradient(transparent 0 33px, rgba(74,18,36,.07) 33px 34px);background-position:0 26px}
+.paper p{margin:0 0 6px}
+.paper .to{color:var(--plum)}
+.sign{text-align:right;font-family:var(--f-script);font-size:32px;color:var(--plum);margin:10px 0 0}
+.paper.kid{margin-bottom:12px}
+.paper.kid .sign small{display:block;font-family:var(--f-body);font-size:12px;line-height:1.4;color:var(--muted)}
+
+/* envelopes */
+.envlist{display:flex;flex-direction:column;gap:24px;align-items:center}
+.envl{position:relative;width:100%;max-width:330px;aspect-ratio:1.55;background:none;padding:0;border-radius:8px;box-shadow:none;color:var(--ink);transition:margin .5s ease, transform .2s}
+.envl.open{margin-top:110px}
+.envl > span{position:absolute;display:block}
+.envl .eb{inset:0;background:#f9c9d4;border-radius:8px;box-shadow:0 18px 30px -18px rgba(224,120,154,.8)}
+.envl .ep{left:7%;right:7%;top:8%;bottom:8%;background:#fff;border-radius:3px;transition:transform .8s cubic-bezier(.3,1.2,.5,1) .35s;background-image:repeating-linear-gradient(transparent 0 12px, rgba(74,18,36,.08) 12px 13px)}
+.envl .ef{inset:0;background:#fde0e7;border-radius:8px;clip-path:polygon(0 0,50% 52%,100% 0,100% 100%,0 100%);z-index:2}
+.envl .efl{left:0;right:0;top:0;height:56%;background:#f6b8c7;clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;z-index:3;transition:transform .55s ease, z-index 0s .3s}
+.envl .label{left:0;right:0;bottom:11%;z-index:4;text-align:center;font-family:var(--f-hand);font-size:22px;padding:0 12px;line-height:1.15;color:var(--plum);transition:opacity .3s}
+.envl .label small{display:block;font-family:var(--f-body);font-size:11px;color:var(--muted);margin-top:4px;font-weight:600}
+.envl .seal{left:50%;top:56%;width:42px;height:42px;margin:-21px 0 0 -21px;border-radius:50%;z-index:5;display:grid;place-items:center;background:var(--rose-fill);color:#fff;font-size:17px;box-shadow:0 4px 10px rgba(224,120,154,.5);transition:transform .4s, opacity .4s}
+.envl .seal .icn{font-size:17px}
+.envl.locked .seal{background:#c9b3ba}
+.envl.open .seal{transform:scale(1.6) rotate(25deg);opacity:0}
+.envl.open .efl{transform:perspective(600px) rotateX(180deg);z-index:1}
+.envl.open .ep{transform:translateY(-38%)}
+.envl.open .label{opacity:0}
+.slot{width:100%}
+
+/* cartas ao filho */
+.who{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 14px 12px 18px}
+.who > span{font-family:var(--f-display);font-weight:700;color:var(--plum)}
+.seg{display:flex;background:var(--pink-3);border-radius:999px;padding:4px;gap:4px}
+.seg button{background:transparent;color:var(--pink);box-shadow:none;padding:8px 16px;font-size:15px}
+.seg button.on{background:#fff;color:var(--plum);box-shadow:0 4px 10px -6px rgba(224,120,154,.8)}
+.moms{display:flex;flex-direction:column;gap:12px}
+.mom{background:#fff;border-radius:22px;box-shadow:var(--shadow);overflow:hidden}
+.momhead{width:100%;display:flex;align-items:center;gap:14px;background:none;color:var(--ink);box-shadow:none;border-radius:0;padding:16px;text-align:left}
+.momhead .ico{width:42px;height:42px;flex:none;border-radius:14px;display:grid;place-items:center;font-size:21px;color:var(--pink);background:var(--pink-3)}
+.momhead .mt{flex:1;min-width:0;display:flex;flex-direction:column}
+.momhead b{font-weight:700;color:var(--plum)}
+.momhead small{font-size:13px;color:var(--muted)}
+.momhead .count{font-size:12px;color:var(--pink);font-weight:700;margin-top:2px}
+.momhead .chev{font-size:22px;color:var(--pink-2);transition:transform .35s}
+.mom.open .chev{transform:rotate(90deg)}
+.mombody{display:none;padding:2px 14px 16px}
+.mom.open .mombody{display:block}
+.mom.open .mombody > *{animation:rise .45s both}
+
+/* fotos */
+.ph{width:100%;aspect-ratio:1;display:grid;place-items:center;font-family:var(--f-hand);font-size:20px;color:rgba(74,18,36,.45);background:linear-gradient(135deg,#fde3ea,#f7a8bc)}
+.ph.b{background:linear-gradient(135deg,#fdf0e4,#f2c8a8)}.ph.c{background:linear-gradient(135deg,#f6e9f5,#d9b6dc)}.ph.d{background:linear-gradient(135deg,#eef3e4,#c9d8b2)}
+.polas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 14px;padding:6px}
+.pola{position:relative;perspective:900px;background:none;padding:0;border-radius:0;box-shadow:none;--r:-3deg;transform:rotate(var(--r));animation:drop .8s cubic-bezier(.3,1.3,.5,1) both;animation-delay:calc(var(--i)*120ms + 150ms)}
+.pola:nth-child(even){--r:3deg}
+@keyframes drop{from{opacity:0;transform:translateY(-40px) rotate(calc(var(--r) * -4))}to{opacity:1;transform:rotate(var(--r))}}
+.pola .in{position:relative;transition:transform .8s cubic-bezier(.3,1.2,.5,1);transform-style:preserve-3d}
+.pola.flip .in{transform:rotateY(180deg)}
+.pola .face{position:relative;background:#fff;padding:9px 9px 40px;box-shadow:0 14px 26px -14px rgba(74,18,36,.45);backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.pola .face span{position:absolute;left:0;right:0;bottom:8px;text-align:center;font-family:var(--f-hand);color:var(--plum);font-size:19px}
+.pola .backf{position:absolute;inset:0;transform:rotateY(180deg);display:grid;place-items:center;padding:16px;font-family:var(--f-hand);font-size:20px;line-height:1.25;color:var(--plum);text-align:center}
+.pola .tape{position:absolute;top:-9px;left:50%;width:58px;height:18px;margin-left:-29px;background:rgba(247,168,188,.6);transform:rotate(-4deg);z-index:2}
+.scratch{position:relative;width:100%;max-width:330px;align-self:center;background:#fff;padding:12px 12px 46px;box-shadow:0 18px 32px -16px rgba(74,18,36,.45);transform:rotate(-1.5deg)}
+.scratch canvas{position:absolute;left:12px;top:12px;width:calc(100% - 24px);aspect-ratio:1;touch-action:none;cursor:grab}
+.scratch p{position:absolute;left:0;right:0;bottom:8px;margin:0;text-align:center;font-family:var(--f-hand);font-size:21px;color:var(--plum)}
+
+/* jogos */
+.mem{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.mc{aspect-ratio:3/4;padding:0;border-radius:14px;background:none;box-shadow:none;perspective:600px}
+.mc .in{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.3,1.3,.5,1);transform-style:preserve-3d}
+.mc.up .in{transform:rotateY(180deg)}
+.mc .f,.mc .k{position:absolute;inset:0;border-radius:14px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:grid;place-items:center}
+.mc .f{background:linear-gradient(160deg,#f7a8bc,#ec6a8d);color:#fff;font-size:20px;border:3px solid #fff;box-shadow:0 8px 16px -10px rgba(224,120,154,.9)}
+.mc .k{transform:rotateY(180deg);font-size:clamp(26px,8vw,34px);background:#fff;color:var(--pink);border:3px solid var(--pink-3)}
+.mc.got .k{border-color:var(--pink)}
+.stats{display:flex;justify-content:center;gap:18px;color:var(--muted);font-size:14px;font-variant-numeric:tabular-nums}
+.game{position:relative;width:100%;aspect-ratio:3/4;max-height:66vh;border-radius:26px;overflow:hidden;background:linear-gradient(#fff,#fde3ea);box-shadow:var(--shadow);touch-action:none}
+.game canvas{width:100%;height:100%;display:block}
+.hud{position:absolute;top:12px;left:14px;right:14px;display:flex;justify-content:space-between;align-items:center;pointer-events:none;font-weight:700;color:var(--plum);font-variant-numeric:tabular-nums}
+.hud i{font-style:normal;color:var(--pink);font-size:18px;margin-right:2px;display:inline-block;transition:opacity .3s}
+.hud i.lost{opacity:.2}
+.overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;text-align:center;background:rgba(255,255,255,.88);backdrop-filter:blur(3px)}
+.overlay h3{font-size:28px}
+.rules{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;text-align:left;font-size:15px;color:var(--ink)}
+.rules b{display:inline-block;width:22px;color:var(--pink)}
+.caught .chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 10px}
+.chip{font-family:var(--f-body);font-size:14px;font-weight:600;line-height:1.3;color:#fff;background:var(--rose-fill);border-radius:999px;padding:6px 14px;animation:pop2 .5s cubic-bezier(.3,1.6,.5,1) both;animation-delay:calc(var(--i)*60ms + 400ms)}
+@keyframes pop2{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:none}}
+.caught .more{font-size:19px;color:var(--muted)}
+
+/* planos e vales */
+.plans{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.plans label{display:flex;align-items:center;gap:14px;background:#fff;border-radius:20px;padding:14px 16px;cursor:pointer;box-shadow:0 8px 20px -16px rgba(224,120,154,.6)}
+.plans input{width:22px;height:22px;accent-color:var(--pink);flex:none}
+.plans .t{flex:1;min-width:0}
+.plans .t b{font-weight:700;color:var(--plum)}
+.plans .t small{display:block;color:var(--muted);font-size:13px}
+.plans input:checked + .t b{text-decoration:line-through;text-decoration-color:var(--pink);opacity:.6}
+.vales{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.vale{border-radius:22px;padding:18px 12px 14px;display:flex;flex-direction:column;gap:8px;background:#fff;text-align:center;box-shadow:var(--shadow);transition:transform .3s, opacity .3s}
+.vale .ico{font-size:28px;color:var(--pink);display:flex;justify-content:center}
+.vale b{font-weight:700;color:var(--plum);font-size:15px;line-height:1.25}
+.vale button{padding:9px;font-size:14px;margin-top:auto}
+.vale.used{opacity:.65}
+.vale.used button{background:var(--pink-3);color:var(--pink);box-shadow:none}
+
+/* presente */
+.gift-wrap{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;padding:60px 18px 26px}
+.gift{width:150px;height:150px;position:relative;background:none;padding:0;box-shadow:none}
+.gift span{position:absolute;display:block}
+.gift .box{left:15px;right:15px;bottom:0;height:96px;background:var(--rose-fill);border-radius:10px}
+.gift .lid{left:5px;right:5px;top:30px;height:30px;background:#f7a8bc;border-radius:10px;transition:transform .7s cubic-bezier(.3,1.5,.5,1)}
+.gift .rib{left:50%;margin-left:-9px;width:18px;top:30px;bottom:0;background:var(--gold)}
+.gift .bow{position:absolute;left:50%;top:6px;margin-left:-30px;width:60px;height:36px;transition:transform .7s}
+.gift.open .lid{transform:translateY(-46px) rotate(-16deg)}
+.gift.open .bow{transform:translate(-30px,-56px) rotate(-24deg)}
+.gift:not(.open){animation:wiggle 2.6s ease-in-out infinite}
+@keyframes wiggle{0%,78%,100%{transform:rotate(0)}84%{transform:rotate(-5deg)}90%{transform:rotate(5deg)}96%{transform:rotate(-2deg)}}
+
+/* ticket e overlays */
+.tk-wrap{position:fixed;inset:0;z-index:6;display:grid;place-items:center;background:rgba(74,18,36,.35);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:calc(env(safe-area-inset-top,0px) + 16px) calc(env(safe-area-inset-bottom,0px) + 16px);animation:xin .3s ease both}
+.tk-box{width:100%;max-width:360px;display:flex;flex-direction:column;gap:14px}
+.ticket{display:flex;background:#fff;border-radius:18px;overflow:hidden;position:relative;box-shadow:0 30px 60px -20px rgba(74,18,36,.45);animation:print .9s cubic-bezier(.2,.8,.2,1) both}
+@keyframes print{from{clip-path:inset(0 0 100% 0);transform:translateY(-24px)}to{clip-path:inset(0 0 0 0);transform:none}}
+.tk-main{flex:1;min-width:0;padding:22px 18px 20px 22px;display:flex;flex-direction:column;gap:6px}
+.tk-ico{font-size:28px;color:var(--pink)}
+.tk-main h3{font-size:22px}
+.tk-who{margin:0;font-size:13px;color:var(--muted)}
+.tk-stub{width:92px;flex:none;background:var(--rose-fill);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;position:relative;border-left:2px dashed rgba(255,255,255,.6)}
+.tk-stub b{font-family:var(--f-display);font-size:28px;line-height:1;font-variant-numeric:tabular-nums}
+.tk-stub span{font-size:10px;letter-spacing:.14em;text-transform:uppercase;opacity:.85;text-align:center}
+.tk-actions{display:flex;flex-direction:column;gap:10px;animation:rise .5s both .6s}
+.tk-actions .ghost{background:#fff}
+.tk-note{margin:0;text-align:center;color:#fff;font-size:14px}
+.tk-note:empty{display:none}
+.wlink,.wbtn{display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.wlink{align-self:center;background:#25a464;color:#fff;text-decoration:none;border-radius:999px;padding:12px 20px;font-weight:700}
+.wlink .icn,.wbtn .icn{font-size:20px}
+.secret .eyebrow{margin-bottom:6px}
+
+/* pergunta, mural, listas */
+.ans{background:var(--bg-2);border-radius:16px;padding:12px 16px}
+.ans small{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--pink);font-weight:700}
+.ans p{margin:4px 0 0;font-family:var(--f-hand);font-size:22px;line-height:1.3}
+.ans.mine{background:var(--pink-3)}
+.locked-ans{display:flex;align-items:center;gap:8px;justify-content:center}
+.locked-ans .icn{font-size:16px}
+.oldq{margin-bottom:10px;padding:14px 16px}
+.oldq small{color:var(--muted);font-size:12px}
+.oldq p{margin:6px 0 0}
+.gtitle{font-family:var(--f-display);font-weight:700;color:var(--plum);font-size:18px;margin:6px 0 10px;text-align:center}
+.mural{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.postit{position:relative;padding:16px 14px 12px;min-height:120px;display:flex;flex-direction:column;justify-content:space-between;gap:8px;transform:rotate(var(--r));box-shadow:0 12px 20px -14px rgba(74,18,36,.5);animation:rise .5s both}
+.postit p{margin:0;font-family:var(--f-hand);font-size:21px;line-height:1.2;word-break:break-word;color:var(--ink)}
+.postit small{font-size:11px;color:rgba(74,18,36,.55)}
+.postit.c0{background:#ffe1e8}.postit.c1{background:#fff2d9}.postit.c2{background:#f3e3f2}.postit.c3{background:#e7f0de}
+.postit .del{top:6px;right:6px;font-size:10px;padding:3px 7px;background:rgba(255,255,255,.6)}
+.card-form{display:flex;flex-direction:column;gap:10px}
+.by{font-size:12px;color:var(--muted)}
+.songs{display:flex;flex-direction:column;gap:10px}
+.song{display:flex;gap:14px;align-items:flex-start;background:#fff;border-radius:20px;padding:14px;box-shadow:0 8px 20px -16px rgba(224,120,154,.6)}
+.play{width:46px;height:46px;flex:none;border-radius:50%;display:grid;place-items:center;font-size:24px;color:#fff;background:var(--rose-fill);text-decoration:none}
+.play.off{background:var(--pink-3);color:var(--pink)}
+.sinfo{min-width:0;display:flex;flex-direction:column}
+.sinfo b{font-weight:700;color:var(--plum)}
+.sinfo small{color:var(--muted);font-size:13px}
+.sinfo p{margin:6px 0;font-family:var(--f-hand);font-size:20px;line-height:1.25}
+.meslist{display:flex;flex-direction:column;gap:10px}
+.mesitem{display:flex;gap:14px;align-items:center;background:#fff;border-radius:20px;padding:14px 16px;box-shadow:0 8px 20px -16px rgba(224,120,154,.6)}
+.mesitem > b{width:46px;height:46px;flex:none;border-radius:50%;display:grid;place-items:center;background:var(--rose-fill);color:#fff;font-family:var(--f-display);font-size:20px}
+.mesitem span{display:flex;flex-direction:column;min-width:0}
+.mesitem small{font-size:12px;color:var(--pink);font-weight:700}
+.mesitem.next{background:transparent;box-shadow:none;border:1.5px dashed var(--pink-2);color:var(--muted)}
+.mesitem.next > b{background:var(--pink-3);color:var(--pink)}
+.mesitem.next .icn{display:inline-block;font-size:14px;vertical-align:-2px}
+.capsule{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;color:var(--muted)}
+.capsule p{margin:0}
+.cap-ico{width:90px;height:90px;border-radius:50%;display:grid;place-items:center;font-size:40px;color:var(--pink);background:var(--pink-3);animation:wob 3s ease-in-out infinite}
+@keyframes wob{50%{transform:rotate(180deg)}}
+.capsule.opened .cap-ico{animation:none;color:var(--gold)}
+.wheelbox{position:relative;width:100%;max-width:330px;align-self:center;aspect-ratio:1}
+.wheelbox canvas{width:100%;height:100%;display:block;border-radius:50%;box-shadow:0 22px 40px -20px rgba(224,120,154,.8);border:6px solid #fff}
+.pointer{position:absolute;top:-8px;left:50%;margin-left:-14px;width:28px;height:30px;background:var(--plum);clip-path:polygon(0 0,100% 0,50% 100%);z-index:2}
+.spin{position:absolute;left:50%;top:50%;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;padding:0;font-size:14px}
+.wopts summary{cursor:pointer;font-weight:700;color:var(--plum)}
+.wopts ul{margin:12px 0 0;padding-left:18px;color:var(--muted);display:flex;flex-direction:column;gap:4px}
+.addopt{display:flex;gap:8px;margin-top:12px}
+.addopt button{flex:none;width:48px;padding:0;display:grid;place-items:center;font-size:20px}
+
+/* =================== início em faixas, como as referências =================== */
+.home{width:100%;max-width:none;gap:0;padding-block:0 0;align-self:start}
+.band{width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);padding:44px max(22px, env(safe-area-inset-left,0px)) 46px;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center;position:relative}
+.band > *{width:100%;max-width:520px}
+.b-sage{background:var(--sage)}
+.b-pink{background:var(--pink-band)}
+.b-stripes{background:repeating-linear-gradient(90deg,#f6d3d6 0 26px,#f3c8ce 26px 52px)}
+.b-light{background:var(--bg)}
+.btitle{font-family:var(--f-script);color:var(--olive);font-size:clamp(46px,13vw,62px);line-height:1;font-weight:400;margin:0}
+.bsub{margin:0;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--olive);opacity:.85;font-weight:500}
+.btext{margin:0;color:var(--olive-d);font-size:14px;line-height:1.7;max-width:34ch}
+.hero{padding-top:calc(30px + env(safe-area-inset-top,0px))}
+.hero .logo{width:auto;height:auto;background:none;box-shadow:none;color:var(--olive);font-family:var(--f-script);font-size:26px;padding:4px 10px}
+.names{font-family:var(--f-script);color:var(--olive);font-size:clamp(64px,19vw,96px);line-height:.85;margin:0;font-weight:400}
+.names small{display:block;font-size:.42em;line-height:1.1;margin:2px 0}
+.hdate{margin:0;font-size:13px;letter-spacing:.14em;color:var(--olive);text-transform:uppercase}
+.flower{position:relative;width:min(250px,72vw);aspect-ratio:1;margin:6px auto 0}
+.flower svg.fl{width:100%;height:100%;display:block}
+.flower .ribbon{position:absolute;width:44%;top:-14%;left:-8%;transform:rotate(-14deg)}
+.hcount{margin:4px 0 0;font-family:var(--f-display);font-weight:600;color:var(--plum);font-size:clamp(18px,5.4vw,24px);font-variant-numeric:tabular-nums;white-space:nowrap}
+.hcount-l{margin:0;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--olive)}
+.photo-rect{position:relative;width:100%;aspect-ratio:4/3;border-radius:46% 46% 18px 18px / 30% 30% 18px 18px;overflow:hidden;background:linear-gradient(135deg,#f9e4e8,#e9b3c0);display:grid;place-items:center;color:rgba(74,18,36,.45);font-family:var(--f-hand);font-size:22px}
+.daisy{position:absolute;width:46px;height:46px}
+.note{background:#fff;border-radius:4px;padding:24px 22px 22px;text-align:left;box-shadow:0 18px 36px -24px rgba(74,18,36,.45);background-image:repeating-linear-gradient(transparent 0 33px, rgba(74,18,36,.07) 33px 34px);background-position:0 54px}
+.note h3{font-family:var(--f-display);font-weight:700;color:var(--plum);font-size:20px;text-align:center;margin:0 0 2px}
+.note h3::after{content:"";display:block;width:40px;height:2px;background:var(--gold);margin:10px auto 8px}
+.note p{margin:0;font-family:var(--f-hand);font-size:22px;line-height:34px;color:var(--ink)}
+.note .sign{font-size:28px;line-height:1.2}
+.note-btn{background:none;box-shadow:none;padding:0;width:100%;text-align:inherit;color:inherit}
+.wcards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.wcard{position:relative;background:#fff;color:var(--ink);border-radius:18px;padding:30px 8px 14px;box-shadow:0 10px 20px -16px rgba(74,18,36,.5);display:flex;flex-direction:column;align-items:center;gap:4px}
+.wcard .fl-ic{position:absolute;top:-16px;left:50%;margin-left:-16px;width:32px;height:32px}
+.wcard b{font-family:var(--f-script);font-weight:400;color:var(--olive);font-size:26px;line-height:1}
+.wcard small{font-size:11px;color:var(--muted);line-height:1.35}
+.wcard .badge{position:absolute;top:8px;right:8px}
+.pensei{background:#fff;border-radius:20px;box-shadow:0 10px 20px -16px rgba(74,18,36,.5);text-align:left}
+.pbtn{background:var(--rose-fill)}
+.pills{display:flex;flex-direction:column;gap:10px}
+.pill{display:grid;grid-template-columns:64px 1fr;gap:6px;background:none;box-shadow:none;padding:0;border-radius:0;color:var(--ink);text-align:left}
+.pill .pl{background:#f0bac6;color:#fff;border-radius:999px;display:grid;place-items:center;font-size:20px;min-height:46px}
+.pill .pr{background:#fff;border-radius:999px;padding:9px 18px;display:flex;flex-direction:column;justify-content:center;line-height:1.25}
+.b-pink .pill .pr{background:#fdeef0}
+.pill .pr b{font-weight:600;font-size:14px;color:var(--plum)}
+.pill .pr small{font-size:11px;color:var(--muted)}
+.pill .badge{display:none}
+.polrow{display:flex;justify-content:center;gap:0;padding:6px 0}
+.mini{background:#fff;padding:6px 6px 22px;width:31%;box-shadow:0 10px 18px -12px rgba(74,18,36,.5);border-radius:0;color:var(--plum);font-family:var(--f-hand);font-size:13px;position:relative}
+.mini .ph{font-size:12px}
+.mini span{position:absolute;left:0;right:0;bottom:3px}
+.mini:nth-child(1){transform:rotate(-6deg) translateY(6px)}.mini:nth-child(2){transform:rotate(2deg);z-index:1}.mini:nth-child(3){transform:rotate(7deg) translateY(8px)}
+.lastbtn{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:8px;background:var(--rose-fill);color:#fff;font-weight:600}
+.lastbtn .icn{font-size:20px}
+.xbanner{max-width:520px}
+.endband{padding-bottom:calc(60px + env(safe-area-inset-bottom,0px))}
+.endtitle{font-family:var(--f-script);color:var(--plum);font-size:clamp(46px,13vw,62px);line-height:1;margin:0}
+.endsub{margin:0;color:var(--muted);font-size:13px}
+.ribbon-sm{width:70px;margin:0 auto}
+.timeline{background:#fff;box-shadow:0 10px 20px -16px rgba(74,18,36,.5);text-align:left}
+.timeline li::before{background:#f0bac6}
+.timeline time{color:var(--olive)}
+.timeline h3{font-size:18px}
+.hero .xbanner{margin-top:8px}
+
+/* telas internas no tom das referências */
+.view{max-width:560px}
+.vbar{background:rgba(252,244,246,.9)}
+.vback{color:var(--olive)}
+.vhead p{color:var(--olive-d)}
+.rico,.momhead .ico,.cap-ico{background:var(--sage);color:var(--olive)}
+.qcard,.card-form,.who,.oldq,.wopts,.capsule,.gift-wrap,.mom,.vale,.song,.mesitem,.plans label{box-shadow:0 10px 22px -18px rgba(74,18,36,.5)}
+.qcard h3,.tk-main h3,.overlay h3{color:var(--plum)}
+.vale .ico,.tk-ico{color:var(--olive)}
+.opt{background:var(--sage);color:var(--olive-d)}
+.opt.ok{background:#d9e8c9;color:#3f5a26}
+.opt.no{background:var(--pink-band);color:var(--plum)}
+.bar{background:var(--sage)} .bar i{background:var(--olive)}
+.seg{background:var(--sage)} .seg button{color:var(--olive)}
+.sign{color:var(--plum)}
+.score{color:var(--olive)}
+.game{background:linear-gradient(#fffafb,var(--pink-band))}
+.mc .f{background:linear-gradient(160deg,#dfe6c6,#b9c49a);color:#fff}
+.mc .k{color:var(--pink)}
+.envl .eb{background:#f3c8ce}.envl .ef{background:#f9dfe3}.envl .efl{background:#efb8c2}
+.wlink{background:var(--olive)}
+.plans input{accent-color:var(--olive)}
+.dquote::before{color:var(--olive)}
+.daily h1{color:var(--plum)}
+.daily h1 em{color:var(--olive)}
+.dlogo{color:var(--olive)}
+.wax{background:var(--rose-fill);color:#fff}
+.sheet{box-shadow:0 30px 60px -30px rgba(111,118,75,.6)}
+.yay{color:var(--olive)}
+.q{color:var(--plum)}
+.dots i.on{background:var(--olive)}
+.gate input[type=text]{background:var(--sage);color:var(--olive-d)}
+
+/* ---------- Natal: tela própria, verde-pinheiro, creme e vermelho-cranberry ---------- */
+.xapp{position:fixed;inset:0;z-index:3;overflow-y:auto;overflow-x:hidden;background:#fbf6ec;color:#3b3a2c;text-align:center;animation:xin .8s ease both}
+.xapp.out{animation:xout .7s ease forwards}
+.xb{position:relative;padding:44px max(22px,env(safe-area-inset-left,0px)) 44px;display:flex;flex-direction:column;align-items:center;gap:14px}
+.xb > *{position:relative;width:100%;max-width:480px}
+.xb1{background:radial-gradient(120% 80% at 50% 0%, #3e5f4c, #2f4b3c 60%, #263d31);color:#fbf6ec;padding-top:calc(70px + env(safe-area-inset-top,0px));overflow:hidden}
+.xb1 canvas{position:absolute;inset:0;width:100%!important;height:100%;max-width:none;pointer-events:none}
+.lights{position:absolute!important;top:env(safe-area-inset-top,0px);left:0;right:0;height:60px;max-width:none!important;display:flex;justify-content:space-between;padding:0 10px}
+.lights::before{content:"";position:absolute;left:0;right:0;top:-30px;height:60px;border-bottom:1.5px solid rgba(201,164,92,.5);border-radius:0 0 50% 50%}
+.lights i{position:relative;width:9px;height:14px;border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;margin-top:calc(14px + var(--d)*1px);animation:twinkle 1.8s ease-in-out infinite;animation-delay:calc(var(--k)*.2s)}
+@keyframes twinkle{0%,100%{opacity:1;filter:drop-shadow(0 0 5px currentColor)}50%{opacity:.4;filter:none}}
+.tree{width:150px!important;height:168px;animation:rise .9s both .2s}
+.tree .star{transform-origin:85px 22px;animation:starglow 2.4s ease-in-out infinite}
+@keyframes starglow{50%{transform:scale(1.15) rotate(10deg);filter:drop-shadow(0 0 8px #f3dca4)}}
+.tree .orn{animation:twinkle 2s ease-in-out infinite}
+.xeb{margin:0;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:#d9c08a;font-weight:600}
+.xt1{margin:0;font-family:var(--f-script);font-weight:400;color:#fbf6ec;font-size:clamp(64px,19vw,92px);line-height:.95}
+.xt2{margin:0;font-family:var(--f-script);color:#d9c08a;font-size:clamp(40px,12vw,56px);line-height:1}
+.xb2{background:repeating-linear-gradient(90deg,#f7ece6 0 26px,#f0dbd5 26px 52px)}
+.xcard{background:#fff;border-radius:22px;padding:22px 18px;box-shadow:0 16px 34px -22px rgba(47,75,60,.6)}
+.xcard h3{font-family:var(--f-display);font-weight:700;color:#b5343c;font-size:20px;margin:0}
+.xcard h3::after{content:"";display:block;width:40px;height:2px;background:#c9a45c;margin:10px auto 14px}
+.xcount{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.xcount div{background:#e6ecd6;border-radius:14px;padding:10px 4px}
+.xcount b{display:block;font-family:var(--f-display);font-weight:700;font-size:clamp(22px,6.6vw,30px);color:#2f4b3c;line-height:1.15;font-variant-numeric:tabular-nums}
+.xcount b.tick{animation:pop .4s}
+.xcount span{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#6f764b;font-weight:600}
+.xlabel{margin:12px 0 0;font-family:var(--f-hand);font-size:22px;color:#2f4b3c}
+.xb3{background:#e6ecd6}
+.xnote{background:#fff;border-radius:4px;padding:24px 22px 20px;text-align:left;box-shadow:0 18px 34px -22px rgba(47,75,60,.55);
+  background-image:repeating-linear-gradient(transparent 0 33px, rgba(47,75,60,.08) 33px 34px);background-position:0 24px}
+.xnote p{margin:0;font-family:var(--f-hand);font-size:22px;line-height:34px;color:#3b3a2c}
+.xnote .to{color:#b5343c}
+.xnote .sign{font-family:var(--f-script);font-size:30px;color:#2f4b3c;text-align:right;line-height:1.3}
+.xflower{position:relative;width:min(200px,58vw)!important;aspect-ratio:1;margin:8px auto 0}
+.xflower .ribbon{position:absolute;width:42%;top:-12%;right:-6%;transform:rotate(14deg)}
+.xb4{background:#fbf6ec;padding-bottom:calc(50px + env(safe-area-inset-bottom,0px))}
+.xgo{background:#b5343c;color:#fff;box-shadow:0 12px 24px -12px rgba(181,52,60,.8);padding:15px 30px;animation:breathe 2.4s ease-in-out infinite;width:auto!important}
+@keyframes breathe{50%{transform:scale(1.04)}}
+.xhint{margin:0;font-size:13px;color:#8b8a73}
+.xholly{width:64px!important;margin:0 auto}
+</style>
+
+<canvas id="petals" aria-hidden="true"></canvas>
+<main id="app"></main>
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<script>
+/* =========================================================
+   CONTEÚDO — tudo que for trocar fica aqui
+   ========================================================= */
+/* =========================================================
+   FIREBASE — cole aqui o firebaseConfig do seu projeto
+   (Configurações do projeto → Seus apps → app da Web)
+   Vazio = salva só neste aparelho.
+   ========================================================= */
+const FIREBASE = {
+  apiKey: '',
+  authDomain: '',
+  projectId: '',
+  storageBucket: '',
+  messagingSenderId: '',
+  appId: ''
+};
+
+const C = {
+  nome: 'diogo',
+  inicioNamoro: new Date(2026, 3, 12),
+
+  polaroids: [
+    {foto:'', cls:'',  legenda:'nosso 1º encontro', verso:'Exemplo: o que você lembra desse dia'},
+    {foto:'', cls:'b', legenda:'aquele dia',        verso:'Exemplo: uma história engraçada dessa foto'},
+    {foto:'', cls:'c', legenda:'eu e você',         verso:'Exemplo: o que você sentiu nesse momento'},
+    {foto:'', cls:'d', legenda:'meu favorito',      verso:'Exemplo: por que essa é sua foto preferida'}
+  ],
+  raspadinha: {foto:'', legenda:'Exemplo: a foto surpresa'},
+  memoria: ['♥︎','✿︎','☾︎','★︎','♪︎','∞'],
+  /* palavras escritas nos corações do jogo (20) */
+  motivos: ['seu sorriso','sua voz','seus cachinhos','seu lado nerd','sua inteligência','sua paciência','sua coragem','sua determinação','seu amor','seu romantismo',
+            'seu chamego','seu acolhimento','seu abraço','seu cheiro','nossa intimidade','suas piadas','suas provocações','seu capricho','sua comida','sua proatividade'],
+  quiz: [
+    {p:'Qual é a minha comida favorita?', o:['Pizza','Sushi','Hambúrguer','Lasanha'], c:1},
+    {p:'Qual é a minha cor preferida?', o:['Azul','Rosa','Roxo','Vermelho'], c:2},
+    {p:'Onde foi o nosso primeiro encontro?', o:['Praça','Shopping','Sorveteria','Cinema'], c:1},
+    {p:'O que eu mais gosto de fazer com você?', o:['Ver filme','Sair pra comer','Conversar','Tudo isso'], c:3}
+  ],
+  provavel: [
+    {p:'Quem dorme primeiro no meio do filme?', r:'milena', obs:'eu, né… kkkk'},
+    {p:'Quem pede desculpa primeiro?', r:'diogo', obs:'você, meu amor'},
+    {p:'Quem fala "eu te amo" primeiro?', r:'ambos', obs:'a gente nunca consegue segurar'}
+  ],
+  planos: [
+    {t:'Exemplo: viajar juntos pra praia', d:'2027'}, {t:'Exemplo: passar o Ano Novo juntos', d:'31/12'},
+    {t:'Exemplo: aprender a cozinhar algo juntos', d:'quando der'}, {t:'Exemplo: ver o pôr do sol num lugar novo', d:'em breve'},
+    {t:'Exemplo: comemorar 1 ano de namoro', d:'12/04/2027'}
+  ],
+  cartas: [
+    {titulo:'Para abrir no Natal', abre:new Date(2026,11,25), texto:'Exemplo: uma carta que só abre no dia 25.'},
+    {titulo:'Para um dia triste', abre:null, texto:'Exemplo: quando você estiver pra baixo, lembra que eu tô aqui.'},
+    {titulo:'Nosso 1 ano de namoro', abre:new Date(2027,3,12), texto:'Exemplo: carta de 1 ano.'},
+    {titulo:'Nosso próximo Natal', abre:new Date(2027,11,25), texto:'Exemplo: carta do Natal de 2027.'},
+    {titulo:'No nosso noivado', abre:null, quando:'pra abrir no dia em que a gente noivar', texto:'Exemplo: carta pro dia do nosso noivado.'},
+    {titulo:'No nosso casamento', abre:null, quando:'pra abrir no dia do nosso casamento', texto:'Exemplo: carta pro dia do nosso casamento.'}
+  ],
+  /* cartas ao nosso primeiro filho: os dois escrevem, sem limite */
+  momentos: [
+    {id:'descobrir', ico:'heart', t:'Assim que descobrirmos', s:'o dia em que a gente soube de você'},
+    {id:'nascer',    ico:'baby', t:'Assim que você nascer',  s:'pra ler nos seus primeiros dias'},
+    {id:'umano',     ico:'cake', t:'No seu primeiro ano de vida', s:'seu primeiro aniversário'},
+    {id:'dezoito',   ico:'key', t:'Aos seus 18 anos',       s:'quando você virar adulto'},
+    {id:'casamento', ico:'ring', t:'No seu casamento',       s:'no dia mais bonito da sua vida'},
+    {id:'formatura', ico:'cap', t:'Na sua formatura',       s:'quando você conquistar isso'}
+  ],
+  whatsMihzinha: '5566999359338',
+
+  /* mensagem do dia: uma diferente por dia */
+  mensagens: [
+    'Você é mais forte do que imagina. E eu tô aqui torcendo por você em cada passo.',
+    'Hoje pode ser um dia comum pra todo mundo, mas você continua sendo extraordinário pra mim.',
+    'Um passo de cada vez. Você não precisa resolver tudo hoje.',
+    'Tudo o que você está construindo vai valer a pena. Eu acredito em você.',
+    'Respira fundo. Você já venceu tanta coisa até aqui.',
+    'Que hoje você seja gentil com você mesmo, do jeito que você é comigo.',
+    'Sua determinação me inspira todos os dias.',
+    'Nenhum dia ruim dura pra sempre. E eu fico do seu lado em todos eles.',
+    'Você merece todas as coisas boas que estão vindo.',
+    'Hoje, lembra disso: alguém te ama muito e tem muito orgulho de você.',
+    'Pequenos progressos ainda são progressos. Continua.',
+    'O mundo fica mais leve com o seu sorriso. Usa ele bastante hoje.',
+    'Você não está sozinho. Nunca.',
+    'Seus sonhos são grandes porque você é capaz de alcançá-los.',
+    'Se cansar, descansa. Mas não desiste.',
+    'Que o seu dia seja tão bonito quanto o seu coração.',
+    'Acreditar em você é a coisa mais fácil que eu faço.',
+    'Coragem não é não ter medo. É ir mesmo assim. E você vai.',
+    'Hoje é uma página nova. Escreve algo bonito nela.',
+    'Você é a melhor parte dos meus dias.',
+    'Faz o seu melhor hoje. O seu melhor já é muito.',
+    'Tem gente que ilumina o lugar onde chega. Você é assim.',
+    'Deus cuida de cada detalhe da sua vida. E eu também quero cuidar.',
+    'Às vezes a vitória é só conseguir levantar da cama. E tá tudo bem.',
+    'Você está exatamente onde precisa estar pra crescer.',
+    'Não compara o seu caminho com o de ninguém. O seu é lindo do seu jeito.',
+    'Orgulho de quem você é e de quem você está se tornando.',
+    'Que hoje te traga motivos pra sorrir. Se faltar, me chama.',
+    'Seja paciente com o tempo. As coisas boas estão sendo preparadas.',
+    'Você faz diferença na vida de quem está perto de você. Principalmente na minha.',
+    'Errar faz parte. Aprender com isso é o que te faz gigante.',
+    'Hoje eu escolho você de novo. Como em todos os outros dias.',
+    'Sua inteligência, sua fé e seu coração vão te levar longe.',
+    'O cansaço passa. O que você está construindo fica.',
+    'Que a sua semana seja leve, produtiva e cheia de pequenas alegrias.',
+    'Você é o tipo de pessoa que faz o mundo melhor só por existir.',
+    'Confia no processo. E confia em você.',
+    'Mesmo nos dias difíceis, você continua sendo meu lugar favorito.',
+    'Você já sobreviveu a cem por cento dos seus dias ruins. Esse também vai passar.',
+    'Hoje vai dar certo. E se não der, amanhã a gente tenta de novo, juntos.',
+    'Não esquece de beber água, de comer direito e de lembrar que eu te amo.',
+    'Seus cachinhos, seu sorriso e sua coragem: o dia já começa melhor sabendo que você existe.',
+    'A sua história ainda tem muitos capítulos bonitos pela frente.',
+    'Seja leve. A vida fica mais bonita assim.',
+    'Você tem um coração enorme. Cuida dele também.',
+    'O futuro que eu imagino tem você em todos os planos.',
+    'Que o seu esforço de hoje seja o orgulho de amanhã.',
+    'Você é capaz. Você é suficiente. Você é amado.',
+    'Desacelera um pouco. Nem tudo precisa ser pra ontem.',
+    'Obrigada por ser exatamente quem você é.',
+    'Grandes coisas começam com dias como hoje.',
+    'Se o dia pesar, lembra do nosso primeiro encontro e sorri.',
+    'Ninguém faz isso como você faz.',
+    'Hoje eu tô orando por você e pelos seus sonhos.',
+    'Quando você duvidar de si mesmo, olha pelo meu olhar.',
+    'A disciplina de hoje é a liberdade de amanhã.',
+    'Você ilumina até os dias nublados.',
+    'Que nada tire a sua paz hoje.',
+    'O melhor ainda está por vir. E eu quero estar lá pra ver.',
+    'Te amo hoje, amanhã e em todos os dias que vierem.'
+  ],
+
+  /* pergunta do dia: os dois respondem */
+  perguntas: [
+    'Qual foi o melhor momento da sua semana?',
+    'O que você mais gosta de fazer comigo?',
+    'Qual lugar do mundo você quer conhecer comigo?',
+    'Qual música te lembra de mim?',
+    'O que te fez sorrir hoje?',
+    'Qual foi a primeira coisa que você reparou em mim?',
+    'Qual é o seu sonho mais bobo?',
+    'Se a gente pudesse viajar amanhã, pra onde iria?',
+    'Qual é a sua lembrança favorita da gente?',
+    'O que te deixa calmo quando está tudo difícil?',
+    'Qual comida você quer que a gente cozinhe junto?',
+    'Qual é uma coisa que você nunca me contou?',
+    'Como você imagina a gente daqui a 5 anos?',
+    'O que eu faço que te faz se sentir amado?',
+    'Qual filme a gente precisa ver juntos?',
+    'Qual foi o dia mais feliz da sua vida?',
+    'O que você quer conquistar esse ano?',
+    'Qual apelido você mais gosta que eu te chame?',
+    'Qual é a sua mania mais engraçada?',
+    'Se você pudesse reviver um dia com a gente, qual seria?',
+    'O que você admira em mim?',
+    'Qual hábito a gente podia criar juntos?',
+    'Do que você tem mais orgulho em você?',
+    'Qual cheiro te lembra infância?',
+    'Como seria o nosso date perfeito?',
+    'Qual é a sua maior qualidade?',
+    'O que você gostaria de aprender?',
+    'Qual momento você queria ter fotografado?',
+    'O que te deixa com saudade de mim?',
+    'Qual nome você gostaria de dar pro nosso primeiro filho?',
+    'Qual foi a coisa mais corajosa que você já fez?',
+    'O que você precisa ouvir hoje?',
+    'Qual é o seu lugar favorito em Sinop?',
+    'O que você agradece hoje?',
+    'Qual é a sua comida conforto?',
+    'O que a gente devia fazer mais vezes?',
+    'Qual a coisa mais romântica que você já viu?',
+    'Qual tradição de Natal você quer ter comigo?',
+    'Qual é um medo que você quer vencer?',
+    'Se eu fosse uma música, qual eu seria?'
+  ],
+
+  /* mesversário: libera no dia 12 de cada mês (1 = 12/05/2026) */
+  mesversarios: [
+    'Um mês! E eu já sabia que você era diferente de tudo.',
+    'Dois meses de você. Dois meses de risadas, chamego e paz.',
+    'Três meses e eu ainda fico boba quando você chega.',
+    'Quatro meses. Obrigada por me escolher todos os dias.',
+    'Cinco meses e o meu lugar favorito continua sendo do seu lado.',
+    'Seis meses! Meio ano de nós. Que venham todos os outros.',
+    'Sete meses. Nosso primeiro Natal tá chegando e eu tô feliz demais.',
+    'Oito meses. Que esse ano novo seja cheio de nós.',
+    'Nove meses de você e eu te amo mais do que no primeiro.',
+    'Dez meses. Você é a minha resposta pra tantas orações.',
+    'Onze meses. Falta pouco pro nosso primeiro ano, meu amor.',
+    'Um ano! Um ano inteiro sendo sua. Obrigada por cada dia.'
+  ],
+  mesversarioPadrao: 'Mais um mês ao seu lado. Eu escolheria você de novo em todos eles.',
+
+  /* roleta do date: opções fixas (vocês podem adicionar mais pelo app) */
+  dates: ['Noite de sushi','Cinema','Piquenique no parque','Filme em casa com pipoca','Cozinhar juntos','Passeio no shopping',
+          'Sorvete e pôr do sol','Jogos de tabuleiro','Café da manhã especial','Algo que a gente nunca fez'],
+
+  /* abra quando… */
+  abraQuando: [
+    {titulo:'Abra quando estiver com saudade', texto:'Exemplo: fecha os olhos e lembra do nosso último abraço. Logo, logo tem outro.'},
+    {titulo:'Abra quando estiver bravo comigo', texto:'Exemplo: respira… eu te amo mesmo quando a gente discorda. Vem conversar comigo?'},
+    {titulo:'Abra quando não conseguir dormir', texto:'Exemplo: pensa em todas as coisas boas que a gente ainda vai viver.'},
+    {titulo:'Abra quando tiver um dia ruim', texto:'Exemplo: você não precisa ser forte o tempo todo. Eu tô aqui.'},
+    {titulo:'Abra quando precisar rir', texto:'Exemplo: lembra daquela vez que…'},
+    {titulo:'Abra quando duvidar de você', texto:'Exemplo: eu acredito em você mais do que você imagina.'}
+  ],
+
+  /* segredo: toca 5 vezes no selo D&M */
+  segredo: 'Exemplo: você achou o segredo! Aqui vai uma coisa que eu nunca te disse…',
+
+  vales: [
+    {i:'hand', t:'Vale um cafuné'}, {i:'film', t:'Vale escolher o filme'}, {i:'dinner', t:'Vale um jantar feito por mim'},
+    {i:'hug', t:'Vale um abraço demorado'}, {i:'icecream', t:'Vale um sorvete'}, {i:'crown', t:'Vale ganhar uma discussão'}
+  ]
+};
+
+/* ícones desenhados em traço (sem emoji) */
+const ICONS = {
+  camera:'<rect x="3" y="7" width="18" height="13" rx="3"/><circle cx="12" cy="13.5" r="3.5"/><path d="M8.5 7l1.5-3h4l1.5 3"/>',
+  sparkle:'<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/>',
+  cards:'<rect x="3.5" y="5" width="10" height="14" rx="2" transform="rotate(-8 8.5 12)"/><rect x="10.5" y="5" width="10" height="14" rx="2" transform="rotate(8 15.5 12)"/>',
+  heartsfall:'<path d="M12 20s-6-3.8-6-8.5a3.4 3.4 0 016-2.2 3.4 3.4 0 016 2.2c0 4.7-6 8.5-6 8.5z"/><path d="M6 3v2M12 2v3M18 3v2"/>',
+  question:'<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 015 0c0 1.8-2.5 2-2.5 4"/><circle cx="12" cy="17" r=".7" fill="currentColor"/>',
+  duo:'<circle cx="8.5" cy="9" r="3"/><circle cx="15.5" cy="9" r="3"/><path d="M3 19c0-3 2.5-5 5.5-5s5.5 2 5.5 5M10 19c0-3 2.5-5 5.5-5S21 16 21 19"/>',
+  compass:'<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>',
+  mail:'<rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/>',
+  baby:'<circle cx="12" cy="13" r="7"/><path d="M12 6c0-2 1.5-3 3-2.5"/><circle cx="9.5" cy="12.5" r=".7" fill="currentColor"/><circle cx="14.5" cy="12.5" r=".7" fill="currentColor"/><path d="M10 16c1.2 1 2.8 1 4 0"/>',
+  ticket:'<path d="M3 8a2 2 0 002-2h14a2 2 0 002 2v2a2 2 0 000 4v2a2 2 0 00-2 2H5a2 2 0 00-2-2v-2a2 2 0 000-4z"/><path d="M14 7v10" stroke-dasharray="2 2"/>',
+  gift:'<rect x="3.5" y="9" width="17" height="11" rx="1.5"/><path d="M2.5 9h19M12 9v11M12 9c-1-3-4.5-4.5-5.5-2.5S9 9 12 9zm0 0c1-3 4.5-4.5 5.5-2.5S15 9 12 9z"/>',
+  tree:'<path d="M12 3l5 6h-3l4 5h-3l4 5H5l4-5H6l4-5H7z"/><path d="M12 19v2"/>',
+  lock:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/>',
+  heart:'<path d="M12 20s-7-4.4-7-10a4 4 0 017-2.6A4 4 0 0119 10c0 5.6-7 10-7 10z"/>',
+  ring:'<circle cx="12" cy="15" r="6"/><path d="M9.5 6.5L12 3l2.5 3.5L12 9z"/>',
+  cake:'<rect x="4" y="11" width="16" height="9" rx="2"/><path d="M4 15c2 1.5 4 1.5 5.3 0 1.4 1.5 4 1.5 5.4 0 1.3 1.5 3.3 1.5 5.3 0M12 11V7"/><path d="M12 3.5c.8 1 .8 2 0 2.5-.8-.5-.8-1.5 0-2.5z"/>',
+  key:'<circle cx="8" cy="15" r="4"/><path d="M11 12l8-8M16 7l2.5 2.5M14 9l2 2"/>',
+  cap:'<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3.5 2.5 8.5 2.5 12 0v-5M22 9v6"/>',
+  hand:'<path d="M8 13V6.5a1.5 1.5 0 013 0V12m0-6.5V5a1.5 1.5 0 013 0v7m0-5.5a1.5 1.5 0 013 0V13m0-3a1.5 1.5 0 013 0v4c0 4-3 7-7 7h-1c-3 0-4.5-1.5-6-4l-2-3.5a1.5 1.5 0 012.5-1.5L8 15"/>',
+  film:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 5v14M17 5v14M3 9.5h4M3 14.5h4M17 9.5h4M17 14.5h4"/>',
+  dinner:'<circle cx="12" cy="12" r="5.5"/><circle cx="12" cy="12" r="2.5"/><path d="M3.5 4v4.5a1.5 1.5 0 003 0V4M5 9v11M20.5 4c-1.5 0-2.5 2-2.5 5h2.5v11"/>',
+  hug:'<path d="M9 17s-5-3-5-7a3 3 0 015-2 3 3 0 015 2"/><path d="M15 20s-5-3-5-7a3 3 0 015-2 3 3 0 015 2c0 4-5 7-5 7z"/>',
+  icecream:'<path d="M8 11l4 10 4-10"/><path d="M7 11a5 5 0 1110 0z"/>',
+  crown:'<path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"/>',
+  chat:'<path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/>',
+  note:'<path d="M5 4h14v11l-5 5H5z"/><path d="M14 20v-5h5"/>',
+  calendar:'<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M12 17s-2.5-1.5-2.5-3a1.2 1.2 0 012.5-.6 1.2 1.2 0 012.5.6c0 1.5-2.5 3-2.5 3z"/>',
+  flag:'<path d="M5 21V4M5 4h11l-2 4 2 4H5"/>',
+  music:'<path d="M9 18V6l11-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/>',
+  hourglass:'<path d="M6 3h12M6 21h12M8 3v3a4 4 0 004 4 4 4 0 004-4V3M8 21v-3a4 4 0 014-4 4 4 0 014 4v3"/>',
+  wheel:'<circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4"/><circle cx="12" cy="12" r="2" fill="currentColor"/>',
+  open:'<path d="M3 10l9-6 9 6v10H3z"/><path d="M3 10l9 6 9-6"/>',
+  sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  play:'<circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/>',
+  whats:'<path d="M4 20l1.3-4A8 8 0 1112 20a8 8 0 01-4-1z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 .8c-1-.4-1.9-1.3-2.3-2.3l.8-1-1-2z"/>'
+};
+const icon = n => `<svg class="icn" viewBox="0 0 24 24" aria-hidden="true">${ICONS[n]||''}</svg>`;
+
+/* ========================================================= */
+const app = document.getElementById('app');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const store = {
+  get(k, d){ try{ return JSON.parse(localStorage.getItem('diogo_'+k)) ?? d }catch(e){ return d } },
+  set(k, v){ try{ localStorage.setItem('diogo_'+k, JSON.stringify(v)) }catch(e){} }
+};
+const photo = (f, cls, label) => f ? `<img src="${esc(f)}" alt="" style="width:100%;aspect-ratio:1;object-fit:cover;display:block">`
+                                  : `<div class="ph ${cls||''}">${label||'sua foto aqui'}</div>`;
+const FLOURISH = `<svg class="flourish" viewBox="0 0 120 14" aria-hidden="true"><path d="M2 7 C 30 0, 40 14, 60 7 S 90 0, 118 7"/></svg>`;
+const sechead = (eb, title, sub) => `<div class="sechead st"><p class="eyebrow">${eb}</p><h2>${title}</h2>${sub?`<p class="lead">${sub}</p>`:''}${FLOURISH}</div>`;
+
+/* ---------- Sync: login com Google e tudo compartilhado entre os dois ---------- */
+const hoje = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+const Sync = (() => {
+  let mode = 'local', fdb = null, user = null, quem = store.get('quem', '');
+  let state = {planos:{}, vales:{}, pensei:{}}, stateUnsub = null;
+  const SL = [], cols = {};
+  const online = () => mode === 'online' && !!user;
+  const emitState = () => SL.forEach(f => f(state));
+  const ts = () => firebase.firestore.FieldValue.serverTimestamp();
+  const loadScript = src => new Promise((ok, no) => { const sc = document.createElement('script'); sc.src = src; sc.onload = ok; sc.onerror = no; document.head.append(sc); });
+  state = {planos:store.get('planos', {}), vales:store.get('vales', {}), pensei:store.get('pensei', {})};
+  async function whoAmI(){ try{ const d = await fdb.doc('pessoas/' + user.uid).get(); quem = d.exists ? (d.data().quem || '') : ''; }catch(e){ quem = ''; } }
+  function attachAll(){
+    if(!online()) return;
+    if(!stateUnsub) stateUnsub = fdb.doc('compartilhado/estado').onSnapshot(d => { const v = d.data() || {}; state = {planos:v.planos || {}, vales:v.vales || {}, pensei:v.pensei || {}}; emitState(); }, () => {});
+    Object.values(cols).forEach(c => c.attach());
+  }
+  const ready = (async () => {
+    if(!FIREBASE.apiKey) return;
+    try{
+      const v = '10.12.2', base = `https://www.gstatic.com/firebasejs/${v}/`;
+      await loadScript(base + 'firebase-app-compat.js');
+      await Promise.all([loadScript(base + 'firebase-auth-compat.js'), loadScript(base + 'firebase-firestore-compat.js')]);
+      firebase.initializeApp(FIREBASE); fdb = firebase.firestore(); mode = 'online';
+      try{ await firebase.auth().getRedirectResult(); }catch(e){}
+      await new Promise(res => { const off = firebase.auth().onAuthStateChanged(async u => { off(); user = u; if(u){ await whoAmI(); attachAll(); } res(); }); });
+    }catch(e){ mode = 'local'; }
+  })();
+  function col(name){
+    if(cols[name]) return cols[name].api;
+    const c = cols[name] = {items:store.get('col_' + name, []), L:[], unsub:null};
+    const emit = () => c.L.forEach(f => f(c.items));
+    const saveLocal = () => { store.set('col_' + name, c.items); emit(); };
+    c.attach = () => {
+      if(!online() || c.unsub || !c.L.length) return;
+      c.unsub = fdb.collection(name).onSnapshot(snap => {
+        c.items = snap.docs.map(d => ({id:d.id, ...d.data(), criadoEm: d.data().criadoEm?.toMillis?.() ?? Date.now()})).sort((a,b) => a.criadoEm - b.criadoEm); emit();
+      }, () => {});
+    };
+    c.api = {
+      on(f){ c.L.push(f); f(c.items); ready.then(c.attach); return () => { c.L = c.L.filter(x => x !== f); }; },
+      async add(o){ await ready; if(online()) return fdb.collection(name).add({...o, uid:user.uid, criadoEm:ts()});
+        c.items = [...c.items, {...o, id:'l' + Date.now() + Math.random().toString(36).slice(2,6), criadoEm:Date.now()}]; saveLocal(); },
+      async set(id, o){ await ready; if(online()) return fdb.collection(name).doc(id).set({...o, uid:user.uid, criadoEm:ts()}, {merge:true});
+        c.items = [...c.items.filter(x => x.id !== id), {...o, id, criadoEm:Date.now()}]; saveLocal(); },
+      async remove(id){ await ready; if(online()) return fdb.collection(name).doc(id).delete();
+        c.items = c.items.filter(x => x.id !== id); saveLocal(); }
+    };
+    return c.api;
+  }
+  return {
+    ready, col,
+    get mode(){ return mode; }, get user(){ return user; }, get quem(){ return quem; }, get online(){ return online(); },
+    async login(){
+      await ready; if(mode !== 'online') return 'offline';
+      const prov = new firebase.auth.GoogleAuthProvider();
+      try{ user = (await firebase.auth().signInWithPopup(prov)).user; }
+      catch(e){
+        if(['auth/popup-blocked','auth/operation-not-supported-in-this-environment','auth/web-storage-unsupported'].includes(e.code)){ await firebase.auth().signInWithRedirect(prov); return 'redirect'; }
+        throw e;
+      }
+      await whoAmI(); attachAll(); return 'ok';
+    },
+    async setQuem(q){
+      quem = q; store.set('quem', q);
+      if(online()) await fdb.doc('pessoas/' + user.uid).set({quem:q, email:user.email || ''}, {merge:true});
+    },
+    on(k, f){ if(k === 'cartas') return col('cartasFilhos').on(f); SL.push(f); f(state); return () => { const i = SL.indexOf(f); if(i > -1) SL.splice(i, 1); }; },
+    async setFlag(group, key, val){
+      await ready;
+      if(online()) return fdb.doc('compartilhado/estado').set({[group]:{[key]:val}}, {merge:true});
+      state = {...state, [group]:{...state[group], [key]:val}}; store.set(group, state[group]); emitState();
+    },
+    async pensei(){
+      await ready; const d = hoje(), q = quem || 'Di';
+      if(online()) return fdb.doc('compartilhado/estado').set({pensei:{[d]:{[q]:firebase.firestore.FieldValue.increment(1)}}}, {merge:true});
+      const day = {...(state.pensei[d] || {})}; day[q] = (day[q] || 0) + 1;
+      state = {...state, pensei:{...state.pensei, [d]:day}}; store.set('pensei', state.pensei); emitState();
+    },
+    addCarta(c){ return col('cartasFilhos').add(c); },
+    removeCarta(id){ return col('cartasFilhos').remove(id); }
+  };
+})();
+
+/* ---------- entrada ---------- */
+const steps = [
+  {q:'Oi! Qual é o seu nome?', hint:'Esse presente tem dono, então preciso conferir…', ph:'seu nome', type:'text',
+   check:v => norm(v) === C.nome, wrong:['Hmm… esse presente não é seu','Tenta de novo, só o dono pode entrar','Errou o próprio nome? kkkk']},
+  {q:'Hmm, vamos ver se é mesmo… qual a data do nosso namoro?', hint:'dia, mês e ano', ph:'dd/mm/aaaa', type:'date',
+   check:v => sameDate(v,'12/04/2026'), wrong:['Di?? Sério que errou essa?','Vou fingir que não vi…','Pensa com carinho ♥︎']},
+  {q:'Certo… mas e a data da nossa primeira conversa no WhatsApp?', hint:'essa é mais difícil, eu sei', ph:'dd/mm/aaaa', type:'date',
+   check:v => sameDate(v,'15/02/2026'), wrong:['Quase! Lembra de fevereiro…','Olha o print aí na memória','Não foi esse dia não, amor']},
+  {q:'E o nosso primeiro encontro, hein?', hint:'o dia em que tudo ficou real', ph:'dd/mm/aaaa', type:'date',
+   check:v => sameDate(v,'17/02/2026'), wrong:['Errou! Mas eu lembro direitinho','Foi pouco depois da primeira conversa… e foi no shopping','Tenta mais uma vez']}
+];
+function norm(s){return s.normalize('NFD').replace(/[̀-ͯ]/g,'').trim().toLowerCase()}
+function parseDate(s){
+  const m = s.trim().match(/^(\d{1,2})\D+(\d{1,2})\D+(\d{2}|\d{4})$/) || s.trim().match(/^(\d{2})(\d{2})(\d{4})$/);
+  if(!m) return null; let [, d, mo, y] = m; if(y.length===2) y = '20'+y; return `${+d}-${+mo}-${+y}`;
+}
+const sameDate = (a,b) => parseDate(a) === parseDate(b);
+
+function renderStep(i){
+  const s = steps[i]; let wrong = 0;
+  app.innerHTML = `
+    <div class="gate page"><div class="sheet" id="card">
+      <div class="wax">D</div>
+      <div class="dots st" style="--i:0">${steps.map((_,k)=>`<i class="${k<=i?'on':''}"></i>`).join('')}</div>
+      <p class="eyebrow st" style="--i:1">${i===0 ? 'um presente pra você' : 'pergunta ' + (i+1) + ' de ' + steps.length}</p>
+      <h1 class="q st" style="--i:2">${s.q}</h1>
+      <p class="lead st" style="--i:3">${s.hint}</p>
+      ${s.type === 'date' ? `
+      <div class="st" style="--i:4">
+        <div class="hearts" id="hearts" aria-live="polite">${[0,1,2,3,4,5,6,7].map(k => `${k===2||k===4?'<span class="sep">/</span>':''}<svg viewBox="0 0 24 22" data-h="${k}"><path d="M12 21s-9-5.6-9-12a5 5 0 019-3 5 5 0 019 3c0 6.4-9 12-9 12z"/></svg>`).join('')}</div>
+        <div class="pad">${[1,2,3,4,5,6,7,8,9,'',0,'⌫'].map(n => n === '' ? '<span class="key blank"></span>' : `<button class="key" type="button" data-k="${n}">${n}</button>`).join('')}</div>
+        <p class="msg" id="msg" role="status"></p>
+      </div>` : `
+      <form id="f" autocomplete="off" class="st" style="--i:4">
+        <input type="text" id="ans" autocapitalize="words" placeholder="${s.ph}" aria-label="${esc(s.q)}">
+        <button type="submit">Continuar</button>
+        <p class="msg" id="msg" role="status"></p>
+      </form>`}
+    </div></div>`;
+  const card = document.getElementById('card'), msg = document.getElementById('msg');
+  const fail = () => { msg.textContent = s.wrong[wrong++ % s.wrong.length]; card.classList.remove('shake'); void card.offsetWidth; card.classList.add('shake'); };
+  const pass = el => { sparkle(el); setTimeout(() => i+1 < steps.length ? renderStep(i+1) : renderSuccess(), 450); };
+  if(s.type === 'date'){
+    let dig = '';
+    const paint = () => document.querySelectorAll('#hearts svg').forEach((h,k) => h.classList.toggle('on', k < dig.length));
+    const press = k => {
+      if(k === '⌫'){ dig = dig.slice(0,-1); paint(); return; }
+      if(dig.length >= 8) return;
+      dig += k; paint(); msg.textContent = '';
+      if(dig.length === 8){
+        const v = dig.slice(0,2) + '/' + dig.slice(2,4) + '/' + dig.slice(4);
+        setTimeout(() => { if(s.check(v)) pass(document.getElementById('hearts')); else { fail(); dig = ''; setTimeout(paint, 300); } }, 250);
+      }
+    };
+    card.querySelectorAll('.key[data-k]').forEach(b => b.onclick = () => press(b.dataset.k));
+    const onKey = e => { if(!document.getElementById('hearts')){ removeEventListener('keydown', onKey); return; } if(/^[0-9]$/.test(e.key)) press(e.key); else if(e.key === 'Backspace') press('⌫'); };
+    addEventListener('keydown', onKey);
+    return;
+  }
+  const input = document.getElementById('ans');
+  setTimeout(() => input.focus(), 500);
+  document.getElementById('f').addEventListener('submit', e => {
+    e.preventDefault();
+    if(s.check(input.value)) pass(input); else { fail(); input.select(); }
+  });
+}
+function maskDate(e){
+  let v = e.target.value.replace(/\D/g,'').slice(0,8);
+  if(v.length>4) v = v.slice(0,2)+'/'+v.slice(2,4)+'/'+v.slice(4); else if(v.length>2) v = v.slice(0,2)+'/'+v.slice(2);
+  e.target.value = v;
+}
+function renderSuccess(){
+  store.set('entrou', true);
+  const H = 'M55 92 C 20 66, 6 46, 6 28 C 6 14, 18 4, 31 4 C 42 4, 51 11, 55 20 C 59 11, 68 4, 79 4 C 92 4, 104 14, 104 28 C 104 46, 90 66, 55 92 Z';
+  app.innerHTML = `
+    <div class="gate page"><div class="sheet">
+      <div class="wax">D</div>
+      <svg class="drawheart" viewBox="0 0 110 100" aria-hidden="true"><path class="fill" d="${H}"/><path d="${H}"/></svg>
+      <p class="yay st" style="--i:6">Ai sim!</p>
+      <p class="lead"><span id="typed" class="typed"></span></p>
+      <button id="go" class="st" style="--i:14">Abrir meu presente</button>
+    </div></div>`;
+  setTimeout(()=>burst(innerWidth/2, innerHeight*.4), 1500);
+  typeText(document.getElementById('typed'), 'Oi meu amor, vem ver o que fiz para você', 900);
+  document.getElementById('go').onclick = renderLogin;
+}
+const GLOGO = `<svg viewBox="0 0 24 24" aria-hidden="true" class="g"><path d="M21.6 12.2c0-.7-.1-1.3-.2-1.9H12v3.6h5.4a4.6 4.6 0 01-2 3v2.5h3.2c1.9-1.7 3-4.3 3-7.2z" fill="#4285F4"/><path d="M12 22c2.7 0 5-.9 6.6-2.4l-3.2-2.5c-.9.6-2 1-3.4 1-2.6 0-4.8-1.8-5.6-4.1H3.1v2.6A10 10 0 0012 22z" fill="#34A853"/><path d="M6.4 14c-.2-.6-.3-1.3-.3-2s.1-1.4.3-2V7.4H3.1a10 10 0 000 9.2z" fill="#FBBC05"/><path d="M12 5.9c1.5 0 2.8.5 3.8 1.5l2.9-2.9A10 10 0 003.1 7.4L6.4 10c.8-2.3 3-4.1 5.6-4.1z" fill="#EA4335"/></svg>`;
+function renderLogin(){
+  app.innerHTML = `
+    <div class="gate page"><div class="sheet">
+      <div class="wax">D</div>
+      <p class="eyebrow st" style="--i:0">só mais um passinho</p>
+      <h1 class="q st" style="--i:1">Entra com a sua conta Google</h1>
+      <p class="lead st" style="--i:2">Assim tudo o que a gente fizer aqui fica guardado. O que eu escrever você vê, e o que você escrever eu vejo.</p>
+      <button class="glogin st" style="--i:3" id="glogin">${GLOGO}<span>Entrar com Google</span></button>
+      <p class="msg" id="lmsg" role="status"></p>
+    </div></div>`;
+  const btn = document.getElementById('glogin'), msg = document.getElementById('lmsg');
+  btn.onclick = async () => {
+    btn.disabled = true; msg.textContent = '';
+    try{
+      const r = await Sync.login();
+      if(r === 'redirect') return;
+      if(r === 'offline'){ msg.textContent = 'O login ainda não está ligado, então por enquanto fica salvo só neste aparelho.'; await new Promise(ok => setTimeout(ok, 1800)); }
+      Sync.quem ? firstScreen() : renderWho();
+    }catch(e){ msg.textContent = 'Não deu pra entrar agora. Tenta de novo.'; btn.disabled = false; }
+  };
+}
+function renderWho(){
+  app.innerHTML = `
+    <div class="gate page"><div class="sheet">
+      <div class="wax">D</div>
+      <p class="eyebrow st" style="--i:0">pra eu saber quem escreveu</p>
+      <h1 class="q st" style="--i:1">Quem é você?</h1>
+      <div class="duo st" style="--i:2"><button data-q="Di">Di</button><button data-q="Mihzinha">Mihzinha</button></div>
+      <p class="lead st" style="--i:3">Isso fica salvo na sua conta.</p>
+    </div></div>`;
+  app.querySelectorAll('[data-q]').forEach(b => b.onclick = async () => { b.disabled = true; try{ await Sync.setQuem(b.dataset.q); }catch(e){} sparkle(b); firstScreen(); });
+}
+function typeText(el, text, delay){
+  if(reduce){ el.textContent = text; el.classList.remove('typed'); return; }
+  let k = 0; setTimeout(function t(){ el.textContent = text.slice(0, ++k); if(k < text.length) setTimeout(t, 38); }, delay);
+}
+
+/* ---------- mini app de Natal ---------- */
+let xtimer;
+let xFromY = 0;
+function renderXmas(){
+  if(document.querySelector('.home')) xFromY = window.scrollY;
+  stopGame(); clearInterval(timer); document.getElementById('tabbar')?.remove();
+  const cols = ['#e05a5f','#f3dca4','#9bc28a','#fbf6ec'];
+  const N = 16;
+  const bulbs = Array.from({length:N},(_,k)=>{ const t = k/(N-1); const d = Math.round(Math.sin(t*Math.PI)*18); return `<i style="--k:${k};--d:${d};background:${cols[k%4]};color:${cols[k%4]}"></i>`; }).join('');
+  const RED_RIBBON = RIBBON.replace(/#f2b8c4/g,'#c4404a').replace(/#e99aac/g,'#9e2a33');
+  const f0 = C.polaroids[0] || {};
+  const HOLLY = `<svg viewBox="0 0 64 32" aria-hidden="true"><path d="M30 18c-6-10-18-12-26-8 6 2 6 8 2 12 8 2 18 0 24-4z" fill="#2f4b3c"/><path d="M34 18c6-10 18-12 26-8-6 2-6 8-2 12-8 2-18 0-24-4z" fill="#3e5f4c"/><circle cx="28" cy="18" r="5" fill="#b5343c"/><circle cx="36" cy="18" r="5" fill="#c4404a"/><circle cx="32" cy="12" r="5" fill="#9e2a33"/></svg>`;
+  const x = document.createElement('div'); x.className = 'xapp'; x.id = 'xapp';
+  x.innerHTML = `
+    <section class="xb xb1">
+      <canvas id="xsnow" aria-hidden="true"></canvas>
+      <div class="lights" aria-hidden="true">${bulbs}</div>
+      <svg class="tree" viewBox="0 0 170 190" aria-hidden="true">
+        <rect x="74" y="160" width="22" height="24" rx="3" fill="#7a5a3e"/>
+        <path d="M85 30 L140 100 H30 Z" fill="#6f8f5e"/><path d="M85 60 L152 136 H18 Z" fill="#5d7f50"/><path d="M85 92 L162 166 H8 Z" fill="#4c6e43"/>
+        <path d="M40 120 Q85 140 132 112" fill="none" stroke="#d9c08a" stroke-width="2" opacity=".8"/><path d="M30 152 Q90 168 146 140" fill="none" stroke="#d9c08a" stroke-width="2" opacity=".8"/>
+        <circle class="orn" cx="70" cy="86" r="5" fill="#c4404a"/><circle class="orn" cx="104" cy="100" r="5" fill="#f3dca4" style="animation-delay:.5s"/>
+        <circle class="orn" cx="58" cy="128" r="6" fill="#f3dca4" style="animation-delay:1s"/><circle class="orn" cx="112" cy="134" r="6" fill="#c4404a" style="animation-delay:.3s"/>
+        <circle class="orn" cx="85" cy="150" r="5" fill="#fbf6ec" style="animation-delay:.8s"/><circle class="orn" cx="38" cy="160" r="5" fill="#c4404a" style="animation-delay:1.2s"/>
+        <circle class="orn" cx="136" cy="158" r="5" fill="#fbf6ec" style="animation-delay:.6s"/>
+        <path class="star" d="M85 6 L90 18 L103 19 L93 27 L96 40 L85 33 L74 40 L77 27 L67 19 L80 18 Z" fill="#f3dca4"/>
+      </svg>
+      <p class="xeb st" style="--i:3">nosso primeiro Natal</p>
+      <h1 class="xt1 st" style="--i:4">Feliz Natal</h1>
+      <p class="xt2 st" style="--i:5">meu amor</p>
+    </section>
+    <section class="xb xb2">
+      <div class="xcard st" style="--i:6">
+        <h3 id="xl">Falta pouco pro dia 25</h3>
+        <div class="xcount" id="xc">
+          <div><b id="xd">0</b><span>dias</span></div><div><b id="xh">0</b><span>horas</span></div>
+          <div><b id="xm">0</b><span>min</span></div><div><b id="xs">0</b><span>seg</span></div>
+        </div>
+        <p class="xlabel">pra gente abrir os presentes juntos</p>
+      </div>
+    </section>
+    <section class="xb xb3">
+      <div class="xnote">
+        <p class="to">Meu Di,</p>
+        <p>Esse ano eu ganhei você. E esse é só o primeiro de muitos Natais que eu quero passar do seu lado.</p>
+        <p class="sign">Mihzinha</p>
+      </div>
+      <div class="xflower">${FLOWER('xfl','nós no Natal', f0.foto).replace('#fbe6ea','#f7ece6').replace('#e9b3c0','#d9b3ab')}<span class="ribbon">${RED_RIBBON}</span></div>
+    </section>
+    <section class="xb xb4">
+      <span class="xholly">${HOLLY}</span>
+      <button class="xgo" id="xgo">Explorar meu presente</button>
+      <p class="xhint">tem muita coisa te esperando lá dentro</p>
+    </section>`;
+  document.body.append(x);
+  app.innerHTML = '';
+  clearInterval(xtimer); xtick(); xtimer = setInterval(xtick, 1000); heroSnow();
+  document.getElementById('xgo').onclick = () => {
+    burst(innerWidth/2, innerHeight*.7, 30);
+    x.classList.add('out'); clearInterval(xtimer); renderHome(xFromY); xFromY = 0;
+    setTimeout(() => x.remove(), 700);
+  };
+}
+
+/* ---------- mensagem do dia ---------- */
+function diaDoAno(d = new Date()){ return Math.floor((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - Date.UTC(2026,0,1)) / 86400000); }
+function mensagemDoDia(){ const n = C.mensagens.length; return C.mensagens[((diaDoAno() * 7) % n + n) % n]; }
+function renderDaily(){
+  stopGame(); clearInterval(timer); document.getElementById('tabbar')?.remove();
+  const now = new Date(), h = now.getHours();
+  const saud = h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite';
+  const nome = Sync.quem === 'Mihzinha' ? 'Mihzinha' : 'meu Di';
+  const data = now.toLocaleDateString('pt-BR', {weekday:'long', day:'numeric', month:'long'});
+  window.scrollTo(0,0);
+  app.innerHTML = `
+    <div class="daily page">
+      <div class="dlogo st" style="--i:0">D&amp;M</div>
+      <p class="eyebrow st" style="--i:1">${data}</p>
+      <h1 class="st" style="--i:2">${saud},<em>${nome}</em></h1>
+      <blockquote class="dquote st" style="--i:4">${esc(mensagemDoDia())}</blockquote>
+      <p class="dsign st" style="--i:5">${Sync.quem === 'Mihzinha' ? 'pra você também, meu amor' : 'com amor, Mihzinha'}</p>
+      <button class="st" style="--i:6" id="dgo">Entrar no D&amp;M</button>
+    </div>`;
+  document.getElementById('dgo').onclick = () => renderHome();
+}
+
+/* ---------- tela inicial ---------- */
+const TABS = [
+  {id:'hoje',    t:'Hoje',    ico:'sun'},
+  {id:'nos',     t:'Nós',     ico:'heart'},
+  {id:'brincar', t:'Brincar', ico:'sparkle'},
+  {id:'cartas',  t:'Cartas',  ico:'mail'}
+];
+const LISTS = {
+  hoje: [
+    {id:'pergunta', ico:'chat',     t:'Pergunta do dia',     s:'Os dois respondem'},
+    {id:'bilhetes', ico:'note',     t:'Bilhetinhos',         s:'Recados de um pro outro'},
+    {id:'mes',      ico:'calendar', t:'Mesversário',         s:'Todo dia 12 tem surpresa'}],
+  nos: [
+    {id:'fotos',    ico:'camera',   t:'Nossas fotos',        s:'Toca em cada uma pra virar'},
+    {id:'primeiras',ico:'flag',     t:'Nossas primeiras vezes', s:'A gente vai adicionando'},
+    {id:'playlist', ico:'music',    t:'Nossa playlist',      s:'As músicas da gente'},
+    {id:'planos',   ico:'compass',  t:'Nossos planos',       s:'O que vem por aí'}],
+  brincar: [
+    {id:'roleta',   ico:'wheel',    t:'Roleta do date',      s:'Sorteia o próximo encontro'},
+    {id:'coracoes', ico:'heartsfall', t:'Pegue os corações', s:'O que eu amo em você'},
+    {id:'memoria',  ico:'cards',    t:'Jogo da memória',     s:'Ache os pares'},
+    {id:'raspa',    ico:'sparkle',  t:'Raspadinha',          s:'Tem uma foto escondida'},
+    {id:'quiz',     ico:'question', t:'Quanto você me conhece?', s:'Vale nota, hein'},
+    {id:'provavel', ico:'duo',      t:'Quem é mais provável', s:'Você ou eu?'}],
+  cartas: [
+    {id:'abra',     ico:'open',     t:'Abra quando…',        s:'Pra cada momento'},
+    {id:'cartas',   ico:'mail',     t:'Cartas pro futuro',   s:'Abrem em datas especiais'},
+    {id:'capsula',  ico:'hourglass',t:'Cápsula do tempo',    s:'Abre no Natal de 2027'},
+    {id:'filhos',   ico:'baby',     t:'Ao nosso primeiro filho', s:'Cartas que nós dois escrevemos'},
+    {id:'vales',    ico:'ticket',   t:'Vales-presente',      s:'Pra resgatar comigo'}]
+};
+let homeTab = 'hoje';
+let timer;
+let homeY = 0;
+const FLOWER = (id, label, src) => `<svg class="fl" viewBox="0 0 200 200" aria-hidden="true"><defs><clipPath id="${id}">
+  ${[0,1,2,3,4,5,6,7].map(k => { const a = k*Math.PI/4; return `<circle cx="${100+58*Math.cos(a)}" cy="${100+58*Math.sin(a)}" r="44"/>`; }).join('')}<circle cx="100" cy="100" r="62"/></clipPath>
+  <linearGradient id="${id}g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fbe6ea"/><stop offset="1" stop-color="#e9b3c0"/></linearGradient></defs>
+  <g clip-path="url(#${id})">${src ? `<image href="${esc(src)}" x="0" y="0" width="200" height="200" preserveAspectRatio="xMidYMid slice"/>` : `<rect width="200" height="200" fill="url(#${id}g)"/><text x="100" y="106" text-anchor="middle" font-family="Dancing Script, TeX Gyre Chorus, cursive" font-size="20" fill="rgba(74,18,36,.45)">${label}</text>`}</g></svg>`;
+const RIBBON = `<svg viewBox="0 0 120 120" aria-hidden="true"><path d="M60 46C46 20 14 12 12 30s26 26 48 16z" fill="#f2b8c4"/><path d="M60 46C74 20 106 12 108 30s-26 26-48 16z" fill="#f2b8c4"/>
+  <path d="M60 46C50 34 30 26 22 32" stroke="#e99aac" stroke-width="2" fill="none"/><path d="M60 46C70 34 90 26 98 32" stroke="#e99aac" stroke-width="2" fill="none"/>
+  <path d="M56 50C48 72 40 92 30 112M64 50C72 72 82 92 94 112" stroke="#f2b8c4" stroke-width="9" stroke-linecap="round" fill="none"/><ellipse cx="60" cy="47" rx="9" ry="8" fill="#e99aac"/></svg>`;
+const DAISY = (c, m) => `<svg viewBox="0 0 40 40" aria-hidden="true">${[0,1,2,3,4,5].map(k => `<ellipse cx="20" cy="9" rx="6" ry="9" fill="${c}" transform="rotate(${k*60} 20 20)"/>`).join('')}<circle cx="20" cy="20" r="5.5" fill="${m}"/></svg>`;
+const pills = list => `<div class="pills">${list.map(r => `<button class="pill" data-go="${r.id}"><span class="pl">${icon(r.ico)}</span><span class="pr"><b>${r.t}</b><small>${r.s}</small></span></button>`).join('')}</div>`;
+function renderHome(y = 0){
+  const outro = Sync.quem === 'Mihzinha' ? 'Di' : 'Mihzinha';
+  const f0 = C.polaroids[0] || {}, f1 = C.polaroids[1] || {};
+  app.innerHTML = `
+  <div class="home page">
+    <section class="band b-sage hero">
+      <button class="logo" id="logo" aria-label="D&amp;M">D&amp;M</button>
+      <h1 class="names st" style="--i:0">Diogo<small>e</small>Milena</h1>
+      <p class="hdate st" style="--i:1">12 de abril de 2026</p>
+      <div class="flower st" style="--i:2">${FLOWER('fl1','nós dois', f0.foto)}<span class="ribbon">${RIBBON}</span></div>
+      <p class="hcount-l st" style="--i:3">juntos há</p>
+      <p class="hcount st" style="--i:3"><span id="cd">0</span>d : <span id="ch">0</span>h : <span id="cm">0</span>m : <span id="cs">0</span>s</p>
+      ${natalAberto() ? `<button class="xbanner" id="toxmas"><span class="rico">${icon('tree')}</span><span class="rtxt"><b>É época do nosso Natal</b><small>Toca pra abrir</small></span></button>` : ''}
+    </section>
+
+    <section class="band b-stripes">
+      <button class="note-btn" data-go="mensagem"><div class="note">
+        <h3>Um bilhete pra hoje</h3>
+        <p>Meu Di,</p><p>${esc(mensagemDoDia())}</p><p class="sign">Mihzinha</p>
+      </div></button>
+    </section>
+
+    <section class="band b-sage">
+      <h2 class="btitle">a nossa história</h2>
+      <p class="btext">A gente se conheceu numa mensagem de WhatsApp, se viu pela primeira vez dois dias depois no shopping, e desde 12 de abril você é o meu namorado.</p>
+      <div class="flower" style="width:min(200px,58vw)">${FLOWER('fl2','o primeiro encontro', f1.foto)}</div>
+    </section>
+
+    <section class="band b-pink">
+      <h2 class="btitle">todo dia</h2>
+      <div class="wcards">
+        <button class="wcard" data-go="pergunta"><span class="fl-ic">${DAISY('#f0bac6','#fff')}</span><b>Pergunta</b><small>do dia, os dois respondem</small><i class="badge" id="badge-pergunta" hidden></i></button>
+        <button class="wcard" data-go="bilhetes"><span class="fl-ic">${DAISY('#dfe6c6','#fff')}</span><b>Bilhetes</b><small>recados de um pro outro</small><i class="badge" id="badge-bilhetes" hidden></i></button>
+        <button class="wcard" data-go="mes"><span class="fl-ic">${DAISY('#f0bac6','#fff')}</span><b>Dia 12</b><small>surpresa todo mês</small></button>
+      </div>
+      <div class="pensei">
+        <button class="pbtn" id="pbtn" aria-label="Pensei em você">${icon('heart')}</button>
+        <div class="ptxt"><b>Pensei em você</b><span id="pinfo">toca no coração quando lembrar de mim</span></div>
+      </div>
+    </section>
+
+    <section class="band b-sage">
+      <h2 class="btitle">nossas memórias</h2>
+      <div class="polrow">${C.polaroids.slice(0,3).map((p,k) => `<button class="mini" data-go="fotos">${photo(p.foto, p.cls, '♥︎')}<span>${esc(p.legenda)}</span></button>`).join('')}</div>
+      ${pills(LISTS.nos)}
+    </section>
+
+    <section class="band b-pink">
+      <h2 class="btitle">pra gente brincar</h2>
+      ${pills(LISTS.brincar)}
+    </section>
+
+    <section class="band b-sage">
+      <h2 class="btitle">cartas pra você</h2>
+      ${pills(LISTS.cartas)}
+      <button class="lastbtn" data-go="carta">${icon('gift')}A última surpresa</button>
+    </section>
+
+    <section class="band b-light endband">
+      <span class="ribbon-sm">${RIBBON}</span>
+      <p class="endsub">com todo o meu amor,</p>
+      <p class="endtitle">Mihzinha</p>
+    </section>
+  </div>`;
+  document.getElementById('tabbar')?.remove();
+  clearInterval(timer); tick(); timer = setInterval(tick, 1000);
+  document.getElementById('toxmas')?.addEventListener('click', renderXmas);
+  requestAnimationFrame(() => window.scrollTo({top:y, behavior:'instant'}));
+  app.querySelectorAll('[data-go]').forEach(b => b.onclick = () => openStop(b.dataset.go));
+
+  let taps = 0, tapT;
+  document.getElementById('logo').onclick = e => {
+    taps++; clearTimeout(tapT); tapT = setTimeout(() => taps = 0, 1500);
+    const l = e.currentTarget; l.classList.remove('tap'); void l.offsetWidth; l.classList.add('tap');
+    if(taps >= 5){ taps = 0; showSecret(); }
+  };
+  const pinfo = document.getElementById('pinfo');
+  const offP = Sync.on('state', st => {
+    if(!pinfo.isConnected){ setTimeout(() => offP && offP()); return; }
+    const d = (st.pensei || {})[hoje()] || {}, eu = d[Sync.quem || 'Di'] || 0, ele = d[outro] || 0;
+    pinfo.innerHTML = `${outro} pensou em você <b>${ele}</b> ${ele === 1 ? 'vez' : 'vezes'} hoje · você, <b>${eu}</b>`;
+  });
+  document.getElementById('pbtn').onclick = e => { const b = e.currentTarget; b.classList.remove('beat'); void b.offsetWidth; b.classList.add('beat'); sparkle(b); Sync.pensei(); };
+  const offB = Sync.col('bilhetes').on(list => {
+    const el = document.getElementById('badge-bilhetes'); if(!el){ setTimeout(() => offB && offB()); return; }
+    const seen = store.get('seenBilhetes', 0), n = list.filter(b => b.autor !== Sync.quem && b.criadoEm > seen).length;
+    el.hidden = !n; el.textContent = n;
+  });
+  const offQ = Sync.col('respostas').on(list => {
+    const el = document.getElementById('badge-pergunta'); if(!el){ setTimeout(() => offQ && offQ()); return; }
+    el.hidden = list.some(r => r.dia === hoje() && r.quem === Sync.quem); el.textContent = 'nova';
+  });
+}
+function showSecret(){
+  closeTicket();
+  const w = document.createElement('div'); w.className = 'tk-wrap'; w.id = 'tk';
+  w.innerHTML = `<div class="tk-box"><div class="paper unfold secret"><p class="eyebrow">shhh… você achou</p><p class="to">O segredo do D&amp;M</p><p>${esc(C.segredo)}</p><p class="sign">Mihzinha</p></div>
+    <div class="tk-actions"><button class="ghost" id="tkclose">Guardar segredo</button></div></div>`;
+  document.body.append(w); burst(innerWidth/2, innerHeight/2, 50);
+  w.onclick = e => { if(e.target === w) closeTicket(); };
+  document.getElementById('tkclose').onclick = closeTicket;
+}
+const natalAberto = (d = new Date()) => location.hash === '#natal' || (d.getMonth() === 11 && d.getDate() >= 18 && d.getDate() <= 26);
+const XMAS = (() => { const d = new Date(); return new Date(d.getFullYear(), 11, 25); })();
+function firstScreen(){ natalAberto() ? renderXmas() : renderDaily(); }
+function setNum(id, v){ const b = document.getElementById(id); if(b && b.textContent !== String(v)){ b.textContent = v; b.classList.remove('tick'); void b.offsetWidth; b.classList.add('tick'); } }
+function split(sec){ const d = Math.floor(sec/86400); sec -= d*86400; const h = Math.floor(sec/3600); sec -= h*3600; const m = Math.floor(sec/60); return [d,h,m,Math.floor(sec-m*60)]; }
+function xtick(){
+  if(!document.getElementById('xd')) return;
+  const left = (XMAS - Date.now())/1000;
+  if(left <= 0){ document.getElementById('xc').hidden = true; document.querySelector('.xlabel') && (document.querySelector('.xlabel').textContent = 'obrigada por esse Natal ao meu lado'); document.getElementById('xl').textContent = new Date().getDate() === 25 ? 'Hoje é Natal, meu amor' : 'Que Natal lindo foi o nosso'; return; }
+  const [d,h,m,s2] = split(left); setNum('xd',d); setNum('xh',h); setNum('xm',m); setNum('xs',s2);
+}
+function tick(){
+  const el = document.getElementById('cd'); if(!el) return;
+  let diff = Math.max(0, Date.now() - C.inicioNamoro.getTime())/1000;
+  const d = Math.floor(diff/86400); diff -= d*86400; const h = Math.floor(diff/3600); diff -= h*3600;
+  const m = Math.floor(diff/60), s = Math.floor(diff - m*60);
+  [['cd',d],['ch',h],['cm',m],['cs',s]].forEach(([id,v]) => {
+    const b = document.getElementById(id); if(b && b.textContent !== String(v)){ b.textContent = v; b.classList.remove('tick'); void b.offsetWidth; b.classList.add('tick'); }
+  });
+}
+function markDone(id){ const d = store.get('done', {}); d[id] = true; store.set('done', d); }
+function shell(eb, title, sub, body){
+  window.scrollTo(0,0); document.getElementById('tabbar')?.remove();
+  app.innerHTML = `<div class="view page">
+    <div class="vbar"><button class="vback" id="back" aria-label="Voltar"><svg viewBox="0 0 24 24" class="icn"><path d="M15 5l-7 7 7 7"/></svg><span>Voltar</span></button></div>
+    <header class="vhead"><h2>${title}</h2>${sub ? `<p>${sub}</p>` : ''}</header>
+    ${body}</div>`;
+  document.getElementById('back').onclick = () => { stopGame(); renderHome(homeY); };
+}
+const VIEWS = {};
+function openStop(id){ homeY = window.scrollY; markDone(id); VIEWS[id](); }
+
+/* ---------- fotos ---------- */
+VIEWS.fotos = () => {
+  shell('nós dois','Nossas fotos','Toca em cada foto pra ler o que tem atrás',
+    `<div class="polas">${C.polaroids.map((p,k)=>`
+      <button class="pola" style="--i:${k}"><span class="tape"></span><div class="in">
+        <div class="face">${photo(p.foto,p.cls)}<span>${esc(p.legenda)}</span></div>
+        <div class="face backf">${esc(p.verso)}</div></div></button>`).join('')}</div>`);
+  app.querySelectorAll('.pola').forEach(b => b.onclick = () => b.classList.toggle('flip'));
+};
+
+/* ---------- raspadinha ---------- */
+VIEWS.raspa = () => {
+  shell('surpresa','Raspadinha','Passa o dedo pra descobrir',
+    `<div class="scratch">${photo(C.raspadinha.foto,'c','surpresa!')}<canvas id="sc"></canvas><p>${esc(C.raspadinha.legenda)}</p></div>`);
+  const cv = document.getElementById('sc'), r = cv.getBoundingClientRect(), dpr = devicePixelRatio;
+  cv.width = r.width*dpr; cv.height = r.height*dpr;
+  const x = cv.getContext('2d'); x.scale(dpr,dpr);
+  const g = x.createLinearGradient(0,0,r.width,r.height); g.addColorStop(0,'#f5d3d3'); g.addColorStop(1,'#d4707e');
+  x.fillStyle = g; x.fillRect(0,0,r.width,r.height);
+  for(let i=0;i<70;i++){ x.fillStyle='rgba(255,255,255,'+(Math.random()*.6+.2)+')'; x.beginPath(); x.arc(Math.random()*r.width,Math.random()*r.height,Math.random()*2.5+.5,0,7); x.fill(); }
+  x.fillStyle = '#fff'; x.font = 'italic 600 26px "Cormorant Garamond", Georgia, serif'; x.textAlign='center';
+  x.fillText('raspe aqui ♥︎', r.width/2, r.height/2);
+  x.globalCompositeOperation = 'destination-out';
+  let down = false, n = 0;
+  const pos = e => { const b = cv.getBoundingClientRect(); return [e.clientX-b.left, e.clientY-b.top]; };
+  const rub = e => { if(!down) return; const [px,py] = pos(e); x.beginPath(); x.arc(px,py,26,0,7); x.fill();
+    if(++n === 60){ cv.style.transition='opacity .8s'; cv.style.opacity='0'; const b = cv.getBoundingClientRect(); burst(b.left+b.width/2, b.top+b.height/2); } };
+  cv.addEventListener('pointerdown', e => { down = true; cv.setPointerCapture(e.pointerId); rub(e); });
+  cv.addEventListener('pointermove', rub);
+  cv.addEventListener('pointerup', () => down = false);
+};
+
+/* ---------- memória ---------- */
+VIEWS.memoria = () => {
+  const deck = [...C.memoria, ...C.memoria].sort(()=>Math.random()-.5);
+  shell('jogo','Jogo da memória','Encontra todos os pares',
+    `<div class="stats"><span id="mv">0 jogadas</span><span id="pr">0 de ${C.memoria.length} pares</span></div>
+     <div class="mem">${deck.map((v,k)=>`<button class="mc st" style="--i:${k}" data-v="${v}" aria-label="carta"><div class="in"><div class="f">♥︎</div><div class="k">${v}</div></div></button>`).join('')}</div>
+     <div id="memEnd"></div>`);
+  let first = null, lock = false, moves = 0, pairs = 0;
+  app.querySelectorAll('.mc').forEach(b => b.onclick = () => {
+    if(lock || b.classList.contains('up')) return;
+    b.classList.add('up'); if(!first){ first = b; return; }
+    moves++; document.getElementById('mv').textContent = moves + (moves===1 ? ' jogada' : ' jogadas');
+    if(first.dataset.v === b.dataset.v){
+      first.classList.add('got'); b.classList.add('got'); first = null; pairs++;
+      document.getElementById('pr').textContent = `${pairs} de ${C.memoria.length} pares`;
+      if(pairs === C.memoria.length){ burst(innerWidth/2, innerHeight/2);
+        document.getElementById('memEnd').innerHTML = `<div class="paper unfold"><p>Achou todos em ${moves} jogadas!</p><p>Exemplo: aqui entra uma mensagem de recompensa pra ele.</p></div>`; }
+    } else { lock = true; setTimeout(()=>{ first.classList.remove('up'); b.classList.remove('up'); first = null; lock = false; }, 800); }
+  });
+};
+
+/* ---------- pegue os corações ---------- */
+let gameRAF = null;
+function stopGame(){ if(gameRAF) cancelAnimationFrame(gameRAF); gameRAF = null; }
+VIEWS.coracoes = () => {
+  const META = C.motivos.length, VIDAS = 5;
+  shell('jogo','Pegue os corações',`Cada coração tem uma coisa que eu amo em você. Pega os ${META}!`,
+    `<div class="game" id="game"><canvas id="gc"></canvas>
+      <div class="hud" aria-live="polite"><span id="hp"></span><span id="hs">♥︎ 0 / ${META}</span></div>
+      <div class="overlay" id="ov"><h3>Pronto?</h3>
+        <ul class="rules"><li><b>♥︎</b>pega os ${META} corações pra ganhar</li><li><b>↑</b>cada coração pego deixa tudo mais rápido</li><li><b>↓</b>deixou cair 5? perdeu</li><li><b>✕︎</b>pegou um coração partido? perdeu na hora</li></ul>
+        <button id="start">Começar</button></div></div>
+     <div id="won"></div>`);
+  const box = document.getElementById('game'), cv = document.getElementById('gc'), x = cv.getContext('2d');
+  let W, H, px, items, caught, pool, lives, last, spawn, pops, shakeT;
+  const fit = () => { const r = box.getBoundingClientRect(); W = r.width; H = r.height; cv.width = W*devicePixelRatio; cv.height = H*devicePixelRatio; x.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0); };
+  const move = e => { if(!W) return; const r = box.getBoundingClientRect(); px = Math.max(24, Math.min(W-24, e.clientX - r.left)); };
+  box.addEventListener('pointermove', move); box.addEventListener('pointerdown', move);
+  const hud = () => {
+    document.getElementById('hp').innerHTML = Array.from({length:VIDAS},(_,k)=>`<i class="${k < lives ? '' : 'lost'}">♥︎</i>`).join('');
+    document.getElementById('hs').textContent = `♥︎ ${caught.length} / ${META}`;
+  };
+  const FONT = '600 12px Jost, system-ui, sans-serif';
+  const splitWord = w => { const m = w.match(/^(seu|sua|seus|suas|nosso|nossa)\s+(.+)$/i); return m ? [m[1], m[2]] : ['', w]; };
+  function drawHeart(cx, cy, r, word){
+    x.save(); x.translate(cx, cy);
+    x.shadowColor = 'rgba(142,23,48,.35)'; x.shadowBlur = 8; x.shadowOffsetY = 3;
+    const g = x.createLinearGradient(0, -r, 0, r); g.addColorStop(0, '#f0b0c0'); g.addColorStop(1, '#e48aa3');
+    x.fillStyle = g;
+    x.beginPath(); x.moveTo(0, r*.95);
+    x.bezierCurveTo(-r*1.25, r*.15, -r*1.05, -r*.95, -r*.5, -r*.95);
+    x.bezierCurveTo(-r*.18, -r*.95, 0, -r*.7, 0, -r*.45);
+    x.bezierCurveTo(0, -r*.7, r*.18, -r*.95, r*.5, -r*.95);
+    x.bezierCurveTo(r*1.05, -r*.95, r*1.25, r*.15, 0, r*.95); x.fill();
+    x.shadowColor = 'transparent'; x.fillStyle = '#fff'; x.textAlign = 'center'; x.textBaseline = 'middle';
+    const [pre, main] = splitWord(word);
+    if(pre){ x.font = '500 10px Jost, system-ui, sans-serif'; x.globalAlpha = .85; x.fillText(pre, 0, -r*.32); x.globalAlpha = 1; x.font = FONT; x.fillText(main, 0, -r*.32 + 13); }
+    else { x.font = FONT; x.fillText(main, 0, -r*.1); }
+    x.restore();
+  }
+  function heartPath(r){
+    x.beginPath(); x.moveTo(0, r*.95);
+    x.bezierCurveTo(-r*1.25, r*.15, -r*1.05, -r*.95, -r*.5, -r*.95);
+    x.bezierCurveTo(-r*.18, -r*.95, 0, -r*.7, 0, -r*.45);
+    x.bezierCurveTo(0, -r*.7, r*.18, -r*.95, r*.5, -r*.95);
+    x.bezierCurveTo(r*1.05, -r*.95, r*1.25, r*.15, 0, r*.95);
+  }
+  function drawBroken(cx, cy, r){
+    x.save(); x.translate(cx, cy);
+    x.fillStyle = '#5c4148'; heartPath(r); x.fill();
+    x.strokeStyle = '#fbefec'; x.lineWidth = 2.5; x.lineJoin = 'round';
+    x.beginPath(); x.moveTo(-1, -r*.45); x.lineTo(3, -r*.05); x.lineTo(-3, r*.3); x.lineTo(1, r*.92); x.stroke();
+    x.restore();
+  }
+  function drawCatcher(cx, cy){
+    x.save(); x.translate(cx, cy);
+    const g = x.createLinearGradient(0, -14, 0, 18); g.addColorStop(0, '#8a9160'); g.addColorStop(1, '#6f764b');
+    x.fillStyle = g; x.beginPath(); x.moveTo(-30, -12); x.quadraticCurveTo(-28, 18, 0, 18); x.quadraticCurveTo(28, 18, 30, -12); x.closePath(); x.fill();
+    x.fillStyle = '#eaf0dc'; x.beginPath(); x.ellipse(0, -12, 30, 5, 0, 0, Math.PI*2); x.fill();
+    x.fillStyle = '#fff'; x.font = '600 14px Jost, system-ui'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('♥︎', 0, 5);
+    x.restore();
+  }
+  document.getElementById('start').onclick = start;
+  function start(){
+    fit(); px = W/2; items = []; pops = []; caught = []; lives = VIDAS; spawn = 400; shakeT = 0; last = performance.now();
+    pool = [...C.motivos].sort(() => Math.random() - .5);
+    document.getElementById('won').innerHTML = ''; document.getElementById('ov').hidden = true; hud();
+    stopGame(); gameRAF = requestAnimationFrame(loop);
+  }
+  function showCaught(win){
+    const w = document.getElementById('won');
+    if(!caught.length){ w.innerHTML = ''; return; }
+    w.innerHTML = `<div class="paper unfold caught">
+      <p class="to">${win ? 'Tudo o que eu amo em você' : 'O que você pegou do que eu amo em você'}</p>
+      <div class="chips">${caught.map((m,k) => `<span class="chip" style="--i:${k}">♥︎ ${esc(m)}</span>`).join('')}</div>
+      ${win ? '' : `<p class="more">e ainda faltaram ${META - caught.length}… tenta de novo pra ver todos</p>`}
+      <p class="sign">Mihzinha</p></div>`;
+    setTimeout(() => w.scrollIntoView({behavior:'smooth', block:'start'}), 900);
+  }
+  function end(win, why){
+    stopGame();
+    const ov = document.getElementById('ov'); ov.hidden = false;
+    if(win){ burst(innerWidth/2, innerHeight/2, 70);
+      ov.innerHTML = `<h3>Pegou todos!</h3><p class="lead">Olha embaixo tudo o que eu amo em você.</p><button id="start">Jogar de novo</button>`; }
+    else ov.innerHTML = `<h3>Perdeu! kkkkk</h3><p class="lead">${why}<br>Você pegou ${caught.length} de ${META}.</p><button id="start">Tentar de novo</button>`;
+    document.getElementById('start').onclick = start;
+    showCaught(win);
+  }
+  function loop(t){
+    const dt = Math.min(40, t - last); last = t;
+    const lvl = caught.length / META;
+    const speed = 1 + lvl * 1.8;
+    const every = 950 - lvl * 520;
+    spawn -= dt;
+    if(spawn <= 0){
+      let bad = Math.random() < .14 + lvl * .14;
+      if(!bad && !pool.length) bad = true;
+      const it = {x:0, y:-30, v:(.11+Math.random()*.06)*speed, bad, w:Math.random()*6};
+      if(!bad){ it.word = pool.shift(); x.font = FONT; it.r = Math.max(28, x.measureText(splitWord(it.word)[1]).width * .62 + 10); }
+      else it.r = 18;
+      it.x = it.r + 8 + Math.random()*(W - 2*it.r - 16);
+      items.push(it);
+      spawn = every * (.7 + Math.random()*.6);
+    }
+    let sx = 0; if(shakeT > 0){ shakeT -= dt; sx = (Math.random()-.5)*8; }
+    x.clearRect(0,0,W,H); x.save(); x.translate(sx, 0);
+    x.textAlign = 'center'; x.textBaseline = 'middle';
+    drawCatcher(px, H-30);
+    for(const it of items){
+      it.y += it.v*dt; it.w += dt*.004;
+      const ix = it.x + Math.sin(it.w)*5;
+      if(it.bad) drawBroken(ix, it.y, it.r); else drawHeart(ix, it.y, it.r, it.word);
+      const reach = 26 + it.r*.6;
+      if(!it.hit && it.y + it.r*.6 > H-62 && it.y - it.r*.6 < H-12 && Math.abs(ix - px) < reach){
+        it.hit = true;
+        if(it.bad){ x.restore(); end(false, 'Pegou um coração partido.'); return; }
+        caught.push(it.word); pops.push({x:ix, y:it.y, t:0, txt:'+ ' + it.word, c:'#c93a52'}); hud();
+        if(caught.length >= META){ x.restore(); end(true); return; }
+      }
+      if(!it.hit && it.y - it.r > H){
+        it.hit = true;
+        if(!it.bad){ pool.push(it.word); lives--; shakeT = 250; pops.push({x:ix, y:H-24, t:0, txt:'−1 ♥︎', c:'#8e1730'}); hud();
+          if(lives <= 0){ x.restore(); end(false, 'Deixou cair 5 corações.'); return; } }
+      }
+    }
+    for(const p of pops){ p.t += dt; x.globalAlpha = Math.max(0, 1 - p.t/700); x.font = '600 16px Jost, system-ui'; x.fillStyle = p.c; x.fillText(p.txt, p.x, p.y - p.t*.06); }
+    x.globalAlpha = 1; x.fillStyle = '#000'; pops = pops.filter(p => p.t < 700);
+    items = items.filter(it => !it.hit);
+    x.restore();
+    gameRAF = requestAnimationFrame(loop);
+  }
+};
+
+/* ---------- quiz ---------- */
+VIEWS.quiz = () => {
+  let i = 0, pts = 0;
+  shell('quiz','Quanto você me conhece?','Vamos ver se você presta atenção em mim', `<div id="qz"></div>`);
+  const qz = document.getElementById('qz');
+  function q(){
+    const it = C.quiz[i];
+    qz.innerHTML = `<div class="qcard page">
+      <div class="bar"><i style="width:${i/C.quiz.length*100}%"></i></div>
+      <p class="eyebrow">pergunta ${i+1} de ${C.quiz.length}</p><h3>${esc(it.p)}</h3>
+      <div class="opts">${it.o.map((o,k)=>`<button class="opt st" style="--i:${k}" data-k="${k}">${esc(o)}</button>`).join('')}</div></div>`;
+    qz.querySelectorAll('.opt').forEach(b => b.onclick = () => {
+      const k = +b.dataset.k; qz.querySelectorAll('.opt').forEach(o => o.disabled = true);
+      qz.querySelectorAll('.opt')[it.c].classList.add('ok');
+      if(k === it.c){ pts++; sparkle(b); } else { b.classList.add('no','shake'); }
+      setTimeout(()=>{ i++; i < C.quiz.length ? q() : end(); }, 1100);
+    });
+  }
+  function end(){
+    const p = pts / C.quiz.length;
+    const title = p === 1 ? 'Namorado nível: aprovado pela sogra' : p >= .5 ? 'Bom, mas pode melhorar…' : 'Di… a gente precisa conversar kkkk';
+    if(p === 1) burst(innerWidth/2, innerHeight/2);
+    qz.innerHTML = `<div class="qcard center page"><p class="score">${pts}/${C.quiz.length}</p><p class="yay" style="font-size:34px">${title}</p><button id="again" class="ghost">Tentar de novo</button></div>`;
+    document.getElementById('again').onclick = () => { i = 0; pts = 0; q(); };
+  }
+  q();
+};
+
+/* ---------- quem é mais provável ---------- */
+VIEWS.provavel = () => {
+  let i = 0, hits = 0;
+  shell('você ou eu?','Quem é mais provável…','Escolhe, depois vê o que eu respondi', `<div id="pv"></div>`);
+  const pv = document.getElementById('pv');
+  function q(){
+    const it = C.provavel[i];
+    pv.innerHTML = `<div class="qcard center page"><p class="eyebrow">${i+1} de ${C.provavel.length}</p><h3>${esc(it.p)}</h3>
+      <div class="duo three"><button data-r="diogo">Eu</button><button data-r="milena">A Mihzinha</button><button data-r="ambos">Os dois</button></div><p class="reveal" id="rv"></p></div>`;
+    pv.querySelectorAll('[data-r]').forEach(b => b.onclick = () => {
+      pv.querySelectorAll('[data-r]').forEach(o => o.disabled = true);
+      const ok = b.dataset.r === it.r; if(ok){ hits++; sparkle(b); }
+      const rv = document.getElementById('rv'); rv.classList.add('unfold');
+      rv.innerHTML = `${ok ? 'Concordamos!' : 'Discordo!'} Eu disse: ${({diogo:'você', milena:'eu', ambos:'os dois'})[it.r]}<br><small style="font-size:19px;color:var(--muted)">${esc(it.obs)}</small>`;
+      setTimeout(()=>{ i++; i < C.provavel.length ? q() : pv.innerHTML = `<div class="qcard center page"><p class="score">${hits}/${C.provavel.length}</p><p class="lead">vezes que a gente concordou</p></div>`; }, 2300);
+    });
+  }
+  q();
+};
+
+/* ---------- planos ---------- */
+VIEWS.planos = () => {
+  shell('daqui pra frente','Nossos planos','Tudo que eu quero viver com você. Marca quando a gente realizar',
+    `<ul class="plans">${C.planos.map((p,k)=>`<li class="st" style="--i:${k}"><label><input type="checkbox" id="pl${k}"><span class="t"><b>${esc(p.t)}</b><small>${esc(p.d)}</small></span></label></li>`).join('')}</ul>`);
+  const boxes = [...app.querySelectorAll('.plans input')];
+  const off = Sync.on('state', st => boxes.forEach((c,k) => { c.checked = !!st.planos[k]; }));
+  boxes.forEach((c,k) => c.onchange = () => { Sync.setFlag('planos', k, c.checked); if(c.checked) sparkle(c); });
+  const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { off(); prev(); };
+};
+
+/* ---------- envelopes (cartas pro futuro) ---------- */
+function envelopes(list, seal){
+  const now = new Date(), fmt = d => d.toLocaleDateString('pt-BR');
+  return `<div class="envlist">${list.map((c,k)=>{
+    const locked = c.abre && c.abre > now;
+    const sub = c.quando ? c.quando : locked ? `abre em ${fmt(c.abre)} · faltam ${Math.ceil((c.abre-now)/86400000)} dias` : c.abre ? 'já pode abrir' : 'abre quando você precisar';
+    return `<button class="envl st ${locked?'locked':''}" style="--i:${k}" data-k="${k}" aria-label="${esc(c.titulo)}">
+      <span class="eb"></span><span class="ep"></span><span class="ef"></span><span class="efl"></span>
+      <span class="seal">${locked ? icon('lock') : seal}</span>
+      <span class="label">${esc(c.titulo)}<small>${esc(sub)}</small></span></button>
+      <div class="slot" id="slot${k}"></div>`;
+  }).join('')}</div>`;
+}
+function wireEnvelopes(list, opener){
+  app.querySelectorAll('.envl').forEach(b => b.onclick = () => {
+    if(b.classList.contains('locked')){ b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake'); return; }
+    const k = +b.dataset.k, slot = document.getElementById('slot'+k);
+    if(b.classList.contains('open')){ b.classList.remove('open'); slot.innerHTML = ''; return; }
+    b.classList.add('open');
+    setTimeout(()=>{ const r = b.getBoundingClientRect(); burst(r.left + r.width/2, r.top + r.height/3, 18); }, 450);
+    setTimeout(()=>{ slot.innerHTML = opener(list[k]); slot.scrollIntoView({behavior:'smooth', block:'nearest'}); }, 1000);
+  });
+}
+VIEWS.cartas = () => {
+  shell('pra depois','Cartas pro futuro','Cada uma só abre no dia certo', envelopes(C.cartas, '♥︎'));
+  wireEnvelopes(C.cartas, c => `<div class="paper unfold"><p class="to">${esc(c.titulo)}</p><p>${esc(c.texto)}</p><p class="sign">Mihzinha</p></div>`);
+};
+/* ---------- cartas ao nosso primeiro filho ---------- */
+VIEWS.filhos = () => {
+  let autor = Sync.quem;
+  const open = new Set();
+  shell('um dia','Ao nosso primeiro filho','Cartas que eu e você vamos escrever pra quem ainda vai chegar. Pode escrever quantas quiser',
+    `<div class="who st"><span>${Sync.mode === 'online' && Sync.user ? 'Escrevendo como' : 'Quem está escrevendo?'}</span>
+       <div class="seg" role="radiogroup"><button data-a="Di" role="radio">Di</button><button data-a="Mihzinha" role="radio">Mihzinha</button></div></div>
+     <div class="moms" id="moms"></div>
+     <p class="savenote" id="savenote"></p>`);
+  const moms = document.getElementById('moms');
+  const fixed = Sync.mode === 'online' && Sync.user;
+  const setAutor = a => { autor = a; if(!fixed) Sync.setQuem(a);
+    app.querySelectorAll('.seg button').forEach(b => { const on = b.dataset.a === a; b.classList.toggle('on', on); b.setAttribute('aria-checked', on); }); };
+  app.querySelectorAll('.seg button').forEach(b => { if(fixed && b.dataset.a !== autor) b.hidden = true; b.onclick = () => { if(!fixed) setAutor(b.dataset.a); }; });
+  if(autor) setAutor(autor);
+  const fmt = t => new Date(t).toLocaleDateString('pt-BR', {day:'2-digit', month:'long', year:'numeric'});
+
+  function draw(list){
+    if(!document.getElementById('moms')) return;
+    document.getElementById('savenote').textContent = Sync.mode === 'online' && Sync.user ? 'As cartas ficam guardadas e os dois conseguem ver.' : 'Por enquanto as cartas ficam salvas só neste aparelho.';
+    moms.innerHTML = C.momentos.map((m,k) => {
+      const cs = list.filter(c => c.momento === m.id);
+      const isOpen = open.has(m.id);
+      return `<article class="mom st ${isOpen?'open':''}" style="--i:${k}" data-m="${m.id}">
+        <button class="momhead" data-t="${m.id}" aria-expanded="${isOpen}">
+          <span class="ico">${icon(m.ico)}</span>
+          <span class="mt"><b>${m.t}</b><small>${m.s}</small><span class="count">${cs.length ? '♥︎ ' + cs.length + (cs.length === 1 ? ' carta' : ' cartas') : 'nenhuma carta ainda'}</span></span>
+          <span class="chev" aria-hidden="true">›</span>
+        </button>
+        <div class="mombody">
+          ${cs.map(c => `<div class="paper unfold kid">
+              <p class="to">Meu filho,</p>
+              ${esc(c.texto).split(/\n+/).map(t => `<p>${t}</p>`).join('')}
+              <p class="sign">${c.autor === 'Di' ? 'papai' : 'mamãe'}<small>${esc(c.autor)} · ${fmt(c.criadoEm)}</small></p>
+              ${c.autor === autor ? `<button class="del" data-del="${c.id}">apagar</button>` : ''}
+            </div>`).join('')}
+          <form class="write" data-w="${m.id}">
+            <textarea id="ta-${m.id}" rows="5" placeholder="Escreva aqui a sua carta…" aria-label="Carta: ${m.t}"></textarea>
+            <button type="submit">Guardar carta</button>
+            <p class="werr" role="status"></p>
+          </form>
+        </div>
+      </article>`;
+    }).join('');
+    moms.querySelectorAll('.momhead').forEach(h => h.onclick = () => {
+      const id = h.dataset.t, el = h.parentElement;
+      open.has(id) ? open.delete(id) : open.add(id);
+      el.classList.toggle('open'); h.setAttribute('aria-expanded', el.classList.contains('open'));
+    });
+    moms.querySelectorAll('.del').forEach(d => d.onclick = () => {
+      if(d.dataset.sure){ Sync.removeCarta(d.dataset.del); }
+      else { d.dataset.sure = 1; d.textContent = 'toca de novo pra apagar'; setTimeout(() => { if(d.isConnected){ delete d.dataset.sure; d.textContent = 'apagar'; } }, 3000); }
+    });
+    moms.querySelectorAll('.write').forEach(f => f.onsubmit = async e => {
+      e.preventDefault();
+      const ta = f.querySelector('textarea'), err = f.querySelector('.werr'), texto = ta.value.trim();
+      if(!autor){ err.textContent = 'Escolhe lá em cima quem está escrevendo.'; app.querySelector('.who').classList.add('shake'); setTimeout(()=>app.querySelector('.who')?.classList.remove('shake'), 500); return; }
+      if(!texto){ err.textContent = 'Escreve alguma coisa antes de guardar.'; return; }
+      const btn = f.querySelector('button'); btn.disabled = true; btn.textContent = 'Guardando…';
+      try{ open.add(f.dataset.w); await Sync.addCarta({momento:f.dataset.w, autor, texto}); sparkle(btn); }
+      catch(e){ err.textContent = 'Não consegui guardar agora. Confere a internet e tenta de novo.'; btn.disabled = false; btn.textContent = 'Guardar carta'; }
+    });
+  }
+  const off = Sync.on('cartas', draw);
+  const back = document.getElementById('back'), prev = back.onclick;
+  back.onclick = () => { off(); prev(); };
+};
+
+/* ---------- vales ---------- */
+VIEWS.vales = () => {
+  shell('pra usar comigo','Vales-presente','Cada vale só pode ser resgatado uma vez. Quando resgatar, me manda o ticket',
+    `<div class="vales">${C.vales.map((v,k)=>`<div class="vale st" style="--i:${k}"><span class="ico">${icon(v.i)}</span><b>${esc(v.t)}</b><button data-k="${k}">Resgatar</button></div>`).join('')}</div>`);
+  let used = {};
+  const btns = [...app.querySelectorAll('.vale button')];
+  const paint = () => btns.forEach(b => {
+    const u = used[b.dataset.k];
+    b.parentElement.classList.toggle('used', !!u);
+    if(!b.dataset.sure) b.textContent = u ? 'Ver ticket' : 'Resgatar';
+  });
+  const off = Sync.on('state', st => { used = st.vales || {}; paint(); });
+  btns.forEach(b => b.onclick = async () => {
+    const k = b.dataset.k, u = used[k];
+    if(u){ showTicket(k, u); return; }
+    if(!b.dataset.sure){
+      b.dataset.sure = 1; b.textContent = 'Toca de novo pra confirmar';
+      setTimeout(() => { if(b.isConnected){ delete b.dataset.sure; paint(); } }, 3000); return;
+    }
+    delete b.dataset.sure;
+    const t = {por: Sync.quem || 'Di', em: Date.now(), cod: String(Math.floor(1000 + Math.random()*9000))};
+    b.disabled = true;
+    try{ await Sync.setFlag('vales', k, t); used = {...used, [k]: t}; paint(); sparkle(b); showTicket(k, t); }
+    catch(e){ b.textContent = 'Não deu, tenta de novo'; }
+    b.disabled = false;
+  });
+  const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { off(); closeTicket(); prev(); };
+};
+function closeTicket(){ document.getElementById('tk')?.remove(); }
+function showTicket(k, t){
+  closeTicket();
+  const v = C.vales[k], info = typeof t === 'object' ? t : {por:'Di', em:Date.now(), cod:'0000'};
+  const data = new Date(info.em).toLocaleDateString('pt-BR');
+  const texto = `Mihzinha, tô resgatando o meu vale: ${v.t}! ♥ (ticket nº ${info.cod}, ${data})`;
+  const w = document.createElement('div'); w.className = 'tk-wrap'; w.id = 'tk';
+  w.innerHTML = `
+    <div class="tk-box">
+      <div class="ticket">
+        <div class="tk-main">
+          <p class="eyebrow">vale-presente resgatado</p>
+          <span class="tk-ico">${icon(v.i)}</span>
+          <h3>${esc(v.t)}</h3>
+          <p class="tk-who">resgatado por ${esc(info.por)} em ${data}</p>
+        </div>
+        <div class="tk-stub"><span>nº</span><b>${esc(info.cod)}</b><span>válido 1 vez</span></div>
+      </div>
+      <div class="tk-actions">
+        <button id="tksend" class="wbtn">${icon('whats')}Enviar pra Mihzinha</button>
+        <button class="ghost" id="tkclose">Fechar</button>
+        <p class="tk-note" id="tknote"></p>
+      </div>
+    </div>`;
+  document.body.append(w);
+  w.onclick = e => { if(e.target === w) closeTicket(); };
+  document.getElementById('tkclose').onclick = closeTicket;
+  document.getElementById('tksend').onclick = async () => {
+    const a = document.createElement('a'); a.href = 'https://wa.me/' + C.whatsMihzinha + '?text=' + encodeURIComponent(texto); a.target = '_blank'; a.rel = 'noopener'; document.body.append(a); a.click(); a.remove();
+    document.getElementById('tknote').textContent = 'Se o WhatsApp não abrir, tira um print do ticket e me manda no (66) 99935-9338.';
+  };
+}
+
+/* ---------- mensagem do dia (reabrir) ---------- */
+VIEWS.mensagem = () => renderDaily();
+
+/* ---------- pergunta do dia ---------- */
+VIEWS.pergunta = () => {
+  const n = C.perguntas.length, pq = C.perguntas[((diaDoAno() * 3) % n + n) % n];
+  const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'Mihzinha' : 'Di';
+  shell('hoje','Pergunta do dia','Responde, e aí você vê o que o outro respondeu',
+    `<div class="qcard"><p class="eyebrow">${new Date().toLocaleDateString('pt-BR',{day:'numeric',month:'long'})}</p><h3>${esc(pq)}</h3>
+      <form class="write" id="qf"><textarea id="qta" rows="4" placeholder="Sua resposta…" aria-label="Sua resposta"></textarea><button type="submit">Responder</button><p class="werr" id="qerr" role="status"></p></form>
+      <div id="qans"></div></div>
+     <div id="qold"></div>`);
+  const col = Sync.col('respostas');
+  const off = col.on(list => {
+    const box = document.getElementById('qans'); if(!box) return;
+    const minha = list.find(r => r.dia === hoje() && r.quem === eu), dele = list.find(r => r.dia === hoje() && r.quem === outro);
+    document.getElementById('qf').hidden = !!minha;
+    box.innerHTML = (minha ? `<div class="ans mine"><small>você respondeu</small><p>${esc(minha.texto)}</p></div>` : '') +
+      (dele ? (minha ? `<div class="ans unfold"><small>${outro} respondeu</small><p>${esc(dele.texto)}</p></div>` : `<p class="lead locked-ans">${icon('lock')} ${outro} já respondeu. Responde pra ver!</p>`)
+            : (minha ? `<p class="lead">${outro} ainda não respondeu. Volta mais tarde!</p>` : ''));
+    const dias = [...new Set(list.filter(r => r.dia < hoje()).map(r => r.dia))].sort().reverse().slice(0, 10);
+    document.getElementById('qold').innerHTML = dias.length ? `<p class="gtitle">dias anteriores</p>` + dias.map(d => {
+      const rs = list.filter(r => r.dia === d); return `<div class="oldq"><small>${d.split('-').reverse().join('/')} · ${esc(rs[0].pergunta || '')}</small>${rs.map(r => `<p><b>${esc(r.quem)}:</b> ${esc(r.texto)}</p>`).join('')}</div>`;
+    }).join('') : '';
+  });
+  document.getElementById('qf').onsubmit = async e => {
+    e.preventDefault(); const t = document.getElementById('qta').value.trim();
+    if(!t){ document.getElementById('qerr').textContent = 'Escreve alguma coisa antes.'; return; }
+    const b = e.target.querySelector('button'); b.disabled = true;
+    try{ await col.set(hoje() + '_' + eu, {dia:hoje(), quem:eu, pergunta:pq, texto:t}); sparkle(b); }
+    catch(err){ document.getElementById('qerr').textContent = 'Não deu pra salvar. Tenta de novo.'; b.disabled = false; }
+  };
+  const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { off(); prev(); };
+};
+
+/* ---------- bilhetinhos ---------- */
+VIEWS.bilhetes = () => {
+  store.set('seenBilhetes', Date.now());
+  const eu = Sync.quem || 'Di';
+  shell('recadinhos','Bilhetinhos','Deixa um recado pro outro achar',
+    `<form class="write" id="bf"><textarea id="bta" rows="3" maxlength="240" placeholder="Escreve um bilhetinho…" aria-label="Bilhetinho"></textarea><button type="submit">Colar no mural</button><p class="werr" id="berr"></p></form>
+     <div class="mural" id="mural"></div>`);
+  const col = Sync.col('bilhetes');
+  const off = col.on(list => {
+    const m = document.getElementById('mural'); if(!m) return;
+    m.innerHTML = list.length ? [...list].reverse().map((b,k) => `<div class="postit c${k % 4}" style="--r:${(k % 5 - 2) * 1.3}deg">
+      <p>${esc(b.texto)}</p><small>${esc(b.autor)} · ${new Date(b.criadoEm).toLocaleDateString('pt-BR')}</small>
+      ${b.autor === eu ? `<button class="del" data-del="${b.id}">apagar</button>` : ''}</div>`).join('')
+      : `<p class="lead empty">O mural ainda está vazio. Cola o primeiro bilhetinho!</p>`;
+    m.querySelectorAll('.del').forEach(d => d.onclick = () => { if(d.dataset.sure) col.remove(d.dataset.del); else { d.dataset.sure = 1; d.textContent = 'toca de novo'; } });
+  });
+  document.getElementById('bf').onsubmit = async e => {
+    e.preventDefault(); const ta = document.getElementById('bta'), t = ta.value.trim();
+    if(!t){ document.getElementById('berr').textContent = 'Escreve o recado antes.'; return; }
+    const b = e.target.querySelector('button'); b.disabled = true;
+    try{ await col.add({autor:eu, texto:t}); ta.value = ''; sparkle(b); store.set('seenBilhetes', Date.now()); }
+    catch(err){ document.getElementById('berr').textContent = 'Não deu pra colar. Tenta de novo.'; }
+    b.disabled = false;
+  };
+  const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { off(); prev(); };
+};
+
+/* ---------- mesversário ---------- */
+VIEWS.mes = () => {
+  const now = new Date(), ini = C.inicioNamoro;
+  let meses = (now.getFullYear() - ini.getFullYear()) * 12 + (now.getMonth() - ini.getMonth()); if(now.getDate() < 12) meses--;
+  const msg = n => C.mesversarios[n - 1] || C.mesversarioPadrao;
+  let prox = new Date(now.getFullYear(), now.getMonth(), 12); if(now.getDate() >= 12) prox = new Date(now.getFullYear(), now.getMonth() + 1, 12);
+  const faltam = Math.ceil((prox - new Date(now.getFullYear(), now.getMonth(), now.getDate())) / 86400000);
+  const ehHoje = now.getDate() === 12 && meses > 0;
+  shell('todo dia 12','Mesversário', ehHoje ? 'Hoje é dia de comemorar!' : `Faltam ${faltam} ${faltam === 1 ? 'dia' : 'dias'} pro próximo`,
+    `${ehHoje ? `<div class="paper unfold mesnow"><p class="to">${meses} ${meses === 1 ? 'mês' : 'meses'} juntos</p><p>${esc(msg(meses))}</p><p class="sign">Mihzinha</p></div>` : ''}
+     <div class="meslist">${Array.from({length:Math.max(0, meses)}, (_,i) => meses - i).filter(n => !(ehHoje && n === meses)).map((n,k) => `
+       <div class="mesitem st" style="--i:${k}"><b>${n}</b><span><small>${n === 1 ? 'mês' : 'meses'} · 12/${String((ini.getMonth() + n) % 12 + 1).padStart(2,'0')}</small>${esc(msg(n))}</span></div>`).join('')}
+       <div class="mesitem next"><b>${meses + 1}</b><span><small>${prox.toLocaleDateString('pt-BR')}</small>${icon('lock')} libera no dia 12</span></div>
+     </div>`);
+  if(ehHoje) setTimeout(() => burst(innerWidth/2, innerHeight/3, 50), 500);
+};
+
+/* ---------- primeiras vezes ---------- */
+VIEWS.primeiras = () => {
+  const eu = Sync.quem || 'Di';
+  shell('nós dois','Nossas primeiras vezes','Primeiro filme, primeira viagem, primeira briga… vai adicionando',
+    `<form class="write card-form" id="pf"><input type="text" id="pt" placeholder="Nossa primeira vez que…" aria-label="O quê"><input type="date" id="pd" aria-label="Quando">
+      <textarea id="px" rows="3" placeholder="Conta como foi (opcional)" aria-label="Como foi"></textarea><button type="submit">Adicionar</button><p class="werr" id="perr"></p></form>
+     <ol class="timeline" id="pl"></ol>`);
+  const col = Sync.col('primeiras');
+  const off = col.on(list => {
+    const ol = document.getElementById('pl'); if(!ol) return;
+    const ord = [...list].sort((a,b) => (b.data || '').localeCompare(a.data || ''));
+    ol.innerHTML = ord.length ? ord.map(p => `<li><time>${p.data ? p.data.split('-').reverse().join(' · ') : ''}</time><h3>${esc(p.titulo)}</h3>${p.texto ? `<p>${esc(p.texto)}</p>` : ''}<p class="by">por ${esc(p.autor)}${p.autor === eu ? ` · <button class="linkbtn" data-del="${p.id}">apagar</button>` : ''}</p></li>`).join('')
+      : `<li class="emptyli"><p class="lead">Nenhuma ainda. Que tal começar pelo primeiro encontro no shopping?</p></li>`;
+    ol.querySelectorAll('[data-del]').forEach(d => d.onclick = () => { if(d.dataset.sure) col.remove(d.dataset.del); else { d.dataset.sure = 1; d.textContent = 'toca de novo'; } });
+  });
+  document.getElementById('pf').onsubmit = async e => {
+    e.preventDefault(); const t = document.getElementById('pt').value.trim();
+    if(!t){ document.getElementById('perr').textContent = 'Escreve o que foi.'; return; }
+    const b = e.target.querySelector('button'); b.disabled = true;
+    try{ await col.add({autor:eu, titulo:t, data:document.getElementById('pd').value, texto:document.getElementById('px').value.trim()}); e.target.reset(); sparkle(b); }
+    catch(err){ document.getElementById('perr').textContent = 'Não deu pra salvar. Tenta de novo.'; }
+    b.disabled = false;
+  };
+  const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { off(); prev(); };
+};
+
+/* ---------- playlist ---------- */
+VIEWS.playlist = () => {
+  const eu = Sync.quem || 'Di';
+  shell('a trilha sonora','Nossa playlist','As músicas que lembram a gente',
+    `<form class="write card-form" id="mf"><input type="text" id="mt" placeholder="Nome da música" aria-label="Música"><input type="text" id="ma" placeholder="Cantor ou banda" aria-label="Artista">
+      <input type="text" id="ml" inputmode="url" placeholder="Link do Spotify ou YouTube (opcional)" aria-label="Link"><textarea id="mp" rows="2" placeholder="Por que ela lembra a gente?" aria-label="Por quê"></textarea>
+      <button type="submit">Adicionar música</button><p class="werr" id="merr"></p></form>
+     <div class="songs" id="songs"></div>`);
+  const col = Sync.col('musicas');
+  const off = col.on(list => {
+    const box = document.getElementById('songs'); if(!box) return;
+    box.innerHTML = list.length ? [...list].reverse().map((m,k) => {
+      const link = /^https?:\/\//.test(m.link || '') ? m.link : '';
+      return `<div class="song st" style="--i:${k}">
+        ${link ? `<a class="play" href="${esc(link)}" target="_blank" rel="noopener" aria-label="Ouvir">${icon('play')}</a>` : `<span class="play off">${icon('music')}</span>`}
+        <div class="sinfo"><b>${esc(m.titulo)}</b><small>${esc(m.artista || '')}</small>${m.porque ? `<p>${esc(m.porque)}</p>` : ''}<small class="by">${esc(m.autor)}${m.autor === eu ? ` · <button class="linkbtn" data-del="${m.id}">tirar</button>` : ''}</small></div></div>`;
+    }).join('') : `<p class="lead empty">A playlist ainda está vazia. Qual é a primeira música de vocês?</p>`;
+    box.querySelectorAll('[data-del]').forEach(d => d.onclick = () => { if(d.dataset.sure) col.remove(d.dataset.del); else { d.dataset.sure = 1; d.textContent = 'toca de novo'; } });
+  });
+  document.getElementById('mf').onsubmit = async e => {
+    e.preventDefault(); const t = document.getElementById('mt').value.trim();
+    if(!t){ document.getElementById('merr').textContent = 'Coloca o nome da música.'; return; }
+    const b = e.target.querySelector('button'); b.disabled = true;
+    try{ await col.add({autor:eu, titulo:t, artista:document.getElementById('ma').value.trim(), link:document.getElementById('ml').value.trim(), porque:document.getElementById('mp').value.trim()}); e.target.reset(); sparkle(b); }
+    catch(err){ document.getElementById('merr').textContent = 'Não deu pra salvar. Tenta de novo.'; }
+    b.disabled = false;
+  };
+  const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { off(); prev(); };
+};
+
+/* ---------- cápsula do tempo ---------- */
+VIEWS.capsula = () => {
+  const ABRE = new Date(2027, 11, 25), aberta = new Date() >= ABRE, eu = Sync.quem || 'Di';
+  const dias = Math.ceil((ABRE - new Date()) / 86400000);
+  shell('pro futuro','Cápsula do tempo', aberta ? 'Ela abriu! Olha o que a gente escreveu' : `Abre no Natal de 2027. Faltam ${dias} dias`,
+    `<div class="capsule ${aberta ? 'opened' : ''}"><div class="cap-ico">${icon('hourglass')}</div><p id="capn">…</p></div>
+     ${aberta ? '' : `<form class="write" id="cf"><textarea id="cta" rows="5" placeholder="Escreve pro nós de daqui a um ano…" aria-label="Carta pra cápsula"></textarea><button type="submit">Guardar na cápsula</button><p class="werr" id="cerr"></p></form>`}
+     <div id="capl"></div>`);
+  const col = Sync.col('capsula');
+  const off = col.on(list => {
+    const n = document.getElementById('capn'); if(!n) return;
+    n.textContent = `${list.length} ${list.length === 1 ? 'carta guardada' : 'cartas guardadas'}${aberta ? '' : ', lacradas até lá'}`;
+    if(aberta) document.getElementById('capl').innerHTML = list.map(c => `<div class="paper unfold kid"><p>${esc(c.texto).replace(/\n+/g,'</p><p>')}</p><p class="sign">${esc(c.autor)}</p></div>`).join('');
+  });
+  const f = document.getElementById('cf');
+  if(f) f.onsubmit = async e => {
+    e.preventDefault(); const t = document.getElementById('cta').value.trim();
+    if(!t){ document.getElementById('cerr').textContent = 'Escreve alguma coisa antes.'; return; }
+    const b = f.querySelector('button'); b.disabled = true;
+    try{ await col.add({autor:eu, texto:t}); f.reset(); sparkle(b); document.getElementById('cerr').textContent = 'Guardada! Só abre no Natal de 2027.'; }
+    catch(err){ document.getElementById('cerr').textContent = 'Não deu pra guardar. Tenta de novo.'; }
+    b.disabled = false;
+  };
+  const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { off(); prev(); };
+};
+
+/* ---------- abra quando ---------- */
+VIEWS.abra = () => {
+  shell('pra cada momento','Abra quando…','Escolhe o envelope do jeito que você estiver se sentindo', envelopes(C.abraQuando.map(c => ({...c, quando:'pode abrir agora'})), '♥︎'));
+  wireEnvelopes(C.abraQuando, c => `<div class="paper unfold"><p class="to">${esc(c.titulo)}</p><p>${esc(c.texto)}</p><p class="sign">Mihzinha</p></div>`);
+};
+
+/* ---------- roleta do date ---------- */
+VIEWS.roleta = () => {
+  const eu = Sync.quem || 'Di';
+  shell('próximo encontro','Roleta do date','Gira e o destino escolhe o nosso próximo programa',
+    `<div class="wheelbox"><div class="pointer" aria-hidden="true"></div><canvas id="wh" aria-label="Roleta"></canvas><button class="spin" id="spin">Girar</button></div>
+     <div id="wres" aria-live="polite"></div>
+     <details class="wopts"><summary>Opções da roleta</summary>
+       <form class="addopt" id="of"><input type="text" id="ot" placeholder="Adicionar uma ideia de date" aria-label="Nova opção"><button type="submit" aria-label="Adicionar">${icon('plus')}</button></form>
+       <ul id="ol"></ul></details>`);
+  const cv = document.getElementById('wh'), x = cv.getContext('2d'), col = Sync.col('roleta');
+  let opts = [], extra = [], ang = 0, spinning = false;
+  const COLS = ['#e48aa3','#8a9160','#fbe6ea','#eaf0dc'];
+  function draw(){
+    const S = cv.clientWidth, d = devicePixelRatio; if(!S) return; cv.width = cv.height = S*d; x.setTransform(d,0,0,d,0,0);
+    const r = S/2, n = opts.length, seg = Math.PI*2/n;
+    x.clearRect(0,0,S,S); x.save(); x.translate(r,r); x.rotate(ang);
+    opts.forEach((o,i) => {
+      x.beginPath(); x.moveTo(0,0); x.arc(0,0,r-4,i*seg,(i+1)*seg); x.closePath(); x.fillStyle = COLS[i % (n % 4 === 1 ? 3 : 4)]; x.fill();
+      x.strokeStyle = '#fffaf9'; x.lineWidth = 2; x.stroke();
+      x.save(); x.rotate(i*seg + seg/2); x.textAlign = 'right'; x.textBaseline = 'middle';
+      x.fillStyle = (i % 4) < 2 ? '#fff' : '#4a1224'; x.font = `600 ${n > 12 ? 10 : 12}px Jost, system-ui`;
+      const t = o.length > 22 ? o.slice(0,21) + '…' : o; x.fillText(t, r - 16, 0); x.restore();
+    });
+    x.restore();
+    x.beginPath(); x.arc(r,r,26,0,Math.PI*2); x.fillStyle = '#fffaf9'; x.fill();
+  }
+  const rebuild = () => {
+    opts = [...C.dates, ...extra.map(e => e.texto)]; draw();
+    document.getElementById('ol').innerHTML = C.dates.map(t => `<li>${esc(t)}</li>`).join('') + extra.map(e => `<li>${esc(e.texto)} <button class="linkbtn" data-del="${e.id}">tirar</button></li>`).join('');
+    document.querySelectorAll('#ol [data-del]').forEach(b => b.onclick = () => col.remove(b.dataset.del));
+  };
+  const off = col.on(list => { if(!document.getElementById('wh')) return; extra = list; rebuild(); });
+  addEventListener('resize', draw);
+  document.getElementById('of').onsubmit = async e => { e.preventDefault(); const i = document.getElementById('ot'), t = i.value.trim(); if(!t) return; await col.add({texto:t, autor:eu}); i.value = ''; };
+  document.getElementById('spin').onclick = () => {
+    if(spinning) return; spinning = true; document.getElementById('wres').innerHTML = '';
+    const n = opts.length, seg = Math.PI*2/n, pick = Math.floor(Math.random()*n);
+    // ponteiro no topo (-90°): o centro do segmento escolhido para lá
+    const target = -Math.PI/2 - (pick*seg + seg/2);
+    const TAU = Math.PI*2, start = ang, delta = ((target - start) % TAU + TAU) % TAU, end = start + TAU*6 + delta;
+    const total = end - start, dur = reduce ? 10 : 4200, t0 = performance.now();
+    (function step(t){
+      const p = Math.min(1, (t - t0)/dur), e = 1 - Math.pow(1 - p, 4);
+      ang = start + total*e; draw();
+      if(p < 1) return requestAnimationFrame(step);
+      spinning = false; const r = document.getElementById('spin').getBoundingClientRect(); burst(r.left + r.width/2, r.top, 40);
+      const txt = `Mihzinha, a roleta escolheu o nosso próximo date: ${opts[pick]}! Quando a gente vai? ♥`;
+      document.getElementById('wres').innerHTML = `<div class="qcard center page"><p class="eyebrow">nosso próximo date</p><h3>${esc(opts[pick])}</h3>
+        ${eu === 'Mihzinha' ? '' : `<a class="wlink" href="https://wa.me/${C.whatsMihzinha}?text=${encodeURIComponent(txt)}" target="_blank" rel="noopener">${icon('whats')}Combinar com a Mihzinha</a>`}</div>`;
+    })(t0);
+  };
+  const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { off(); removeEventListener('resize', draw); prev(); };
+};
+
+/* ---------- a última surpresa ---------- */
+VIEWS.carta = () => {
+  shell('por último','A última surpresa','Abre com carinho',
+    `<div class="gift-wrap"><button class="gift" id="gift" aria-label="Abrir o presente"><span class="lid"></span><span class="box"></span><span class="rib"></span><svg class="bow" viewBox="0 0 60 36" aria-hidden="true"><path d="M30 18C22 4 6 2 6 14s16 8 24 4zM30 18c8-14 24-16 24-4s-16 8-24 4z" fill="#bf9455"/><path d="M30 18l-8 16M30 18l8 16" stroke="#bf9455" stroke-width="5" stroke-linecap="round"/><circle cx="30" cy="18" r="5" fill="#a07a40"/></svg></button>
+     <p class="lead" id="tap">toca no presente</p><div id="slot" style="width:100%"></div></div>`);
+  document.getElementById('gift').onclick = e => {
+    const g = e.currentTarget; if(g.classList.contains('open')) return;
+    g.classList.add('open'); const r = g.getBoundingClientRect(); burst(r.left+r.width/2, r.top+r.height/2, 60);
+    document.getElementById('tap').hidden = true;
+    setTimeout(()=>{ document.getElementById('slot').innerHTML = `
+      <article class="paper unfold">
+        <p class="to">Meu Di,</p>
+        <p>Quem diria que uma conversa no WhatsApp em fevereiro ia virar tudo isso. Desde o primeiro encontro eu soube que tinha alguma coisa diferente em você.</p>
+        <p>Obrigada por cada dia, cada risada e cada cuidado. Você deixa tudo mais leve.</p>
+        <p>Que esse seja o primeiro de muitos Natais ao seu lado.</p>
+        <p class="sign">te amo, Mihzinha</p>
+      </article>`; }, 600);
+  };
+};
+
+/* ---------- pétalas caindo + explosões ---------- */
+const pc = document.getElementById('petals'), pctx = pc.getContext('2d');
+const fx = document.getElementById('fx'), fctx = fx.getContext('2d');
+const DPR = devicePixelRatio; let PW, PH;
+function size(){ PW = pc.width = fx.width = innerWidth*DPR; PH = pc.height = fx.height = innerHeight*DPR; }
+size(); addEventListener('resize', size);
+const PCOL = ['#f27a96','#f5a3b5','#ee8aa2','#f8c3cf'];
+const petals = Array.from({length:34}, (_,i) => ({x:Math.random(), y:Math.random(), s:Math.random()*.0009+.0004, r:Math.random()*7+6, a:Math.random()*6, va:(Math.random()-.5)*.03, w:Math.random()*7, c:PCOL[i%4], o:Math.random()*.35+.35}));
+function petal(c, r){ c.beginPath(); c.moveTo(0,-r); c.bezierCurveTo(r*.9,-r*.6, r*.7,r*.7, 0,r); c.bezierCurveTo(-r*.7,r*.7, -r*.9,-r*.6, 0,-r); c.fill(); }
+function heart(c, r){
+  c.beginPath(); c.moveTo(0,r*.3);
+  c.bezierCurveTo(0,-r*.3,-r,-r*.3,-r,r*.25); c.bezierCurveTo(-r,r*.75,0,r*1.05,0,r*1.4);
+  c.bezierCurveTo(0,r*1.05,r,r*.75,r,r*.25); c.bezierCurveTo(r,-r*.3,0,-r*.3,0,r*.3); c.fill();
+}
+let parts = [];
+function burst(x, y, n=40){
+  if(reduce) return;
+  for(let i=0;i<n;i++){ const a = Math.random()*Math.PI*2, v = Math.random()*6+2;
+    parts.push({x:x*DPR, y:y*DPR, vx:Math.cos(a)*v*DPR, vy:(Math.sin(a)*v-3)*DPR, life:1, r:(Math.random()*6+5)*DPR, c:PCOL[i%4], rot:Math.random()*6, heart:Math.random()<.6}); }
+}
+function sparkle(el){ const r = el.getBoundingClientRect(); burst(r.left + r.width/2, r.top + r.height/2, 14); }
+function frame(){
+  pctx.clearRect(0,0,PW,PH);
+  if(!document.getElementById('xapp')) for(const p of petals){
+    p.y += p.s * .7; p.w += .01; if(p.y > 1.05){ p.y = -.05; p.x = Math.random(); }
+    pctx.save(); pctx.globalAlpha = .35 + p.o * .6; pctx.fillStyle = p.c;
+    pctx.translate((p.x + Math.sin(p.w)*.015)*PW, p.y*PH); heart(pctx, (p.r * .42 + 2) * DPR); pctx.restore();
+  }
+  fctx.clearRect(0,0,PW,PH);
+  parts = parts.filter(p => p.life > 0);
+  for(const p of parts){
+    p.x += p.vx; p.y += p.vy; p.vy += .25*DPR; p.vx *= .98; p.life -= .016; p.rot += .08;
+    fctx.save(); fctx.globalAlpha = Math.max(0,p.life); fctx.fillStyle = p.c; fctx.translate(p.x, p.y); fctx.rotate(p.heart ? 0 : p.rot);
+    p.heart ? heart(fctx, p.r*.8) : petal(fctx, p.r); fctx.restore();
+  }
+  if(!reduce) requestAnimationFrame(frame);
+}
+frame();
+
+/* ---------- neve só no cartão de Natal ---------- */
+let snowRAF;
+function heroSnow(){
+  cancelAnimationFrame(snowRAF);
+  const c = document.getElementById('xsnow'); if(!c) return;
+  const x = c.getContext('2d');
+  const fit = () => { c.width = c.clientWidth*DPR; c.height = c.clientHeight*DPR; }; fit();
+  const fl = Array.from({length:70}, () => ({x:Math.random(), y:Math.random(), r:Math.random()*2+.6, s:Math.random()*.0018+.0007, w:Math.random()*7}));
+  (function loop(){
+    if(!document.getElementById('xsnow')) return;
+    if(c.width !== c.clientWidth*DPR) fit();
+    x.clearRect(0,0,c.width,c.height); x.fillStyle = 'rgba(247,239,228,.85)';
+    for(const f of fl){ f.y += f.s; f.w += .01; if(f.y > 1.02){ f.y = -.02; f.x = Math.random(); }
+      x.beginPath(); x.arc((f.x + Math.sin(f.w)*.01)*c.width, f.y*c.height, f.r*DPR, 0, 7); x.fill(); }
+    if(!reduce) snowRAF = requestAnimationFrame(loop);
+  })();
+}
+
+/* se ele já entrou antes neste celular, vai direto pro Natal */
+(async () => {
+  if(!store.get('entrou', false)) return renderStep(0);
+  await Sync.ready;
+  if(Sync.mode === 'online' && !Sync.user) return renderLogin();
+  if(!Sync.quem) return renderWho();
+  firstScreen();
+})();
+</script>
+
+</body>
+</html>
