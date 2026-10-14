@@ -901,6 +901,9 @@ button,.lastbtn{background:var(--wine);color:#fff}
 .momhead b{color:var(--ink)}
 .momhead .chev{color:var(--wine)}
 
+.hero .logo,.wax,.dlogo,.endlogo,.bk-mono{border-radius:22%!important;overflow:hidden;background:#fff!important}
+.wax{border:0}
+
 /* ---------- Natal: tela própria, verde-pinheiro, creme e vermelho-cranberry ---------- */
 .xapp{position:fixed;inset:0;z-index:3;overflow-y:auto;overflow-x:hidden;background:#fbf6ec;color:#3b3a2c;text-align:center;animation:xin .8s ease both}
 .xapp.out{animation:xout .7s ease forwards}
@@ -1571,14 +1574,12 @@ let homeY = 0;
 /* logo D&M: medalhão creme com aro dourado, raminhos de oliveira, um coração azul (Di) e um rosa (Mihzinha) */
 /* logo D&M: monograma limpo, aro dourado e um coração vermelho */
 const LOGO = (cls = '') => `<svg class="dmlogo ${cls}" viewBox="0 0 120 120" role="img" aria-label="D&amp;M">
-  <circle cx="60" cy="60" r="57" fill="#fbf7f0"/>
-  <circle cx="60" cy="60" r="57" fill="none" stroke="#c9a96a" stroke-width="1.6"/>
-  <circle cx="60" cy="60" r="51" fill="none" stroke="#c9a96a" stroke-width=".7" opacity=".7"/>
-  <g transform="translate(54.6 25) scale(.45)"><path d="M12 21s-9-5.6-9-12a5 5 0 019-3 5 5 0 019 3c0 6.4-9 12-9 12z" fill="#b3122c"/></g>
-  <text x="53" y="74" text-anchor="end" font-size="38" font-family="Great Vibes, TeX Gyre Chorus, cursive" fill="#1f1a17">D</text>
-  <text x="60" y="69" text-anchor="middle" font-size="15" font-family="Playfair Display, Lora, Georgia, serif" fill="#c9a96a">&amp;</text>
-  <text x="66" y="74" text-anchor="start" font-size="38" font-family="Great Vibes, TeX Gyre Chorus, cursive" fill="#7a1424">M</text>
-  <path d="M46 88h28" stroke="#c9a96a" stroke-width=".8"/>
+  <rect width="120" height="120" rx="26" fill="#ffffff"/>
+  <g transform="translate(54.6 22) scale(.45)"><path d="M12 21s-9-5.6-9-12a5 5 0 019-3 5 5 0 019 3c0 6.4-9 12-9 12z" fill="#b3122c"/></g>
+  <text x="52" y="77" text-anchor="end" font-size="46" font-family="Great Vibes, TeX Gyre Chorus, cursive" fill="#1f1a17">D</text>
+  <text x="60" y="71" text-anchor="middle" font-size="17" font-family="Playfair Display, Lora, Georgia, serif" fill="#c9a96a">&amp;</text>
+  <text x="67" y="77" text-anchor="start" font-size="46" font-family="Great Vibes, TeX Gyre Chorus, cursive" fill="#7a1424">M</text>
+  <path d="M44 94h32" stroke="#c9a96a" stroke-width="1"/>
 </svg>`;
 /* ícone quadrado do app: fundo branco */
 const LOGO_SQ = `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
@@ -1589,6 +1590,14 @@ const LOGO_SQ = `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
   <text x="67" y="77" text-anchor="start" font-size="46" font-family="Great Vibes, TeX Gyre Chorus, cursive" fill="#7a1424">M</text>
   <path d="M44 94h32" stroke="#c9a96a" stroke-width="1"/>
 </svg>`;
+/* marca de batom vermelho e coração vermelho */
+const LIPS = (cls = '') => `<svg class="lips ${cls}" viewBox="0 0 100 60" aria-hidden="true">
+  <path d="M5 30C15 18 28 8 40 12c5 1 8 4 10 6 2-2 5-5 10-6 12-4 25 6 35 18-15 0-30 2-45 3C35 32 20 30 5 30z" fill="#c8182c"/>
+  <path d="M5 30c15 2 30 3 45 4 15-1 30-2 45-4-10 18-27 26-45 26S15 48 5 30z" fill="#d92a3d"/>
+  <path d="M9 30.5c20 4 62 4 82 0" fill="none" stroke="#8e0f1d" stroke-width="2" stroke-linecap="round"/>
+  <ellipse cx="38" cy="44" rx="9" ry="3.5" fill="#fff" opacity=".28" transform="rotate(-8 38 44)"/>
+  <ellipse cx="64" cy="45" rx="6" ry="2.5" fill="#fff" opacity=".2" transform="rotate(6 64 45)"/></svg>`;
+const RHEART = (cls = '') => `<svg class="rheart ${cls}" viewBox="0 0 24 22" aria-hidden="true"><path d="M12 21s-9-5.6-9-12a5 5 0 019-3 5 5 0 019 3c0 6.4-9 12-9 12z" fill="#d6283b"/><ellipse cx="8" cy="7.5" rx="2.2" ry="1.4" fill="#fff" opacity=".35" transform="rotate(-30 8 7.5)"/></svg>`;
 const FLOWER = (id, label, src) => `<svg class="fl" viewBox="0 0 200 200" aria-hidden="true"><defs><clipPath id="${id}">
   ${[0,1,2,3,4,5,6,7].map(k => { const a = k*Math.PI/4; return `<circle cx="${100+58*Math.cos(a)}" cy="${100+58*Math.sin(a)}" r="44"/>`; }).join('')}<circle cx="100" cy="100" r="62"/></clipPath>
   <linearGradient id="${id}g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fbe6ea"/><stop offset="1" stop-color="#e9b3c0"/></linearGradient></defs>
