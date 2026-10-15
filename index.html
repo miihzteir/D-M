@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=42">
-<link rel="apple-touch-icon" href="icon-180.png?v=42">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=42">
+<link rel="manifest" href="manifest.json?v=43">
+<link rel="apple-touch-icon" href="icon-180.png?v=43">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=43">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -3271,7 +3271,7 @@ function renderHome(y = 0){
       <p class="endtitle">${esc(C.textos.fimNome)}</p>
       <p class="endyear">2026</p>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
-      <p class="endver">versão de 15/10 · 18h20</p>
+      <p class="endver">versão de 15/10 · 18h30</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
@@ -5011,7 +5011,7 @@ const APP_URL = 'https://miihzteir.github.io/D-M/';
 const carregaJS = src => new Promise((ok, no) => { if(document.querySelector(`script[src="${src}"]`)) return ok(); const sc = document.createElement('script'); sc.src = src; sc.onload = ok; sc.onerror = no; document.head.append(sc); });
 const SONS = [
   {id:'sino', t:'Sininho', notas:[[1318.5, 0, .9, 'sine'], [1760, .12, 1.1, 'sine']]},
-  {id:'coracao', t:'Tum-tum', notas:[[95, 0, .18, 'sine', 1], [80, .2, .25, 'sine', 1]]},
+  {id:'coracao', t:'Tum-tum', notas:[[320, 0, .16, 'triangle', 1, 150], [300, .2, .2, 'triangle', 1, 130], [640, 0, .06, 'sine', 0, 300], [600, .2, .06, 'sine', 0, 280]]},
   {id:'harpa', t:'Harpinha', notas:[[523.3, 0, .7, 'triangle'], [659.3, .07, .7, 'triangle'], [784, .14, .7, 'triangle'], [1046.5, .21, .9, 'triangle']]},
   {id:'bolha', t:'Bolhinha', notas:[[420, 0, .16, 'sine', 0, 980]]},
   {id:'caixinha', t:'Caixinha de música', notas:[[1568, 0, .9, 'sine'], [1318.5, .16, .9, 'sine'], [1046.5, .32, .9, 'sine'], [1318.5, .48, 1.2, 'sine']]},
@@ -5118,15 +5118,16 @@ VIEWS.notificacoes = () => {
   const $ = id => document.getElementById(id);
   const draw = (msg = '') => { if(!$('ntbox')) return;
     const perm = notifSuportada() ? Notification.permission : 'sem', som = store.get('notifSom', 'sino');
-    const estado = perm === 'granted' ? (pushAtivo() ? ['ok', 'Ligadas, até com o app fechado'] : ['meio', 'Ligadas enquanto o app estiver aberto']) : perm === 'denied' ? ['nao', 'Bloqueadas no navegador'] : perm === 'sem' ? ['nao', 'Esse navegador não tem notificações'] : ['nao', 'Desligadas'];
+    const estado = perm === 'granted' ? (pushAtivo() ? ['ok', 'Ligadas, até com o app fechado'] : ['meio', 'Ligadas enquanto o app estiver aberto']) : perm === 'denied' ? ['nao', 'Notificações bloqueadas'] : perm === 'sem' ? ['nao', 'Esse navegador não tem notificações'] : ['nao', 'Desligadas'];
     $('ntbox').innerHTML = `<div class="nt-card"><div class="nt-st ${estado[0]}"><span class="nt-dot"></span><b>${estado[1]}</b></div>
-        ${perm === 'granted' ? `<button type="button" class="ghost" id="nttest">${icon('bell')} Testar</button>` : perm === 'denied' ? `<p class="nt-aj">Libera em: cadeado do site (ou configurações do app) › <b>Notificações</b> › <b>Permitir</b>.</p>` : perm === 'sem' ? (ios ? `<p class="nt-aj">No iPhone, só funciona com o app instalado na tela de início.</p>` : '') : `<button type="button" id="ntligar">${icon('bell')} Ligar notificações</button>`}
+        ${perm === 'granted' ? `<button type="button" class="ghost" id="nttest">${icon('bell')} Testar</button>` : perm === 'denied' ? `<p class="nt-aj">Libera em: <b>Configurações</b> › <b>Aplicativos</b> › <b>D&amp;M</b> › <b>Permitir notificações</b>. Depois recarrega o app.</p><button type="button" class="ghost" id="ntrec">Recarregar o app</button>` : perm === 'sem' ? (ios ? `<p class="nt-aj">No iPhone, só funciona com o app instalado na tela de início.</p>` : '') : `<button type="button" id="ntligar">${icon('bell')} Ligar notificações</button>`}
         ${perm === 'granted' && !pushAtivo() && /github\.io$/.test(location.hostname) && vapidChave() && workerURL() ? `<button type="button" class="ghost" id="ntligar">Ligar com o app fechado também</button>` : ''}
         ${msg ? `<p class="nt-msg">${msg}</p>` : ''}</div>
       <p class="ct-sep">Som</p>
       <div class="nt-sons">${SONS.map(x => `<button type="button" class="${x.id === som ? 'on' : ''}" data-som="${x.id}"><span class="nt-r"></span>${x.t}</button>`).join('')}</div>
       <p class="nt-nota">Com o app fechado, toca o som do celular.</p>
       ${eu === 'Mihzinha' ? `<details class="nt-cfg" ${vapidChave() && workerURL() ? '' : 'open'}><summary>Configuração (só você vê)</summary><label class="fz-lab">Chave de push do Firebase<input type="text" id="ntvapid" value="${esc(vapidChave())}" placeholder="cola a chave aqui"></label><label class="fz-lab">Endereço do Cloudflare<input type="url" id="ntworker" value="${esc(workerURL())}" placeholder="https://dm-avisos….workers.dev"></label><button type="button" class="ghost" id="ntvsalva">Salvar</button><p class="nt-msg" id="ntvm"></p></details>` : ''}`;
+    $('ntrec')?.addEventListener('click', () => location.reload());
     $('ntbox').querySelectorAll('[data-som]').forEach(b => b.onclick = () => { store.set('notifSom', b.dataset.som); tocaSom(b.dataset.som); draw(); });
     $('ntligar')?.addEventListener('click', async e => { e.currentTarget.disabled = true; const r = await ativarPush();
       draw(r === 'push' ? 'Prontinho! Agora chega aviso até com o app fechado.' : r === 'local' ? 'Ligadas! Avisam enquanto o app estiver aberto.' : r === 'denied' ? 'Você não permitiu. Dá pra liberar nas configurações.' : String(r).startsWith('erro') ? 'Não deu pra ligar com o app fechado (' + esc(String(r).slice(5, 60)) + ')' : ''); });
