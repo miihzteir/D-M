@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=43">
-<link rel="apple-touch-icon" href="icon-180.png?v=43">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=43">
+<link rel="manifest" href="manifest.json?v=45">
+<link rel="apple-touch-icon" href="icon-180.png?v=45">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=45">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -1806,6 +1806,20 @@ html body .nt-sons button.on{border-color:#b0485a;background:#fff5f7}
 .nt-cfg .fz-lab{margin-top:10px}
 html body .nt-card button{display:flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 18px;line-height:1}
 html body .nt-card button .icn{display:block;font-size:18px;flex:none}
+/* senha */
+.pin-wrap{position:fixed;inset:0;z-index:9800;display:grid;place-items:center;padding:20px;background:rgba(60,20,34,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity .25s}
+.pin-wrap.in{opacity:1}
+.pin-card{position:relative;width:100%;max-width:320px;background:#fffaf6;border-radius:30px;padding:30px 22px 22px;text-align:center;box-shadow:0 40px 80px -30px rgba(60,10,25,.6);display:flex;flex-direction:column;align-items:center;gap:8px}
+.pin-card.ok{animation:pinok .35s ease}@keyframes pinok{50%{transform:scale(1.04)}}
+.pin-ic{width:54px;height:54px;border-radius:18px;display:grid;place-items:center;background:linear-gradient(135deg,#e8506a,#9b1630);color:#fff;font-size:26px;box-shadow:0 10px 22px -10px rgba(155,22,48,.7)}
+.pin-card h3{font-family:var(--f-display);font-style:italic;font-size:24px;margin:6px 0 0;color:var(--ink)}
+.pin-sub{font-size:13px;color:var(--muted);margin:0 0 6px;min-height:18px}
+.pin-dots{display:flex;gap:12px;margin:6px 0 14px}.pin-dots i{width:14px;height:14px;border-radius:50%;border:2px solid #d9a3ad;transition:background .15s,transform .15s}.pin-dots i.on{background:#b0485a;border-color:#b0485a;transform:scale(1.1)}
+.pin-pad{display:grid;grid-template-columns:repeat(3,64px);gap:12px}
+html body .pin-pad button{width:64px;height:64px;min-height:0;padding:0;border-radius:50%;background:#fff;color:var(--ink);font-size:24px;font-weight:600;border:0;box-shadow:0 6px 16px -10px rgba(122,20,36,.45), inset 0 0 0 1px rgba(200,24,44,.08)}
+html body .pin-pad button:active{background:#fde3e8;transform:scale(.95)}
+html body .pin-pad button[data-n="x"]{background:none;box-shadow:none;font-size:22px;color:var(--muted)}
+html body .pin-x{position:absolute;top:12px;right:12px;width:34px;height:34px;min-height:0;padding:0;border-radius:50%;background:none;border:0;box-shadow:none;color:var(--muted);display:grid;place-items:center;font-size:18px}.pin-x .icn{transform:rotate(45deg)}
 </style>
 
 <canvas id="petals" aria-hidden="true"></canvas>
@@ -2756,6 +2770,10 @@ const app = document.getElementById('app');
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 /* prévia: a Mihzinha vê o app do zero, como o Di, sem mexer em nada de verdade */
+
+/* apelidos: varia o nome pra não ficar repetitivo (cada lugar mantém o mesmo no dia) */
+const APELIDOS = {Mihzinha:['Mihzinha', 'Mih', 'Milena'], Di:['Di', 'Diogo']};
+function apelido(q, k = 0){ const l = APELIDOS[q] || [q]; const d = new Date(); const n = d.getFullYear() * 400 + d.getMonth() * 32 + d.getDate(); return l[((n * 7 + k * 13) % l.length + l.length) % l.length]; }
 const PREVIA = /^#previa/.test(location.hash);
 const PFX = PREVIA ? 'previa_' : 'diogo_';
 const store = {
@@ -2973,6 +2991,31 @@ function renderLogin(){
     }catch(e){ msg.textContent = 'Não deu pra entrar agora. Tenta de novo.'; btn.disabled = false; }
   };
 }
+
+/* senha da Mihzinha (pro Di não entrar no lugar dela kkk) */
+const PIN_H = '8a9243d616795d1038fbb5068231850490eb0f532be8d8fceb36ad8615ff3e07';
+async function pinCerto(v){ try{ const h = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('dm:' + v)); return [...new Uint8Array(h)].map(x => x.toString(16).padStart(2, '0')).join('') === PIN_H; }catch(e){ return v.split('').reverse().join('') === '550022'; } }
+function pedirSenha(){
+  return new Promise(ok => {
+    let v = '';
+    const w = document.createElement('div'); w.className = 'pin-wrap';
+    w.innerHTML = `<div class="pin-card"><button type="button" class="pin-x" aria-label="Voltar">${icon('plus')}</button>
+      <span class="pin-ic">${icon('lock')}</span><h3>Senha da Mihzinha</h3><p class="pin-sub" id="pinsub">pra ninguém entrar no lugar dela</p>
+      <div class="pin-dots" id="pindots">${'<i></i>'.repeat(6)}</div>
+      <div class="pin-pad">${[1,2,3,4,5,6,7,8,9].map(n => `<button type="button" data-n="${n}">${n}</button>`).join('')}<span></span><button type="button" data-n="0">0</button><button type="button" data-n="x" aria-label="Apagar">⌫</button></div></div>`;
+    document.body.append(w); requestAnimationFrame(() => w.classList.add('in'));
+    const fecha = r => { document.removeEventListener('keydown', tecla); w.classList.remove('in'); setTimeout(() => w.remove(), 250); ok(r); };
+    const pinta = () => w.querySelectorAll('#pindots i').forEach((d, i) => d.classList.toggle('on', i < v.length));
+    const digita = async n => { if(n === 'x'){ v = v.slice(0, -1); pinta(); return; } if(v.length >= 6) return; v += n; pinta();
+      if(v.length === 6){ if(await pinCerto(v)){ store.set('pinOk', true); w.querySelector('.pin-card').classList.add('ok'); setTimeout(() => fecha(true), 350); }
+        else { const c = w.querySelector('.pin-card'); c.classList.remove('shake'); void c.offsetWidth; c.classList.add('shake'); w.querySelector('#pinsub').textContent = 'senha errada… é você mesmo, Di? kkkk'; if(navigator.vibrate) try{ navigator.vibrate(200); }catch(e){} setTimeout(() => { v = ''; pinta(); }, 400); } } };
+    const tecla = e => { if(/^\d$/.test(e.key)) digita(e.key); else if(e.key === 'Backspace') digita('x'); else if(e.key === 'Escape') fecha(false); };
+    document.addEventListener('keydown', tecla);
+    w.querySelectorAll('[data-n]').forEach(b => b.onclick = () => digita(b.dataset.n));
+    w.querySelector('.pin-x').onclick = () => fecha(false);
+    w.onclick = e => { if(e.target === w) fecha(false); };
+  });
+}
 function renderWho(){
   app.innerHTML = `
     <div class="gate page"><div class="sheet who-sheet">
@@ -2986,6 +3029,7 @@ function renderWho(){
       </div>
     </div></div>`;
   app.querySelectorAll('[data-q]').forEach(b => b.onclick = async () => {
+    if(b.dataset.q === 'Mihzinha' && !PREVIA && !store.get('pinOk', false) && !(await pedirSenha())) return;
     app.querySelectorAll('[data-q]').forEach(x => x.disabled = true); b.classList.add('chosen'); sparkle(b);
     try{ await Sync.setQuem(b.dataset.q); }catch(e){}
     setTimeout(nextStep, 450);
@@ -3271,7 +3315,7 @@ function renderHome(y = 0){
       <p class="endtitle">${esc(C.textos.fimNome)}</p>
       <p class="endyear">2026</p>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
-      <p class="endver">versão de 15/10 · 18h30</p>
+      <p class="endver">versão de 15/10 · 18h50</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
@@ -3366,7 +3410,7 @@ function renderFesta(f){
   else if(f.id === 'namoro'){ const n = Math.max(1, f.ano - 2026); cfg = {tema:'namoro', eb:'12 de abril', titulo:F.namoro.titulo.replace('{anos}', `${n} ${n === 1 ? 'ano' : 'anos'}`), sub:F.namoro.sub, texto:F.namoro.texto, fx:'coracoes'}; }
   else { const dele = f.nv.includes(eu); const q = dele ? eu : f.nv[0]; const tx = q === 'Di' ? F.niverDi : F.niverMih;
     cfg = dele ? {tema:'niver', eb:'hoje é o seu dia', titulo:tx.titulo, sub:tx.sub, texto:tx.texto, fx:'baloes'}
-               : {tema:'niver', eb:'hoje é um dia especial', titulo:`Hoje é aniversário ${q === 'Di' ? 'do Di' : 'da Mihzinha'}!`, sub:'não esquece de dar parabéns', texto:'', fx:'baloes', semCarta:1}; }
+               : {tema:'niver', eb:'hoje é um dia especial', titulo:`Hoje é aniversário ${q === 'Di' ? 'do ' + apelido('Di', 1) : 'da ' + apelido('Mihzinha', 1)}!`, sub:'não esquece de dar parabéns', texto:'', fx:'baloes', semCarta:1}; }
   app.innerHTML = ''; document.getElementById('n25')?.remove();
   const el = document.createElement('div'); el.id = 'n25'; el.className = `n25 tema-${cfg.tema}`; document.body.append(el);
   const fx = cfg.fx === 'neve' ? Array.from({length:40}, (_, k) => `<i class="fx-neve" style="--x:${(k * 37) % 100}%;--d:${4 + (k % 5)}s;--a:${(k * .37) % 5}s;--s:${2 + (k % 3) * 2}px"></i>`).join('')
@@ -3420,12 +3464,12 @@ function avisoRecado(){
     const nomeO = eu === 'Di' ? 'Mihzinha' : 'Di', ele = eu === 'Di' ? 'ela' : 'ele';
     const ler = r.ler.map(id => list.find(x => x.id === id)).filter(x => x && x.texto && !store.get('leuRecado_' + x.id, false))[0];
     if(ler){ store.set('leuRecado_' + ler.id, true);
-      return mostraRecado(`<span class="dedic-ic">${icon('heart')}</span><p class="rc-eb">${ler.id.startsWith('namoro') ? 'pelo nosso aniversário de namoro' : 'pelo seu aniversário'}</p><h3>${ler.de === 'Di' ? 'O Di' : 'A Mihzinha'} escreveu pra você</h3><div class="paper rc-paper">${quandoEscrita(ler.criadoEm)}${esc(ler.texto).split(/\n\s*\n/).map(x => `<p>${x.replace(/\n/g, '<br>')}</p>`).join('')}<p class="sign">${ler.de === 'Di' ? 'Di' : 'Mihzinha'}</p></div><button type="button" class="rc-ok">Guardar no coração</button>`); }
+      return mostraRecado(`<span class="dedic-ic">${icon('heart')}</span><p class="rc-eb">${ler.id.startsWith('namoro') ? 'pelo nosso aniversário de namoro' : 'pelo seu aniversário'}</p><h3>${ler.de === 'Di' ? 'O ' + apelido('Di', 2) : 'A ' + apelido('Mihzinha', 2)} escreveu pra você</h3><div class="paper rc-paper">${quandoEscrita(ler.criadoEm)}${esc(ler.texto).split(/\n\s*\n/).map(x => `<p>${x.replace(/\n/g, '<br>')}</p>`).join('')}<p class="sign">${ler.de === 'Di' ? 'Di' : 'Mihzinha'}</p></div><button type="button" class="rc-ok">Guardar no coração</button>`); }
     const w = r.escrever; if(!w) return;
     const ja = list.find(x => x.id === w.id), adiado = store.get('rcDepois_' + w.id, '') === hoje();
     if(ja && ja.texto || adiado) return;
-    const tit = w.tipo === 'niver' ? `${w.quando === 'amanhã' ? 'Amanhã' : 'Hoje'} é aniversário ${nomeO === 'Di' ? 'do Di' : 'da Mihzinha'}!` : `${w.quando === 'amanhã' ? 'Amanhã' : 'Hoje'} faz ${w.anos} ${w.anos === 1 ? 'ano' : 'anos'} de namoro!`;
-    const sub = w.tipo === 'niver' ? `Escreve um bilhetinho pra ${ele}. ${w.quando === 'amanhã' ? `${ele === 'ela' ? 'Ela' : 'Ele'} só vai ler amanhã, quando entrar no app.` : `${ele === 'ela' ? 'Ela' : 'Ele'} vê assim que entrar.`}` : `Escreve um recado ${nomeO === 'Di' ? 'pro Di' : 'pra Mihzinha'}. ${w.quando === 'amanhã' ? 'Os dois só leem amanhã.' : 'Aparece assim que entrar.'}`;
+    const tit = w.tipo === 'niver' ? `${w.quando === 'amanhã' ? 'Amanhã' : 'Hoje'} é aniversário ${nomeO === 'Di' ? 'do ' + apelido('Di', 3) : 'da ' + apelido('Mihzinha', 3)}!` : `${w.quando === 'amanhã' ? 'Amanhã' : 'Hoje'} faz ${w.anos} ${w.anos === 1 ? 'ano' : 'anos'} de namoro!`;
+    const sub = w.tipo === 'niver' ? `Escreve um bilhetinho pra ${ele}. ${w.quando === 'amanhã' ? `${ele === 'ela' ? 'Ela' : 'Ele'} só vai ler amanhã, quando entrar no app.` : `${ele === 'ela' ? 'Ela' : 'Ele'} vê assim que entrar.`}` : `Escreve um recado ${nomeO === 'Di' ? 'pro ' + apelido('Di', 4) : 'pra ' + apelido('Mihzinha', 4)}. ${w.quando === 'amanhã' ? 'Os dois só leem amanhã.' : 'Aparece assim que entrar.'}`;
     mostraRecado(`<span class="dedic-ic">${icon('note')}</span><h3>${tit}</h3><p class="rc-sub">${sub}</p><textarea id="rctx" rows="6" maxlength="2000" placeholder="Escreve com carinho…"></textarea><p class="werr" id="rcerr"></p><button type="button" id="rcenv">Guardar o recado</button><button type="button" class="ghost" id="rcdepois">Escrevo depois</button>`, box => {
       box.querySelector('#rcdepois').onclick = () => { store.set('rcDepois_' + w.id, hoje()); fechaRecado(); };
       box.querySelector('#rcenv').onclick = async e => { const t = box.querySelector('#rctx').value.trim(); if(!t){ box.querySelector('#rcerr').textContent = 'Escreve alguma coisinha antes.'; return; }
@@ -4741,7 +4785,7 @@ function sequenciaHTML(chocs, eu, outro){
       cells += `<i class="sq-d ${cls}${ds === hj ? ' hj' : ''}${ds === INICIO_STR ? ' ini' : ''}">${a && b ? icon('heart') : k}</i>`; }
     html += `<div class="sq-mes"><p>${m.toLocaleDateString('pt-BR', {month:'long', year:'numeric'})}</p><div class="sq-grid">${['D','S','T','Q','Q','S','S'].map(x => `<b>${x}</b>`).join('')}${cells}</div></div>`;
   });
-  html += `<div class="sq-leg"><span><i class="sq-d ambos">${icon('heart')}</i>os dois</span><span><i class="sq-d eu"></i>só você</span><span><i class="sq-d ele"></i>só ${outro === 'Di' ? 'o Di' : 'a Mihzinha'}</span></div>`;
+  html += `<div class="sq-leg"><span><i class="sq-d ambos">${icon('heart')}</i>os dois</span><span><i class="sq-d eu"></i>só você</span><span><i class="sq-d ele"></i>só ${outro === 'Di' ? 'o ' + apelido('Di', 5) : 'a ' + apelido('Mihzinha', 5)}</span></div>`;
   if(!jaComecou()) html = `<p class="sq-aviso">A sequência começa a contar no dia 25 de dezembro.</p>` + html;
   return html;
 }
@@ -4776,7 +4820,7 @@ VIEWS.casinha = () => {
     if(tipo === 'pet'){ const nome = (cs.pets || {})[q]; fxMsg(`Você fez carinho ${nome ? 'no ' + nome : q === 'cachorro' ? 'no cachorrinho' : 'no gatinho'}`); return; }
     if(q === 'Bebe'){ fxMsg('Você fez carinho no bebê'); return; }
     if(q === eu){ fxMsg(eu === 'Di' ? 'Abraço em você mesmo também vale' : 'Abraço em você mesma também vale'); return; }
-    colA.add({de:eu, para:q}).catch(() => {}); fxMsg(`Você deu um abraço ${q === 'Di' ? 'no Di' : 'na Mihzinha'}. ${q === 'Di' ? 'Ele' : 'Ela'} vai ver quando entrar`);
+    colA.add({de:eu, para:q}).catch(() => {}); fxMsg(`Você deu um abraço ${q === 'Di' ? 'no ' + apelido('Di', 6) : 'na ' + apelido('Mihzinha', 6)}. ${q === 'Di' ? 'Ele' : 'Ela'} vai ver quando entrar`);
   };
   const comprar = async (b, id, preco, depois) => {
     const s = chocoSaldo(chocs, compras), mini = b.classList.contains('sw');
@@ -4795,7 +4839,7 @@ VIEWS.casinha = () => {
       $('csmis').innerHTML = `<div class="ms-head ms-off"><b>Missões do dia</b><small>começam no dia 25</small></div>`; }
     else {
     $('cshoje').innerHTML = (of.hoje ? `<span class="ok">${icon('heart')} o seu de hoje já tá guardado</span>` : `<button type="button" id="cspega">${icon('gift')} Pegar o chocolate de hoje</button>`)
-      + `<small>${outro === 'Di' ? 'O Di' : 'A Mihzinha'} ${ofo.hoje ? 'também já pegou hoje' : 'ainda não pegou hoje'}${ofo.seguidos ? ` · ${ofo.seguidos} ${ofo.seguidos === 1 ? 'dia seguido' : 'dias seguidos'}` : ''}</small><small class="cs-dica">a cada 7 dias seguidos, +${CASA.bonusOfensiva} chocolates de bônus</small>`;
+      + `<small>${outro === 'Di' ? 'O ' + apelido('Di', 7) : 'A ' + apelido('Mihzinha', 7)} ${ofo.hoje ? 'também já pegou hoje' : 'ainda não pegou hoje'}${ofo.seguidos ? ` · ${ofo.seguidos} ${ofo.seguidos === 1 ? 'dia seguido' : 'dias seguidos'}` : ''}</small><small class="cs-dica">a cada 7 dias seguidos, +${CASA.bonusOfensiva} chocolates de bônus</small>`;
     $('cspega')?.addEventListener('click', async e => { const r = e.currentTarget.getBoundingClientRect(); burst(r.left + r.width/2, r.top, 24); e.currentTarget.disabled = true; try{ await pegarChocolate(colC, chocs, eu); }catch(x){} });
     }
     if(seqAberta) $('csseq').innerHTML = sequenciaHTML(chocs, eu, outro);
@@ -4902,7 +4946,7 @@ Sync.on('state', st => { niverAtual = st.niver || {}; });
 const md = d => d.slice(5, 10);
 function niverHoje(){ if(location.hash === '#niver') return ['Di']; const h = mdMT(); return ['Di','Mihzinha'].filter(q => niverAtual[q] && md(niverAtual[q]) === h); }
 function proxNiver(q){ const b = niverAtual[q]; if(!b) return null; const y = new Date().getFullYear(); let d = `${y}-${md(b)}`; if(diasAte(d) < 0) d = `${y + 1}-${md(b)}`; return {data:d, dias:diasAte(d), idade:+d.slice(0,4) - +b.slice(0,4)}; }
-const doDa = q => q === 'Di' ? 'do Di' : 'da Mihzinha';
+const doDa = q => q === 'Di' ? 'do ' + apelido('Di', 8) : 'da ' + apelido('Mihzinha', 8);
 
 /* ---------- missões da semana ---------- */
 const MISSOES = [
@@ -4938,12 +4982,12 @@ const MIS_DIA = {
     {id:'pensei', t:() => 'Apertar "pensei em você" 3 vezes', go:'#pbtn', ic:'heart', meta:3},
     {id:'diario', t:() => 'Contar no diário como foi o seu dia', go:'diario', ic:'note'}],
   esc: [
-    {id:'bilh',   t:o => `Mandar um bilhetinho ${o === 'Di' ? 'pro Di' : 'pra Mihzinha'}`, go:'bilhetes', ic:'note'},
-    {id:'cartad', t:o => `Escrever uma cartinha com data ${o === 'Di' ? 'pro Di' : 'pra Mihzinha'}`, go:'cartadata', ic:'mail'},
-    {id:'gostos', t:o => `Colocar uma coisa que ${o === 'Di' ? 'o Di' : 'a Mihzinha'} ama`, go:'gostos', ic:'star'},
+    {id:'bilh',   t:o => `Mandar um bilhetinho ${o === 'Di' ? 'pro ' + apelido('Di', 9) : 'pra ' + apelido('Mihzinha', 9)}`, go:'bilhetes', ic:'note'},
+    {id:'cartad', t:o => `Escrever uma cartinha com data ${o === 'Di' ? 'pro ' + apelido('Di', 10) : 'pra ' + apelido('Mihzinha', 10)}`, go:'cartadata', ic:'mail'},
+    {id:'gostos', t:o => `Colocar uma coisa que ${o === 'Di' ? 'o ' + apelido('Di', 11) : 'a ' + apelido('Mihzinha', 11)} ama`, go:'gostos', ic:'star'},
     {id:'musica', t:() => 'Colocar uma música na nossa playlist', go:'playlist', ic:'music'}],
   brin: [
-    {id:'abraco',   t:o => `Dar um abraço ${o === 'Di' ? 'no Di' : 'na Mihzinha'} na casinha`, go:'casinha', ic:'hug'},
+    {id:'abraco',   t:o => `Dar um abraço ${o === 'Di' ? 'no ' + apelido('Di', 12) : 'na ' + apelido('Mihzinha', 12)} na casinha`, go:'casinha', ic:'hug'},
     {id:'coracoes', t:() => 'Jogar uma partida de Pegue os corações', go:'coracoes', ic:'heartsfall'},
     {id:'memoria',  t:() => 'Terminar um jogo da memória', go:'memoria', ic:'cards'}]
 };
@@ -4983,9 +5027,9 @@ function missoesBox(el, compacto){
       <div class="mdia-h"><span class="mdia-ic">${icon('gift')}</span><div class="mdia-ht"><b>Missões de hoje</b><small>${pegas === tot ? 'as duas feitas, amanhã tem mais' : 'a primeira vale 1 chocolate, a segunda 2'}</small></div><span class="mdia-n">${pegas}/${tot}</span></div>
       ${info.map(x => `<button type="button" class="mdia-row ${x.pego ? 'pego' : x.feito ? 'pronta' : ''}" data-mid="${x.m.id}">
         <span class="mr-ic">${icon(x.m.ic)}</span>
-        <span class="mr-t">${x.m.esp ? `<em class="mr-esp">missão especial ${x.m.esp.autor === 'Di' ? 'do Di' : 'da Mihzinha'}</em>` : ''}${esc(x.m.t(outro))}<small>${x.pego ? 'feita' : x.m.manual && !x.feito ? 'quando fizer, toca aqui' : x.feito ? `toca pra pegar ${x.m.premio === 1 ? 'o chocolate' : `os ${x.m.premio} chocolates`}` : x.meta > 1 ? `${x.v} de ${x.meta} · toca pra ir` : 'toca pra ir'}</small></span>
+        <span class="mr-t">${x.m.esp ? `<em class="mr-esp">missão especial ${x.m.esp.autor === 'Di' ? 'do ' + apelido('Di', 13) : 'da ' + apelido('Mihzinha', 13)}</em>` : ''}${esc(x.m.t(outro))}<small>${x.pego ? 'feita' : x.m.manual && !x.feito ? 'quando fizer, toca aqui' : x.feito ? `toca pra pegar ${x.m.premio === 1 ? 'o chocolate' : `os ${x.m.premio} chocolates`}` : x.meta > 1 ? `${x.v} de ${x.meta} · toca pra ir` : 'toca pra ir'}</small></span>
         <span class="mr-r">${x.pego ? '♥︎' : x.feito ? `+${x.m.premio}` : `+${x.m.premio} ›`}</span></button>`).join('')}
-      <button type="button" class="mdia-esp" id="mdesp">${icon('star')} criar uma missão especial ${outro === 'Di' ? 'pro Di' : 'pra Mihzinha'}</button></div>`;
+      <button type="button" class="mdia-esp" id="mdesp">${icon('star')} criar uma missão especial ${outro === 'Di' ? 'pro ' + apelido('Di', 14) : 'pra ' + apelido('Mihzinha', 14)}</button></div>`;
     el.querySelector('#mdesp').onclick = abrirMissoesEsp;
     el.querySelectorAll('[data-mid]').forEach(b => b.onclick = async () => {
       const x = info.find(i => i.m.id === b.dataset.mid); if(!x || x.pego) return;
@@ -5064,7 +5108,7 @@ window.pushEvento = pushEvento;
 let vigiando = false;
 function vigiar(){
   if(vigiando || PREVIA || !Sync.quem) return; vigiando = true;
-  const eu = Sync.quem, outro = eu === 'Di' ? 'Mihzinha' : 'Di', Ele = outro === 'Di' ? 'O Di' : 'A Mihzinha', ele = outro === 'Di' ? 'ele' : 'ela';
+  const eu = Sync.quem, outro = eu === 'Di' ? 'Mihzinha' : 'Di', Ele = outro === 'Di' ? 'O ' + apelido('Di', 15) : 'A ' + apelido('Mihzinha', 15), ele = outro === 'Di' ? 'ele' : 'ela';
   const t0 = Date.now() - 3000, vistos = new Set(), novo = (k, it) => { if(vistos.has(k) || !(it.criadoEm > t0)) return false; vistos.add(k); return true; };
   const ok = () => jaComecou();
   const corta = (t, n = 90) => !t ? '' : t.length > n ? t.slice(0, n - 1) + '…' : t;
@@ -5106,13 +5150,13 @@ function renovaPush(){ if(notifSuportada() && Notification.permission === 'grant
 /* cartãozinho na tela inicial convidando a ligar */
 function convitePush(el){
   if(!el || PREVIA || !notifSuportada() || Notification.permission !== 'default' || store.get('notifConviteFechado', false)) return;
-  const outro = (Sync.quem || 'Di') === 'Di' ? 'a Mihzinha' : 'o Di';
+  const outro = (Sync.quem || 'Di') === 'Di' ? 'a ' + apelido('Mihzinha', 36) : 'o ' + apelido('Di', 36);
   el.innerHTML = `<div class="ncv"><span class="ncv-ic">${icon('bell')}</span><span class="ncv-t"><b>Ligar as notificações?</b><small>pra saber na hora quando ${outro} fizer algo pra você</small></span><button type="button" id="ncvok">Ligar</button><button type="button" class="ncv-x" id="ncvx" aria-label="Agora não">${icon('plus')}</button></div>`;
   el.querySelector('#ncvx').onclick = () => { store.set('notifConviteFechado', true); el.innerHTML = ''; };
   el.querySelector('#ncvok').onclick = () => openStop('notificacoes');
 }
 VIEWS.notificacoes = () => {
-  const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'a Mihzinha' : 'o Di';
+  const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'a ' + apelido('Mihzinha', 37) : 'o ' + apelido('Di', 37);
   const ua = navigator.userAgent, ios = /iphone|ipad|ipod/i.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
   shell('avisos','Notificações',`Pra saber na hora quando ${outro} fizer algo pra você`, `<div id="ntbox"></div>`);
   const $ = id => document.getElementById(id);
@@ -5159,7 +5203,7 @@ function tourInicio(forcar){
       <h2>${esc(p.t)}</h2><p>${esc(p.s)}</p>
       <div class="tour-dots">${passos.map((_, i) => `<i class="${i === k ? 'on' : ''}"></i>`).join('')}</div>
       <div class="tour-acts">${k ? `<button type="button" class="ghost" id="tourv">Voltar</button>` : ''}<button type="button" id="tourn">${ult ? 'Bora começar' : 'Próximo'}</button></div>
-      ${k === 0 ? `<p class="tour-sign">com amor, ${eu === 'Di' ? 'Mihzinha' : 'Di'}</p>` : ''}</div>`;
+      ${k === 0 ? `<p class="tour-sign">com amor, ${eu === 'Di' ? 'sua Mih' : 'seu Di'}</p>` : ''}</div>`;
     w.querySelector('#tourn').onclick = e => { if(ult){ const r = e.currentTarget.getBoundingClientRect(); burst(r.left + r.width / 2, r.top, 60); fecha(); } else { k++; draw(); } };
     w.querySelector('#tourv')?.addEventListener('click', () => { k--; draw(); });
     w.querySelector('#tourx').onclick = fecha; };
@@ -5169,7 +5213,7 @@ function tourInicio(forcar){
 
 /* ---------- missões especiais (um cria pro outro) ---------- */
 function abrirMissoesEsp(){
-  const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'Mihzinha' : 'Di', pro = outro === 'Di' ? 'pro Di' : 'pra Mihzinha', col = Sync.col('missoesEsp');
+  const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'Mihzinha' : 'Di', pro = outro === 'Di' ? 'pro ' + apelido('Di', 16) : 'pra ' + apelido('Mihzinha', 16), col = Sync.col('missoesEsp');
   document.getElementById('mesp')?.remove();
   const w = document.createElement('div'); w.className = 'tk-wrap'; w.id = 'mesp';
   w.innerHTML = `<div class="sheet2"><button class="inst-x" id="mespx" aria-label="Fechar">${icon('plus')}</button>
@@ -5198,7 +5242,7 @@ function missaoEspHoje(lista, eu){
 /* ---------- hoje com o outro: o que ele(a) já fez ---------- */
 function painelOutro(el){
   if(!el) return;
-  const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'Mihzinha' : 'Di', Ele = outro === 'Di' ? 'O Di' : 'A Mihzinha', ele = outro === 'Di' ? 'ele' : 'ela';
+  const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'Mihzinha' : 'Di', Ele = outro === 'Di' ? 'O ' + apelido('Di', 17) : 'A ' + apelido('Mihzinha', 17), ele = outro === 'Di' ? 'ele' : 'ela';
   const d = {pensei:{}}, offs = [], cols = ['respostas','bilhetes','chocolates','saudade','premios','abracos'];
   let raf = 0;
   const draw = () => { raf = 0; if(!el.isConnected){ offs.forEach(f => f && f()); return; }
@@ -5211,7 +5255,7 @@ function painelOutro(el){
     const bl = (d.bilhetes || []).filter(b => b.autor === outro && b.criadoEm >= ini).length; if(bl) its.push({ic:'note', t:`colou ${bl === 1 ? 'um bilhetinho' : bl + ' bilhetinhos'} no mural`, go:'bilhetes'});
     const sd = (d.saudade || []).find(x => x.quem === outro && x.dia === hj); if(sd) its.push({ic:'heart', t:`tá com saudade (${sd.n || 1}x hoje)`, go:'saudade'});
     const ab = (d.abracos || []).filter(a => a.de === outro && a.para === eu && a.criadoEm >= ini).length; if(ab) its.push({ic:'hug', t:`te deu ${ab === 1 ? 'um abraço' : ab + ' abraços'} na casinha`, go:'casinha'});
-    el.innerHTML = `<div class="hj-o"><p class="hj-t">Hoje com ${outro === 'Di' ? 'o Di' : 'a Mihzinha'}</p>${its.length ? its.map(i => `<button type="button" class="hj-it ${i.forte ? 'forte' : ''}" ${i.go ? `data-hgo="${i.go}"` : ''}><span class="hj-ic">${icon(i.ic)}</span><span>${i.t}</span></button>`).join('') : `<p class="hj-vazio">${Ele} ainda não passou por aqui hoje. Que tal deixar um bilhetinho pra ${ele} achar?</p>`}</div>`;
+    el.innerHTML = `<div class="hj-o"><p class="hj-t">Hoje com ${outro === 'Di' ? 'o ' + apelido('Di', 18) : 'a ' + apelido('Mihzinha', 18)}</p>${its.length ? its.map(i => `<button type="button" class="hj-it ${i.forte ? 'forte' : ''}" ${i.go ? `data-hgo="${i.go}"` : ''}><span class="hj-ic">${icon(i.ic)}</span><span>${i.t}</span></button>`).join('') : `<p class="hj-vazio">${Ele} ainda não passou por aqui hoje. Que tal deixar um bilhetinho pra ${ele} achar?</p>`}</div>`;
     el.querySelectorAll('[data-hgo]').forEach(b => b.onclick = () => { const g = b.dataset.hgo; if(g.startsWith('#')){ const a = document.querySelector(g); a && a.scrollIntoView({behavior:'smooth', block:'center'}); a && (a.classList.remove('mpulse'), void a.offsetWidth, a.classList.add('mpulse')); } else openStop(g); });
   };
   const pede = () => { if(!raf) raf = requestAnimationFrame(draw); };
@@ -5223,7 +5267,7 @@ function painelOutro(el){
 /* ---------- prêmios de verdade: trocar chocolates por mimos ---------- */
 const PREMIO_SUG = [['Vale um jantar que você escolhe', 40], ['Vale uma massagem de 20 minutos', 25], ['Vale um dia sem lavar louça', 20], ['Vale o filme que você escolher', 15], ['Vale um passeio surpresa', 60], ['Vale café da manhã na cama', 35]];
 VIEWS.premios = () => {
-  const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'Mihzinha' : 'Di', pro = outro === 'Di' ? 'pro Di' : 'pra Mihzinha', Ele = outro === 'Di' ? 'O Di' : 'A Mihzinha';
+  const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'Mihzinha' : 'Di', pro = outro === 'Di' ? 'pro ' + apelido('Di', 19) : 'pra ' + apelido('Mihzinha', 19), Ele = outro === 'Di' ? 'O ' + apelido('Di', 20) : 'A ' + apelido('Mihzinha', 20);
   shell('mimos de verdade','Prêmios de verdade','Os chocolates da casinha também viram coisas de verdade. Um escolhe os prêmios do outro',
     `<div class="pz-saldo"><span class="cs-ic">${CHOCO_SVG}</span><div><b id="pzs">0</b><small>chocolates pra gastar</small></div></div>
      <h3 class="ct-sep">Pra você trocar</h3><div class="pz-list" id="pzpra"></div>
@@ -5248,7 +5292,7 @@ VIEWS.premios = () => {
       if(!jaComecou() && !PREVIA){ csToast('Os chocolates começam no dia 25'); return; }
       if(sl2 < p.preco){ csToast(`Faltam ${p.preco - sl2} chocolates pra esse`); b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake'); return; }
       if(!b.dataset.sure){ b.dataset.sure = 1; const o = b.innerHTML; b.textContent = `Trocar ${p.preco}?`; b.classList.add('sure'); setTimeout(() => { if(!b.isConnected) return; delete b.dataset.sure; b.innerHTML = o; b.classList.remove('sure'); }, 2600); return; }
-      b.disabled = true; try{ await colP.set('premio_' + p.id, {preco:p.preco, autor:eu}); await col.set(p.id, Object.assign({}, p, {comprado:true, compradoEm:Date.now(), por:eu})); const r = b.getBoundingClientRect(); burst(r.left + r.width / 2, r.top, 50); csToast(`É seu! Agora ${outro === 'Di' ? 'o Di' : 'a Mihzinha'} tem que cumprir ♥︎`); }catch(x){ b.disabled = false; } });
+      b.disabled = true; try{ await colP.set('premio_' + p.id, {preco:p.preco, autor:eu}); await col.set(p.id, Object.assign({}, p, {comprado:true, compradoEm:Date.now(), por:eu})); const r = b.getBoundingClientRect(); burst(r.left + r.width / 2, r.top, 50); csToast(`É seu! Agora ${outro === 'Di' ? 'o ' + apelido('Di', 21) : 'a ' + apelido('Mihzinha', 21)} tem que cumprir ♥︎`); }catch(x){ b.disabled = false; } });
     $('pzmeus').querySelectorAll('[data-ent]').forEach(b => b.onclick = async () => { const p = list.find(x => x.id === b.dataset.ent); if(!p) return; await col.set(p.id, Object.assign({}, p, {entregue:true, entregueEm:Date.now()})); sparkle(b); });
     $('pzmeus').querySelectorAll('[data-del]').forEach(b => b.onclick = () => { if(!b.dataset.sure){ b.dataset.sure = 1; b.classList.add('sure'); setTimeout(() => { delete b.dataset.sure; b.classList.remove('sure'); }, 2500); return; } col.remove(b.dataset.del); });
   };
@@ -5269,7 +5313,7 @@ function avisoAbraco(){
   setTimeout(() => { off(); if(!document.querySelector('.home')) return;
     const visto = store.get('abracosVistos', 0), novos = list.filter(a => a.para === eu && a.criadoEm > visto);
     if(!novos.length) return;
-    const de = novos[novos.length - 1].de === 'Di' ? 'O Di' : 'A Mihzinha';
+    const de = novos[novos.length - 1].de === 'Di' ? 'O ' + apelido('Di', 22) : 'A ' + apelido('Mihzinha', 22);
     const t = document.createElement('div'); t.className = 'chtoast top'; t.id = 'abtoast';
     t.innerHTML = `<span class="ch-ic ab-ic">${icon('heart')}</span><span class="ch-tx"><b>${de} te deu ${novos.length === 1 ? 'um abraço' : novos.length + ' abraços'} na casinha!</b><small>toca no bonequinho pra devolver</small></span><button type="button" id="abok">Ver</button>`;
     document.body.append(t); requestAnimationFrame(() => t.classList.add('in'));
@@ -5290,7 +5334,7 @@ VIEWS.saudade = () => {
   const col = Sync.col('saudade'), $ = id => document.getElementById(id);
   let list = [];
   const n = (q, d = hoje()) => (list.find(x => x.id === `${d}_${q}`) || {}).n || 0;
-  const coracao = (q) => { const v = n(q), f = Math.min(10, v) / 10, nome = q === eu ? 'Você' : (q === 'Di' ? 'O Di' : 'A Mihzinha');
+  const coracao = (q) => { const v = n(q), f = Math.min(10, v) / 10, nome = q === eu ? 'Você' : (q === 'Di' ? 'O ' + apelido('Di', 23) : 'A ' + apelido('Mihzinha', 23));
     return `<div class="sd-h"><svg viewBox="0 0 100 92"><defs><clipPath id="sdc${q}"><path d="M50 88C20 66 4 50 4 30 4 14 16 4 29 4c9 0 16 5 21 12 5-7 12-12 21-12 13 0 25 10 25 26 0 20-16 36-46 58z"/></clipPath></defs>
       <path d="M50 88C20 66 4 50 4 30 4 14 16 4 29 4c9 0 16 5 21 12 5-7 12-12 21-12 13 0 25 10 25 26 0 20-16 36-46 58z" fill="#fbf2f0" stroke="#7a1424" stroke-width="3"/>
       <rect clip-path="url(#sdc${q})" x="0" y="${92 - 92 * f}" width="100" height="${92 * f}" fill="#b3122c" class="sd-fill"/>
@@ -5298,7 +5342,7 @@ VIEWS.saudade = () => {
       <b>${v}</b><small><strong>${q === eu ? 'Você' : q}</strong> · ${v === 1 ? 'vez' : 'vezes'} hoje</small></div>`; };
   const draw = () => { if(!$('sdh')) return;
     $('sdh').innerHTML = coracao('Mihzinha') + coracao('Di');
-    const vo = n(outro); $('sdm').textContent = vo >= 10 ? `${outro === 'Di' ? 'O Di' : 'A Mihzinha'} tá morrendo de saudade de você hoje!` : vo ? `${outro === 'Di' ? 'O Di' : 'A Mihzinha'} já sentiu saudade ${vo} ${vo === 1 ? 'vez' : 'vezes'} hoje` : `${outro === 'Di' ? 'O Di' : 'A Mihzinha'} ainda não apertou hoje`;
+    const vo = n(outro); $('sdm').textContent = vo >= 10 ? `${outro === 'Di' ? 'O ' + apelido('Di', 24) : 'A ' + apelido('Mihzinha', 24)} tá morrendo de saudade de você hoje!` : vo ? `${outro === 'Di' ? 'O ' + apelido('Di', 25) : 'A ' + apelido('Mihzinha', 25)} já sentiu saudade ${vo} ${vo === 1 ? 'vez' : 'vezes'} hoje` : `${outro === 'Di' ? 'O ' + apelido('Di', 26) : 'A ' + apelido('Mihzinha', 26)} ainda não apertou hoje`;
     const dias = [...Array(7)].map((_, k) => { const d = new Date(); d.setDate(d.getDate() - 6 + k); return dsStr(d); });
     const mx = Math.max(5, ...dias.map(d => n('Di', d) + n('Mihzinha', d)));
     $('sds').innerHTML = `<h3>Últimos 7 dias</h3><div class="sd-bars">${dias.map(d => `<div class="sd-col"><div class="sd-bar"><i style="height:${n('Mihzinha', d) / mx * 100}%" class="mi"></i><i style="height:${n('Di', d) / mx * 100}%" class="di"></i></div><small>${new Date(d + 'T12:00:00').toLocaleDateString('pt-BR', {weekday:'short'}).slice(0,3)}</small></div>`).join('')}</div><p class="sd-leg"><span class="mi"></span>Mihzinha <span class="di"></span>Di</p>`;
@@ -5310,7 +5354,7 @@ VIEWS.saudade = () => {
 
 /* ---------- diário do casal ---------- */
 VIEWS.diario = () => {
-  const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'Mihzinha' : 'Di', nomeO = outro === 'Di' ? 'O Di' : 'A Mihzinha';
+  const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'Mihzinha' : 'Di', nomeO = outro === 'Di' ? 'O ' + apelido('Di', 27) : 'A ' + apelido('Mihzinha', 27);
   shell('um pouquinho de cada dia','Diário do casal',`Cada um conta como foi o dia. Você só lê o ${outro === 'Di' ? 'dele' : 'dela'} depois de escrever o seu`,
     `<form class="card-form" id="dif"><p class="wo-t">Como foi o seu dia hoje?</p><p class="dia-data">${fmtLongo(hoje())}</p>
       <textarea id="dit" rows="5" maxlength="1500" placeholder="Me conta tudo…" aria-label="Seu dia"></textarea>
@@ -5427,7 +5471,7 @@ VIEWS.lugares = () => {
 VIEWS.cartadata = () => {
   const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'Mihzinha' : 'Di';
   const amanha = (() => { const d = new Date(); d.setDate(d.getDate() + 1); return dsStr(d); })();
-  shell('pra abrir depois','Cartinha com data',`Escreve hoje e escolhe o dia que ${outro === 'Di' ? 'o Di' : 'a Mihzinha'} vai poder abrir`,
+  shell('pra abrir depois','Cartinha com data',`Escreve hoje e escolhe o dia que ${outro === 'Di' ? 'o ' + apelido('Di', 28) : 'a ' + apelido('Mihzinha', 28)} vai poder abrir`,
     `<form class="card-form" id="cdf"><p class="wo-t">Escrever pra ${outro}</p>
       <textarea id="cdt" rows="6" maxlength="3000" placeholder="Meu amor…"></textarea>${gravadorBox('cdgrav')}
       <label class="fz-lab">Pode abrir em<input type="date" id="cdd" min="${amanha}"></label>
@@ -5775,7 +5819,7 @@ const nomeCat = id => (gcats().find(c => c[0] === id) || [0, GVELHAS[id] || 'Sem
 VIEWS.gostos = () => {
   const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'Mihzinha' : 'Di';
   let aba = store.get('gsAba', outro), filtro = 'tudo', list = [], foto = '';
-  const nome = q => q === 'Di' ? 'o Di' : 'a Mihzinha';
+  const nome = q => q === 'Di' ? 'o ' + apelido('Di', 29) : 'a ' + apelido('Mihzinha', 29);
   shell('o que cada um ama','O que cada um ama','Você coloca o que o outro ama, com foto e legenda. Assim cada um mostra que presta atenção',
     `<div class="fz-tabs gs-tabs"><button type="button" data-a="Di">O que o Di ama</button><button type="button" data-a="Mihzinha">O que a Mihzinha ama</button></div>
      <div id="gsform"></div><div class="gs-cats" id="gscats"></div><div class="gs-grid" id="gsgrid"></div><input type="file" id="gsfile" accept="image/*" hidden>
@@ -5787,7 +5831,7 @@ VIEWS.gostos = () => {
       <div class="gs-campos"><label class="fz-lab">Categoria<select id="gscat">${gcats().map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label>
       <label class="fz-lab">Legenda<input type="text" id="gsleg" maxlength="80" placeholder="ex: Minecraft, joga desde criança"></label>
       <button type="submit" id="gssave">Guardar</button><p class="werr" id="gserr"></p></div></form></details>`
-    : `<p class="gs-nota">${icon('heart')} Essa parte é ${eu === 'Di' ? 'a Mihzinha' : 'o Di'} que preenche. Aqui você vê o que ${eu === 'Di' ? 'ela' : 'ele'} sabe que você ama.</p>`;
+    : `<p class="gs-nota">${icon('heart')} Essa parte é ${eu === 'Di' ? 'a ' + apelido('Mihzinha', 38) : 'o ' + apelido('Di', 38)} que preenche. Aqui você vê o que ${eu === 'Di' ? 'ela' : 'ele'} sabe que você ama.</p>`;
   const draw = () => { if(!$('gsgrid')) return;
     document.querySelectorAll('.gs-tabs button').forEach(b => b.classList.toggle('on', b.dataset.a === aba));
     const meus = list.filter(x => x.sobre === aba), ids = [...new Set(meus.map(x => x.cat))], cats = [...gcats().filter(([v]) => ids.includes(v)), ...ids.filter(v => !gcats().some(c => c[0] === v)).map(v => [v, nomeCat(v)])];
@@ -5795,7 +5839,7 @@ VIEWS.gostos = () => {
     $('gscats').innerHTML = meus.length ? [['tudo','Tudo'], ...cats].map(([v, t]) => `<button type="button" class="${filtro === v ? 'on' : ''}" data-f="${v}">${t}</button>`).join('') : '';
     const vis = meus.filter(x => filtro === 'tudo' || x.cat === filtro).slice().reverse();
     $('gsgrid').innerHTML = vis.length ? vis.map(x => `<article class="gs-card">${x.img ? `<img src="${x.img}" alt="">` : `<span class="gs-sem">${icon('star')}</span>`}<div><small>${esc(nomeCat(x.cat))}</small><p>${esc(x.legenda || '')}</p>${x.sobre === outro || x.autor === eu ? `<span class="gs-acts"><button type="button" class="linkbtn" data-ed="${x.id}">editar</button><button type="button" class="linkbtn" data-del="${x.id}">apagar</button></span>` : ''}</div></article>`).join('')
-      : `<p class="lead hq-empty">${aba === outro ? `Ainda não tem nada aqui. Coloca a primeira coisa que ${nome(outro)} ama!` : `${eu === 'Di' ? 'A Mihzinha' : 'O Di'} ainda não colocou nada. Logo aparece!`}</p>`;
+      : `<p class="lead hq-empty">${aba === outro ? `Ainda não tem nada aqui. Coloca a primeira coisa que ${nome(outro)} ama!` : `${eu === 'Di' ? 'A ' + apelido('Mihzinha', 39) : 'O ' + apelido('Di', 39)} ainda não colocou nada. Logo aparece!`}</p>`;
     $('gscats').querySelectorAll('[data-f]').forEach(b => b.onclick = () => { filtro = b.dataset.f; draw(); });
     $('gsgrid').querySelectorAll('[data-del]').forEach(d => d.onclick = () => { if(d.dataset.sure) col.remove(d.dataset.del); else { d.dataset.sure = 1; d.textContent = 'toca de novo'; } });
     $('gsgrid').querySelectorAll('[data-ed]').forEach(d => d.onclick = () => { const x = list.find(y => y.id === d.dataset.ed); if(!x) return; editando = x; foto = x.img || ''; formAberto = true; drawForm(); $('gscat').value = x.cat; if($('gscat').value !== x.cat){ $('gscat').insertAdjacentHTML('beforeend', `<option value="${x.cat}">${esc(nomeCat(x.cat))}</option>`); $('gscat').value = x.cat; } $('gsleg').value = x.legenda || ''; $('gssave').textContent = 'Salvar alterações'; $('gsform').scrollIntoView({behavior:'smooth', block:'start'}); });
@@ -6027,7 +6071,7 @@ function evCor(t, k){
 /* ---------- áudio: gravar a própria voz nas cartas e bilhetes ---------- */
 const AUD_MAX_S = 60, AUD_MAX = 900000;
 const podeGravar = () => !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder);
-const quemVoz = q => q === 'curto' ? 'Ouvir o áudio' : q === 'você' ? 'Ouvir o seu áudio' : `Ouvir a voz ${q === 'Di' ? 'do Di' : 'da Mihzinha'}`;
+const quemVoz = q => q === 'curto' ? 'Ouvir o áudio' : q === 'você' ? 'Ouvir o seu áudio' : `Ouvir a voz ${q === 'Di' ? 'do ' + apelido('Di', 30) : 'da ' + apelido('Mihzinha', 30)}`;
 function audioHTML(src, quem){ if(!src) return '';
   return `<div class="aud" role="button" tabindex="0" data-aud><span class="aud-pl"><svg class="ap-play" viewBox="0 0 24 24"><path d="M8.5 5.5v13l10.5-6.5z"/></svg><svg class="ap-pause" viewBox="0 0 24 24"><path d="M7 5h3.6v14H7zM13.4 5H17v14h-3.6z"/></svg></span><span class="aud-mid"><span class="aud-tx">${esc(quemVoz(quem))}</span><span class="aud-bar"><i></i></span></span><span class="aud-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><audio preload="none" src="${src}"></audio></div>`; }
 document.addEventListener('click', e => { const a = e.target.closest('[data-aud]'); if(!a) return; e.stopPropagation(); e.preventDefault();
@@ -6320,7 +6364,7 @@ VIEWS.mes = () => {
   let list = [];
   const minha = n => list.find(x => x.id === `m${n}_${eu}`);
   const fillForm = () => { const n = +$('msn').value, m = minha(n); $('mst').value = m ? m.texto : ''; $('msdel').hidden = !m; $('mss').textContent = m ? 'Salvar' : 'Guardar';
-    $('msh').textContent = n > meses ? `${outro === 'Di' ? 'O Di' : 'A Mihzinha'} só vai conseguir ler no dia ${dataMes(n)}.` : ''; };
+    $('msh').textContent = n > meses ? `${outro === 'Di' ? 'O ' + apelido('Di', 31) : 'A ' + apelido('Mihzinha', 31)} só vai conseguir ler no dia ${dataMes(n)}.` : ''; };
   $('msn').onchange = fillForm;
   function draw(){
     document.querySelectorAll('.mes-notes').forEach(box => {
@@ -6328,7 +6372,7 @@ VIEWS.mes = () => {
       box.innerHTML = ['Mihzinha','Di'].map(q => {
         const m = list.find(x => x.id === `m${n}_${q}`); if(!m || !m.texto) return '';
         const nome = q === 'Di' ? 'Di' : 'Mihzinha';
-        if(!liberado && q !== eu) return `<div class="mes-note lock">${icon('lock')}<span>${q === 'Di' ? 'O Di' : 'A Mihzinha'} já deixou uma mensagem. Abre no dia 12.</span></div>`;
+        if(!liberado && q !== eu) return `<div class="mes-note lock">${icon('lock')}<span>${q === 'Di' ? 'O ' + apelido('Di', 32) : 'A ' + apelido('Mihzinha', 32)} já deixou uma mensagem. Abre no dia 12.</span></div>`;
         return `<div class="mes-note"><p>${esc(m.texto)}</p><p class="by">${q === eu && !liberado ? 'você escreveu · só aparece pro outro no dia 12' : `com amor, ${nome}`}</p></div>`;
       }).join('');
     });
@@ -6463,7 +6507,7 @@ function abraPool(list, cat, leitor){
   return [{id:'ex_' + cat.id, cat:cat.id, texto:cat.texto, exemplo:true, criadoEm:0}];
 }
 VIEWS.abra = () => {
-  const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'Mihzinha' : 'Di', ele = outro === 'Di' ? 'ele' : 'ela', proOutro = outro === 'Di' ? 'pro Di' : 'pra Mihzinha';
+  const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'Mihzinha' : 'Di', ele = outro === 'Di' ? 'ele' : 'ela', proOutro = outro === 'Di' ? 'pro ' + apelido('Di', 33) : 'pra ' + apelido('Mihzinha', 33);
   let modo = store.get('abraModo', eu === 'Mihzinha' ? 'escrever' : 'ler');
   shell('pra cada momento','Abra quando…', 'Cartas pra abrir quando precisar. Cada um escreve pro outro, e cada vez que abrir um envelope sai uma carta diferente',
     `<div class="fz-tabs ab-tabs"><button type="button" data-m="ler">Pra eu abrir</button><button type="button" data-m="escrever">Escrever ${proOutro}</button></div>
@@ -6478,7 +6522,7 @@ VIEWS.abra = () => {
   function draw(){
     const box = document.getElementById('abl'); if(!box) return;
     document.querySelectorAll('.ab-tabs button').forEach(b => b.classList.toggle('on', b.dataset.m === modo));
-    document.getElementById('abdica').textContent = escrevendo() ? `Toca num envelope e escreve quantas cartas quiser. Quando ${ele} abrir, sai uma por vez.` : `Escolhe o envelope do jeito que você estiver se sentindo. São as cartas que ${outro === 'Di' ? 'o Di' : 'a Mihzinha'} escreveu pra você.`;
+    document.getElementById('abdica').textContent = escrevendo() ? `Toca num envelope e escreve quantas cartas quiser. Quando ${ele} abrir, sai uma por vez.` : `Escolhe o envelope do jeito que você estiver se sentindo. São as cartas que ${outro === 'Di' ? 'o ' + apelido('Di', 34) : 'a ' + apelido('Mihzinha', 34)} escreveu pra você.`;
     box.innerHTML = C.abraQuando.map(cat => {
       const minhas = list.filter(c => c.cat === cat.id && autorDe(c) === eu), pool = abraPool(list, cat, eu), novas = pool.filter(c => !lidas[c.id] && !c.vazio).length;
       const sub = escrevendo() ? `${minhas.length} ${minhas.length === 1 ? 'escrita' : 'escritas'} · ${minhas.filter(c => lidas[c.id]).length} ${ele === 'ele' ? 'lidas por ele' : 'lidas por ela'}` : (pool[0] && pool[0].vazio ? 'ainda sem carta' : novas ? `${novas} ${novas === 1 ? 'carta nova' : 'cartas novas'}` : 'você já leu todas');
@@ -6516,7 +6560,7 @@ VIEWS.abra = () => {
   function readCat(btn, id){
     const cat = C.abraQuando.find(c => c.id === id), pool = abraPool(list, cat, eu);
     if(openFor[id]){ delete openFor[id]; return draw(); }
-    if(pool[0] && pool[0].vazio){ openFor[id] = `<p class="lead ab-vazio">${outro === 'Di' ? 'O Di' : 'A Mihzinha'} ainda não escreveu nesse envelope. Que tal pedir uma cartinha? ♥︎</p>`; return draw(); }
+    if(pool[0] && pool[0].vazio){ openFor[id] = `<p class="lead ab-vazio">${outro === 'Di' ? 'O ' + apelido('Di', 35) : 'A ' + apelido('Mihzinha', 35)} ainda não escreveu nesse envelope. Que tal pedir uma cartinha? ♥︎</p>`; return draw(); }
     let carta = pool.find(c => !lidas[c.id]), repetida = false;
     if(!carta){ carta = pool[Math.floor(Math.random() * pool.length)]; repetida = true; }
     btn.classList.add('open');
