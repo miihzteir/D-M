@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=17">
-<link rel="apple-touch-icon" href="icon-180.png?v=17">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=17">
+<link rel="manifest" href="manifest.json?v=20">
+<link rel="apple-touch-icon" href="icon-180.png?v=20">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=20">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -348,6 +348,23 @@ textarea:focus,.card-form input:focus,.addopt input:focus{border-color:var(--pin
 .vale b{font-weight:700;color:var(--plum);font-size:15px;line-height:1.25}
 .vale button{padding:9px;font-size:14px;margin-top:auto}
 .vale.used{opacity:.65}
+.fm-sec{display:flex;flex-direction:column;gap:12px;scroll-margin-top:70px}
+.fm-head{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;text-align:left}
+.fm-head h3{margin:0;font-family:var(--f-display);font-size:21px;color:var(--plum)}.fm-head p{margin:2px 0 0;font-size:13px;color:var(--muted)}
+.fm-ed{width:auto!important;min-height:34px!important;padding:0 12px!important;font-size:13px!important;display:inline-flex;gap:5px;align-items:center;flex:none}
+.fm-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;padding:4px 4px 10px}
+.fm-ph{display:flex;flex-direction:column;background:#fff!important;padding:7px 7px 8px!important;border-radius:4px!important;box-shadow:0 10px 22px -14px rgba(74,18,36,.55)!important;transform:rotate(var(--r));min-height:0!important;border:0!important}
+.fm-ph.ph{aspect-ratio:4/5;display:grid;place-items:center;color:#d8aab4;font-size:26px}
+.fm-ph img{width:100%;aspect-ratio:1;object-fit:cover;display:block;border-radius:2px}
+.fm-ph small{display:block;margin-top:6px;font-family:var(--f-hand);font-size:16px;color:var(--ink);text-align:center;line-height:1.1}
+.fm-vazio{grid-column:1/-1;margin:0;font-size:14px;color:var(--muted);text-align:center;background:#fffaf6;border-radius:14px;padding:14px}
+.fm-zoom{z-index:9700!important;cursor:zoom-out}.fm-zoom figure{margin:0;background:#fff;padding:10px 10px 14px;border-radius:6px;max-width:92vw;box-shadow:0 30px 60px -20px rgba(0,0,0,.5)}
+.fm-zoom img{display:block;max-width:86vw;max-height:72vh;object-fit:contain}.fm-zoom figcaption{margin-top:8px;font-family:var(--f-hand);font-size:20px;text-align:center}
+.ed-err small{color:#b3122c!important;font-weight:600;line-height:1.3;padding:4px;text-align:center}
+.ab-dica{margin:-6px 0 0;font-size:13.5px;color:#7a6a6a;text-align:center}
+.ab-vazio{background:#fffaf6;border-radius:16px;padding:14px}
+.abedf{margin:6px 0}
+.bk-anos{max-width:100%;overflow-x:auto}
 .gs-grid > p{grid-column:1/-1}
 .gs-catsed{margin-top:6px;min-width:0;max-width:100%}.gs-det{min-width:0}.gs-catsed > div{padding:0 14px 14px;display:flex;flex-direction:column;gap:8px}
 .gs-catdica{margin:0;font-size:12.5px;color:#8a6a6f;text-align:left}
@@ -2840,7 +2857,6 @@ const LISTS = {
     {id:'bilhetes', ico:'note',     t:'Bilhetinhos',         s:'Recados de um pro outro'},
     {id:'mes',      ico:'calendar', t:'Mesversário',         s:'Todo dia 12 a gente se escreve'}],
   nos: [
-    {id:'fotos',    ico:'camera',   t:'Nossas fotos',        s:'Toca em cada uma pra virar'},
     {id:'primeiras',ico:'flag',     t:'Nossas primeiras vezes', s:'A gente vai adicionando'},
     {id:'playlist', ico:'music',    t:'Nossa playlist',      s:'As músicas da gente'},
     {id:'planos',   ico:'compass',  t:'Nossos planos',       s:'O que vem por aí'},
@@ -2983,7 +2999,7 @@ function renderHome(y = 0){
       <p class="endtitle">${esc(C.textos.fimNome)}</p>
       <p class="endyear">2026</p>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
-      <p class="endver">versão de 15/10 · 03h20</p>
+      <p class="endver">versão de 15/10 · 07h00</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
@@ -3007,7 +3023,7 @@ function renderHome(y = 0){
     g.onclick = () => { g.remove(); renderXmas(); }; document.body.append(g); }
   requestAnimationFrame(() => window.scrollTo({top:y, behavior:'instant'}));
   app.querySelectorAll('[data-go]').forEach(b => b.onclick = () => openStop(b.dataset.go));
-  app.querySelectorAll('[data-mem]').forEach(b => b.onclick = () => { homeY = window.scrollY; VIEWS.memoria2(b.dataset.mem); });
+  app.querySelectorAll('[data-mem]').forEach(b => b.onclick = () => { homeY = window.scrollY; curView = 'fotos'; VIEWS.fotos(b.dataset.mem); });
   const offM = Sync.col('fotosMem').on(list => {
     if(!document.getElementById('mp-' + C.memorias[0].id)){ setTimeout(() => offM && offM()); return; }
     C.memorias.forEach(m => { const f = list.filter(x => x.mem === m.id).sort((a,b) => a.slot - b.slot)[0]; const el = document.getElementById('mp-' + m.id); if(el && f) el.innerHTML = `<img src="${f.img}" alt="">`; });
@@ -3229,13 +3245,28 @@ const MAPA_ED = {quiz:['textos','quiz'], pergunta:['textos','perguntas'], provav
 function openStop(id){ document.getElementById('xgift')?.remove(); homeY = window.scrollY; markDone(id); curView = id; VIEWS[id](); }
 
 /* ---------- fotos ---------- */
-VIEWS.fotos = () => {
-  shell('nós dois','Nossas fotos','Toca em cada foto pra ler o que tem atrás',
-    `<div class="polas">${C.polaroids.map((p,k)=>`
+/* todas as fotos juntas: as memórias (os 3 polaroids da tela inicial) e as polaroids que viram */
+VIEWS.fotos = (foco) => {
+  const souEla = Sync.quem === 'Mihzinha';
+  shell('nós dois','Nossas fotos','Todas as nossas fotos num lugar só. Toca numa foto pra ver grandona',
+    `${C.memorias.map((m, k) => `<section class="fm-sec" id="fm-${m.id}"><div class="fm-head"><div><h3>${esc(m.titulo)}</h3><p>${esc(m.sub || '')}</p></div>${souEla ? `<button type="button" class="ghost fm-ed" data-mem="${m.id}">${icon('pencil')} fotos</button>` : ''}</div>
+        <div class="fm-grid" id="fmg-${m.id}">${[0,1,2,3].map(i => `<div class="fm-ph ph ${['','b','c','d'][i]}" style="--r:${[-2,1.5,-1,2][i]}deg"><span>${icon('image')}</span></div>`).join('')}</div></section>`).join('')}
+     <section class="fm-sec"><div class="fm-head"><div><h3>Polaroids</h3><p>toca em cada uma pra ler o que tem atrás</p></div></div>
+     <div class="polas">${C.polaroids.map((p,k)=>`
       <button class="pola" style="--i:${k}"><span class="tape"></span><div class="in">
         <div class="face">${photo(p.foto,p.cls)}<span>${esc(p.legenda)}</span></div>
-        <div class="face backf">${esc(p.verso)}</div></div></button>`).join('')}</div>`);
+        <div class="face backf">${esc(p.verso)}</div></div></button>`).join('')}</div></section>`);
   app.querySelectorAll('.pola').forEach(b => b.onclick = () => b.classList.toggle('flip'));
+  app.querySelectorAll('.fm-ed').forEach(b => b.onclick = () => { VIEWS.memoria2(b.dataset.mem); const bk = document.getElementById('back'), pv = bk.onclick; bk.onclick = () => { pv(); setTimeout(() => { curView = 'fotos'; VIEWS.fotos(b.dataset.mem); }, 30); }; });
+  const zoom = (src, leg) => { const w = document.createElement('div'); w.className = 'tk-wrap fm-zoom'; w.innerHTML = `<figure><img src="${src}" alt="">${leg ? `<figcaption>${esc(leg)}</figcaption>` : ''}</figure>`; w.onclick = () => w.remove(); document.body.append(w); };
+  const col = Sync.col('fotosMem');
+  const off = col.on(l => { C.memorias.forEach(m => { const g = document.getElementById('fmg-' + m.id); if(!g) return;
+      const fs = l.filter(x => x.mem === m.id && x.img).sort((a, b) => a.slot - b.slot);
+      g.innerHTML = fs.length ? fs.map((f, i) => `<button type="button" class="fm-ph has" style="--r:${[-2,1.5,-1,2][i % 4]}deg" data-src="${f.id}"><img src="${f.img}" alt="" loading="lazy">${f.legenda ? `<small>${esc(f.legenda)}</small>` : ''}</button>`).join('')
+        : `<p class="fm-vazio">${souEla ? 'Ainda sem fotos. Toca em "fotos" pra colocar.' : 'As fotos daqui a Mihzinha ainda vai colocar.'}</p>`;
+      g.querySelectorAll('[data-src]').forEach(b => b.onclick = () => { const f = l.find(x => x.id === b.dataset.src); if(f) zoom(f.img, f.legenda); }); }); });
+  if(foco) setTimeout(() => document.getElementById('fm-' + foco)?.scrollIntoView({behavior:'smooth', block:'start'}), 250);
+  const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { off(); prev(); };
 };
 
 /* ---------- raspadinha ---------- */
@@ -3510,16 +3541,35 @@ VIEWS.planos = () => {
 };
 
 /* ---------- memória: página com 4 fotos ---------- */
+/* encolhe a foto até caber com folga no banco (cada documento aguenta no máximo 1 MB) */
+const FOTO_MAX = 600000;
+function desenhaFoto(src, w, h, max, q){ let k = Math.min(1, max / Math.max(w, h)), out = '', qq = q;
+  for(let i = 0; i < 7; i++){ const c = document.createElement('canvas'); c.width = Math.max(1, Math.round(w * k)); c.height = Math.max(1, Math.round(h * k));
+    const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); x.drawImage(src, 0, 0, c.width, c.height);
+    out = c.toDataURL('image/jpeg', qq); if(out.length <= FOTO_MAX) return out; k *= .8; qq = Math.max(.5, qq - .06); }
+  return out; }
 function compressImage(file, max = 1000, q = .72){
   return new Promise((ok, no) => {
     const img = new Image(), url = URL.createObjectURL(file);
-    img.onload = () => { const k = Math.min(1, max / Math.max(img.width, img.height)); const c = document.createElement('canvas');
-      c.width = Math.round(img.width * k); c.height = Math.round(img.height * k); c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
-      URL.revokeObjectURL(url); ok(c.toDataURL('image/jpeg', q)); };
-    img.onerror = () => { URL.revokeObjectURL(url); no(new Error('img')); };
+    img.onload = () => { try{ const r = desenhaFoto(img, img.naturalWidth || img.width, img.naturalHeight || img.height, max, q); URL.revokeObjectURL(url); ok(r); }catch(e){ URL.revokeObjectURL(url); no(e); } };
+    img.onerror = async () => { URL.revokeObjectURL(url);
+      try{ const bmp = await createImageBitmap(file); ok(desenhaFoto(bmp, bmp.width, bmp.height, max, q)); }
+      catch(e){ const er = new Error('formato'); er.code = 'formato'; no(er); } };
     img.src = url;
   });
 }
+/* explica em português o que deu errado ao salvar */
+function erroFoto(e){
+  const c = (e && (e.code || e.message)) || '';
+  if(/formato/.test(c)) return 'Esse formato de foto não abriu aqui. Tira um print dela e manda o print.';
+  if(/permission|insufficient/i.test(c)) return 'O banco não deixou salvar (permissão). Me manda essa mensagem que eu te ajudo a liberar.';
+  if(/unauthenticated/i.test(c) || (Sync.mode === 'online' && !Sync.user)) return 'Você não tá logada com o Google, por isso não salvou. Sai do app e entra de novo.';
+  if(/too large|exceeds|maximum|size/i.test(c)) return 'A foto ficou grande demais. Tenta outra ou um print dela.';
+  if(/unavailable|network|offline|tempo/i.test(c)) return 'Sem internet agora. Tenta de novo quando a conexão voltar.';
+  return 'Não deu pra salvar (' + String(c).slice(0, 60) + '). Tenta de novo.';
+}
+/* salva e avisa se demorar demais */
+function comTempo(p, ms = 25000){ return Promise.race([p, new Promise((_, no) => setTimeout(() => { const e = new Error('tempo'); e.code = 'unavailable'; no(e); }, ms))]); }
 VIEWS.memoria2 = (id) => {
   const m = C.memorias.find(x => x.id === id) || C.memorias[0], eu = Sync.quem || 'Di';
   const tones = ['','b','c','d'], rotulo = i => m.id === 'encontro' ? `${i + 1}º encontro` : `foto ${i + 1}`;
@@ -3557,9 +3607,9 @@ VIEWS.memoria2 = (id) => {
   file.onchange = async () => {
     const fl = file.files[0]; if(!fl || cur === null) return;
     const note = document.getElementById('mnote'); note.textContent = 'Guardando a foto…';
-    try{ const img = await compressImage(fl); const f = list.find(x => x.id === docId(cur));
-      await col.set(docId(cur), {mem:id, slot:cur, img, legenda:(f && f.legenda) || '', autor:eu}); note.textContent = 'Foto guardada ♥︎'; sparkle(document.querySelector(`.mslot[data-s="${cur}"]`)); }
-    catch(e){ note.textContent = 'Não deu pra guardar essa foto. Tenta outra.'; }
+    try{ const img = await compressImage(fl, 1000, .72); const f = list.find(x => x.id === docId(cur));
+      await comTempo(col.set(docId(cur), {mem:id, slot:cur, img, legenda:(f && f.legenda) || '', autor:eu})); note.textContent = 'Foto guardada ♥︎'; sparkle(document.querySelector(`.mslot[data-s="${cur}"]`)); }
+    catch(e){ note.textContent = erroFoto(e); }
   };
   const off = col.on(l => { list = l.filter(x => x.mem === id); draw(); });
   const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { off(); prev(); };
@@ -4705,7 +4755,7 @@ VIEWS.lugares = () => {
   };
   const led = editavel($('lgf'), $('lgs'), 'Guardar lugar');
   $('lgf').onsubmit = async e => { e.preventDefault(); const n = $('lgn').value.trim(); if(!n){ $('lge').textContent = 'Coloca o nome do lugar.'; return; } $('lge').textContent = '';
-    const b = $('lgs'); b.disabled = true; try{ const dados = {nome:n, cidade:$('lgc').value.trim(), data:$('lgd').value, legenda:$('lgl').value.trim(), img}; if(led.id){ const p = list.find(x => x.id === led.id) || {}; await col.set(led.id, Object.assign({autor:p.autor || eu}, dados)); led.fechar(); } else await col.add(Object.assign({autor:eu}, dados)); e.target.reset(); img = ''; $('lgprev').innerHTML = `${icon('image')}<small>escolher foto</small>`; sparkle(b); }catch(x){ $('lge').textContent = 'Não deu pra guardar.'; } b.disabled = false; };
+    const b = $('lgs'); b.disabled = true; try{ const dados = {nome:n, cidade:$('lgc').value.trim(), data:$('lgd').value, legenda:$('lgl').value.trim(), img}; if(led.id){ const p = list.find(x => x.id === led.id) || {}; await col.set(led.id, Object.assign({autor:p.autor || eu}, dados)); led.fechar(); } else await col.add(Object.assign({autor:eu}, dados)); e.target.reset(); img = ''; $('lgprev').innerHTML = `${icon('image')}<small>escolher foto</small>`; sparkle(b); }catch(x){ $('lge').textContent = erroFoto(x); } b.disabled = false; };
   let prim = true;
   const off = col.on(l => { list = l; if(prim){ prim = false; if(!l.length) $('lgdet').open = true; } draw(); });
   const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { off(); prev(); };
@@ -5016,7 +5066,9 @@ VIEWS.editar = (foco, origem, abaIni) => {
     $('edsalvat')?.addEventListener('click', async e => { await col.set('textos', {natal:$('txn').value.trim(), segredo:$('txs').value.trim(), retro:$('txr').value.trim(), mes:[...$('edb').querySelectorAll('[data-mes]')].map(t => t.value.trim())}); salvo(e.target, 'Textos salvos!'); });
   };
   $('edfile').onchange = async () => { const f = $('edfile').files[0]; if(!f || !alvo) return; const card = $('edb').querySelector(`[data-slot="${alvo}"] .ed-ph`); if(card) card.innerHTML = '<span><small>preparando…</small></span>';
-    try{ const img = await compressImage(f, alvo.startsWith('memfoto') ? 520 : 900, .74); await col.set(alvo, {img}); }catch(e){ if(card) card.innerHTML = '<span><small>não deu, tenta outra</small></span>'; } };
+    if(Sync.mode === 'online' && !Sync.user){ if(card) card.innerHTML = `<span><small>${erroFoto({code:'unauthenticated'})}</small></span>`; return; }
+    try{ const img = await compressImage(f, alvo.startsWith('memfoto') ? 520 : 900, .74); if(card) card.innerHTML = '<span><small>salvando…</small></span>'; await comTempo(col.set(alvo, {img})); csToast('Foto salva ♥'); setTimeout(() => draw(), 300); }
+    catch(e){ if(card) card.innerHTML = `<span class="ed-err"><small>${erroFoto(e)}</small></span>`; csToast(erroFoto(e)); } };
   document.querySelectorAll('.ed-tabs button').forEach(b => b.onclick = () => { aba = b.dataset.a; store.set('edAba', aba); draw(); });
   ligarViagem($('edvgbox'));
   $('edzerar').onclick = async e => { const b = e.currentTarget, msg = $('rsmsg'), sel = [...document.querySelectorAll('[data-rs]:checked')].map(x => x.dataset.rs);
@@ -5081,7 +5133,7 @@ VIEWS.gostos = () => {
     $('gspick').onclick = () => { $('gsfile').value = ''; $('gsfile').click(); };
     f.onsubmit = async e => { e.preventDefault(); const leg = $('gsleg').value.trim(), b = $('gssave');
       if(!foto && !leg){ $('gserr').textContent = 'Coloca uma foto ou escreve a legenda.'; return; }
-      b.disabled = true; try{ if(editando) await col.set(editando.id, {sobre:editando.sobre, autor:eu, img:foto, legenda:leg, cat:$('gscat').value}); else await col.add({sobre:outro, autor:eu, img:foto, legenda:leg, cat:$('gscat').value}); const eraEd = !!editando; editando = null; foto = ''; formAberto = !eraEd; sparkle(b); drawForm(); }catch(x){ b.disabled = false; $('gserr').textContent = 'Não deu pra guardar. Tenta de novo.'; } };
+      b.disabled = true; try{ if(editando) await col.set(editando.id, {sobre:editando.sobre, autor:eu, img:foto, legenda:leg, cat:$('gscat').value}); else await col.add({sobre:outro, autor:eu, img:foto, legenda:leg, cat:$('gscat').value}); const eraEd = !!editando; editando = null; foto = ''; formAberto = !eraEd; sparkle(b); drawForm(); }catch(x){ b.disabled = false; $('gserr').textContent = erroFoto(x); } };
   };
   $('gsfile').onchange = async () => { const f = $('gsfile').files[0]; if(!f) return; $('gspick').innerHTML = '<span><small>preparando…</small></span>';
     try{ foto = await compressImage(f, 700, .74); $('gspick').innerHTML = `<img src="${foto}" alt="">`; }catch(e){ $('gspick').innerHTML = '<span><small>não deu, tenta outra</small></span>'; } };
@@ -5149,7 +5201,7 @@ VIEWS.datas = () => {
   const preview = () => { $('dmprev').innerHTML = img ? `<img src="${img}" alt="">` : `${icon('image')}<small>escolher foto</small>`; };
   $('dmpick').onclick = () => { $('dmfile').value = ''; $('dmfile').click(); };
   $('dmfile').onchange = async () => { const f = $('dmfile').files[0]; if(!f) return; $('dmerr').textContent = 'Preparando a foto…';
-    try{ img = await compressImage(f, 1100, .74); preview(); $('dmerr').textContent = ''; }catch(e){ $('dmerr').textContent = 'Não deu pra usar essa foto. Tenta outra.'; } };
+    try{ img = await compressImage(f, 1100, .74); preview(); $('dmerr').textContent = ''; }catch(e){ $('dmerr').textContent = erroFoto(e); } };
   const reset = () => { editId = null; img = ''; $('dmf').reset(); preview(); $('dmft').textContent = 'Nova data marcante'; $('dmsave').textContent = 'Guardar'; $('dmcancel').hidden = true; };
   $('dmcancel').onclick = reset;
   $('dmf').onsubmit = async e => {
@@ -5159,7 +5211,7 @@ VIEWS.datas = () => {
     const b = $('dmsave'); b.disabled = true;
     try{ const o = {data, titulo, legenda, img, autor:eu}; editId ? await col.set(editId, o) : await col.add(o); sparkle(b); const keep = editId; reset();
       setTimeout(() => document.querySelector(keep ? `[data-id="${keep}"]` : '.dm-item')?.scrollIntoView({behavior:'smooth', block:'center'}), 300); }
-    catch(x){ $('dmerr').textContent = 'Não deu pra guardar. Tenta de novo.'; }
+    catch(x){ $('dmerr').textContent = erroFoto(x); }
     b.disabled = false;
   };
   function draw(){
@@ -5679,45 +5731,58 @@ VIEWS.capsula = () => {
 
 /* ---------- abra quando ---------- */
 /* cada envelope guarda várias cartas; a cada abertura sai uma que ele ainda não leu */
-function abraPool(list, cat){
-  const real = list.filter(c => c.cat === cat.id).sort((a,b) => a.criadoEm - b.criadoEm);
-  return real.length ? real : [{id:'ex_' + cat.id, cat:cat.id, texto:cat.texto, exemplo:true, criadoEm:0}];
+/* cartas antigas sem autor foram escritas pela Mihzinha */
+const autorDe = c => c.exemplo ? 'Mihzinha' : (c.autor || 'Mihzinha');
+/* as cartas que "leitor" pode abrir: as que o outro escreveu */
+function abraPool(list, cat, leitor){
+  const real = list.filter(c => c.cat === cat.id && (!leitor || autorDe(c) !== leitor)).sort((a,b) => a.criadoEm - b.criadoEm);
+  if(real.length) return real;
+  if(leitor === 'Mihzinha') return [{id:'vazio_' + cat.id, cat:cat.id, texto:'', vazio:true, criadoEm:0}];
+  return [{id:'ex_' + cat.id, cat:cat.id, texto:cat.texto, exemplo:true, criadoEm:0}];
 }
 VIEWS.abra = () => {
-  const souEla = Sync.quem === 'Mihzinha';
-  shell('pra cada momento','Abra quando…', souEla ? 'Escreva quantas cartas quiser em cada envelope. Cada vez que ele abrir, sai uma diferente' : 'Escolhe o envelope do jeito que você estiver se sentindo. Cada vez sai uma carta nova',
-    `<div class="envlist" id="abl"></div>
+  const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'Mihzinha' : 'Di', ele = outro === 'Di' ? 'ele' : 'ela', proOutro = outro === 'Di' ? 'pro Di' : 'pra Mihzinha';
+  let modo = store.get('abraModo', eu === 'Mihzinha' ? 'escrever' : 'ler');
+  shell('pra cada momento','Abra quando…', 'Cartas pra abrir quando precisar. Cada um escreve pro outro, e cada vez que abrir um envelope sai uma carta diferente',
+    `<div class="fz-tabs ab-tabs"><button type="button" data-m="ler">Pra eu abrir</button><button type="button" data-m="escrever">Escrever ${proOutro}</button></div>
+     <p class="ab-dica" id="abdica"></p>
+     <div class="envlist" id="abl"></div>
      <button class="ghost albumlink" id="toalbum">${icon('cards')}Ver o álbum de cartas</button>`);
   document.getElementById('toalbum').onclick = () => VIEWS.album();
   const col = Sync.col('abraQuando');
   let list = [], lidas = {};
   const openFor = {};
+  const escrevendo = () => modo === 'escrever';
   function draw(){
     const box = document.getElementById('abl'); if(!box) return;
-    box.innerHTML = C.abraQuando.map((cat,k) => {
-      const pool = abraPool(list, cat), novas = pool.filter(c => !lidas[c.id]).length;
-      const sub = souEla ? `${list.filter(c => c.cat === cat.id).length} escritas · ${pool.filter(c => lidas[c.id] && !c.exemplo).length} lidas` : (novas ? `${novas} ${novas === 1 ? 'carta nova' : 'cartas novas'}` : 'você já leu todas');
-      return `<button class="envl ${!souEla && openFor[cat.id] ? 'open' : ''}" data-c="${cat.id}" aria-label="${esc(cat.titulo)}">
+    document.querySelectorAll('.ab-tabs button').forEach(b => b.classList.toggle('on', b.dataset.m === modo));
+    document.getElementById('abdica').textContent = escrevendo() ? `Toca num envelope e escreve quantas cartas quiser. Quando ${ele} abrir, sai uma por vez.` : `Escolhe o envelope do jeito que você estiver se sentindo. São as cartas que ${outro === 'Di' ? 'o Di' : 'a Mihzinha'} escreveu pra você.`;
+    box.innerHTML = C.abraQuando.map(cat => {
+      const minhas = list.filter(c => c.cat === cat.id && autorDe(c) === eu), pool = abraPool(list, cat, eu), novas = pool.filter(c => !lidas[c.id] && !c.vazio).length;
+      const sub = escrevendo() ? `${minhas.length} ${minhas.length === 1 ? 'escrita' : 'escritas'} · ${minhas.filter(c => lidas[c.id]).length} ${ele === 'ele' ? 'lidas por ele' : 'lidas por ela'}` : (pool[0] && pool[0].vazio ? 'ainda sem carta' : novas ? `${novas} ${novas === 1 ? 'carta nova' : 'cartas novas'}` : 'você já leu todas');
+      return `<button class="envl ${!escrevendo() && openFor[cat.id] ? 'open' : ''}" data-c="${cat.id}" aria-label="${esc(cat.titulo)}">
         <span class="eb"></span><span class="ep"></span><span class="ef"></span><span class="efl"></span>
-        <span class="seal">${souEla ? icon('plus') : (novas ? novas : '♥︎')}</span>
+        <span class="seal">${escrevendo() ? icon('plus') : (novas ? novas : '♥︎')}</span>
         <span class="label">${esc(cat.titulo)}<small>${sub}</small></span></button>
-        <div class="slot" id="slot-${cat.id}">${openFor[cat.id] === 'EDIT' ? editHtml(cat.id) : (openFor[cat.id] || '')}</div>`;
+        <div class="slot" id="slot-${cat.id}">${openFor[cat.id] === 'EDIT' ? (escrevendo() ? editHtml(cat.id) : '') : (!escrevendo() && openFor[cat.id]) || ''}</div>`;
     }).join('');
-    box.querySelectorAll('.envl').forEach(b => b.onclick = () => souEla ? editCat(b.dataset.c) : readCat(b, b.dataset.c));
+    box.querySelectorAll('.envl').forEach(b => b.onclick = () => escrevendo() ? editCat(b.dataset.c) : readCat(b, b.dataset.c));
     box.querySelectorAll('[data-del]').forEach(d => d.onclick = () => { if(d.dataset.sure) col.remove(d.dataset.del); else { d.dataset.sure = 1; d.textContent = 'toca de novo'; } });
+    box.querySelectorAll('[data-abed]').forEach(d => d.onclick = () => { const it = d.closest('.abitem'); it.querySelector('p').hidden = true; it.querySelector('.abedf').hidden = false; });
+    box.querySelectorAll('.abedf').forEach(f => f.onsubmit = async e => { e.preventDefault(); const t = f.querySelector('textarea').value.trim(); if(!t) return; const c = list.find(x => x.id === f.dataset.id); await col.set(f.dataset.id, Object.assign({}, c, {texto:t})); sparkle(f.querySelector('button')); });
     box.querySelectorAll('form[data-cat]').forEach(f => f.onsubmit = async e => {
       e.preventDefault(); const ta = f.querySelector('textarea'), t = ta.value.trim(), err = f.querySelector('.werr');
       if(!t){ err.textContent = 'Escreve a carta antes de guardar.'; return; }
       const btn = f.querySelector('button'); btn.disabled = true;
-      try{ await col.add({cat:f.dataset.cat, texto:t, autor:Sync.quem}); sparkle(btn); }
+      try{ await col.add({cat:f.dataset.cat, texto:t, autor:eu}); sparkle(btn); }
       catch(x){ err.textContent = 'Não deu pra guardar. Tenta de novo.'; btn.disabled = false; }
     });
   }
   function editHtml(id){
-    const cat = C.abraQuando.find(c => c.id === id), mine = list.filter(c => c.cat === id);
+    const cat = C.abraQuando.find(c => c.id === id), mine = list.filter(c => c.cat === id && autorDe(c) === eu);
     return `<div class="abedit">
-      <form class="write" data-cat="${id}"><textarea rows="5" placeholder="Escreve uma carta pra quando ele ${esc(cat.titulo.replace('Abra quando ',''))}…" aria-label="Nova carta"></textarea><button type="submit">Guardar carta</button><p class="werr"></p></form>
-      ${mine.length ? mine.map((c,i) => `<div class="abitem"><span class="abn">${i+1}</span><p>${esc(c.texto)}</p><small>${lidas[c.id] ? 'ele já leu' : 'ainda não lida'} · <button class="linkbtn" data-del="${c.id}">apagar</button></small></div>`).join('') : `<p class="lead">Nenhuma carta escrita ainda nesse envelope.</p>`}
+      <form class="write" data-cat="${id}"><textarea rows="5" placeholder="Escreve uma carta pra quando ${ele} ${esc(cat.titulo.replace(/^Abra quando /i,''))}…" aria-label="Nova carta"></textarea><button type="submit">Guardar carta</button><p class="werr"></p></form>
+      ${mine.length ? mine.map((c,i) => `<div class="abitem"><span class="abn">${i+1}</span><p>${esc(c.texto)}</p><form class="abedf write" data-id="${c.id}" hidden><textarea rows="4">${esc(c.texto)}</textarea><button type="submit">Salvar</button></form><small>${lidas[c.id] ? `${ele} já leu` : 'ainda não lida'} · <button class="linkbtn" data-abed="${c.id}">editar</button> · <button class="linkbtn" data-del="${c.id}">apagar</button></small></div>`).join('') : `<p class="lead">Nenhuma carta sua nesse envelope ainda.</p>`}
     </div>`;
   }
   function editCat(id){
@@ -5725,18 +5790,20 @@ VIEWS.abra = () => {
     openFor[id] = 'EDIT'; draw();
   }
   function readCat(btn, id){
-    const cat = C.abraQuando.find(c => c.id === id), pool = abraPool(list, cat);
+    const cat = C.abraQuando.find(c => c.id === id), pool = abraPool(list, cat, eu);
     if(openFor[id]){ delete openFor[id]; return draw(); }
+    if(pool[0] && pool[0].vazio){ openFor[id] = `<p class="lead ab-vazio">${outro === 'Di' ? 'O Di' : 'A Mihzinha'} ainda não escreveu nesse envelope. Que tal pedir uma cartinha? ♥︎</p>`; return draw(); }
     let carta = pool.find(c => !lidas[c.id]), repetida = false;
     if(!carta){ carta = pool[Math.floor(Math.random() * pool.length)]; repetida = true; }
     btn.classList.add('open');
     setTimeout(() => { const r = btn.getBoundingClientRect(); burst(r.left + r.width/2, r.top + r.height/3, 18); }, 450);
     setTimeout(() => {
-      openFor[id] = `<div class="paper unfold">${carta.exemplo ? '' : quandoEscrita(carta.criadoEm)}${repetida ? '<p class="relida">você já leu todas desse envelope, então essa é uma de novo ♥︎</p>' : ''}<p class="to">${esc(cat.titulo)}</p>${esc(carta.texto).split(/\n+/).map(t => `<p>${t}</p>`).join('')}<p class="sign">Mihzinha</p></div>`;
-      if(!lidas[carta.id]) Sync.setFlag('lidas', carta.id, {em:Date.now(), cat:id});
+      openFor[id] = `<div class="paper unfold">${carta.exemplo ? '' : quandoEscrita(carta.criadoEm)}${repetida ? '<p class="relida">você já leu todas desse envelope, então essa é uma de novo ♥︎</p>' : ''}<p class="to">${esc(cat.titulo)}</p>${esc(carta.texto).split(/\n+/).map(t => `<p>${t}</p>`).join('')}<p class="sign">${autorDe(carta)}</p></div>`;
+      if(!lidas[carta.id]) Sync.setFlag('lidas', carta.id, {em:Date.now(), cat:id, por:eu});
       draw(); document.getElementById('slot-' + id)?.scrollIntoView({behavior:'smooth', block:'nearest'});
     }, 1000);
   }
+  document.querySelectorAll('.ab-tabs button').forEach(b => b.onclick = () => { modo = b.dataset.m; store.set('abraModo', modo); Object.keys(openFor).forEach(k => delete openFor[k]); draw(); });
   const offA = col.on(l => { list = l; draw(); });
   const offS = Sync.on('state', st => { lidas = st.lidas || {}; draw(); });
   const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { offA(); offS(); prev(); };
@@ -5744,8 +5811,9 @@ VIEWS.abra = () => {
 
 /* ---------- álbum das cartas já abertas: um livrinho pra folhear ---------- */
 VIEWS.album = () => {
-  shell('pra reler sempre','Álbum de cartas','Folheia pra reler todas as cartas que já foram abertas',
-    `<div class="bookwrap">
+  shell('pra reler sempre','Álbum de cartas','Um álbum pra cada ano, com todas as cartas que já foram abertas',
+    `<div class="fz-tabs bk-anos" id="bkanos" hidden></div>
+     <div class="bookwrap">
        <div class="book" id="book"></div>
        <div class="bknav">
          <button class="bkbtn" id="bkprev" aria-label="Página anterior"><svg viewBox="0 0 24 24" class="icn"><path d="M15 5l-7 7 7 7"/></svg></button>
@@ -5754,19 +5822,24 @@ VIEWS.album = () => {
        </div>
        <p class="bkhint">arrasta pro lado ou toca nas setas</p>
      </div>`);
-  const col = Sync.col('abraQuando'); let list = [], lidas = {}, pages = [], cur = 0, busy = false;
+  const col = Sync.col('abraQuando'); let list = [], lidas = {}, pages = [], cur = 0, busy = false, ano = null;
   const fmt = t => new Date(t).toLocaleDateString('pt-BR', {day:'numeric', month:'long', year:'numeric'});
   function build(){
-    const todas = C.abraQuando.flatMap(cat => abraPool(list, cat).map(c => ({...c, cat})));
-    const abertas = todas.filter(c => lidas[c.id]).sort((a,b) => (lidas[a.id].em || 0) - (lidas[b.id].em || 0));
-    pages = [{type:'cover', n:abertas.length}, ...abertas.map((c,i) => ({type:'letter', c, i:i+1, total:abertas.length})), {type:'end', n:abertas.length}];
+    const todas = [...list.map(c => ({...c, cat:C.abraQuando.find(k => k.id === c.cat) || {titulo:'Abra quando…'}})), ...C.abraQuando.map(cat => ({id:'ex_' + cat.id, cat, texto:cat.texto, exemplo:true}))];
+    const abertasTodas = todas.filter(c => lidas[c.id]).sort((a,b) => (lidas[a.id].em || 0) - (lidas[b.id].em || 0));
+    const anos = [...new Set(abertasTodas.map(c => new Date(lidas[c.id].em || Date.now()).getFullYear()))].sort();
+    const atual = new Date().getFullYear(); if(!anos.includes(atual)) anos.push(atual);
+    if(ano === null || !anos.includes(ano)) ano = anos[anos.length - 1];
+    const bar = document.getElementById('bkanos'); if(bar){ bar.innerHTML = anos.map(a => `<button type="button" class="${a === ano ? 'on' : ''}" data-ano="${a}">${a}</button>`).join(''); bar.hidden = anos.length < 2; bar.querySelectorAll('[data-ano]').forEach(b => b.onclick = () => { ano = +b.dataset.ano; cur = 0; build(); render(); }); }
+    const abertas = abertasTodas.filter(c => new Date(lidas[c.id].em || Date.now()).getFullYear() === ano);
+    pages = [{type:'cover', n:abertas.length, ano}, ...abertas.map((c,i) => ({type:'letter', c, i:i+1, total:abertas.length})), {type:'end', n:abertas.length}];
     if(cur > pages.length - 1) cur = pages.length - 1;
   }
   function pageHtml(pg){
     if(!pg) return '';
     if(pg.type === 'cover') return `<div class="bk-cover">
         <span class="bk-ribbon"></span>
-        <div class="bk-ctext"><span class="bk-mono">${LOGO()}</span><h3>Nossas cartas</h3><p class="bk-sub">${pg.n ? `${pg.n} ${pg.n === 1 ? 'carta aberta' : 'cartas abertas'}` : 'ainda vazio'}</p><p class="bk-year">2026</p></div>
+        <div class="bk-ctext"><span class="bk-mono">${LOGO()}</span><h3>Nossas cartas</h3><p class="bk-sub">${pg.n ? `${pg.n} ${pg.n === 1 ? 'carta aberta' : 'cartas abertas'}` : 'ainda vazio'}</p><p class="bk-year">${pg.ano || new Date().getFullYear()}</p></div>
         <span class="bk-bow">${RIBBON}</span></div>`;
     if(pg.type === 'end') return `<div class="bk-paper bk-endpage"><span class="bk-flower">${DAISY('#f0bac6','#fff')}</span>
         <p class="bk-endtxt">${pg.n ? 'E ainda tem muitas cartas esperando por você no "Abra quando…"' : 'Quando uma carta do "Abra quando…" for aberta, ela vem morar aqui pra sempre'}</p><p class="sign">Mihzinha</p>${LIPS('kiss')}</div>`;
@@ -5775,7 +5848,7 @@ VIEWS.album = () => {
         <div class="bk-head"><span class="albdate">${fmt(lidas[c.id].em)}</span></div>
         <p class="bk-cat">${esc(c.cat.titulo)}</p>
         <div class="bk-lines">${esc(c.texto).split(/\n+/).map(t => `<p>${t}</p>`).join('')}</div>
-        <p class="sign">Mihzinha</p>
+        <p class="sign">${autorDe(c)}</p>
         <p class="bk-num">${pg.i} de ${pg.total}</p></div>`;
   }
   function render(){
