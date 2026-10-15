@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=41">
-<link rel="apple-touch-icon" href="icon-180.png?v=41">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=41">
+<link rel="manifest" href="manifest.json?v=42">
+<link rel="apple-touch-icon" href="icon-180.png?v=42">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=42">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -1804,6 +1804,8 @@ html body .nt-sons button.on{border-color:#b0485a;background:#fff5f7}
 .nt-lista{margin:0;padding:0 0 0 18px;font-size:13.5px;line-height:1.7;color:var(--ink2)}
 .nt-cfg{margin-top:18px;background:#fff;border-radius:18px;padding:12px 14px}.nt-cfg summary{font-weight:700;font-size:13.5px;color:var(--muted);cursor:pointer}
 .nt-cfg .fz-lab{margin-top:10px}
+html body .nt-card button{display:flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 18px;line-height:1}
+html body .nt-card button .icn{display:block;font-size:18px;flex:none}
 </style>
 
 <canvas id="petals" aria-hidden="true"></canvas>
@@ -3269,7 +3271,7 @@ function renderHome(y = 0){
       <p class="endtitle">${esc(C.textos.fimNome)}</p>
       <p class="endyear">2026</p>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
-      <p class="endver">versão de 15/10 · 18h10</p>
+      <p class="endver">versão de 15/10 · 18h20</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
@@ -5042,7 +5044,7 @@ async function avisar(n){
   if(document.visibilityState === 'visible') return notiToast(n);
   if(pushAtivo() || !notifSuportada() || Notification.permission !== 'granted') return;
   try{ const reg = 'serviceWorker' in navigator && await navigator.serviceWorker.getRegistration();
-    const op = {body:n.corpo || '', icon:'icon-192.png', badge:'icon-badge.png', tag:n.tag || n.go || 'dm', renotify:true, data:{url:APP_URL + (n.go ? '#ir-' + n.go : '')}};
+    const op = {body:n.corpo || '', icon:'icon-coracao.png', badge:'icon-badge.png', tag:n.tag || n.go || 'dm', renotify:true, data:{url:APP_URL + (n.go ? '#ir-' + n.go : '')}};
     if(reg) reg.showNotification(n.titulo, op); else new Notification(n.titulo, op); }catch(e){}
 }
 
@@ -5128,7 +5130,7 @@ VIEWS.notificacoes = () => {
     $('ntbox').querySelectorAll('[data-som]').forEach(b => b.onclick = () => { store.set('notifSom', b.dataset.som); tocaSom(b.dataset.som); draw(); });
     $('ntligar')?.addEventListener('click', async e => { e.currentTarget.disabled = true; const r = await ativarPush();
       draw(r === 'push' ? 'Prontinho! Agora chega aviso até com o app fechado.' : r === 'local' ? 'Ligadas! Avisam enquanto o app estiver aberto.' : r === 'denied' ? 'Você não permitiu. Dá pra liberar nas configurações.' : String(r).startsWith('erro') ? 'Não deu pra ligar com o app fechado (' + esc(String(r).slice(5, 60)) + ')' : ''); });
-    $('nttest')?.addEventListener('click', async () => { tocaSom(); try{ const reg = 'serviceWorker' in navigator && await navigator.serviceWorker.getRegistration(); const op = {body:'É assim que vai chegar ♥', icon:'icon-192.png', badge:'icon-badge.png', tag:'teste'}; reg ? reg.showNotification('D&M', op) : new Notification('D&M', op); }catch(e){ notiToast({titulo:'D&M', corpo:'É assim que vai chegar ♥'}); }
+    $('nttest')?.addEventListener('click', async () => { tocaSom(); try{ const reg = 'serviceWorker' in navigator && await navigator.serviceWorker.getRegistration(); const op = {body:'É assim que vai chegar ♥', icon:'icon-coracao.png', badge:'icon-badge.png', tag:'teste'}; reg ? reg.showNotification('D&M', op) : new Notification('D&M', op); }catch(e){ notiToast({titulo:'D&M', corpo:'É assim que vai chegar ♥'}); }
       if(pushAtivo()) try{ const r = await pushEvento('teste', {}, null); if(r && r.erro) draw('O servidor respondeu: ' + esc(r.erro)); else if(r && r.enviados === 0) draw('O servidor não achou o seu celular. Toca em "Ligar com o app fechado" de novo.'); }catch(e){ draw('Não consegui falar com o servidor.'); } });
     $('ntvsalva')?.addEventListener('click', async () => { const v = $('ntvapid').value.trim(), wk = $('ntworker').value.trim(); try{ await Sync.col('conteudo').set('config', {vapid:v, worker:wk}); $('ntvm').textContent = 'Salvo! Agora toca em "Ligar com o app fechado".'; setTimeout(() => draw(), 1500); }catch(e){ $('ntvm').textContent = 'Não deu pra salvar.'; } });
   };
