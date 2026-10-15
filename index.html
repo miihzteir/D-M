@@ -7,9 +7,11 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="D&amp;M">
 <meta name="application-name" content="D&amp;M">
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icon-180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<link rel="manifest" href="manifest.json?v=6">
+<link rel="apple-touch-icon" href="icon-180.png?v=6">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=6">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -1334,6 +1336,54 @@ details.cd-env{display:block}details.cd-env summary{display:flex;align-items:cen
 .ed-n{position:absolute;left:10px;top:12px;font-weight:800;font-size:13px;color:var(--wine)}
 .ed-obj .ed-rm,.ed-add{width:auto;align-self:flex-start;min-height:32px;padding:0 12px;font-size:12.5px;display:inline-flex;gap:6px;align-items:center}
 
+/* ---------- ajustes 14/10 noite ---------- */
+.wax-pic{background:#fff!important;padding:0!important;overflow:hidden;border-radius:22%!important;border:3px solid #fff!important}
+.wax-pic img,.dlogo-pic img{width:100%;height:100%;object-fit:cover;display:block}
+.dlogo-pic{overflow:hidden;border-radius:24%!important;background:#fff!important;border:3px solid #fff!important}
+.ch-x{position:absolute;top:-10px;right:-6px;width:26px!important;height:26px;min-height:26px!important;padding:0!important;border-radius:50%;display:grid;place-items:center;background:#fffdf8!important;color:var(--muted)!important;border:1px solid var(--line2);box-shadow:0 4px 10px -4px rgba(0,0,0,.25)!important;font-size:13px}
+.ch-x .icn{transform:rotate(45deg)}
+.endver{margin:6px 0 0;font-size:10.5px;letter-spacing:.06em;color:var(--muted);opacity:.7}
+.n25{position:fixed!important;inset:0!important;z-index:9000!important;width:auto!important;max-width:none!important;margin:0!important;height:auto!important;overflow:auto;display:grid;place-items:center;padding:28px 18px;background:linear-gradient(180deg,#24463a,#16302a);position:relative;overflow:hidden}
+.n25-neve .fx-old{position:absolute;top:-10px;left:var(--x);width:var(--s);height:var(--s);border-radius:50%;background:#fff;opacity:.8;animation:n25cai var(--d) linear var(--a) infinite}
+@keyframes n25cai{to{transform:translateY(110svh)}}
+.n25-card{position:relative;z-index:1;width:min(100%,420px);text-align:center;color:#fbf6ec}
+.n25-eb{margin:0;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#f3dca4}
+.n25-card h1{margin:6px 0 0;font-family:var(--f-script);font-weight:400;font-size:64px;line-height:1.05;color:#fbf6ec}
+.n25-sub{margin:0 0 18px;font-family:var(--f-script);font-size:30px;color:#f3dca4}
+.n25-paper{text-align:left;color:var(--ink)}
+.n25-btns{display:flex;flex-direction:column;gap:10px;margin-top:20px}
+.n25-btns button{background:#b3122c!important}.n25-btns .ghost{background:transparent!important;color:#fbf6ec!important;border:1.5px solid rgba(251,246,236,.5)}
+
+.previa-bar{position:fixed!important;margin:0!important;left:50%;top:calc(env(safe-area-inset-top,0px) + 8px);transform:translateX(-50%);z-index:9500;display:flex;gap:10px;align-items:center;padding:6px 6px 6px 14px;border-radius:999px;background:#1f1a17;color:#fbf6ec;font-size:12px;box-shadow:0 10px 24px -10px rgba(0,0,0,.5);width:max-content;max-width:calc(100vw - 20px)}
+.previa-bar b{color:#f3dca4}.previa-bar button{width:auto;min-height:30px;padding:0 14px;font-size:12px;background:#b3122c!important}
+.em-previa .ed-modo{display:none}
+.ed-previa{background:linear-gradient(135deg,#fbe6ea,#fffdf8)!important;border-color:#e58fa5!important;margin-bottom:14px}
+.ed-previa{flex-direction:column;align-items:stretch!important}.ed-previa button{width:100%;padding:0 16px}
+
+/* ---------- datas festivas ---------- */
+.n25.tema-anonovo{background:linear-gradient(180deg,#0e1430,#1c2346)}
+.n25.tema-namorados{background:linear-gradient(180deg,#7a1424,#3a0b14)}
+.n25.tema-namoro{background:linear-gradient(180deg,#b3122c,#5a1020)}
+.n25.tema-niver{background:linear-gradient(180deg,#f4c6cf,#e58fa5)}
+.n25.tema-niver .n25-card,.n25.tema-niver h1{color:#5a1020}.n25.tema-niver .n25-eb,.n25.tema-niver .n25-sub{color:#7a1424}
+.n25.tema-niver .n25-btns .ghost{color:#5a1020!important;border-color:rgba(90,16,32,.4)}
+.n25.tema-anonovo .n25-eb,.n25.tema-anonovo .n25-sub{color:#f6d55a}
+.n25-neve .fx-neve{position:absolute;top:-10px;left:var(--x);width:var(--s);height:var(--s);border-radius:50%;background:#fff;opacity:.8;animation:n25cai var(--d) linear var(--a) infinite}
+.fx-cor{position:absolute;top:-30px;left:var(--x);font-size:var(--s);color:#f4b8c6;opacity:.75;animation:n25cai var(--d) linear var(--a) infinite}
+.fx-bal{position:absolute;bottom:-90px;left:var(--x);width:34px;height:42px;border-radius:50% 50% 48% 48%;background:var(--c);opacity:.9;animation:sobe var(--d) linear var(--a) infinite}
+.fx-bal::after{content:"";position:absolute;left:50%;top:100%;width:1px;height:46px;background:rgba(90,16,32,.35)}
+@keyframes sobe{to{transform:translateY(-120svh) rotate(6deg)}}
+.fx-fogos{position:absolute;inset:0;width:100%;height:100%}
+.n25-neve{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.dedic{position:fixed!important;inset:0!important;z-index:9200!important;margin:0!important;width:auto!important;display:grid;place-items:center;padding:24px;background:rgba(31,26,23,.45);opacity:0;transition:opacity .35s}
+.dedic.in{opacity:1}
+.dedic-card{width:min(100%,360px);background:#fffdf8;border-radius:24px;padding:28px 22px 22px;text-align:center;box-shadow:0 30px 60px -20px rgba(31,26,23,.6);transform:scale(.9);transition:transform .35s cubic-bezier(.2,.9,.3,1.3)}
+.dedic.in .dedic-card{transform:scale(1)}
+.dedic-ic{display:inline-grid;place-items:center;width:58px;height:58px;border-radius:50%;background:#b3122c;color:#fff;font-size:26px;animation:nvpulse 1.6s ease-in-out infinite}
+.dedic-card p{margin:16px 0 0;font-family:var(--f-hand);font-weight:600;font-size:26px;line-height:1.3;color:var(--ink)}
+.dedic-card .sign{margin-top:6px;font-size:24px;color:var(--wine)}
+.dedic-card button{margin-top:18px;width:100%}
+
 /* ---------- Natal: tela própria, verde-pinheiro, creme e vermelho-cranberry ---------- */
 .xapp{position:fixed;inset:0;z-index:3;overflow-y:auto;overflow-x:hidden;background:#fbf6ec;color:#3b3a2c;text-align:center;animation:xin .8s ease both}
 .xapp.out{animation:xout .7s ease forwards}
@@ -1905,7 +1955,17 @@ const C = {
   textos: {
     natalEyebrow: 'nosso primeiro Natal', natalTitulo: 'Feliz Natal', natalSub: 'meu amor', natalContagem: 'Falta pouco pro dia 25', natalLegenda: 'pra gente abrir os presentes juntos',
     ultimaCarta: 'Quem diria que uma conversa no WhatsApp em fevereiro ia virar tudo isso. Desde o primeiro encontro eu soube que tinha alguma coisa diferente em você.\n\nObrigada por cada dia, cada risada e cada cuidado. Você deixa tudo mais leve.\n\nQue esse seja o primeiro de muitos Natais ao seu lado.',
+    natalTituloAntes: 'Nosso Natal', natalSubAntes: 'tá chegando',
+    dedicatoria: 'Amor, esse app é dedicado para você. Eu te amo.',
+    natal25: 'Hoje é o nosso primeiro Natal juntos. Obrigada por ser o meu melhor presente desse ano e de todos os outros que vierem.\n\nQue Deus abençoe a nossa história. Eu te amo.',
     ultimaAssinatura: 'te amo, Mihzinha', fimAssinatura: 'com todo o meu amor,', fimNome: 'Mihzinha'
+  },
+  festas: {
+    anoNovo:   {titulo:'Feliz {ano}!', sub:'mais um ano de nós', texto:'Que esse ano seja ainda mais cheio de nós dois. Obrigada por cada dia do ano que passou.\n\nVem comigo pra mais 365 dias?'},
+    namorados: {titulo:'Feliz Dia dos Namorados!', sub:'meu namorado favorito', texto:'Hoje o mundo inteiro comemora o amor, e eu só consigo pensar em você.\n\nObrigada por ser o meu namorado, meu amigo e meu lugar seguro.'},
+    namoro:    {titulo:'{anos} de nós!', sub:'feliz aniversário de namoro', texto:'Hoje faz mais um ano que eu disse sim pra você, e eu diria de novo todos os dias.\n\nObrigada por cada momento até aqui. Que venham muitos outros.'},
+    niverDi:   {titulo:'Feliz aniversário, meu amor!', sub:'hoje o dia é todo seu', texto:'Que Deus te dê um ano lindo, cheio de saúde, sonhos realizados e muito amor. O meu você já tem inteirinho.\n\nObrigada por existir.'},
+    niverMih:  {titulo:'Feliz aniversário!', sub:'hoje o dia é todo seu', texto:'Que o seu novo ano seja leve, bonito e cheio de amor.'}
   },
   marcos: [
     {d:'15/02', t:'A primeira mensagem', s:'um "oi" no WhatsApp'},
@@ -1974,9 +2034,12 @@ const icon = n => `<svg class="icn" viewBox="0 0 24 24" aria-hidden="true">${ICO
 const app = document.getElementById('app');
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+/* prévia: a Mihzinha vê o app do zero, como o Di, sem mexer em nada de verdade */
+const PREVIA = /^#previa/.test(location.hash);
+const PFX = PREVIA ? 'previa_' : 'diogo_';
 const store = {
-  get(k, d){ try{ return JSON.parse(localStorage.getItem('diogo_'+k)) ?? d }catch(e){ return d } },
-  set(k, v){ try{ localStorage.setItem('diogo_'+k, JSON.stringify(v)) }catch(e){} }
+  get(k, d){ try{ return JSON.parse(localStorage.getItem(PFX+k)) ?? d }catch(e){ return d } },
+  set(k, v){ try{ localStorage.setItem(PFX+k, JSON.stringify(v)) }catch(e){} }
 };
 const photo = (f, cls, label) => f ? `<img src="${esc(f)}" alt="" style="width:100%;aspect-ratio:1;object-fit:cover;display:block">`
                                   : `<div class="ph ${cls||''}">${label||'sua foto aqui'}</div>`;
@@ -2001,7 +2064,7 @@ const Sync = (() => {
     Object.values(cols).forEach(c => c.attach());
   }
   const ready = (async () => {
-    if(!FIREBASE.apiKey) return;
+    if(!FIREBASE.apiKey || PREVIA) return;
     try{
       const v = '10.12.2', base = `https://www.gstatic.com/firebasejs/${v}/`;
       await loadScript(base + 'firebase-app-compat.js');
@@ -2089,7 +2152,7 @@ function renderStep(i){
   const s = steps[i]; let wrong = 0;
   app.innerHTML = `
     <div class="gate page"><div class="sheet" id="card">
-      <div class="wax">${LOGO()}</div>
+      <div class="wax wax-pic"><img src="${APP_ICON}" alt="D&amp;M"></div>
       <div class="dots st" style="--i:0">${steps.map((_,k)=>`<i class="${k<=i?'on':''}"></i>`).join('')}</div>
       <p class="eyebrow st" style="--i:1">${i===0 ? 'um presente pra você' : 'pergunta ' + (i+1) + ' de ' + steps.length}</p>
       <h1 class="q st" style="--i:2">${s.q}</h1>
@@ -2143,7 +2206,7 @@ function renderSuccess(){
   const H = 'M55 92 C 20 66, 6 46, 6 28 C 6 14, 18 4, 31 4 C 42 4, 51 11, 55 20 C 59 11, 68 4, 79 4 C 92 4, 104 14, 104 28 C 104 46, 90 66, 55 92 Z';
   app.innerHTML = `
     <div class="gate page"><div class="sheet">
-      <div class="wax">${LOGO()}</div>
+      <div class="wax wax-pic"><img src="${APP_ICON}" alt="D&amp;M"></div>
       <svg class="drawheart" viewBox="0 0 110 100" aria-hidden="true"><path class="fill" d="${H}"/><path d="${H}"/></svg>
       <p class="yay st" style="--i:6">Ai sim!</p>
       <p class="lead"><span id="typed" class="typed"></span></p>
@@ -2157,7 +2220,7 @@ const GLOGO = `<svg viewBox="0 0 24 24" aria-hidden="true" class="g"><path d="M2
 function renderLogin(){
   app.innerHTML = `
     <div class="gate page"><div class="sheet">
-      <div class="wax">${LOGO()}</div>
+      <div class="wax wax-pic"><img src="${APP_ICON}" alt="D&amp;M"></div>
       <p class="eyebrow st" style="--i:0">só mais um passinho</p>
       <h1 class="q st" style="--i:1">Entra com a sua conta Google</h1>
       <p class="lead st" style="--i:2">Assim tudo o que a gente fizer aqui fica guardado. O que um escreve, o outro vê.</p>
@@ -2166,6 +2229,7 @@ function renderLogin(){
     </div></div>`;
   const btn = document.getElementById('glogin'), msg = document.getElementById('lmsg');
   btn.onclick = async () => {
+    if(PREVIA){ store.set('viuLogin', true); nextStep(); return; }
     btn.disabled = true; msg.textContent = '';
     try{
       const r = await Sync.login();
@@ -2179,7 +2243,7 @@ function renderLogin(){
 function renderWho(){
   app.innerHTML = `
     <div class="gate page"><div class="sheet who-sheet">
-      <div class="wax">${LOGO()}</div>
+      <div class="wax wax-pic"><img src="${APP_ICON}" alt="D&amp;M"></div>
       <p class="eyebrow st" style="--i:0">bem-vindo ao nosso cantinho</p>
       <h1 class="q st" style="--i:1">Quem está aí?</h1>
       <p class="lead st" style="--i:2">Escolhe você, e o app guarda tudo do seu jeito.</p>
@@ -2200,6 +2264,7 @@ async function nextStep(){
   if(!q) return renderWho();
   if(q === 'Di' && !store.get('entrou', false)) return renderStep(0);
   await Sync.ready;
+  if(PREVIA && !store.get('viuLogin', false)) return renderLogin();
   if(Sync.mode === 'online' && !Sync.user) return renderLogin();
   if(!Sync.quem) await Sync.setQuem(q);
   firstScreen();
@@ -2238,8 +2303,8 @@ function renderXmas(){
         <path class="star" d="M85 6 L90 18 L103 19 L93 27 L96 40 L85 33 L74 40 L77 27 L67 19 L80 18 Z" fill="#f3dca4"/>
       </svg>
       <p class="xeb st" style="--i:3">${esc(C.textos.natalEyebrow)}</p>
-      <h1 class="xt1 st" style="--i:4">${esc(C.textos.natalTitulo)}</h1>
-      <p class="xt2 st" style="--i:5">${esc(C.textos.natalSub)}</p>
+      <h1 class="xt1 st" style="--i:4">${esc(jaNatal() ? C.textos.natalTitulo : C.textos.natalTituloAntes)}</h1>
+      <p class="xt2 st" style="--i:5">${esc(jaNatal() ? C.textos.natalSub : C.textos.natalSubAntes)}</p>
     </section>
     <section class="xb xb2">
       <div class="xcard st" style="--i:6">
@@ -2261,8 +2326,7 @@ function renderXmas(){
     </section>
     <section class="xb xb4">
       <span class="xholly">${HOLLY}</span>
-      <button class="xgo" id="xgo">Explorar meu presente</button>
-      <p class="xhint">tem muita coisa te esperando lá dentro</p>
+      <button class="xgo" id="xgo">Voltar para a tela inicial</button>
     </section>`;
   document.body.append(x);
   app.innerHTML = '';
@@ -2287,7 +2351,7 @@ function renderDaily(){
   window.scrollTo(0,0);
   app.innerHTML = `
     <div class="daily page">
-      <div class="dlogo st" style="--i:0">${LOGO()}</div>
+      <div class="dlogo dlogo-pic st" style="--i:0"><img src="${APP_ICON}" alt="D&amp;M"></div>
       <p class="eyebrow st" style="--i:1">${data}</p>
       <h1 class="st" style="--i:2">${saud},<em>${nome}</em></h1>
       <blockquote class="dquote st" style="--i:4">${esc(mensagemDoDia())}</blockquote>
@@ -2295,7 +2359,7 @@ function renderDaily(){
       <p class="dsign st" style="--i:5">${Sync.quem === 'Mihzinha' ? 'D&amp;M' : 'Mihzinha'}</p>
       <button class="st" style="--i:6" id="dgo">Entrar no D&amp;M</button>
     </div>`;
-  document.getElementById('dgo').onclick = () => { renderHome(); setTimeout(maybeInstallPrompt, 900); };
+  document.getElementById('dgo').onclick = () => { renderHome(); setTimeout(maybeInstallPrompt, 1500); };
 }
 
 /* ---------- tela inicial ---------- */
@@ -2392,7 +2456,7 @@ function renderHome(y = 0){
   app.innerHTML = `
   <div class="home page">
     <section class="band b-sage hero"><span class="deco d1">${RHEART()}</span><span class="deco d2">${RHEART()}</span><span class="deco d3">${RHEART()}</span>
-      ${eu === 'Mihzinha' ? `<div class="ed-modo"><div class="ed-sw"><button type="button" data-modo="ver" class="${modoEd() ? '' : 'on'}">Ver</button><button type="button" data-modo="editar" class="${modoEd() ? 'on' : ''}">Editar</button></div>${modoEd() ? `<button type="button" class="ed-abrir" data-go="editar">${icon('pencil')} abrir editor</button>` : `<small class="ed-ver">vendo como o Di</small>`}</div>` : ''}
+      ${eu === 'Mihzinha' ? `<div class="ed-modo"><div class="ed-sw"><button type="button" data-modo="ver" class="${modoEd() ? '' : 'on'}">Ver</button><button type="button" data-modo="editar" class="${modoEd() ? 'on' : ''}">Editar</button></div>${modoEd() ? `<button type="button" class="ed-abrir" data-go="editar">${icon('pencil')} abrir editor</button>` : `<button type="button" class="ed-abrir" id="edprev2">${icon('play')} ver do começo</button>`}</div>` : ''}
       <p class="hhello">${saud}, <b>${eu}</b></p>
       <h1 class="names" aria-label="Diogo e Milena"><span class="n1">Diogo</span><button class="n2" id="logo" aria-label="coração">${RHEART()}</button><span class="n3">Milena</span></h1>
       <p class="hdate">desde 12 de abril de 2026</p>
@@ -2455,11 +2519,13 @@ function renderHome(y = 0){
       <p class="endsub">${esc(C.textos.fimAssinatura)}</p>
       <p class="endtitle">${esc(C.textos.fimNome)}</p>
       <p class="endyear">2026</p>
+      <p class="endver">versão de 14/10 · 23h10</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
   clearInterval(timer); tick(); timer = setInterval(tick, 1000);
-  setTimeout(chocoDoDia, 1200); setTimeout(avisoAbraco, 400);
+  setTimeout(chocoDoDia, 1200); setTimeout(avisoAbraco, 400); setTimeout(dedicatoria, 900);
+  document.getElementById('edprev2')?.addEventListener('click', entrarPrevia);
   app.querySelectorAll('[data-modo]').forEach(b => b.onclick = () => { modoEdMem = b.dataset.modo === 'editar'; store.set('modoEdicao', modoEdMem); renderHome(window.scrollY); });
   { let festejou = false; const offN = Sync.on('state', () => { const box = document.getElementById('nvbox'); if(!box){ setTimeout(() => offN && offN()); return; }
       const hj = niverHoje(); let html = '';
@@ -2514,15 +2580,79 @@ function showSecret(){
   document.getElementById('tkclose').onclick = closeTicket;
 }
 /* Natal: presentinho balançando na home de 18 a 25/12; no dia 26 ele sai e o Natal fica em Datas comemorativas */
+/* tudo que é data festiva segue o horário de Mato Grosso (Cuiabá) */
+const jaNatal = () => location.hash === '#natal25' || agoraMT() >= new Date(2026, 11, 25);
+const agoraMT = () => { try{ return new Date(new Date().toLocaleString('en-US', {timeZone:'America/Cuiaba'})); }catch(e){ return new Date(); } };
+const mdMT = () => { const d = agoraMT(); return `${String(d.getMonth() + 1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; };
 const XMAS = new Date(2026, 11, 25);
 const NATAL_INI = new Date(2026, 9, 14); /* liberado já */
-const natalAberto = (d = new Date()) => location.hash === '#natal' || (d >= NATAL_INI && d < new Date(2026, 11, 26));
+const natalAberto = (d = agoraMT()) => location.hash === '#natal' || (d >= NATAL_INI && d < new Date(2026, 11, 26));
 const natalLiberado = (d = new Date()) => location.hash === '#natal' || d >= NATAL_INI;
-function firstScreen(){ renderDaily(); }
+function festaDeHoje(){
+  const h = location.hash, md = mdMT(), ano = agoraMT().getFullYear();
+  const forc = {'#natal25':'natal', '#anonovo':'anoNovo', '#namorados':'namorados', '#namoro':'namoro', '#niver':'niver'}[h];
+  const nv = typeof niverHoje === 'function' ? niverHoje() : [];
+  const id = forc || (md === '12-25' ? 'natal' : nv.length ? 'niver' : md === '01-01' ? 'anoNovo' : md === '04-12' && ano > 2026 ? 'namoro' : md === '06-12' ? 'namorados' : '');
+  return id ? {id, ano, nv:nv.length ? nv : ['Di']} : null;
+}
+function firstScreen(){
+  const f = festaDeHoje();
+  if(f && !store.get(`viuFesta_${f.id}_${f.ano}`, false)) return renderFesta(f);
+  renderDaily();
+}
+function renderFesta(f){
+  store.set(`viuFesta_${f.id}_${f.ano}`, true);
+  const eu = Sync.quem || 'Di', F = C.festas, T = C.textos;
+  let cfg;
+  if(f.id === 'natal') cfg = {tema:'natal', eb:'25 de dezembro', titulo:T.natalTitulo || 'Feliz Natal!', sub:T.natalSub || 'meu amor', texto:T.natal25, btn:'Abrir o nosso Natal', acao:() => renderXmas(), fx:'neve'};
+  else if(f.id === 'anoNovo') cfg = {tema:'anonovo', eb:`1º de janeiro de ${f.ano}`, titulo:F.anoNovo.titulo.replace('{ano}', f.ano), sub:F.anoNovo.sub, texto:F.anoNovo.texto, fx:'fogos'};
+  else if(f.id === 'namorados') cfg = {tema:'namorados', eb:'12 de junho', titulo:F.namorados.titulo, sub:F.namorados.sub, texto:F.namorados.texto, fx:'coracoes'};
+  else if(f.id === 'namoro'){ const n = Math.max(1, f.ano - 2026); cfg = {tema:'namoro', eb:'12 de abril', titulo:F.namoro.titulo.replace('{anos}', `${n} ${n === 1 ? 'ano' : 'anos'}`), sub:F.namoro.sub, texto:F.namoro.texto, fx:'coracoes'}; }
+  else { const dele = f.nv.includes(eu); const q = dele ? eu : f.nv[0]; const tx = q === 'Di' ? F.niverDi : F.niverMih;
+    cfg = dele ? {tema:'niver', eb:'hoje é o seu dia', titulo:tx.titulo, sub:tx.sub, texto:tx.texto, fx:'baloes'}
+               : {tema:'niver', eb:'hoje é um dia especial', titulo:`Hoje é aniversário ${q === 'Di' ? 'do Di' : 'da Mihzinha'}!`, sub:'não esquece de dar parabéns', texto:'', fx:'baloes', semCarta:1}; }
+  app.innerHTML = ''; document.getElementById('n25')?.remove();
+  const el = document.createElement('div'); el.id = 'n25'; el.className = `n25 tema-${cfg.tema}`; document.body.append(el);
+  const fx = cfg.fx === 'neve' ? Array.from({length:40}, (_, k) => `<i class="fx-neve" style="--x:${(k * 37) % 100}%;--d:${4 + (k % 5)}s;--a:${(k * .37) % 5}s;--s:${2 + (k % 3) * 2}px"></i>`).join('')
+    : cfg.fx === 'coracoes' ? Array.from({length:26}, (_, k) => `<i class="fx-cor" style="--x:${(k * 41) % 100}%;--d:${5 + (k % 4)}s;--a:${(k * .53) % 6}s;--s:${10 + (k % 4) * 5}px">${icon('heart')}</i>`).join('')
+    : cfg.fx === 'baloes' ? Array.from({length:16}, (_, k) => `<i class="fx-bal" style="--x:${(k * 23) % 96}%;--d:${7 + (k % 4)}s;--a:${(k * .7) % 7}s;--c:${['#e35d6a','#f3dca4','#f4b8c6','#6f8fb8','#b3122c'][k % 5]}"></i>`).join('')
+    : '<canvas class="fx-fogos"></canvas>';
+  const carta = cfg.semCarta || !cfg.texto ? '' : `<div class="paper n25-paper"><p class="to">${eu === 'Mihzinha' ? 'Meu amor,' : 'Meu Di,'}</p>${cfg.texto.split(/\n\s*\n/).map(x => `<p>${esc(x.trim())}</p>`).join('')}<p class="sign">${eu === 'Mihzinha' ? 'D&amp;M' : 'Mihzinha'}</p></div>`;
+  el.innerHTML = `<div class="n25-neve" aria-hidden="true">${fx}</div><div class="n25-card"><p class="n25-eb">${esc(cfg.eb)}</p><h1>${esc(cfg.titulo)}</h1><p class="n25-sub">${esc(cfg.sub || '')}</p>${carta}
+    <div class="n25-btns">${cfg.btn ? `<button type="button" id="n25x">${cfg.btn}</button>` : ''}<button type="button" class="${cfg.btn ? 'ghost' : ''}" id="n25h">Entrar no D&amp;M</button></div></div>`;
+  setTimeout(() => burst(innerWidth / 2, innerHeight / 3, 70), 400);
+  if(cfg.fx === 'fogos') fogos(el.querySelector('.fx-fogos'));
+  document.getElementById('n25x')?.addEventListener('click', () => { el.remove(); cfg.acao(); });
+  document.getElementById('n25h').onclick = () => { el.remove(); renderDaily(); };
+}
+function fogos(cv){
+  const ctx = cv.getContext('2d'), P = []; let raf;
+  const fit = () => { cv.width = innerWidth * DPR; cv.height = innerHeight * DPR; }; fit();
+  const cores = ['#f6d55a','#fff3c4','#f4b8c6','#e35d6a','#9fd6ee','#ffffff'];
+  const estoura = () => { const x = (.15 + Math.random() * .7) * cv.width, y = (.12 + Math.random() * .35) * cv.height, c = cores[Math.random() * cores.length | 0], n = 46;
+    for(let i = 0; i < n; i++){ const a = i / n * Math.PI * 2, v = (2 + Math.random() * 2.4) * DPR; P.push({x, y, vx:Math.cos(a) * v, vy:Math.sin(a) * v, l:1, c}); } };
+  let t = 0;
+  (function loop(){ if(!cv.isConnected){ cancelAnimationFrame(raf); return; } t++;
+    if(t % 38 === 1) estoura();
+    ctx.fillStyle = 'rgba(10,14,40,.22)'; ctx.fillRect(0, 0, cv.width, cv.height);
+    for(const p of P){ p.x += p.vx; p.y += p.vy; p.vy += .035 * DPR; p.vx *= .985; p.vy *= .985; p.l -= .012; ctx.globalAlpha = Math.max(0, p.l); ctx.fillStyle = p.c; ctx.fillRect(p.x, p.y, 2.4 * DPR, 2.4 * DPR); }
+    ctx.globalAlpha = 1; for(let i = P.length - 1; i >= 0; i--) if(P[i].l <= 0) P.splice(i, 1);
+    raf = requestAnimationFrame(loop); })();
+}
+/* recadinho da primeira vez que ele entra */
+function dedicatoria(){
+  if(Sync.quem !== 'Di' || store.get('viuDedicatoria', false) || document.getElementById('dedic')) return;
+  store.set('viuDedicatoria', true);
+  const w = document.createElement('div'); w.id = 'dedic'; w.className = 'dedic';
+  w.innerHTML = `<div class="dedic-card"><span class="dedic-ic">${icon('heart')}</span><p>${esc(C.textos.dedicatoria)}</p><p class="sign">Mihzinha</p><button type="button">Eu também te amo</button></div>`;
+  document.body.append(w); requestAnimationFrame(() => w.classList.add('in')); setTimeout(() => burst(innerWidth / 2, innerHeight / 2, 50), 300);
+  w.querySelector('button').onclick = () => { w.classList.remove('in'); setTimeout(() => w.remove(), 400); };
+}
 /* convite pra baixar o app: aparece uma vez, some no X */
 let deferredInstall = null;
 addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredInstall = e; const b = document.getElementById('instbtn'); if(b) b.hidden = false; });
 function maybeInstallPrompt(){
+  if(document.getElementById('dedic')) return setTimeout(maybeInstallPrompt, 1500);
   const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone;
   if(standalone || store.get('installSeen', false) || document.getElementById('inst')) return;
   const ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
@@ -3062,14 +3192,17 @@ function chocoDoDia(){
     document.getElementById('chtoast')?.remove();
     const t = document.createElement('div'); t.id = 'chtoast'; t.className = 'chtoast';
     t.innerHTML = `<span class="ch-ic">${CHOCO_SVG}</span><span class="ch-tx"><b>Seu chocolate de hoje chegou!</b><small>${of.seguidos ? `Pega pra manter a ofensiva de ${of.seguidos} ${of.seguidos === 1 ? 'dia' : 'dias'}` : 'Junta e monta a nossa casinha'}</small></span><button type="button" id="chget">Pegar</button>`;
+    t.insertAdjacentHTML('beforeend', `<button type="button" class="ch-x" aria-label="Fechar">${icon('plus')}</button>`);
     document.body.append(t); requestAnimationFrame(() => t.classList.add('in'));
-    document.getElementById('chget').onclick = async e => {
+    const fecha = () => { t.classList.remove('in'); setTimeout(() => t.remove(), 450); };
+    t.querySelector('.ch-x').onclick = fecha; const auto = setTimeout(fecha, 9000);
+    document.getElementById('chget').onclick = async e => { clearTimeout(auto);
       const b = e.currentTarget, r = b.getBoundingClientRect(); burst(r.left + r.width/2, r.top, 24); b.disabled = true;
       let n = of.seguidos + 1; try{ n = (await pegarChocolate(col, list, eu)).seguidos; }catch(x){}
       t.querySelector('.ch-ic').innerHTML = FLAME_SVG;
       t.querySelector('.ch-tx').innerHTML = `<b>${n} ${n === 1 ? 'dia' : 'dias'} seguidos!</b><small>${n % 7 === 0 ? `+1 chocolate e +${CASA.bonusOfensiva} de bônus pela semana` : '+1 chocolate na conta da casinha'}</small>`;
       b.disabled = false; b.textContent = 'Ver'; b.onclick = () => { t.remove(); openStop('casinha'); };
-      setTimeout(() => { t.classList.remove('in'); setTimeout(() => t.remove(), 400); }, 6500);
+      setTimeout(fecha, 2600);
     };
   }, 1500);
 }
@@ -3351,11 +3484,13 @@ function PixelRoom(cv){
     if(cm.id === 'sala' && st.natal) list.push({z:104, fn:() => arvoreNatal()});
     if(cm.id === 'sala' && st.festa) list.push({z:2, fn:() => festaSala()});
     if(st.festa && !cm.out && !cm.fachada && cm.id !== 'sala') list.push({z:2, fn:() => bandeirinhas()});
+    if(st.anoNovo && !cm.out && !cm.fachada) list.push({z:2.5, fn:() => { for(let x = 2; x < LW; x += 6){ const y = 3 + Math.round(Math.sin(x / 20) * 2); R(x, y, 3, 2, (x / 6 + t) % 3 ? '#e5c15a' : '#f3efe8'); P(x + 1, y + 2, '#c9a65c'); } }});
     if(st.niver && (cm.out || cm.fachada || cm.id !== 'sala')) list.push({z:cm.out ? 60 : cm.fachada ? 80 : 2, fn:() => baloes(cm.out ? [[10,36],[16,30],[4,32]] : cm.fachada ? [[96,44],[102,38],[90,40]] : [[150,26],[144,20],[156,22]], cm.out ? 54 : cm.fachada ? 60 : 44)});
     if(st.niver && cm.id === 'sala') list.push({z:96, fn:() => { B(28, 88, 20, 3, '#fbf8f2', '#b8aea0'); R(30, 91, 2, 6, '#b8aea0'); R(44, 91, 2, 6, '#b8aea0'); bolo(38, 87); }});
     if(cm.fachada && st.festa) list.push({z:3, fn:() => { for(let i = 0; i < 9; i++){ const x = 60 + i * 5, y = 50 + Math.round(Math.sin(i / 8 * Math.PI) * 3); R(x, y, 3, 3, ['#e35d6a','#f3dca4','#f4b8c6'][i % 3]); } }});
     list.sort((a, b) => a.z - b.z).forEach(o => o.fn());
     if(st.chuva && (cm.out || cm.fachada)){ g.fillStyle = 'rgba(60,70,95,.14)'; g.fillRect(0, 0, LW, LH); for(let i = 0; i < 70; i++){ const x = (i * 37 + t * 2) % LW, y = (i * 53 + t * 9) % LH; R(x, y, 1, 3, 'rgba(225,235,250,.75)'); } }
+    if(st.anoNovo && (cm.out || cm.fachada)){ [[30,10,'#f6d55a'],[120,8,'#f4b8c6'],[80,16,'#9fd6ee']].forEach(([x,y,c],k) => { const fase = (t + k * 5) % 15; if(fase < 8){ const r = fase + 2; for(let a = 0; a < 12; a++){ const ang = a / 12 * Math.PI * 2; P(Math.round(x + Math.cos(ang) * r), Math.round(y + Math.sin(ang) * r * .8), c); } } else R(x, y + (15 - fase) * 2, 1, 2, c); }); }
     if(st.noite){
       g.fillStyle = cm.out || cm.fachada ? 'rgba(16,20,58,.42)' : 'rgba(22,24,60,.36)'; g.fillRect(0, cm.out || cm.fachada ? 0 : 0, LW, LH);
       const glow = (x, y, r, c) => { for(let k = r; k > 0; k -= 3){ E(x, y, k, Math.round(k * .7), c); } };
@@ -3439,7 +3574,7 @@ VIEWS.casinha = () => {
     const gente = pessoas.filter(q => onde[q] === aba);
     const lookAqui = cm.out ? 'banho' : look;
     const nv = niverHoje(); acc.chapeu = nv.length > 0;
-    const mundo = {noite:ehNoite(), chuva:clima.chuva, natal:ehDezembro(), festa:!!ehFesta() || nv.length > 0, niver:nv.length > 0};
+    const mundo = {noite:ehNoite(), chuva:clima.chuva, natal:ehDezembro(), festa:!!ehFesta() || nv.length > 0, niver:nv.length > 0, anoNovo:ehAnoNovo()};
     px.draw({...mundo, cm, owned, cor:cs.cor || {}, parede:(cs.parede || {})[aba], piso:(cs.piso || {})[aba], gente, look:lookAqui, acc, acao:cs.acao || {}});
     const nome = q => q === 'Bebe' ? 'Bebê' : q;
     $('csquem').innerHTML = cm.provador ? '' : `<span>quem tá aqui:</span>` + pessoas.map(q => `<button type="button" class="${onde[q] === aba ? 'on' : ''}" data-q="${q}">${nome(q)}</button>`).join('');
@@ -3504,9 +3639,10 @@ const dsStr = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}
 const inicioSemana = () => { const d = new Date(); const k = (d.getDay() + 6) % 7; d.setDate(d.getDate() - k); d.setHours(0,0,0,0); return d; };
 const fmtLongo = d => new Date(d + 'T12:00:00').toLocaleDateString('pt-BR', {day:'numeric', month:'long', year:'numeric'});
 const diasAte = d => Math.round((new Date(d + 'T00:00:00') - new Date(hoje() + 'T00:00:00')) / 86400000);
-const ehNoite = () => location.hash === '#noite' || (h => h >= 18 || h < 6)(new Date().getHours());
-function ehFesta(d = new Date()){ if(location.hash === '#festa') return 'festa'; const m = d.getMonth() + 1, dd = d.getDate(); if(m === 4 && dd === 12) return 'aniversario'; if(m === 6 && dd === 12) return 'namorados'; if(dd === 12) return 'mes'; return ''; }
-const ehDezembro = () => location.hash === '#natal' || new Date().getMonth() === 11;
+const ehNoite = () => location.hash === '#noite' || location.hash === '#anonovo' || (h => h >= 18 || h < 6)(agoraMT().getHours());
+function ehFesta(d = agoraMT()){ if(location.hash === '#festa') return 'festa'; const m = d.getMonth() + 1, dd = d.getDate(); if(m === 4 && dd === 12) return 'aniversario'; if(m === 6 && dd === 12) return 'namorados'; if(dd === 12) return 'mes'; return ''; }
+const ehDezembro = () => location.hash === '#natal' || agoraMT().getMonth() === 11;
+const ehAnoNovo = () => location.hash === '#anonovo' || ['12-31','01-01'].includes(mdMT());
 let climaP = null;
 function climaAgora(){
   if(location.hash === '#chuva') return Promise.resolve({chuva:true});
@@ -3521,7 +3657,7 @@ function climaAgora(){
 let niverAtual = {};
 Sync.on('state', st => { niverAtual = st.niver || {}; });
 const md = d => d.slice(5, 10);
-function niverHoje(){ if(location.hash === '#niver') return ['Di']; const h = hoje().slice(5); return ['Di','Mihzinha'].filter(q => niverAtual[q] && md(niverAtual[q]) === h); }
+function niverHoje(){ if(location.hash === '#niver') return ['Di']; const h = mdMT(); return ['Di','Mihzinha'].filter(q => niverAtual[q] && md(niverAtual[q]) === h); }
 function proxNiver(q){ const b = niverAtual[q]; if(!b) return null; const y = new Date().getFullYear(); let d = `${y}-${md(b)}`; if(diasAte(d) < 0) d = `${y + 1}-${md(b)}`; return {data:d, dias:diasAte(d), idade:+d.slice(0,4) - +b.slice(0,4)}; }
 const doDa = q => q === 'Di' ? 'do Di' : 'da Mihzinha';
 
@@ -3563,7 +3699,7 @@ function avisoAbraco(){
     document.body.append(t); requestAnimationFrame(() => t.classList.add('in'));
     store.set('abracosVistos', Date.now());
     document.getElementById('abok').onclick = () => { t.remove(); openStop('casinha'); };
-    setTimeout(() => { t.classList.remove('in'); setTimeout(() => t.remove(), 400); }, 7000);
+    setTimeout(() => { t.classList.remove('in'); setTimeout(() => t.remove(), 400); }, 5000);
   }, 1700);
 }
 
@@ -3773,6 +3909,19 @@ VIEWS.retro = () => {
   }, 1500);
 };
 
+/* ---------- prévia do Di ---------- */
+function entrarPrevia(){
+  try{ Object.keys(localStorage).filter(k => k.startsWith('previa_')).forEach(k => localStorage.removeItem(k));
+    localStorage.setItem('previa_col_conteudo', JSON.stringify(Sync.col('conteudo')._items ? Sync.col('conteudo')._items() : conteudoAtual)); }catch(e){}
+  location.replace(location.pathname + location.search + '#previa'); location.reload();
+}
+function sairPrevia(){
+  try{ Object.keys(localStorage).filter(k => k.startsWith('previa_')).forEach(k => localStorage.removeItem(k)); }catch(e){}
+  location.replace(location.pathname + location.search); setTimeout(() => location.reload(), 50);
+}
+if(PREVIA){ const bar = document.createElement('div'); bar.className = 'previa-bar'; bar.innerHTML = `<span><b>Prévia</b> · do jeitinho que o Di vê. Nada aqui é salvo.</span><button type="button">Sair</button>`; bar.querySelector('button').onclick = sairPrevia; document.body.append(bar); document.documentElement.classList.add('em-previa'); }
+let conteudoAtual = [];
+
 /* ---------- conteúdo editável (só a Mihzinha edita) ---------- */
 const BASE = {
   fotoInicio: C.fotoInicio, fotoEncontro: C.fotoEncontro,
@@ -3802,10 +3951,27 @@ const ESCRITAS = [
   {k:'textos.fimNome', t:'Fim da página (assinatura)', tipo:'linha'},
   {grupo:'Tela de Natal'},
   {k:'textos.natalEyebrow', t:'Frase de cima', tipo:'linha'},
-  {k:'textos.natalTitulo', t:'Título', tipo:'linha'},
-  {k:'textos.natalSub', t:'Embaixo do título', tipo:'linha'},
+  {k:'textos.natalTituloAntes', t:'Título antes do dia 25', d:'o "Feliz Natal" só aparece a partir do dia 25', tipo:'linha'},
+  {k:'textos.natalSubAntes', t:'Embaixo do título antes do dia 25', tipo:'linha'},
+  {k:'textos.natalTitulo', t:'Título a partir do dia 25', tipo:'linha'},
+  {k:'textos.natalSub', t:'Embaixo do título a partir do dia 25', tipo:'linha'},
   {k:'textos.natalContagem', t:'Título da contagem', tipo:'linha'},
   {k:'textos.natalLegenda', t:'Embaixo da contagem', tipo:'linha'},
+  {k:'textos.natal25', t:'Mensagem que abre no dia 25', d:'aparece assim que ele entrar no app no dia de Natal. Linha em branco separa parágrafos', tipo:'texto', rows:6},
+  {grupo:'Datas festivas'},
+  {k:'textos.dedicatoria', t:'Recadinho da primeira vez', d:'aparece uma vez só, na primeira vez que o Di entra no app', tipo:'texto', rows:3},
+  {k:'festas.anoNovo.titulo', t:'Ano Novo: título', d:'{ano} vira o ano novo, tipo 2027', tipo:'linha'},
+  {k:'festas.anoNovo.sub', t:'Ano Novo: embaixo do título', tipo:'linha'},
+  {k:'festas.anoNovo.texto', t:'Ano Novo: cartinha', tipo:'texto', rows:5},
+  {k:'festas.namorados.titulo', t:'Dia dos Namorados: título', tipo:'linha'},
+  {k:'festas.namorados.sub', t:'Dia dos Namorados: embaixo do título', tipo:'linha'},
+  {k:'festas.namorados.texto', t:'Dia dos Namorados: cartinha', tipo:'texto', rows:5},
+  {k:'festas.namoro.titulo', t:'Aniversário de namoro: título', d:'{anos} vira "1 ano", "2 anos"…', tipo:'linha'},
+  {k:'festas.namoro.sub', t:'Aniversário de namoro: embaixo do título', tipo:'linha'},
+  {k:'festas.namoro.texto', t:'Aniversário de namoro: cartinha', tipo:'texto', rows:5},
+  {k:'festas.niverDi.titulo', t:'Aniversário do Di: título', tipo:'linha'},
+  {k:'festas.niverDi.sub', t:'Aniversário do Di: embaixo do título', tipo:'linha'},
+  {k:'festas.niverDi.texto', t:'Aniversário do Di: cartinha', tipo:'texto', rows:5},
   {grupo:'Jogos'},
   {k:'motivos', t:'Pegue os corações (motivos)', d:'um por linha', tipo:'linhas'},
   {k:'dates', t:'Roleta do date', d:'uma ideia por linha', tipo:'linhas'},
@@ -3838,14 +4004,15 @@ function aplicarConteudo(list){
   const sig = (C.fotoInicio || '').length + '|' + (C.fotoEncontro || '').length + '|' + (C.fotoInicio || '').slice(-40) + (C.fotoEncontro || '').slice(-40);
   if(sig !== conteudoSig){ const antes = conteudoSig; conteudoSig = sig; if(antes && document.querySelector('.home')) renderHome(window.scrollY); }
 }
-Sync.col('conteudo').on(aplicarConteudo);
+Sync.col('conteudo').on(l => { conteudoAtual = l; aplicarConteudo(l); });
 
 VIEWS.editar = (foco, origem, abaIni) => {
   document.getElementById('edfab')?.remove();
   if(Sync.quem !== 'Mihzinha'){ shell('só da Mihzinha','Editar o app','Essa parte é só dela', `<p class="lead hq-empty">Aqui é segredo da Mihzinha.</p>`); return; }
   let aba = abaIni || store.get('edAba', 'fotos'); if(foco) store.set('edSec', foco);
   shell('só você vê','Editar o app','Troca as fotos e todas as escritas do app. O Di não consegue mexer aqui',
-    `<div class="fz-tabs ed-tabs"><button type="button" data-a="fotos">Fotos</button><button type="button" data-a="cartas">Cartas</button><button type="button" data-a="textos">Escritas</button></div>
+    `<article class="ed-card ed-previa"><div class="ed-tx"><h3>Ver como o Di, do começo</h3><p>Abre o app do zero, desde o "Qual é o seu nome?", as datas, o login e a mensagem do dia, do jeitinho que ele vai ver. Nada do que você fizer na prévia é salvo e as coisas de vocês continuam intactas.</p></div><button type="button" id="edprevia">Recomeçar como o Di</button></article>
+     <div class="fz-tabs ed-tabs"><button type="button" data-a="fotos">Fotos</button><button type="button" data-a="cartas">Cartas</button><button type="button" data-a="textos">Escritas</button></div>
      <div id="edb"></div><input type="file" id="edfile" accept="image/*" hidden>`);
   const col = Sync.col('conteudo'), $ = id => document.getElementById(id);
   let list = [], alvo = null;
@@ -3907,6 +4074,7 @@ VIEWS.editar = (foco, origem, abaIni) => {
   $('edfile').onchange = async () => { const f = $('edfile').files[0]; if(!f || !alvo) return; const card = $('edb').querySelector(`[data-slot="${alvo}"] .ed-ph`); if(card) card.innerHTML = '<span><small>preparando…</small></span>';
     try{ const img = await compressImage(f, 900, .74); await col.set(alvo, {img}); }catch(e){ if(card) card.innerHTML = '<span><small>não deu, tenta outra</small></span>'; } };
   document.querySelectorAll('.ed-tabs button').forEach(b => b.onclick = () => { aba = b.dataset.a; store.set('edAba', aba); draw(); });
+  $('edprevia').onclick = e => { const b = e.currentTarget; if(!b.dataset.sure){ b.dataset.sure = 1; b.textContent = 'Toca de novo pra abrir'; setTimeout(() => { delete b.dataset.sure; b.textContent = 'Recomeçar como o Di'; }, 3000); return; } entrarPrevia(); };
   const off = col.on(l => { list = l; if(aba !== 'textos' && aba !== 'cartas' || !$('edb').innerHTML) draw(); });
   const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { off(); prev(); };
   if(foco) setTimeout(() => { const sec = document.querySelector(`.ed-sec[data-k="${foco}"]`); if(sec){ sec.open = true; sec.scrollIntoView({behavior:'smooth', block:'start'}); } }, 350);
