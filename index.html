@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=39">
-<link rel="apple-touch-icon" href="icon-180.png?v=39">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=39">
+<link rel="manifest" href="manifest.json?v=41">
+<link rel="apple-touch-icon" href="icon-180.png?v=41">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=41">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -3269,7 +3269,7 @@ function renderHome(y = 0){
       <p class="endtitle">${esc(C.textos.fimNome)}</p>
       <p class="endyear">2026</p>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
-      <p class="endver">versão de 15/10 · 18h00</p>
+      <p class="endver">versão de 15/10 · 18h10</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
@@ -5027,7 +5027,7 @@ function tocaSom(id = store.get('notifSom', 'sino')){
 }
 const notifSuportada = () => 'Notification' in window;
 const pushAtivo = () => !!store.get('pushToken', '') && notifSuportada() && Notification.permission === 'granted' && !!workerURL();
-const vapidChave = () => ((conteudoAtual || []).find(x => x.id === 'config') || {}).vapid || '';
+const vapidChave = () => ((conteudoAtual || []).find(x => x.id === 'config') || {}).vapid || 'BIyzh52hPlGVpLQR3kFJZi2FFv7aJdTzRnfvNe8ik4RexrFLYR-r5XaJLIcCTH9Uy4cgs8vhhvdnFnwXG0lhnx4';
 function notiToast(n){
   let w = document.getElementById('ntoast'); if(w) w.remove();
   w = document.createElement('button'); w.type = 'button'; w.id = 'ntoast'; w.className = 'ntoast';
@@ -5048,7 +5048,7 @@ async function avisar(n){
 
 /* avisa o servidor (Cloudflare) pra mandar notificação pro outro celular */
 const EVENTOS_PUSH = ['bilhetes','respostas','abraQuando','cartasData','abracos','missoesEsp','gostos','musicas','saudade','premios','pensei','teste'];
-const workerURL = () => ((conteudoAtual || []).find(x => x.id === 'config') || {}).worker || '';
+const workerURL = () => ((conteudoAtual || []).find(x => x.id === 'config') || {}).worker || 'https://dm-avisos.miihzteir.workers.dev';
 async function pushEvento(col, doc, antes){
   if(PREVIA || !EVENTOS_PUSH.includes(col) || !workerURL() || Sync.mode !== 'online' || !window.firebase || !firebase.auth().currentUser) return null;
   if(col !== 'teste' && !jaComecou()) return null;
