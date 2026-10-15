@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=30">
-<link rel="apple-touch-icon" href="icon-180.png?v=30">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=30">
+<link rel="manifest" href="manifest.json?v=31">
+<link rel="apple-touch-icon" href="icon-180.png?v=31">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=31">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -1607,6 +1607,11 @@ html body .home .band.b-stripes-blue{background:url("data:image/svg+xml,%3Csvg x
   .cs-tabs::-webkit-scrollbar-thumb,.gs-cats::-webkit-scrollbar-thumb,.bk-anos::-webkit-scrollbar-thumb{background:rgba(122,20,36,.3);border-radius:6px}
   .arrastando{cursor:grabbing!important;user-select:none;scroll-behavior:auto!important}
 }
+@media (min-width: 760px){
+  main#app:has(> .gate){background:transparent!important;box-shadow:none!important;border-radius:0!important;min-height:100vh!important;margin:0 auto!important;padding:0!important;display:flex!important;align-items:center!important;justify-content:center!important;width:520px!important;max-width:520px!important}
+  main#app > .gate{min-height:0!important;max-width:460px!important;background:transparent!important;box-shadow:none!important;width:100%;padding:48px 0!important}
+  main#app > .gate .sheet{border-radius:30px!important;box-shadow:0 30px 70px -30px rgba(74,18,36,.40), 0 0 0 1px rgba(122,20,36,.06)!important;padding:56px 36px 36px!important;margin-top:38px}
+}
 </style>
 
 <canvas id="petals" aria-hidden="true"></canvas>
@@ -3065,7 +3070,7 @@ function renderHome(y = 0){
       <p class="endtitle">${esc(C.textos.fimNome)}</p>
       <p class="endyear">2026</p>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
-      <p class="endver">versão de 15/10 · 12h20</p>
+      <p class="endver">versão de 15/10 · 12h30</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
