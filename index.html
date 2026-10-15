@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=6">
-<link rel="apple-touch-icon" href="icon-180.png?v=6">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=6">
+<link rel="manifest" href="manifest.json?v=10">
+<link rel="apple-touch-icon" href="icon-180.png?v=10">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=10">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -348,6 +348,64 @@ textarea:focus,.card-form input:focus,.addopt input:focus{border-color:var(--pin
 .vale b{font-weight:700;color:var(--plum);font-size:15px;line-height:1.25}
 .vale button{padding:9px;font-size:14px;margin-top:auto}
 .vale.used{opacity:.65}
+.vg-sheet{position:fixed!important;inset:0!important;z-index:9600!important;width:auto!important;margin:0!important;background:rgba(31,26,23,.45);display:flex;align-items:flex-end;justify-content:center;opacity:0;transition:opacity .3s}
+.vg-sheet.in{opacity:1}
+.vg-card{position:relative;background:#fffaf6;width:100%;max-width:520px;border-radius:26px 26px 0 0;padding:22px 18px calc(env(safe-area-inset-bottom,0px) + 22px);text-align:left;transform:translateY(30px);transition:transform .35s cubic-bezier(.2,.8,.2,1);max-height:90vh;overflow:auto}
+.vg-sheet.in .vg-card{transform:none}
+.vg-card h3{margin:0 0 6px;font-family:var(--f-display);color:#7a1424;font-size:22px}.vg-card > p{margin:0 0 14px;font-size:14px;color:#6a5a5a;line-height:1.45}
+.vg-x{position:absolute;right:12px;top:12px;width:36px!important;height:36px;min-height:0!important;padding:0!important;border-radius:50%;background:#f3e4e4!important;color:#7a1424!important;box-shadow:none!important;display:grid;place-items:center}.vg-x svg{transform:rotate(45deg)}
+.vg-quem{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;font-size:13px;font-weight:700;color:#8a6a6f}
+.vg-chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 14px}.vg-chips button{width:auto!important;min-height:0!important;padding:7px 12px!important;font-size:12.5px!important}
+.vg-chips button.sel{background:#7a1424!important;color:#fff!important}
+.vg-ir{width:100%;display:flex;align-items:center;justify-content:center;gap:8px}
+.ed-viagem{flex-direction:column;align-items:stretch!important;margin-bottom:14px;background:linear-gradient(135deg,#eef3fb,#fffdf8)!important;border-color:#a9bfdc!important}
+.previa-bar .pv-dia{background:#fbf6ec!important;color:#1f1a17!important}
+.cs-fogo{cursor:pointer;font:inherit;border:0;text-align:left;position:relative}
+button.cs-saldo{background:var(--paper,#fffaf6);color:inherit;box-shadow:0 10px 24px -16px rgba(122,20,36,.5);padding-right:16px}
+.cs-ver{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:700;color:#b3122c;margin-left:6px;letter-spacing:.02em}.cs-ver svg{width:13px;height:13px}
+.cs-fogo.on{outline:2px solid #e8798f}
+.cs-seq{background:#fffaf6;border:1px solid #f0dcd8;border-radius:20px;padding:14px 12px;margin:10px 0 4px;box-shadow:0 14px 30px -22px rgba(122,20,36,.6)}
+.sq-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px;text-align:center}
+.sq-stats div{background:#fbeef0;border-radius:14px;padding:8px 4px}.sq-stats b{display:block;font-size:22px;color:#7a1424;font-family:var(--serif,serif)}.sq-stats small{font-size:11px;color:#8a6a6f;line-height:1.2;display:block}
+.sq-mes{margin-top:10px}.sq-mes p{margin:0 0 6px;font-weight:700;text-transform:capitalize;color:#5a2030;font-size:13.5px}
+.sq-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}.sq-grid b{font-size:10.5px;color:#a88a8f;text-align:center}
+.sq-d{aspect-ratio:1;border-radius:9px;display:grid;place-items:center;font-style:normal;font-size:11px;color:#a88a8f;background:#f6ecea}
+.sq-d svg{width:12px;height:12px}
+.sq-d.ambos{background:#b3122c;color:#fff}.sq-d.eu{background:#f2a7b8;color:#7a1424}.sq-d.ele{background:#f7d9c4;color:#8a5a2a}
+.sq-d.fut,.sq-d.antes{background:transparent;color:#d8c8c6}.sq-d.hj{outline:2px solid #7a1424;outline-offset:-2px}.sq-d.ini{box-shadow:inset 0 0 0 2px #e5c15a}
+.sq-leg{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:12px;font-size:12px;color:#8a6a6f}.sq-leg span{display:inline-flex;align-items:center;gap:5px}.sq-leg .sq-d{width:18px;height:18px;aspect-ratio:auto}
+.sq-aviso{margin:0 0 10px;text-align:center;font-size:13px;color:#7a1424;font-weight:600}
+.cs-espera{display:inline-flex;align-items:center;gap:6px;font-weight:700;color:#7a1424;background:#fbeef0;border-radius:999px;padding:10px 16px;font-size:14px}.cs-espera svg{width:16px;height:16px}
+.ms-off{opacity:.7}
+.cs-tsep{flex:none;align-self:center;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:#b3707e;padding:0 2px 0 8px}
+#cstabs button.lug.lock{opacity:.7;border-style:dashed}
+.cs-abrir{background:linear-gradient(135deg,#fbe6ea,#fffdf8)!important;border:1.5px solid #e8798f!important}
+.cs-aberto .cs-nm{display:inline-flex;align-items:center;gap:6px;color:#7a1424;font-weight:700}.cs-aberto svg{width:14px;height:14px}
+.cs-juntos{width:100%;display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:8px}
+.vale.used .vlib{opacity:1}.vale .vlib[hidden]{display:none}.vale .vlib{padding:7px;font-size:12.5px;margin-top:2px}
+.vale-add{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:16px}
+.mc .k img{width:100%;height:100%;object-fit:cover;border-radius:11px;display:block}
+.mc .k:has(img){padding:0;overflow:hidden}
+.ed-mem{flex-direction:column;align-items:stretch!important}
+.ed-memgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:10px}
+.ed-memslot{display:flex;flex-direction:column;gap:4px}
+.ed-memph{aspect-ratio:3/4;width:100%!important;height:auto!important;padding:0!important;border-radius:12px!important;overflow:hidden;background:#fbeef0!important;border:2px dashed #e7a9b8!important;box-shadow:none!important;color:#b3122c!important;display:grid;place-items:center}
+.ed-memph img{width:100%;height:100%;object-fit:cover;display:block}
+.ed-memph:has(img){border-style:solid!important}
+.ed-memx{padding:4px!important;font-size:11.5px!important;min-height:0!important}
+.ed-reset{display:block!important;padding:0!important;margin-bottom:14px;overflow:hidden}
+.ed-reset summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px;cursor:pointer}
+.ed-reset summary::-webkit-details-marker{display:none}
+.ed-reset summary span{display:flex;flex-direction:column;gap:2px;text-align:left}
+.ed-reset summary small{color:#8a6a6f;font-size:13px}
+.ed-reset[open] summary svg{transform:rotate(45deg)}
+.ed-reset > :not(summary){margin-left:16px;margin-right:16px}
+.rs-list{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.rs-op{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:14px;background:#fffaf6;border:1px solid #efdcd9;cursor:pointer;text-align:left}
+.rs-op input{width:20px;height:20px;margin-top:2px;flex:none;accent-color:#9b1630}
+.rs-op span{display:flex;flex-direction:column;gap:2px}.rs-op b{font-size:14.5px}.rs-op small{font-size:12.5px;color:#8a6a6f;line-height:1.35}
+.rs-btn{width:calc(100% - 32px);margin-top:14px;margin-bottom:6px;background:#7a1424!important}
+.ed-reset .msg{margin-bottom:14px;text-align:center}
 .vale.used button{background:var(--pink-3);color:var(--pink);box-shadow:none}
 
 /* presente */
@@ -1330,6 +1388,7 @@ details.cd-env{display:block}details.cd-env summary{display:flex;align-items:cen
 .ed-d{margin:0;font-size:12.5px;color:var(--muted)}
 .ed-sec textarea,.ed-sec input{width:100%;box-sizing:border-box;font:500 16px var(--f-body);color:var(--ink);background:#fff;border:1px solid var(--line2);border-radius:10px;padding:10px 12px}
 .ed-sec textarea{resize:vertical}
+.dcount{margin:-6px auto 10px;display:inline-block;padding:4px 12px;border-radius:999px;background:rgba(179,18,44,.08);color:#9b1630;font-size:12px;font-weight:600;letter-spacing:.04em}
 .ed-cont{margin:-4px 0 0;font-size:11.5px;color:var(--muted);text-align:right}
 .ed-objs{display:flex;flex-direction:column;gap:10px}
 .ed-obj{position:relative;display:flex;flex-direction:column;gap:6px;border:1px dashed var(--line2);border-radius:12px;padding:10px 10px 10px 34px}
@@ -1357,6 +1416,8 @@ details.cd-env{display:block}details.cd-env summary{display:flex;align-items:cen
 .previa-bar{position:fixed!important;margin:0!important;left:50%;top:calc(env(safe-area-inset-top,0px) + 8px);transform:translateX(-50%);z-index:9500;display:flex;gap:10px;align-items:center;padding:6px 6px 6px 14px;border-radius:999px;background:#1f1a17;color:#fbf6ec;font-size:12px;box-shadow:0 10px 24px -10px rgba(0,0,0,.5);width:max-content;max-width:calc(100vw - 20px)}
 .previa-bar b{color:#f3dca4}.previa-bar button{width:auto;min-height:30px;padding:0 14px;font-size:12px;background:#b3122c!important}
 .em-previa .ed-modo{display:none}
+.ed-btrow{display:flex;gap:5px}
+.home:has(.ed-btrow) .names{margin-top:30px}.ed-btrow .ed-abrir{padding:0 8px}
 .ed-previa{background:linear-gradient(135deg,#fbe6ea,#fffdf8)!important;border-color:#e58fa5!important;margin-bottom:14px}
 .ed-previa{flex-direction:column;align-items:stretch!important}.ed-previa button{width:100%;padding:0 16px}
 
@@ -1432,6 +1493,12 @@ details.cd-env{display:block}details.cd-env summary{display:flex;align-items:cen
 <canvas id="fx" aria-hidden="true"></canvas>
 
 <script>
+/* viagem no tempo da Mihzinha: na prévia #previa-Quem@AAAA-MM-DD o app acha que hoje é aquele dia */
+(() => { const m = location.hash.match(/^#previa(?:-(Di|Mihzinha))?(?:@(\d{4}-\d\d-\d\d))?/); if(!m || !m[2]) return;
+  const RD = Date, agora = new RD(), alvo = new RD(m[2] + 'T00:00:00'); alvo.setHours(agora.getHours(), agora.getMinutes(), agora.getSeconds());
+  const off = alvo.getTime() - agora.getTime();
+  class FD extends RD { constructor(...a){ if(a.length) super(...a); else super(RD.now() + off); } static now(){ return RD.now() + off; } }
+  window.Date = FD; window.__viagem = {dia:m[2], quem:m[1] || 'Di'}; })();
 /* =========================================================
    CONTEÚDO — tudo que for trocar fica aqui
    ========================================================= */
@@ -1510,6 +1577,7 @@ const C = {
 
   /* mensagem do dia: uma diferente por dia */
   mensagens: [
+    'Você é o meu presente de Natal mais bonito, todo dia do ano.',
     'Hoje eu tô torcendo por você do jeito mais exagerado possível.',
     'Você é o meu assunto favorito.',
     'Esperar em Deus nunca é perder tempo.',
@@ -1688,7 +1756,6 @@ const C = {
     'Coisas boas acontecem com quem não desiste. Você é prova disso.',
     '“Em paz me deito e logo adormeço, pois só tu, Senhor, me fazes viver em segurança.” Salmos 4:8. Dorme bem hoje.',
     'Que hoje não falte café, coragem e motivos pra sorrir.',
-    'Você é o meu presente de Natal mais bonito, todo dia do ano.',
     '“A fé é a certeza daquilo que esperamos e a prova das coisas que não vemos.” Hebreus 11:1',
     'Seu jeito de cuidar das pessoas é uma das coisas mais lindas em você.',
     'Música de hoje: “Trem-Bala”, da Ana Vilela. Ouve com calma e lembra de aproveitar cada momento.',
@@ -1878,46 +1945,370 @@ const C = {
 
   /* pergunta do dia: os dois respondem */
   perguntas: [
-    'Qual foi o melhor momento da sua semana?',
-    'O que você mais gosta de fazer comigo?',
-    'Qual lugar do mundo você quer conhecer comigo?',
-    'Qual música te lembra de mim?',
-    'O que te fez sorrir hoje?',
-    'Qual foi a primeira coisa que você reparou em mim?',
-    'Qual é o seu sonho mais bobo?',
-    'Se a gente pudesse viajar amanhã, pra onde iria?',
-    'Qual é a sua lembrança favorita da gente?',
-    'O que te deixa calmo quando está tudo difícil?',
-    'Qual comida você quer que a gente cozinhe junto?',
-    'Qual é uma coisa que você nunca me contou?',
-    'Como você imagina a gente daqui a 5 anos?',
-    'O que eu faço que te faz se sentir amado?',
-    'Qual filme a gente precisa ver juntos?',
-    'Qual foi o dia mais feliz da sua vida?',
-    'O que você quer conquistar esse ano?',
-    'Qual apelido você mais gosta que eu te chame?',
-    'Qual é a sua mania mais engraçada?',
-    'Se você pudesse reviver um dia com a gente, qual seria?',
-    'O que você admira em mim?',
-    'Qual hábito a gente podia criar juntos?',
-    'Do que você tem mais orgulho em você?',
-    'Qual cheiro te lembra infância?',
-    'Como seria o nosso date perfeito?',
-    'Qual é a sua maior qualidade?',
-    'O que você gostaria de aprender?',
-    'Qual momento você queria ter fotografado?',
-    'O que te deixa com saudade de mim?',
-    'Qual nome você gostaria de dar pro nosso primeiro filho?',
-    'Qual foi a coisa mais corajosa que você já fez?',
-    'O que você precisa ouvir hoje?',
-    'Qual é o seu lugar favorito em Sinop?',
-    'O que você agradece hoje?',
-    'Qual é a sua comida conforto?',
-    'O que a gente devia fazer mais vezes?',
-    'Qual a coisa mais romântica que você já viu?',
     'Qual tradição de Natal você quer ter comigo?',
+    'Qual foi o melhor momento da sua semana?',
+    'Qual foi a coisa mais gostosa que você comeu essa semana?',
+    'Qual é a sua lembrança favorita do nosso primeiro mês?',
+    'O que você pensou de mim quando a gente conversou pela primeira vez?',
+    'Qual foi a última vez que você chorou de rir?',
+    'O que você quer deixar em 2026 e o que quer levar pra 2027?',
+    'Qual é o seu maior desejo pra esse ano novo?',
+    'Qual música você colocaria pra tocar no nosso casamento?',
+    'Se a gente tivesse um cachorro, qual seria o nome dele?',
+    'Qual é a coisa mais simples que te deixa feliz?',
+    'O que você faria com um dia inteiro de folga só pra você?',
+    'O que você mais gosta de fazer comigo?',
+    'Qual foi o melhor presente que você já ganhou?',
+    'Que conselho você daria pro Di de 10 anos?',
+    'Qual é a sua estação do ano favorita e por quê?',
+    'O que você mais gosta no seu jeito de ser?',
+    'Qual personagem de filme ou série parece com você?',
+    'Qual foi a última coisa que te deixou orgulhoso de mim?',
+    'Se você pudesse jantar com qualquer pessoa da história, quem seria?',
+    'O que você quer que a gente faça no próximo fim de semana?',
+    'Qual lugar do mundo você quer conhecer comigo?',
+    'Qual versículo da Bíblia mais fala com você?',
+    'Qual foi um momento em que você sentiu Deus perto?',
+    'O que você mais gosta na sua família?',
+    'Qual é a melhor parte do seu dia?',
+    'Café da manhã, almoço ou jantar? Por quê?',
+    'Qual seria a sua casa dos sonhos?',
+    'O que você nunca deixaria de fazer por mim?',
+    'Qual é a sua maior saudade da infância?',
+    'Qual música te lembra de mim?',
+    'Qual brincadeira de criança você ainda jogaria hoje?',
+    'Que talento você queria ter?',
+    'Qual foi a coisa mais difícil que você já superou?',
+    'Qual é o seu doce favorito de todos?',
+    'Se a gente abrisse um negócio juntos, o que seria?',
+    'Qual é a sua palavra favorita?',
+    'O que você gostaria que eu soubesse sobre você e ainda não sei?',
+    'Qual é o seu jeito favorito de receber carinho?',
+    'O que te fez sorrir hoje?',
+    'O que eu faço que te deixa com vergonha, mas no fundo você gosta?',
+    'Qual foi o melhor conselho que você já recebeu?',
+    'Qual pessoa mais te inspira e por quê?',
+    'O que você gostaria de mudar no mundo?',
+    'Qual cidade você moraria se pudesse escolher qualquer uma?',
+    'O que você faria se ganhasse na loteria amanhã?',
+    'Carnaval: bloquinho, praia ou maratona de série comigo?',
+    'Qual é o seu emoji mais usado?',
+    'Que série você assistiria comigo de novo do começo?',
+    'Qual foi a primeira coisa que você reparou em mim?',
+    'Qual é a sua lembrança mais antiga?',
+    'Qual é o barulho que mais te acalma?',
+    'Que tipo de velhinho você vai ser?',
+    'Qual foi o seu primeiro emprego ou o primeiro dinheiro que você ganhou?',
+    'Qual é o seu maior sonho profissional?',
+    'O que você aprendeu comigo?',
+    'O que você acha que eu aprendi com você?',
+    'Qual é a parte do meu rosto que você mais gosta?',
+    'Qual é o seu sonho mais bobo?',
+    'Qual foi a nossa conversa mais marcante?',
+    'Qual sabor de sorvete define você?',
+    'Praia ou montanha?',
+    'O que te deixa irritado sem motivo nenhum?',
+    'Qual foi o melhor show ou evento que você já foi?',
+    'Que viagem de carro você quer fazer comigo?',
+    'Qual é o seu prato que mais sai bem?',
+    'O que você sempre quis experimentar e nunca teve coragem?',
+    'Se a gente pudesse viajar amanhã, pra onde iria?',
+    'Qual cor você acha que combina comigo?',
+    'Qual roupa minha você mais gosta?',
+    'Se a gente fosse um casal de desenho animado, qual seria?',
+    'Qual oração você mais faz?',
+    'O que você pede pra Deus pra gente?',
+    'Qual foi a última vez que você se sentiu realmente em paz?',
+    'Qual hobby você quer começar esse ano?',
+    'Qual livro ou história marcou a sua vida?',
+    'Qual é a sua lembrança favorita da gente?',
+    'Qual é o seu superpoder secreto?',
+    'O que te faz confiar em alguém?',
+    'Como você gosta de ser cuidado quando está doente?',
+    'O que você mais gosta de fazer num dia de chuva?',
+    'Qual é a sua comida de infância favorita?',
+    'O que você faria se fosse invisível por um dia?',
+    'Que animal você seria?',
+    'Qual foi a última coisa que você aprendeu?',
+    'O que te deixa calmo quando está tudo difícil?',
+    'Qual é a coisa mais engraçada que já aconteceu com a gente?',
+    'Qual é um sonho que você ainda não me contou?',
+    'Do que você mais sente falta quando a gente não se vê?',
+    'O que eu posso fazer pra deixar o seu dia mais leve?',
+    'Qual foi a última vez que você me achou linda sem eu saber?',
+    'Qual é a sua parte favorita de um abraço meu?',
+    'Se o nosso amor fosse um filme, qual seria o título?',
+    'O que a Páscoa significa pra você?',
+    'Qual frase minha você nunca esqueceu?',
+    'O que você faz quando está triste e não quer falar?',
+    'Qual comida você quer que a gente cozinhe junto?',
+    'Como eu posso te ajudar quando você estiver assim?',
+    'Qual foi a decisão mais importante que você já tomou?',
+    'Qual é a sua opinião mais polêmica sobre comida?',
+    'Pizza: qual é o sabor perfeito?',
+    'Qual é o melhor cheiro do mundo?',
+    'Qual é o seu jeito de pedir desculpa?',
+    'O que te deixa nervoso?',
+    'Qual é a música que você canta no chuveiro?',
+    'Qual é uma coisa que você nunca me contou?',
+    'Qual é a sua lembrança favorita de um Natal?',
+    'Que presente você nunca esqueceu de dar pra alguém?',
+    'Hoje faz um ano de namoro! Qual foi o momento mais especial desse ano com a gente?',
+    'O que te faz sentir em casa?',
+    'Qual é o seu lugar preferido da sua casa?',
+    'Se a gente tivesse uma música só nossa, qual seria?',
+    'O que você quer que as pessoas lembrem de você?',
+    'Qual é a coisa que você mais valoriza num relacionamento?',
+    'Qual é a melhor qualidade da gente como casal?',
+    'Como você imagina a gente daqui a 5 anos?',
+    'O que a gente pode melhorar juntos?',
+    'Qual combinado a gente devia fazer?',
+    'O que você acha que vai mudar na gente com o tempo?',
+    'O que você espera que nunca mude?',
+    'Como você quer comemorar o seu próximo aniversário?',
+    'Qual foi o melhor aniversário da sua vida?',
+    'Qual comida você odiava e hoje gosta?',
+    'O que você faz melhor do que eu?',
+    'O que eu faço que te faz se sentir amado?',
+    'O que eu faço melhor do que você?',
+    'Qual é o jogo que você sempre ganha de mim?',
+    'Se você pudesse morar em qualquer época, qual seria?',
+    'Que profissão você teria se não fosse a sua?',
+    'Qual matéria da escola você mais gostava?',
+    'Quem foi o professor que te marcou?',
+    'Qual é o seu melhor amigo e como vocês se conheceram?',
+    'O que você mais gosta de conversar comigo?',
+    'Qual filme a gente precisa ver juntos?',
+    'Qual foi o momento em que você percebeu que gostava de mim?',
+    'O que você mais admira na sua mãe?',
+    'O que você sentiu no nosso primeiro beijo?',
+    'Que foto nossa você mais gosta?',
+    'Qual foi o dia que você mais riu comigo?',
+    'Qual é o seu filme de conforto?',
+    'O que te dá coragem?',
+    'Qual é o melhor jeito de começar uma segunda-feira?',
+    'Qual seria o nosso nome de dupla?',
+    'Qual foi o dia mais feliz da sua vida?',
+    'O que você faz pra se acalmar antes de dormir?',
+    'Qual sonho você teve que nunca esqueceu?',
+    'Você acredita em amor à primeira vista?',
+    'Qual é a melhor coisa de ter alguém pra dividir a vida?',
+    'O que você quer construir comigo?',
+    'Qual é um lugar de Mato Grosso que a gente precisa conhecer?',
+    'Qual é a melhor coisa de morar onde a gente mora?',
+    'Qual é a sua bebida favorita?',
+    'O que você quer conquistar esse ano?',
+    'Que mania minha você já pegou?',
+    'Qual mania sua eu já peguei?',
+    'O que você gostaria de agradecer aos seus pais?',
+    'Qual é a coisa mais bonita que alguém já fez por você?',
+    'Qual é a coisa mais bonita que você já fez por alguém?',
+    'Qual foi o seu maior aprendizado esse mês?',
+    'O que você quer fazer de diferente no mês que vem?',
+    'Qual é o seu desejo pra essa semana?',
+    'Qual apelido você mais gosta que eu te chame?',
+    'Qual é a coisa mais aleatória que você sabe fazer?',
+    'Qual é o seu jeito favorito de passar uma noite comigo?',
+    'Cinema ou filme em casa de pijama?',
+    'Que tipo de date você nunca fez e quer fazer?',
+    'O que você levaria pra uma ilha deserta?',
+    'Qual foi o melhor dia dessa semana e por quê?',
+    'Qual foi o pior dia dessa semana e como eu posso ajudar?',
+    'É Dia dos Namorados! O que você mais ama no nosso namoro?',
+    'O que te faz rir mesmo quando você não quer?',
+    'Qual é a sua mania mais engraçada?',
+    'Qual é a sua memória favorita com os seus avós?',
+    'Que valor da sua família você quer levar pra nossa?',
+    'Como você imagina a nossa casa num domingo?',
+    'Qual seria a regra mais importante da nossa casa?',
+    'Qual cômodo da nossa casa você ia decorar sozinho?',
+    'Quantos filhos você imagina que a gente vai ter?',
+    'O que você quer ensinar pros nossos filhos?',
+    'Qual é a sua maior preocupação hoje?',
+    'Se você pudesse reviver um dia com a gente, qual seria?',
+    'O que eu posso orar por você essa semana?',
+    'Qual promessa de Deus você segura quando está difícil?',
+    'O que é fé pra você?',
+    'Qual foi uma oração que Deus respondeu na sua vida?',
+    'O que você sente quando a gente ora junto?',
+    'Qual é a música de louvor que mais toca o seu coração?',
+    'Qual foi a última vez que você ajudou alguém sem ninguém saber?',
+    'O que você faria se tivesse só um dia comigo?',
+    'O que você admira em mim?',
+    'Qual palavra me descreve melhor?',
+    'Qual palavra descreve a gente?',
+    'O que você sentiu quando me viu pela primeira vez pessoalmente?',
+    'O que você acha que eu penso de você?',
+    'Qual foi o maior mal-entendido que a gente já teve?',
+    'O que você aprendeu com a nossa primeira briguinha?',
+    'Qual é a melhor forma de a gente resolver uma discussão?',
+    'Qual é a sua linguagem do amor favorita?',
+    'Qual hábito a gente podia criar juntos?',
+    'O que faz você se sentir respeitado?',
+    'O que faz você se sentir admirado?',
+    'Que elogio você nunca cansa de ouvir?',
+    'Qual elogio você gostaria de ouvir mais?',
+    'Que coisa pequena eu faço que você ama?',
+    'Qual é a sua comida de dia frio?',
+    'Qual é a sua comida de dia quente?',
+    'Qual é a melhor sobremesa pra dividir?',
+    'Do que você tem mais orgulho em você?',
+    'Qual é a coisa mais estranha que você já comeu?',
+    'Qual comida você quer aprender a fazer?',
+    'Qual cheiro te lembra de mim?',
+    'Qual é o barulho mais irritante do mundo?',
+    'O que você faria se ficasse um dia sem celular?',
+    'Qual aplicativo você mais usa?',
+    'Qual é o melhor vídeo que você viu essa semana?',
+    'Qual meme representa a gente?',
+    'Qual cheiro te lembra infância?',
+    'Qual é a sua frase de efeito?',
+    'Se você escrevesse um livro, sobre o que seria?',
+    'Qual é a pergunta que você sempre quis me fazer?',
+    'Qual é a coisa mais corajosa que você quer fazer esse ano?',
+    'Que hábito ruim você quer largar?',
+    'Que hábito bom você quer começar?',
+    'Como você recarrega as energias?',
+    'Qual foi a última vez que você fez algo pela primeira vez?',
+    'Como seria o nosso date perfeito?',
+    'Que tipo de pai você quer ser um dia?',
+    'Qual esporte você jogaria comigo?',
+    'Qual jogo de tabuleiro ou de cartas é o seu favorito?',
+    'Qual videogame marcou a sua vida?',
+    'O que você mais gosta de fazer sozinho?',
+    'O que você mais gosta de fazer em grupo?',
+    'Qual amigo seu você quer que eu conheça melhor?',
+    'Qual foi a viagem mais marcante da sua vida?',
+    'Qual seria a nossa lua de mel dos sonhos?',
+    'Qual é a sua maior qualidade?',
+    'O que você pensa quando ouve a palavra lar?',
+    'Qual é o seu maior orgulho na sua história?',
+    'O que você gostaria de perguntar pra Deus?',
+    'O que você acha que Deus pensa da gente?',
+    'Qual é a coisa mais importante que a gente tem?',
+    'Se a gente pudesse voltar a qualquer dia juntos, qual seria?',
+    'Qual é o seu momento favorito do dia comigo?',
+    'Qual foi a mensagem minha que você mais gostou de receber?',
+    'O que você gostaria de aprender?',
+    'O que você faria pra me surpreender?',
+    'Qual foi a melhor surpresa que você já recebeu?',
+    'Qual é a sua flor favorita?',
+    'Qual é a sua cor favorita e por quê?',
+    'Qual é o seu número da sorte?',
+    'Que tipo de música você não aguenta ouvir?',
+    'Qual é a música mais antiga que você ama?',
+    'Que cantor ou banda você queria ver ao vivo comigo?',
+    'Qual momento você queria ter fotografado?',
+    'Qual seria o tema da nossa festa de casamento?',
+    'Como você imagina o nosso Natal daqui a 10 anos?',
+    'Quais tradições da sua família você quer que a gente tenha?',
+    'O que te deixa mais animado no futuro?',
+    'Do que você tem medo no futuro?',
+    'Como eu posso te apoiar nos seus sonhos?',
+    'Qual é um sonho meu que você quer me ajudar a realizar?',
+    'O que você faria se não tivesse medo de errar?',
+    'O que te deixa com saudade de mim?',
+    'Qual erro te ensinou muito?',
+    'O que você aprendeu sobre amor com os seus pais?',
+    'Qual casal você admira e por quê?',
+    'O que faz um relacionamento durar?',
+    'Qual é a sua definição de felicidade?',
+    'O que é sucesso pra você?',
+    'Qual seria um dia perfeito, do acordar ao dormir?',
+    'O que você gostaria de fazer quando se aposentar?',
+    'Qual nome você gostaria de dar pro nosso primeiro filho?',
+    'Qual é a sua parte favorita do fim de semana?',
+    'Qual é a coisa mais legal que você já viu na natureza?',
+    'Você prefere nascer do sol ou pôr do sol?',
+    'Qual é a sua lembrança favorita de um dia de chuva?',
+    'Qual é a coisa mais boba que te faz feliz?',
+    'Qual foi o maior mico que você já pagou?',
+    'Qual foi o maior mico que a gente pagou juntos?',
+    'O que você faria com uma máquina do tempo?',
+    'Qual animal de estimação você teve ou queria ter?',
+    'Qual foi a coisa mais corajosa que você já fez?',
+    'Que nome você daria pra um gato nosso?',
+    'Qual seria a nossa música de briga, pra fazer as pazes?',
+    'Qual é a coisa que você mais gosta de me ver fazendo?',
+    'O que você sente quando eu fico brava?',
+    'O que eu faço que te acalma?',
+    'O que você faz quando sente ciúme?',
+    'O que te dá segurança na gente?',
+    'Qual é a sua maior qualidade como namorado?',
+    'O que você precisa ouvir hoje?',
+    'Qual é a minha maior qualidade como namorada?',
+    'O que você queria que eu fizesse mais?',
+    'O que você queria que eu fizesse menos?',
+    'Qual é a coisa mais romântica que eu já fiz?',
+    'Qual é a coisa mais romântica que você quer fazer por mim?',
+    'Qual seria a carta mais bonita que você me escreveria? Me conta uma frase dela.',
+    'Qual é a nossa piada interna favorita?',
+    'Qual apelido meu é o seu favorito?',
+    'Qual é o seu lugar favorito em Sinop?',
+    'Que apelido você nunca quer que eu use?',
+    'Qual foi a primeira mensagem que você me mandou?',
+    'O que você lembra do nosso primeiro encontro?',
+    'O que você estava vestindo no nosso primeiro encontro?',
+    'Qual foi o momento em que você soube que queria namorar comigo?',
+    'O que você contou pros seus amigos sobre mim no começo?',
+    'Qual é a coisa mais bonita que alguém já falou da gente?',
+    'Qual seria o nosso date dos sonhos sem limite de dinheiro?',
+    'O que você agradece hoje?',
+    'E qual seria o nosso date perfeito com 20 reais?',
+    'Qual é o seu restaurante favorito?',
+    'Qual lugar da cidade é a nossa cara?',
+    'Qual é a coisa mais legal que tem pra fazer aqui perto?',
+    'Qual cidade a gente devia conhecer num fim de semana?',
+    'Que país você nunca iria?',
+    'Que idioma você queria falar?',
+    'Qual comida de outro país você quer provar?',
+    'Qual é a sua comida conforto?',
+    'Qual é a sua viagem dos sonhos?',
+    'O que você colocaria numa cápsula do tempo nossa?',
+    'O que você quer me dizer daqui a um ano?',
+    'Qual é a melhor coisa que aconteceu na sua vida esse ano?',
+    'Qual foi o momento mais difícil desse ano e como você passou por ele?',
+    'Quem esteve do seu lado quando você mais precisou?',
+    'O que você gostaria de dizer pra alguém que não fala há tempos?',
+    'Qual é a sua maior saudade hoje?',
+    'O que a gente devia fazer mais vezes?',
+    'Do que você está precisando descansar?',
+    'O que te deixou ansioso essa semana?',
+    'O que eu posso fazer por você hoje?',
+    'Qual é a coisa mais gostosa de acordar cedo?',
+    'E qual é a melhor parte de dormir até tarde?',
+    'Qual é o seu pijama favorito?',
+    'Qual é a sua posição favorita pra assistir filme comigo?',
+    'Qual é a pipoca perfeita: doce ou salgada?',
+    'Qual a coisa mais romântica que você já viu?',
+    'Qual lanche de madrugada você ama?',
+    'Qual é a sua fruta favorita?',
+    'Qual é o tempero que não pode faltar?',
+    'Qual sabor de bolo seria o do nosso casamento?',
+    'Qual é a sua memória mais doce, literalmente?',
+    'Que chocolate você escolheria pra vida toda?',
+    'O que você compraria agora se pudesse?',
+    'Qual é a coisa mais cara que você já comprou?',
     'Qual é um medo que você quer vencer?',
-    'Se eu fosse uma música, qual eu seria?'
+    'Qual foi a melhor compra que você já fez?',
+    'Como você imagina a gente organizando o dinheiro juntos?',
+    'Qual é um objetivo nosso pra esse ano?',
+    'O que você quer comemorar comigo esse mês?',
+    'Qual foi a última vez que você me admirou em silêncio?',
+    'Qual é o seu jeito favorito de dizer eu te amo sem dizer?',
+    'O que você responderia se alguém perguntasse por que me ama?',
+    'Qual é a coisa que mais te faz sentir amado por Deus?',
+    'Se eu fosse uma música, qual eu seria?',
+    'Que lugar te traz paz quando você precisa pensar?',
+    'Qual é a sua lembrança favorita de um domingo em família?',
+    'O que você nunca vai esquecer desse ano?',
+    'Qual foi o melhor abraço que você já recebeu?',
+    'Qual é a sua mania na hora de dormir?',
+    'Que pergunta você faria pra mim de 80 anos?',
+    'O que você mais gosta de ouvir da minha boca?',
+    'Qual é o seu plano perfeito pra uma sexta à noite?',
+    'Qual pergunta desse ano você mais gostou de responder?',
+    'Se você pudesse resumir esse nosso ano em uma palavra, qual seria?'
   ],
 
   /* mesversário: libera no dia 12 de cada mês (1 = 12/05/2026) */
@@ -1957,10 +2348,16 @@ const C = {
     ultimaCarta: 'Quem diria que uma conversa no WhatsApp em fevereiro ia virar tudo isso. Desde o primeiro encontro eu soube que tinha alguma coisa diferente em você.\n\nObrigada por cada dia, cada risada e cada cuidado. Você deixa tudo mais leve.\n\nQue esse seja o primeiro de muitos Natais ao seu lado.',
     natalTituloAntes: 'Nosso Natal', natalSubAntes: 'tá chegando',
     dedicatoria: 'Amor, esse app é dedicado para você. Eu te amo.',
+    vespera: 'Amanhã faz um ano que esse app é seu. Foram 364 bilhetes, um pra cada dia. Esse aqui é só pra dizer que eu escolheria você em todos eles de novo.',
+    fimDiario: 'Um ano de bilhetes, um ano de perguntas, um ano de nós. Os bilhetes acabaram, mas eu continuo aqui te amando todos os dias.',
+    perguntasFim: 'Foram 364 perguntas e um ano inteiro de respostas. Tá tudo guardado aqui embaixo, pra gente reler sempre que quiser.',
+    antesInicio: 'Contagem regressiva: {dias} pro dia 25 de dezembro. A partir daí, todo dia vai ter um bilhetinho novo aqui, um pra cada dia do nosso ano.',
+    memoriaFim: 'Achou todos os pares! Isso vale um beijo de recompensa. Vem buscar.',
     natal25: 'Hoje é o nosso primeiro Natal juntos. Obrigada por ser o meu melhor presente desse ano e de todos os outros que vierem.\n\nQue Deus abençoe a nossa história. Eu te amo.',
     ultimaAssinatura: 'te amo, Mihzinha', fimAssinatura: 'com todo o meu amor,', fimNome: 'Mihzinha'
   },
   festas: {
+    fim:       {titulo:'Um ano de nós', sub:'feliz Natal, meu amor', texto:'Hoje faz um ano que eu te dei esse app.\n\nForam 364 bilhetes, 364 perguntas e um monte de chocolates, abraços e saudades no meio do caminho. Obrigada por ter aberto ele todos os dias.\n\nO D&M encerra aqui o nosso primeiro ano. A nossa história, essa continua. Eu te amo.'},
     anoNovo:   {titulo:'Feliz {ano}!', sub:'mais um ano de nós', texto:'Que esse ano seja ainda mais cheio de nós dois. Obrigada por cada dia do ano que passou.\n\nVem comigo pra mais 365 dias?'},
     namorados: {titulo:'Feliz Dia dos Namorados!', sub:'meu namorado favorito', texto:'Hoje o mundo inteiro comemora o amor, e eu só consigo pensar em você.\n\nObrigada por ser o meu namorado, meu amigo e meu lugar seguro.'},
     namoro:    {titulo:'{anos} de nós!', sub:'feliz aniversário de namoro', texto:'Hoje faz mais um ano que eu disse sim pra você, e eu diria de novo todos os dias.\n\nObrigada por cada momento até aqui. Que venham muitos outros.'},
@@ -2118,6 +2515,18 @@ const Sync = (() => {
       await ready;
       if(online()) return fdb.doc('compartilhado/estado').set({[group]:{[key]:val}}, {merge:true});
       state = {...state, [group]:{...state[group], [key]:val}}; store.set(group, state[group]); emitState();
+    },
+    async clearGroup(group){
+      await ready;
+      if(online()) return fdb.doc('compartilhado/estado').set({[group]:firebase.firestore.FieldValue.delete()}, {merge:true});
+      state = {...state, [group]:{}}; store.set(group, {}); emitState();
+    },
+    async clearCol(name){
+      await ready; const c = col(name);
+      if(online()){ const snap = await fdb.collection(name).get(); let b = fdb.batch(), n = 0;
+        for(const d of snap.docs){ b.delete(d.ref); if(++n % 400 === 0){ await b.commit(); b = fdb.batch(); } }
+        await b.commit(); return; }
+      cols[name].items = []; store.set('col_' + name, []); cols[name].L.forEach(f => f([]));
     },
     async pensei(){
       await ready; const d = hoje(), q = quem || 'Di';
@@ -2341,7 +2750,11 @@ function renderXmas(){
 /* ---------- mensagem do dia ---------- */
 function diaDoAno(d = new Date()){ return Math.floor((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - Date.UTC(2026,0,1)) / 86400000); }
 /* 364 bilhetes: um diferente pra cada dia, sem repetir no ano */
-function mensagemDoDia(){ const n = C.mensagens.length; return C.mensagens[((diaDoAno() * 5) % n + n) % n]; }
+/* a contagem começa no Natal de 2026: dia 1 = 25/12/2026 … dia 364 = 23/12/2027, dia 365 = véspera, dia 366 em diante = encerrado (horário de Cuiabá) */
+const INICIO_JORNADA = Date.UTC(2026, 11, 25);
+function diaJornada(){ const m = location.hash.match(/^#dia(\d+)$/); if(m) return +m[1]; const d = agoraMT(); return Math.floor((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - INICIO_JORNADA) / 86400000) + 1; }
+function itemDoDia(lista, mult){ const n = lista.length; if(!n) return ''; const dj = diaJornada(); if(dj >= 1) return lista[(dj - 1) % n]; return lista[((diaDoAno() * mult) % n + n) % n]; }
+function mensagemDoDia(){ const dj = diaJornada(); if(dj < 1){ const n = 1 - dj; return (C.textos.antesInicio || '').replace('{dias}', n === 1 ? '1 dia' : n + ' dias'); } if(dj === 365) return C.textos.vespera; if(dj > 365) return C.textos.fimDiario; return itemDoDia(C.mensagens, 5); }
 function renderDaily(){
   stopGame(); clearInterval(timer); document.getElementById('tabbar')?.remove();
   const now = new Date(), h = now.getHours();
@@ -2352,7 +2765,7 @@ function renderDaily(){
   app.innerHTML = `
     <div class="daily page">
       <div class="dlogo dlogo-pic st" style="--i:0"><img src="${APP_ICON}" alt="D&amp;M"></div>
-      <p class="eyebrow st" style="--i:1">${data}</p>
+      <p class="eyebrow st" style="--i:1">${data}</p>${(d => d >= 1 && d <= 364 ? `<p class="dcount st" style="--i:1">bilhete ${d} de 364</p>` : '')(diaJornada())}
       <h1 class="st" style="--i:2">${saud},<em>${nome}</em></h1>
       <blockquote class="dquote st" style="--i:4">${esc(mensagemDoDia())}</blockquote>
       <span class="st" style="--i:5;display:block;width:70px;margin:-6px auto 0">${LIPS()}</span>
@@ -2456,7 +2869,7 @@ function renderHome(y = 0){
   app.innerHTML = `
   <div class="home page">
     <section class="band b-sage hero"><span class="deco d1">${RHEART()}</span><span class="deco d2">${RHEART()}</span><span class="deco d3">${RHEART()}</span>
-      ${eu === 'Mihzinha' ? `<div class="ed-modo"><div class="ed-sw"><button type="button" data-modo="ver" class="${modoEd() ? '' : 'on'}">Ver</button><button type="button" data-modo="editar" class="${modoEd() ? 'on' : ''}">Editar</button></div>${modoEd() ? `<button type="button" class="ed-abrir" data-go="editar">${icon('pencil')} abrir editor</button>` : `<button type="button" class="ed-abrir" id="edprev2">${icon('play')} ver do começo</button>`}</div>` : ''}
+      ${eu === 'Mihzinha' ? `<div class="ed-modo"><div class="ed-sw"><button type="button" data-modo="ver" class="${modoEd() ? '' : 'on'}">Ver</button><button type="button" data-modo="editar" class="${modoEd() ? 'on' : ''}">Editar</button></div>${modoEd() ? `<div class="ed-btrow"><button type="button" class="ed-abrir" data-go="editar">${icon('pencil')} editor</button><button type="button" class="ed-abrir" id="edviajar">${icon('calendar')} viajar no tempo</button></div>` : `<button type="button" class="ed-abrir" id="edprev2">${icon('play')} ver do começo</button>`}</div>` : ''}
       <p class="hhello">${saud}, <b>${eu}</b></p>
       <h1 class="names" aria-label="Diogo e Milena"><span class="n1">Diogo</span><button class="n2" id="logo" aria-label="coração">${RHEART()}</button><span class="n3">Milena</span></h1>
       <p class="hdate">desde 12 de abril de 2026</p>
@@ -2519,13 +2932,14 @@ function renderHome(y = 0){
       <p class="endsub">${esc(C.textos.fimAssinatura)}</p>
       <p class="endtitle">${esc(C.textos.fimNome)}</p>
       <p class="endyear">2026</p>
-      <p class="endver">versão de 14/10 · 23h10</p>
+      <p class="endver">versão de 15/10 · 00h20</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
   clearInterval(timer); tick(); timer = setInterval(tick, 1000);
   setTimeout(chocoDoDia, 1200); setTimeout(avisoAbraco, 400); setTimeout(dedicatoria, 900);
-  document.getElementById('edprev2')?.addEventListener('click', entrarPrevia);
+  document.getElementById('edprev2')?.addEventListener('click', () => entrarPrevia());
+  document.getElementById('edviajar')?.addEventListener('click', abrirViagem);
   app.querySelectorAll('[data-modo]').forEach(b => b.onclick = () => { modoEdMem = b.dataset.modo === 'editar'; store.set('modoEdicao', modoEdMem); renderHome(window.scrollY); });
   { let festejou = false; const offN = Sync.on('state', () => { const box = document.getElementById('nvbox'); if(!box){ setTimeout(() => offN && offN()); return; }
       const hj = niverHoje(); let html = '';
@@ -2590,9 +3004,9 @@ const natalAberto = (d = agoraMT()) => location.hash === '#natal' || (d >= NATAL
 const natalLiberado = (d = new Date()) => location.hash === '#natal' || d >= NATAL_INI;
 function festaDeHoje(){
   const h = location.hash, md = mdMT(), ano = agoraMT().getFullYear();
-  const forc = {'#natal25':'natal', '#anonovo':'anoNovo', '#namorados':'namorados', '#namoro':'namoro', '#niver':'niver'}[h];
+  const forc = {'#fim':'fim', '#natal25':'natal', '#anonovo':'anoNovo', '#namorados':'namorados', '#namoro':'namoro', '#niver':'niver'}[h];
   const nv = typeof niverHoje === 'function' ? niverHoje() : [];
-  const id = forc || (md === '12-25' ? 'natal' : nv.length ? 'niver' : md === '01-01' ? 'anoNovo' : md === '04-12' && ano > 2026 ? 'namoro' : md === '06-12' ? 'namorados' : '');
+  const id = forc || (md === '12-25' ? (ano >= 2027 ? 'fim' : 'natal') : nv.length ? 'niver' : md === '01-01' ? 'anoNovo' : md === '04-12' && ano > 2026 ? 'namoro' : md === '06-12' ? 'namorados' : '');
   return id ? {id, ano, nv:nv.length ? nv : ['Di']} : null;
 }
 function firstScreen(){
@@ -2605,6 +3019,7 @@ function renderFesta(f){
   const eu = Sync.quem || 'Di', F = C.festas, T = C.textos;
   let cfg;
   if(f.id === 'natal') cfg = {tema:'natal', eb:'25 de dezembro', titulo:T.natalTitulo || 'Feliz Natal!', sub:T.natalSub || 'meu amor', texto:T.natal25, btn:'Abrir o nosso Natal', acao:() => renderXmas(), fx:'neve'};
+  else if(f.id === 'fim') cfg = {tema:'natal', eb:'25 de dezembro de 2027', titulo:F.fim.titulo, sub:F.fim.sub, texto:F.fim.texto, fx:'neve'};
   else if(f.id === 'anoNovo') cfg = {tema:'anonovo', eb:`1º de janeiro de ${f.ano}`, titulo:F.anoNovo.titulo.replace('{ano}', f.ano), sub:F.anoNovo.sub, texto:F.anoNovo.texto, fx:'fogos'};
   else if(f.id === 'namorados') cfg = {tema:'namorados', eb:'12 de junho', titulo:F.namorados.titulo, sub:F.namorados.sub, texto:F.namorados.texto, fx:'coracoes'};
   else if(f.id === 'namoro'){ const n = Math.max(1, f.ano - 2026); cfg = {tema:'namoro', eb:'12 de abril', titulo:F.namoro.titulo.replace('{anos}', `${n} ${n === 1 ? 'ano' : 'anos'}`), sub:F.namoro.sub, texto:F.namoro.texto, fx:'coracoes'}; }
@@ -2709,7 +3124,7 @@ let curView = '';
 let modoEdMem = null;
 const modoEd = () => Sync.quem === 'Mihzinha' && (modoEdMem ?? store.get('modoEdicao', true)) !== false;
 const MAPA_ED = {quiz:['textos','quiz'], pergunta:['textos','perguntas'], provavel:['textos','provavel'], coracoes:['textos','motivos'], mes:['textos','mesversarios'], abra:['textos','abraQuando'],
-  carta:['textos','textos.ultimaCarta'], cartas:['cartas',''], fotos:['fotos',''], raspa:['fotos',''], vales:['textos','vales'], filhos:['textos','momentos'], mensagem:['textos','mensagens'], roleta:['textos','dates']};
+  carta:['textos','textos.ultimaCarta'], cartas:['cartas',''], fotos:['fotos',''], raspa:['fotos',''], vales:['textos','vales'], memoria:['fotos','memjogo'], filhos:['textos','momentos'], mensagem:['textos','mensagens'], roleta:['textos','dates']};
 function openStop(id){ document.getElementById('xgift')?.remove(); homeY = window.scrollY; markDone(id); curView = id; VIEWS[id](); }
 
 /* ---------- fotos ---------- */
@@ -2745,11 +3160,15 @@ VIEWS.raspa = () => {
 };
 
 /* ---------- memória ---------- */
+const memFotos = () => (typeof conteudoAtual !== 'undefined' ? conteudoAtual : []).filter(x => /^memfoto_\d+$/.test(x.id) && x.img).sort((a, b) => +a.id.split('_')[1] - +b.id.split('_')[1]).slice(0, 8);
 VIEWS.memoria = () => {
-  const deck = [...C.memoria, ...C.memoria].sort(()=>Math.random()-.5);
+  const cartas = memFotos().map(x => ({img:x.img})), sym = C.memoria.slice();
+  while(cartas.length < 6 && sym.length) cartas.push({s:sym.shift()});
+  const N = cartas.length;
+  const deck = [...cartas.keys(), ...cartas.keys()].sort(()=>Math.random()-.5);
   shell('jogo','Jogo da memória','Encontra todos os pares',
-    `<div class="stats"><span id="mv">0 jogadas</span><span id="pr">0 de ${C.memoria.length} pares</span></div>
-     <div class="mem">${deck.map((v,k)=>`<button class="mc st" style="--i:${k}" data-v="${v}" aria-label="carta"><div class="in"><div class="f">♥︎</div><div class="k">${v}</div></div></button>`).join('')}</div>
+    `<div class="stats"><span id="mv">0 jogadas</span><span id="pr">0 de ${N} pares</span></div>
+     <div class="mem">${deck.map((v,k)=>`<button class="mc st" style="--i:${k}" data-v="${v}" aria-label="carta"><div class="in"><div class="f">♥︎</div><div class="k">${cartas[v].img ? `<img src="${cartas[v].img}" alt="">` : cartas[v].s}</div></div></button>`).join('')}</div>
      <div id="memEnd"></div>`);
   let first = null, lock = false, moves = 0, pairs = 0;
   app.querySelectorAll('.mc').forEach(b => b.onclick = () => {
@@ -2758,9 +3177,9 @@ VIEWS.memoria = () => {
     moves++; document.getElementById('mv').textContent = moves + (moves===1 ? ' jogada' : ' jogadas');
     if(first.dataset.v === b.dataset.v){
       first.classList.add('got'); b.classList.add('got'); first = null; pairs++;
-      document.getElementById('pr').textContent = `${pairs} de ${C.memoria.length} pares`;
-      if(pairs === C.memoria.length){ burst(innerWidth/2, innerHeight/2);
-        document.getElementById('memEnd').innerHTML = `<div class="paper unfold"><p>Achou todos em ${moves} jogadas!</p><p>Exemplo: aqui entra uma mensagem de recompensa pra ele.</p></div>`; }
+      document.getElementById('pr').textContent = `${pairs} de ${N} pares`;
+      if(pairs === N){ burst(innerWidth/2, innerHeight/2);
+        document.getElementById('memEnd').innerHTML = `<div class="paper unfold"><p>Achou todos em ${moves} jogadas!</p>${C.textos.memoriaFim ? `<p>${esc(C.textos.memoriaFim)}</p>` : ''}</div>`; }
     } else { lock = true; setTimeout(()=>{ first.classList.remove('up'); b.classList.remove('up'); first = null; lock = false; }, 800); }
   });
 };
@@ -3058,6 +3477,7 @@ const PAL = {
 };
 const CASA = {
   comodos: [
+    {id:'nos',     t:'Nós dois',      provador:1},
     {id:'fora',    t:'Frente da casa', fachada:1, wall:4, spots:[[60,104],[82,104],[101,100]]},
     {id:'sala',    t:'Sala',          wall:0, floor:0, spots:[[62,100],[90,102],[110,96]]},
     {id:'quarto',  t:'Quarto',        wall:1, floor:0, spots:[[36,96],[118,100],[94,108]]},
@@ -3066,114 +3486,189 @@ const CASA = {
     {id:'jogos',   t:'Sala de jogos', wall:6, floor:4, spots:[[64,100],[88,104],[44,108]]},
     {id:'quintal', t:'Piscina',       out:1,           spots:[[28,76],[60,110],[104,110]]},
     {id:'bebe',    t:'Quarto do bebê', wall:2, floor:0, spots:[[54,112],[80,112],[106,114]]},
-    {id:'nos',     t:'Nós dois',      provador:1}
+    {id:'sorveteria', t:'Sorveteria', lugar:1, spots:[[52,112],[76,112],[96,110]]},
+    {id:'cinema',  t:'Cinema',        lugar:1, spots:[[15,118],[146,118],[132,118]]},
+    {id:'cafeteria', t:'Cafeteria',   lugar:1, spots:[[52,112],[76,112],[96,110]]},
+    {id:'praia',   t:'Praia',         lugar:1, ar:1, spots:[[52,92],[74,94],[92,98]]},
+    {id:'parque',  t:'Parque',        lugar:1, ar:1, spots:[[54,84],[76,86],[100,84]]},
+    {id:'igreja',  t:'Igreja',        lugar:1, spots:[[74,118],[88,118],[60,118]]}
   ],
   itens: [
-    {id:'arvore',   c:'fora', t:'Árvore', p:3},
-    {id:'canteiro', c:'fora', t:'Canteiro de flores', p:3, v:'cores'},
-    {id:'caminho',  c:'fora', t:'Caminho de pedras', p:2},
-    {id:'cerca',    c:'fora', t:'Cerquinha', p:3, v:'madeira'},
-    {id:'correio',  c:'fora', t:'Caixa de correio', p:2, v:'cores'},
-    {id:'poste',    c:'fora', t:'Poste de luz', p:3},
-    {id:'banco',    c:'fora', t:'Banco de jardim', p:3, v:'madeira'},
-    {id:'placa',    c:'fora', t:'Plaquinha D&M', p:2},
-    {id:'bike',     c:'fora', t:'Bicicleta', p:4, v:'cores'},
-    {id:'carro',    c:'fora', t:'Carro', p:12, v:'cores'},
-    {id:'tapete',   c:'sala', t:'Tapete oval', p:3, v:'cores', d:1},
-    {id:'sofa',     c:'sala', t:'Sofá', p:6, v:'cores'},
-    {id:'mesinha',  c:'sala', t:'Mesinha de centro', p:3, v:'madeira'},
-    {id:'quadro',   c:'sala', t:'Quadro de paisagem', p:3},
-    {id:'galeria',  c:'sala', t:'Galeria de quadrinhos', p:2},
-    {id:'estante',  c:'sala', t:'Estante de livros', p:4, v:'madeira'},
-    {id:'planta',   c:'sala', t:'Vaso de planta', p:2},
-    {id:'costela',  c:'sala', t:'Costela-de-adão', p:3},
-    {id:'luminaria',c:'sala', t:'Luminária', p:3},
-    {id:'tv',       c:'sala', t:'TV', p:5},
-    {id:'tapeteq',  c:'quarto', t:'Tapete felpudo', p:2, v:'cores', d:1},
-    {id:'cama',     c:'quarto', t:'Cama de casal', p:6, v:'cores'},
-    {id:'criado',   c:'quarto', t:'Criado-mudo com abajur', p:3, v:'madeira'},
-    {id:'guarda',   c:'quarto', t:'Guarda-roupa', p:5, v:'madeira'},
-    {id:'janela',   c:'quarto', t:'Janela com cortina', p:3, v:'cores'},
-    {id:'quadrocor',c:'quarto', t:'Quadrinho de coração', p:2},
-    {id:'varal',    c:'quarto', t:'Varal de fotos com luzinhas', p:3},
-    {id:'pendente', c:'quarto', t:'Planta pendurada', p:2},
-    {id:'espelho',  c:'quarto', t:'Espelho de chão', p:3, v:'madeira'},
-    {id:'geladeira',c:'cozinha', t:'Geladeira', p:5, v:'madeira'},
-    {id:'armario',  c:'cozinha', t:'Armário suspenso', p:3, v:'madeira'},
-    {id:'pia',      c:'cozinha', t:'Bancada com pia', p:4, v:'madeira'},
-    {id:'fruteira', c:'cozinha', t:'Fruteira', p:2},
-    {id:'fogao',    c:'cozinha', t:'Fogão', p:4},
-    {id:'temperos', c:'cozinha', t:'Vasinhos de temperos', p:2},
-    {id:'tapetec',  c:'cozinha', t:'Tapete de cozinha', p:2, v:'cores'},
-    {id:'mesa',     c:'cozinha', t:'Mesa pra dois', p:4, v:'cores'},
-    {id:'flores',   c:'cozinha', t:'Vaso de flores', p:2, req:'mesa'},
-    {id:'doces',    c:'cozinha', t:'Pote de doces', p:2, req:'mesa'},
-    {id:'banheira', c:'banheiro', t:'Banheira', p:6, v:'cores'},
-    {id:'patinho',  c:'banheiro', t:'Patinho de borracha', p:1, req:'banheira'},
-    {id:'piab',     c:'banheiro', t:'Pia com espelho', p:4, v:'madeira'},
-    {id:'vaso',     c:'banheiro', t:'Vaso sanitário', p:3},
-    {id:'toalhas',  c:'banheiro', t:'Toalhas', p:2, v:'cores'},
-    {id:'tapeteb',  c:'banheiro', t:'Tapete de banheiro', p:2, v:'cores'},
-    {id:'cesto',    c:'banheiro', t:'Cesto de roupa', p:2},
-    {id:'plantab',  c:'banheiro', t:'Plantinha', p:2},
-    {id:'neon',     c:'jogos', t:'Neon de coração', p:3},
-    {id:'poster',   c:'jogos', t:'Pôsteres', p:2},
-    {id:'tapeteg',  c:'jogos', t:'Tapete gamer', p:2, v:'cores'},
-    {id:'pc',       c:'jogos', t:'PC gamer', p:6},
-    {id:'cadeira',  c:'jogos', t:'Cadeira gamer', p:5, v:'cores', req:'pc'},
-    {id:'videogame',c:'jogos', t:'TV com videogame', p:6},
-    {id:'pufes',    c:'jogos', t:'Pufes', p:3, v:'cores'},
-    {id:'plantag',  c:'jogos', t:'Plantinha', p:2},
-    {id:'fliper',   c:'jogos', t:'Fliperama', p:8},
-    {id:'piscina',  c:'quintal', t:'Piscina', p:10},
-    {id:'boia',     c:'quintal', t:'Boia', p:2, v:'cores', req:'piscina'},
-    {id:'esprei',   c:'quintal', t:'Espreguiçadeiras', p:4},
-    {id:'guardasol',c:'quintal', t:'Guarda-sol', p:3, v:'cores'},
-    {id:'luzinhas', c:'quintal', t:'Varal de luzinhas', p:3},
-    {id:'palmeira', c:'quintal', t:'Coqueiro', p:2},
-    {id:'flores2',  c:'quintal', t:'Vasos de flores', p:2},
-    {id:'cachorro', c:'quintal', t:'Um cachorrinho', p:8},
-    {id:'gatinho',  c:'quintal', t:'Um gatinho', p:8},
-    {id:'nuvens',   c:'bebe', t:'Nuvens na parede', p:2},
-    {id:'berco',    c:'bebe', t:'Berço', p:8, v:'madeira'},
-    {id:'mobile',   c:'bebe', t:'Móbile', p:3, req:'berco'},
-    {id:'comoda',   c:'bebe', t:'Cômoda', p:3, v:'madeira'},
-    {id:'poltrona', c:'bebe', t:'Poltrona', p:5, v:'cores'},
-    {id:'ursinho',  c:'bebe', t:'Ursinho', p:2},
-    {id:'bebe',     c:'bebe', t:'O nosso bebê', p:15, req:'berco'},
-    {id:'tapetea',  c:'bebe', t:'Tapete de atividades', p:3, req:'bebe'},
-    {id:'cavalinho',c:'bebe', t:'Cavalinho de balanço', p:4, req:'bebe'},
-    {id:'blocos',   c:'bebe', t:'Bloquinhos', p:2, req:'bebe'},
-    {id:'bola',     c:'bebe', t:'Bola colorida', p:2, req:'bebe'},
-    {id:'carrinho', c:'bebe', t:'Carrinho de brinquedo', p:2, req:'bebe'},
-    {id:'passeio',  c:'bebe', t:'Carrinho de bebê', p:6, v:'cores', req:'bebe'},
-    {id:'pijama',   c:'nos', t:'Pijamas combinando', p:4, roupa:1},
-    {id:'moletom',  c:'nos', t:'Moletons de casal', p:4, roupa:1},
-    {id:'domingo',  c:'nos', t:'Look de domingo', p:5, roupa:1},
-    {id:'festa',    c:'nos', t:'Roupa de festa', p:6, roupa:1},
-    {id:'natal',    c:'nos', t:'Look de Natal', p:5, roupa:1},
-    {id:'oculos',   c:'nos', t:'Óculos nerd do Di', p:2},
-    {id:'bone',     c:'nos', t:'Boné do Di', p:2},
-    {id:'laco',     c:'nos', t:'Lacinho da Mihzinha', p:2},
-    {id:'tiara',    c:'nos', t:'Tiara de flores da Mihzinha', p:2},
-    {id:'aliancas', c:'nos', t:'Alianças', p:20}
+    {id:'arvore',   c:'fora', t:'Árvore', p:9},
+    {id:'canteiro', c:'fora', t:'Canteiro de flores', p:9, v:'cores'},
+    {id:'caminho',  c:'fora', t:'Caminho de pedras', p:6},
+    {id:'cerca',    c:'fora', t:'Cerquinha', p:9, v:'madeira'},
+    {id:'correio',  c:'fora', t:'Caixa de correio', p:6, v:'cores'},
+    {id:'poste',    c:'fora', t:'Poste de luz', p:9},
+    {id:'banco',    c:'fora', t:'Banco de jardim', p:9, v:'madeira'},
+    {id:'placa',    c:'fora', t:'Plaquinha D&M', p:6},
+    {id:'bike',     c:'fora', t:'Bicicleta', p:12, v:'cores'},
+    {id:'carro',    c:'fora', t:'Carro', p:45, v:'cores'},
+    {id:'tapete',   c:'sala', t:'Tapete oval', p:9, v:'cores', d:1},
+    {id:'sofa',     c:'sala', t:'Sofá', p:22, v:'cores'},
+    {id:'mesinha',  c:'sala', t:'Mesinha de centro', p:9, v:'madeira'},
+    {id:'quadro',   c:'sala', t:'Quadro de paisagem', p:9},
+    {id:'galeria',  c:'sala', t:'Galeria de quadrinhos', p:6},
+    {id:'estante',  c:'sala', t:'Estante de livros', p:12, v:'madeira'},
+    {id:'planta',   c:'sala', t:'Vaso de planta', p:6},
+    {id:'costela',  c:'sala', t:'Costela-de-adão', p:9},
+    {id:'luminaria',c:'sala', t:'Luminária', p:9},
+    {id:'tv',       c:'sala', t:'TV', p:15},
+    {id:'tapeteq',  c:'quarto', t:'Tapete felpudo', p:6, v:'cores', d:1},
+    {id:'cama',     c:'quarto', t:'Cama de casal', p:22, v:'cores'},
+    {id:'criado',   c:'quarto', t:'Criado-mudo com abajur', p:9, v:'madeira'},
+    {id:'guarda',   c:'quarto', t:'Guarda-roupa', p:15, v:'madeira'},
+    {id:'janela',   c:'quarto', t:'Janela com cortina', p:9, v:'cores'},
+    {id:'quadrocor',c:'quarto', t:'Quadrinho de coração', p:6},
+    {id:'varal',    c:'quarto', t:'Varal de fotos com luzinhas', p:9},
+    {id:'pendente', c:'quarto', t:'Planta pendurada', p:6},
+    {id:'espelho',  c:'quarto', t:'Espelho de chão', p:9, v:'madeira'},
+    {id:'geladeira',c:'cozinha', t:'Geladeira', p:15, v:'madeira'},
+    {id:'armario',  c:'cozinha', t:'Armário suspenso', p:9, v:'madeira'},
+    {id:'pia',      c:'cozinha', t:'Bancada com pia', p:12, v:'madeira'},
+    {id:'fruteira', c:'cozinha', t:'Fruteira', p:6},
+    {id:'fogao',    c:'cozinha', t:'Fogão', p:12},
+    {id:'temperos', c:'cozinha', t:'Vasinhos de temperos', p:6},
+    {id:'tapetec',  c:'cozinha', t:'Tapete de cozinha', p:6, v:'cores'},
+    {id:'mesa',     c:'cozinha', t:'Mesa pra dois', p:12, v:'cores'},
+    {id:'flores',   c:'cozinha', t:'Vaso de flores', p:6, req:'mesa'},
+    {id:'doces',    c:'cozinha', t:'Pote de doces', p:6, req:'mesa'},
+    {id:'banheira', c:'banheiro', t:'Banheira', p:22, v:'cores'},
+    {id:'patinho',  c:'banheiro', t:'Patinho de borracha', p:4, req:'banheira'},
+    {id:'piab',     c:'banheiro', t:'Pia com espelho', p:12, v:'madeira'},
+    {id:'vaso',     c:'banheiro', t:'Vaso sanitário', p:9},
+    {id:'toalhas',  c:'banheiro', t:'Toalhas', p:6, v:'cores'},
+    {id:'tapeteb',  c:'banheiro', t:'Tapete de banheiro', p:6, v:'cores'},
+    {id:'cesto',    c:'banheiro', t:'Cesto de roupa', p:6},
+    {id:'plantab',  c:'banheiro', t:'Plantinha', p:6},
+    {id:'neon',     c:'jogos', t:'Neon de coração', p:9},
+    {id:'poster',   c:'jogos', t:'Pôsteres', p:6},
+    {id:'tapeteg',  c:'jogos', t:'Tapete gamer', p:6, v:'cores'},
+    {id:'pc',       c:'jogos', t:'PC gamer', p:22},
+    {id:'cadeira',  c:'jogos', t:'Cadeira gamer', p:15, v:'cores', req:'pc'},
+    {id:'videogame',c:'jogos', t:'TV com videogame', p:22},
+    {id:'pufes',    c:'jogos', t:'Pufes', p:9, v:'cores'},
+    {id:'plantag',  c:'jogos', t:'Plantinha', p:6},
+    {id:'fliper',   c:'jogos', t:'Fliperama', p:28},
+    {id:'piscina',  c:'quintal', t:'Piscina', p:40},
+    {id:'boia',     c:'quintal', t:'Boia', p:6, v:'cores', req:'piscina'},
+    {id:'esprei',   c:'quintal', t:'Espreguiçadeiras', p:12},
+    {id:'guardasol',c:'quintal', t:'Guarda-sol', p:9, v:'cores'},
+    {id:'luzinhas', c:'quintal', t:'Varal de luzinhas', p:9},
+    {id:'palmeira', c:'quintal', t:'Coqueiro', p:6},
+    {id:'flores2',  c:'quintal', t:'Vasos de flores', p:6},
+    {id:'cachorro', c:'quintal', t:'Um cachorrinho', p:30},
+    {id:'gatinho',  c:'quintal', t:'Um gatinho', p:30},
+    {id:'nuvens',   c:'bebe', t:'Nuvens na parede', p:6},
+    {id:'berco',    c:'bebe', t:'Berço', p:30, v:'madeira'},
+    {id:'mobile',   c:'bebe', t:'Móbile', p:9, req:'berco'},
+    {id:'comoda',   c:'bebe', t:'Cômoda', p:9, v:'madeira'},
+    {id:'poltrona', c:'bebe', t:'Poltrona', p:15, v:'cores'},
+    {id:'ursinho',  c:'bebe', t:'Ursinho', p:6},
+    {id:'bebe',     c:'bebe', t:'O nosso bebê', p:60, req:'berco'},
+    {id:'tapetea',  c:'bebe', t:'Tapete de atividades', p:9, req:'bebe'},
+    {id:'cavalinho',c:'bebe', t:'Cavalinho de balanço', p:12, req:'bebe'},
+    {id:'blocos',   c:'bebe', t:'Bloquinhos', p:6, req:'bebe'},
+    {id:'bola',     c:'bebe', t:'Bola colorida', p:6, req:'bebe'},
+    {id:'carrinho', c:'bebe', t:'Carrinho de brinquedo', p:6, req:'bebe'},
+    {id:'passeio',  c:'bebe', t:'Carrinho de bebê', p:24, v:'cores', req:'bebe'},
+    {id:'vitrola',  c:'sala', t:'Vitrola', p:14, v:'madeira'},
+    {id:'pelucia',  c:'quarto', t:'Ursão de pelúcia', p:12},
+    {id:'velas',    c:'banheiro', t:'Prateleira com velinhas', p:8},
+    {id:'jukebox',  c:'jogos', t:'Jukebox', p:20},
+    {id:'estrelas', c:'bebe', t:'Estrelinhas no teto', p:8, req:'berco'},
+    {id:'sorveteria', c:'sorveteria', t:'Abrir a sorveteria', p:35, lugar:1},
+    {id:'sv_balcao',  c:'sorveteria', t:'Vitrine de sorvetes', p:18, req:'sorveteria'},
+    {id:'sv_mesa',    c:'sorveteria', t:'Mesinha com cadeiras', p:12, v:'cores', req:'sorveteria'},
+    {id:'sv_sorvete', c:'sorveteria', t:'Dois sorvetes na mesa', p:6, req:'sv_mesa'},
+    {id:'sv_casq',    c:'sorveteria', t:'Casquinha gigante', p:8, req:'sv_balcao'},
+    {id:'sv_picole',  c:'sorveteria', t:'Freezer de picolé', p:12, req:'sorveteria'},
+    {id:'sv_neon',    c:'sorveteria', t:'Neon de coração', p:10, req:'sorveteria'},
+    {id:'sv_lumi',    c:'sorveteria', t:'Luminárias pendentes', p:8, v:'cores', req:'sorveteria'},
+    {id:'sv_quadro',  c:'sorveteria', t:'Quadrinho de sorvete', p:5, req:'sorveteria'},
+    {id:'sv_flores',  c:'sorveteria', t:'Florzinhas no balcão', p:5, req:'sv_balcao'},
+    {id:'cinema',     c:'cinema', t:'Abrir o cinema', p:45, lugar:1},
+    {id:'cn_telao',   c:'cinema', t:'Telão passando filme', p:20, req:'cinema'},
+    {id:'cn_poltronas', c:'cinema', t:'Poltronas vermelhas', p:18, req:'cinema'},
+    {id:'cn_pipoca',  c:'cinema', t:'Balde de pipoca', p:6, req:'cn_poltronas'},
+    {id:'cn_refri',   c:'cinema', t:'Refri pra dois', p:5, req:'cn_poltronas'},
+    {id:'cn_cortinas',c:'cinema', t:'Cortinas de veludo', p:12, v:'cores', req:'cinema'},
+    {id:'cn_luzes',   c:'cinema', t:'Luzinhas do corredor', p:6, req:'cinema'},
+    {id:'cn_cartaz',  c:'cinema', t:'Cartaz do nosso filme', p:8, req:'cinema'},
+    {id:'cafeteria',  c:'cafeteria', t:'Abrir a cafeteria', p:40, lugar:1},
+    {id:'cf_balcao',  c:'cafeteria', t:'Balcão com cafeteira', p:18, req:'cafeteria'},
+    {id:'cf_bolos',   c:'cafeteria', t:'Vitrine de bolos', p:10, req:'cf_balcao'},
+    {id:'cf_mesa',    c:'cafeteria', t:'Mesinha pra dois', p:12, v:'cores', req:'cafeteria'},
+    {id:'cf_xicaras', c:'cafeteria', t:'Duas xícaras quentinhas', p:5, req:'cf_mesa'},
+    {id:'cf_lousa',   c:'cafeteria', t:'Lousa de cardápio', p:6, req:'cafeteria'},
+    {id:'cf_prat',    c:'cafeteria', t:'Prateleira com canecas', p:8, v:'madeira', req:'cafeteria'},
+    {id:'cf_plantas', c:'cafeteria', t:'Plantas penduradas', p:6, req:'cafeteria'},
+    {id:'cf_gato',    c:'cafeteria', t:'Gatinho da cafeteria', p:15, req:'cafeteria'},
+    {id:'praia',      c:'praia', t:'Ir pra praia', p:50, lugar:1},
+    {id:'pr_toalha',  c:'praia', t:'Canga pra dois', p:8, v:'cores', req:'praia'},
+    {id:'pr_sol',     c:'praia', t:'Guarda-sol', p:10, v:'cores', req:'pr_toalha'},
+    {id:'pr_castelo', c:'praia', t:'Castelinho de areia', p:6, req:'praia'},
+    {id:'pr_coqueiro',c:'praia', t:'Coqueiro', p:8, req:'praia'},
+    {id:'pr_prancha', c:'praia', t:'Prancha de surf', p:10, v:'cores', req:'praia'},
+    {id:'pr_cooler',  c:'praia', t:'Cooler com água de coco', p:8, req:'praia'},
+    {id:'pr_gaivotas',c:'praia', t:'Gaivotas', p:4, req:'praia'},
+    {id:'pr_barco',   c:'praia', t:'Barquinho no mar', p:12, req:'praia'},
+    {id:'parque',     c:'parque', t:'Ir pro parque', p:30, lugar:1},
+    {id:'pq_toalha',  c:'parque', t:'Toalha de piquenique', p:8, v:'cores', req:'parque'},
+    {id:'pq_cesta',   c:'parque', t:'Cesta de piquenique', p:8, req:'pq_toalha'},
+    {id:'pq_arvore',  c:'parque', t:'Árvore grandona', p:10, req:'parque'},
+    {id:'pq_balanco', c:'parque', t:'Balanço na árvore', p:10, req:'pq_arvore'},
+    {id:'pq_lago',    c:'parque', t:'Laguinho com patos', p:14, req:'parque'},
+    {id:'pq_pipa',    c:'parque', t:'Pipa', p:5, v:'cores', req:'parque'},
+    {id:'pq_banco',   c:'parque', t:'Banco do parque', p:8, v:'madeira', req:'parque'},
+    {id:'pq_flores',  c:'parque', t:'Canteiros de flores', p:6, req:'parque'},
+    {id:'igreja',     c:'igreja', t:'Abrir a igreja', p:60, lugar:1},
+    {id:'ig_bancos',  c:'igreja', t:'Bancos de madeira', p:20, req:'igreja'},
+    {id:'ig_tapete',  c:'igreja', t:'Tapete do corredor', p:10, v:'cores', req:'igreja'},
+    {id:'ig_petalas', c:'igreja', t:'Pétalas no caminho', p:6, req:'ig_tapete'},
+    {id:'ig_altar',   c:'igreja', t:'Altar com a cruz', p:18, req:'igreja'},
+    {id:'ig_vitrais', c:'igreja', t:'Vitrais coloridos', p:16, req:'igreja'},
+    {id:'ig_arco',    c:'igreja', t:'Arco de flores', p:20, req:'ig_altar'},
+    {id:'ig_velas',   c:'igreja', t:'Castiçais com velas', p:10, req:'ig_altar'},
+    {id:'ig_flores',  c:'igreja', t:'Flores brancas nos bancos', p:8, req:'ig_bancos'},
+    {id:'casamento',  c:'nos', t:'Roupa de casamento', p:50, roupa:1, req:'aliancas'},
+    {id:'inverno',  c:'nos', t:'Look de inverno', p:15, roupa:1},
+    {id:'praiaroupa', c:'nos', t:'Look de praia', p:15, roupa:1},
+    {id:'pijama',   c:'nos', t:'Pijamas combinando', p:12, roupa:1},
+    {id:'moletom',  c:'nos', t:'Moletons de casal', p:12, roupa:1},
+    {id:'domingo',  c:'nos', t:'Look de domingo', p:15, roupa:1},
+    {id:'festa',    c:'nos', t:'Roupa de festa', p:18, roupa:1},
+    {id:'natal',    c:'nos', t:'Look de Natal', p:15, roupa:1},
+    {id:'oculos',   c:'nos', t:'Óculos nerd do Di', p:6},
+    {id:'bone',     c:'nos', t:'Boné do Di', p:6},
+    {id:'laco',     c:'nos', t:'Lacinho da Mihzinha', p:6},
+    {id:'tiara',    c:'nos', t:'Tiara de flores da Mihzinha', p:6},
+    {id:'aliancas', c:'nos', t:'Alianças', p:100}
   ],
-  precoCor: 2, precoParede: 3, precoPiso: 3, bonusInicio: 5, bonusOfensiva: 2
+  precoCor: 6, precoParede: 10, precoPiso: 10, bonusInicio: 10, bonusOfensiva: 3
 };
 
+const INICIO_STR = '2026-12-25';
+const jaComecou = () => diaJornada() >= 1;
+const faltamInicio = () => Math.max(0, 1 - diaJornada());
+/* chocolates de antes do dia 25 (testes) não contam */
+const valeChoco = c => location.hash.startsWith('#dia') || !(m => m && m[1] < INICIO_STR)(String(c.id).match(/(\d{4}-\d\d-\d\d)/));
 function chocoSaldo(chocs, compras){
+  chocs = chocs.filter(valeChoco);
   const ganhos = chocs.reduce((t,c) => t + (+c.qtd || 1), 0);
   const gastos = compras.reduce((t,c) => t + (+c.preco || 0), 0);
   return Math.max(0, ganhos - gastos);
 }
 /* ofensiva: dias seguidos que a pessoa entrou e pegou o chocolate */
 function ofensiva(chocs, quem){
-  const dias = new Set(chocs.filter(c => c.id.endsWith('_' + quem) && /^\d{4}-\d\d-\d\d_/.test(c.id)).map(c => c.id.slice(0, 10)));
+  const dias = diasDeChoco(chocs, quem);
   const ds = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
   const d = new Date(); if(!dias.has(ds(d))) d.setDate(d.getDate() - 1);
   let n = 0; while(dias.has(ds(d))){ n++; d.setDate(d.getDate() - 1); }
   return {seguidos:n, total:dias.size, hoje:dias.has(hoje())};
 }
+function diasDeChoco(chocs, quem){ return new Set(chocs.filter(c => c.id.endsWith('_' + quem) && /^\d{4}-\d\d-\d\d_/.test(c.id) && valeChoco(c)).map(c => c.id.slice(0, 10))); }
+function maiorSeq(dias){ const l = [...dias].sort(); let best = 0, cur = 0, prev = null; for(const d of l){ cur = prev && (new Date(d + 'T12:00:00') - new Date(prev + 'T12:00:00')) / 86400000 === 1 ? cur + 1 : 1; best = Math.max(best, cur); prev = d; } return best; }
 async function pegarChocolate(col, chocs, eu){
   await col.set(`${hoje()}_${eu}`, {qtd:1, autor:eu, dia:hoje()});
   const of = ofensiva([...chocs, {id:`${hoje()}_${eu}`}], eu);
@@ -3183,6 +3678,7 @@ async function pegarChocolate(col, chocs, eu){
 
 /* aviso do chocolate do dia na tela inicial */
 function chocoDoDia(){
+  if(!jaComecou()) return;
   const eu = Sync.quem || 'Di', col = Sync.col('chocolates');
   let list = [];
   const off = col.on(l => { list = l; });
@@ -3230,6 +3726,7 @@ function PixelRoom(cv){
     else { for(let y = 0; y < h; y++) R(0, y, LW, 1, sh('#a9d2ec', y / 100)); [[10,10],[118,6],[60,4]].forEach(([x,y]) => { R(x, y, 16, 3, '#fff'); R(x + 4, y - 2, 8, 2, '#fff'); }); }
   }
   function room(cm, st){
+    if(cm.lugar){ LUG[cm.id](); return; }
     if(cm.fachada){
       ceu(71);
       R(0, 70, LW, LH - 70, '#8fbf6a'); for(let i = 0; i < 140; i++) P((i * 37) % LW, 70 + (i * 53) % 50, i % 3 ? '#7fae5c' : '#a3cf7c');
@@ -3263,8 +3760,118 @@ function PixelRoom(cv){
     R(0, WALL_H, LW, 2, 'rgba(0,0,0,.08)');
   }
 
+  /* passeios: cenário de cada lugar */
+  const LUG = {
+    sorveteria(){
+      R(0, 0, LW, WALL_H, '#fbe3e8'); for(let x = 0; x < LW; x += 12) R(x, 10, 6, WALL_H - 20, '#f6d0d9');
+      for(let x = 0; x < LW; x += 10){ R(x, 0, 5, 8, '#e8798f'); R(x + 5, 0, 5, 8, '#fbf8f2'); E(x + 2, 8, 2, 1, '#e8798f'); E(x + 7, 8, 2, 1, '#fbf8f2'); }
+      R(0, WALL_H - 10, LW, 10, '#bfe6d6'); R(0, WALL_H - 10, LW, 1, '#e2f5ec'); R(0, WALL_H - 1, LW, 1, '#9cc9b6');
+      for(let y = WALL_H, i = 0; y < LH; y += 8, i++) for(let x = 0; x < LW; x += 8) R(x, y, 8, 8, (x / 8 + i) % 2 ? '#fbf8f2' : '#f7d3dc');
+      R(0, WALL_H, LW, 2, 'rgba(0,0,0,.08)');
+    },
+    cinema(){
+      R(0, 0, LW, LH, '#2a1f33'); for(let x = 0; x < LW; x += 8) R(x, 0, 1, 50, '#33263f');
+      B(28, 4, 104, 36, '#4a4458', '#14101a'); R(29, 5, 102, 1, '#5a5468');
+      R(0, 50, LW, LH - 50, '#5a1a2a'); for(let i = 0; i < 200; i++) P((i * 29) % LW, 50 + (i * 47) % (LH - 50), i % 2 ? '#6a2232' : '#4e1624');
+      for(let y = 64; y < LH; y += 16) R(0, y, LW, 1, '#3e101c');
+    },
+    cafeteria(){
+      R(0, 0, LW, WALL_H, '#efe1c9'); for(let y = 2; y < WALL_H - 9; y += 5) for(let x = ((y - 2) / 5 % 2) * 6; x < LW; x += 12) R(x, y, 11, 4, '#e7d3b4');
+      R(0, WALL_H - 9, LW, 9, '#6b4a36'); R(0, WALL_H - 9, LW, 1, '#8a6248'); R(0, WALL_H - 1, LW, 1, '#4a3226');
+      const fc = '#9a6b48'; R(0, WALL_H, LW, LH - WALL_H, fc);
+      for(let y = WALL_H; y < LH; y += 6){ R(0, y, LW, 1, sh(fc, -.18)); for(let x = ((y / 6) % 3) * 13; x < LW; x += 38) R(x, y, 1, 6, sh(fc, -.18)); R(0, y + 1, LW, 1, sh(fc, .1)); }
+    },
+    praia(){
+      ceu(36);
+      R(0, 34, LW, 23, '#4fb3d9'); R(0, 34, LW, 2, '#7cc8e6');
+      for(let x = -12 + (t * 2) % 12; x < LW; x += 12){ R(x, 40, 6, 1, '#9fe0f5'); R(x + 5, 47, 5, 1, '#9fe0f5'); R(x + 2, 52, 4, 1, '#bdeaf8'); }
+      R(0, 57, LW, LH - 57, '#f1d9a6');
+      for(let x = 0; x < LW; x++){ const y = 56 + Math.round(Math.sin((x + t) / 6)); R(x, y, 1, 2, '#f5fbfd'); }
+      for(let i = 0; i < 150; i++) P((i * 37) % LW, 60 + (i * 53) % (LH - 60), i % 3 ? '#e3c58c' : '#f8e7c2');
+      [[20,112],[118,70],[66,116]].forEach(([x,y]) => { R(x, y, 3, 1, '#f4b8c6'); P(x + 1, y - 1, '#f4b8c6'); });
+    },
+    igreja(){
+      R(0, 0, LW, WALL_H, '#f6f1ea'); for(let x = 6; x < LW; x += 26){ R(x, 4, 2, WALL_H - 8, '#ece4d8'); }
+      R(0, 0, LW, 3, '#d9cdb8'); R(0, WALL_H - 3, LW, 3, '#d9cdb8');
+      R(0, WALL_H, LW, LH - WALL_H, '#e6ddd0'); for(let y = WALL_H; y < LH; y += 10) R(0, y, LW, 1, '#d6cbbb'); for(let y = WALL_H, i = 0; y < LH; y += 10, i++) for(let x = (i % 2) * 10; x < LW; x += 20) R(x, y, 1, 10, '#d6cbbb');
+      B(46, 46, 68, 8, '#efe6d8', '#b8aa94'); R(46, 46, 68, 1, '#fbf8f2');
+    },
+    parque(){
+      ceu(34);
+      [[8,30,14],[34,28,16],[62,31,13],[92,27,17],[124,30,15],[152,28,14]].forEach(([x,y,r]) => { E(x, y, r, 9, '#5f8a5a'); E(x - 3, y - 3, r - 6, 5, '#6f9c66'); });
+      R(0, 34, LW, LH - 34, '#8fbf6a'); for(let i = 0; i < 170; i++) P((i * 37) % LW, 36 + (i * 53) % (LH - 36), i % 3 ? '#7fae5c' : '#a3cf7c');
+      for(let y = 40; y < LH; y++){ const w = 8 + (y - 40) / 3, cx = 78 + Math.sin(y / 14) * 10; R(cx - w / 2, y, w, 1, '#e3d3ae'); }
+    }
+  };
+  function lugarFechado(cm){
+    g.fillStyle = 'rgba(40,24,36,.5)'; g.fillRect(0, 0, LW, LH);
+    R(79, 0, 1, 40, '#4a403b'); R(80, 0, 1, 40, '#4a403b');
+    B(58, 40, 44, 16, '#a87452', '#4a2e22'); R(60, 42, 40, 1, sh('#a87452', .25));
+    R(66, 47, 28, 5, '#f3dca4'); for(let x = 68; x < 92; x += 4) R(x, 48, 2, 3, '#7a1424');
+    B(77, 58, 6, 5, '#e5c15a', '#4a2e22'); R(78, 55, 4, 1, '#4a2e22'); R(78, 55, 1, 3, '#4a2e22'); R(81, 55, 1, 3, '#4a2e22');
+  }
+
   /* itens: cada um desenha a si mesmo; z = linha da base pra ordenar */
   const D = {
+    vitrola: {z:110, f:(c) => { B(124, 96, 26, 14, c); R(126, 98, 22, 1, sh(c, .3)); R(128, 110, 2, 4, sh(c, -.3)); R(144, 110, 2, 4, sh(c, -.3)); B(124, 88, 26, 7, '#3a2a24', '#1f1612'); EO(134, 91, 6, 2, '#1f1a17', '#111'); E(134, 91, 1, 1, '#b3122c'); R(142, 86, 1, 5, '#c0c0c0'); R(142, 86, 4, 1, '#c0c0c0'); P(150 - (t % 3), 82 - (t % 4), '#4a403b'); P(146 + (t % 2), 78 - (t % 3), '#4a403b'); }},
+    pelucia: {z:116, f:() => { const x = 142, y = 114, c = '#c48a5a', d = '#a06c42'; shadow(x, y, 10); EO(x, y - 8, 9, 8, c, '#6b4a36'); E(x, y - 6, 5, 4, '#e8c09a'); EO(x, y - 22, 7, 6, c, '#6b4a36'); EO(x - 6, y - 28, 2, 2, c, '#6b4a36'); EO(x + 6, y - 28, 2, 2, c, '#6b4a36'); E(x, y - 20, 3, 2, '#e8c09a'); P(x - 3, y - 23, '#1f1a17'); P(x + 3, y - 23, '#1f1a17'); P(x, y - 21, '#3a2a24'); R(x - 3, y - 15, 7, 2, '#b3122c'); heart(x - 2, y - 11, '#e35d6a'); EO(x - 8, y - 2, 3, 2, d, '#6b4a36'); EO(x + 8, y - 2, 3, 2, d, '#6b4a36'); }},
+    velas:   {z:1, f:(c, t) => { B(108, 20, 40, 3, '#a87452', '#6b4a36'); [[112,'#fbf8f2'],[120,'#f4b8c6'],[128,'#fbf8f2'],[138,'#f3dca4']].forEach(([x,cc],k) => { const h = 6 + (k % 2) * 3; B(x, 20 - h, 4, h, cc, '#b8aea0'); R(x + 1, 19 - h, 1, 1, '#3a2a24'); P(x + 1, 17 - h - ((t + k) % 2), (t + k) % 3 ? '#f6b13b' : '#fff3c4'); }); E(146, 17, 2, 2, '#bfe0f2'); }},
+    jukebox: {z:112, f:(c, t) => { const x = 6, y = 80; B(x, y, 22, 32, '#b3122c', '#3a1018'); EO(x + 11, y + 2, 10, 6, '#b3122c', '#3a1018'); E(x + 11, y + 2, 7, 4, ['#ffd36f','#ff8fae','#a8e6ff'][t % 3]); R(x + 3, y + 10, 16, 9, '#fbf8f2'); for(let k = 0; k < 4; k++) R(x + 5, y + 12 + k * 2, 12, 1, k % 2 ? '#e5c15a' : '#6f8fb8'); R(x + 3, y + 22, 16, 7, '#3a1018'); for(let k = 0; k < 4; k++) R(x + 4 + k * 4, y + 24, 2, 3, ['#ffd36f','#ff8fae','#a8e6ff','#9fe08a'][(k + t) % 4]); }},
+    estrelas:{z:0, f:(c, t) => { [[20,6],[34,14],[48,5],[120,6],[132,15],[150,8],[12,20],[142,24]].forEach(([x,y],k) => { const cc = (t + k) % 5 ? '#f6d55a' : '#fff3c4'; P(x, y - 1, cc); R(x - 1, y, 3, 1, cc); P(x, y + 1, cc); }); }},
+    /* sorveteria */
+    sv_balcao: {z:80, f:() => { B(96, 50, 60, 12, '#e3f2f8', '#7a8a94'); R(97, 51, 58, 2, '#ffffff'); ['#f4b8c6','#7a4a36','#a8e0c4','#f3e2b0','#e35d6a'].forEach((cc, k) => { R(99 + k * 11, 56, 9, 5, '#cfd5dc'); E(103 + k * 11, 56, 4, 2, cc); P(102 + k * 11, 55, sh(cc, .4)); }); B(96, 62, 60, 18, '#fbf8f2', '#9a8a8a'); for(let x = 98; x < 154; x += 8) R(x, 64, 4, 14, '#f7d3dc'); R(96, 62, 60, 2, '#e8798f'); }},
+    sv_casq:   {z:81, f:() => { const x = 148, y = 48; for(let k = 0; k < 9; k++) R(x - 4 + k / 2, y - 9 + k, 9 - k, 1, k % 2 ? '#d9a441' : '#c48a3a'); EO(x, y - 13, 5, 4, '#f4b8c6', '#b3707e'); EO(x, y - 18, 4, 3, '#a8e0c4', '#6fa88c'); P(x - 1, y - 21, '#e35d6a'); P(x - 2, y - 14, '#fff'); }},
+    sv_mesa:   {z:99, f:(c) => { [[34,c],[66,c]].forEach(([x,cc]) => { B(x - 5, 84, 10, 4, cc); R(x - 4, 88, 1, 12, '#9a948c'); R(x + 3, 88, 1, 12, '#9a948c'); }); EO(50, 92, 7, 2, '#fbf8f2', '#b8aea0'); R(49, 94, 2, 9, '#c9b8c0'); R(45, 103, 10, 2, '#b8aea0'); }},
+    sv_sorvete:{z:103, f:() => { [[47,'#f4b8c6'],[53,'#a8e0c4']].forEach(([x,cc]) => { R(x - 1, 86, 3, 3, '#d9a441'); P(x, 89, '#c48a3a'); EO(x, 84, 2, 2, cc, sh(cc, -.3)); }); }},
+    sv_picole: {z:92, f:() => { B(4, 68, 26, 24, '#fbf8f2', '#8a9aa4'); R(5, 68, 24, 6, '#bfe0f2'); R(5, 68, 24, 1, '#ffffff'); ['#e35d6a','#f3dca4','#a8e0c4','#7a4a36','#f4b8c6'].forEach((cc, k) => { R(7 + k * 4, 70, 3, 3, cc); }); R(8, 78, 18, 8, '#e8798f'); R(10, 80, 14, 1, '#fbf8f2'); heart(14, 81, '#fbf8f2'); }},
+    sv_neon:   {z:1, f:(c, t) => { const on = t % 9 !== 0, cc = on ? '#ff5f8f' : '#b3707e'; if(on){ g.fillStyle = 'rgba(255,95,143,.18)'; g.fillRect(18, 12, 34, 22); } heart(26, 15, cc); heart(33, 18, on ? '#ffd3de' : '#c9a4ac'); R(20, 28, 30, 1, cc); }},
+    sv_lumi:   {z:2, f:(c, t) => { [70,84].forEach(x => { R(x, 8, 1, 10, '#4a403b'); B(x - 4, 18, 9, 4, c); R(x - 2, 22, 5, 1, '#fff3c4'); if(ST.noite){ g.fillStyle = 'rgba(255,230,160,.12)'; g.fillRect(x - 8, 22, 17, 20); } }); }},
+    sv_quadro: {z:1, f:() => { B(58, 14, 14, 18, '#fbf8f2', '#b3707e'); R(59, 15, 12, 16, '#bfe6d6'); for(let k = 0; k < 6; k++) R(63 + k / 2, 22 + k, 5 - k, 1, '#d9a441'); EO(65, 20, 3, 3, '#f4b8c6', '#b3707e'); }},
+    sv_flores: {z:82, f:() => { B(100, 42, 6, 8, '#bfe0f2', '#7a8a94'); [[101,38,'#e35d6a'],[104,36,'#f4b8c6'],[103,40,'#fbf8f2']].forEach(([x,y,cc]) => { R(x, y + 2, 1, 4, '#4f8a4a'); R(x - 1, y, 3, 2, cc); }); }},
+    /* cinema */
+    cn_telao:  {z:1, f:(c, t) => { const f = t % 40; for(let y = 0; y < 34; y++) R(29, 5 + y, 102, 1, sh('#f6c38a', y / 70 - .1)); EO(100 - f, 20, 6, 6, '#fff1b8', '#f6d55a'); R(29, 30, 102, 9, '#6f9c66'); const bx = 50 + (f % 20); heart(bx, 18 - (t % 4 < 2 ? 0 : 1), '#e35d6a'); R(58, 22, 3, 8, '#5a3a28'); R(64, 22, 3, 8, '#2a1d17'); g.fillStyle = 'rgba(255,240,200,.06)'; g.fillRect(20, 0, 120, 60); }},
+    cn_cortinas:{z:2, f:(c) => { [[0,1],[132,-1]].forEach(([x0]) => { for(let x = 0; x < 28; x++) R(x0 + x, 0, 1, 52 - (x0 ? (27 - x) : x) / 3, x % 4 < 2 ? c : sh(c, -.2)); R(x0, 0, 28, 3, sh(c, -.35)); }); R(26, 30, 2, 3, '#e5c15a'); R(132, 30, 2, 3, '#e5c15a'); }},
+    cn_poltronas:{z:110, f:() => { for(let x = 28; x < 134; x += 18){ B(x, 72, 14, 7, '#7a1424', '#2a0a12'); R(x + 1, 72, 12, 1, '#9b1630'); } for(let x = 28; x < 134; x += 18){ B(x, 98, 14, 9, '#b3122c', '#2a0a12'); R(x + 1, 98, 12, 2, '#d23a50'); R(x - 2, 104, 3, 8, '#5a1020'); R(x + 13, 104, 3, 8, '#5a1020'); B(x, 107, 14, 5, '#9b1630', '#2a0a12'); } }},
+    cn_pipoca: {z:111, f:() => { const x = 77, y = 92; for(let k = 0; k < 9; k++) R(x + (k > 6 ? 1 : 0), y + k, 9 - (k > 6 ? 2 : 0), 1, '#3a1018'); for(let i = 0; i < 8; i++) R(x + 1 + i, y, 1, 8, i % 3 ? '#fbf8f2' : '#e35d6a'); E(x + 4, y - 1, 5, 3, '#fff6d8'); [[x + 1, y - 3],[x + 5, y - 4],[x + 8, y - 2],[x + 3, y - 1]].forEach(([a,b]) => P(a, b, '#f3dca4')); }},
+    cn_refri:  {z:111, f:() => { [[60,96],[96,96]].forEach(([x,y]) => { B(x, y, 5, 7, '#e35d6a', '#3a1018'); R(x, y + 2, 5, 1, '#fbf8f2'); R(x + 3, y - 4, 1, 4, '#fbf8f2'); }); }},
+    cn_luzes:  {z:3, f:(c, t) => { for(let y = 66; y < LH; y += 16){ [3, 155].forEach((x, k) => R(x, y - 3, 2, 2, (t + y + k) % 4 ? '#f6d55a' : '#fff3c4')); } }},
+    cn_cartaz: {z:81, f:() => { const x = 138; R(x + 8, 74, 1, 14, '#c0c0c0'); R(x + 3, 87, 11, 2, '#c0c0c0'); B(x, 54, 18, 22, '#1f1a2a', '#e5c15a'); R(x + 2, 56, 14, 10, '#e58fa5'); heart(x + 6, 58, '#fbf8f2'); R(x + 2, 68, 14, 1, '#f3dca4'); R(x + 4, 71, 10, 1, '#f3dca4'); }},
+    /* cafeteria */
+    cf_balcao: {z:80, f:() => { B(100, 58, 56, 22, '#6b4a36', '#3a2a24'); R(100, 58, 56, 3, '#8a6248'); for(let x = 104; x < 154; x += 10) R(x, 64, 6, 13, '#5a3a28'); B(122, 42, 16, 16, '#c9ced6', '#5a5f6a'); R(124, 44, 12, 4, '#2a2a30'); P(126, 45, '#e35d6a'); R(128, 52, 4, 2, '#5a5f6a'); B(126, 54, 6, 4, '#fbf8f2', '#9a948c'); P(128 + (t % 2), 50 - (t % 3), '#e8e2da'); B(142, 50, 5, 6, '#fbf8f2', '#9a948c'); B(148, 50, 5, 6, '#f4b8c6', '#9a948c'); }},
+    cf_bolos:  {z:81, f:() => { B(102, 46, 16, 12, '#e3f2f8', '#7a8a94'); R(103, 47, 14, 1, '#fff'); B(104, 52, 5, 5, '#f4b8c6', '#b3707e'); R(104, 52, 5, 1, '#fbf8f2'); B(111, 52, 5, 5, '#7a4a36', '#3a2a24'); R(111, 52, 5, 1, '#fbf8f2'); P(106, 51, '#e35d6a'); P(113, 51, '#e35d6a'); }},
+    cf_mesa:   {z:99, f:(c) => { [34, 66].forEach(x => { B(x - 5, 84, 10, 4, '#8a5d40'); R(x - 4, 88, 1, 12, '#5a3a28'); R(x + 3, 88, 1, 12, '#5a3a28'); }); B(43, 90, 14, 4, c); R(44, 90, 12, 1, sh(c, .35)); R(49, 94, 2, 9, '#5a3a28'); R(45, 103, 10, 2, '#5a3a28'); }},
+    cf_xicaras:{z:103, f:(c, t) => { [[46,'#fbf8f2'],[53,'#f4b8c6']].forEach(([x,cc],k) => { B(x - 1, 86, 4, 3, cc, '#9a948c'); P(x + 3, 87, '#9a948c'); P(x, 84 - ((t + k) % 3), '#e8e2da'); P(x + 1, 82 - ((t + k) % 2), '#e8e2da'); }); }},
+    cf_lousa:  {z:1, f:() => { B(16, 8, 30, 22, '#2f3a33', '#6b4a36'); R(19, 11, 14, 1, '#e8e2da'); R(19, 15, 22, 1, '#cfd5dc'); R(19, 19, 18, 1, '#cfd5dc'); R(19, 23, 20, 1, '#cfd5dc'); heart(37, 10, '#f4b8c6'); }},
+    cf_prat:   {z:1, f:(c) => { B(54, 26, 40, 3, c); [[58,'#fbf8f2'],[66,'#f4b8c6'],[74,'#a8e0c4'],[82,'#f3dca4']].forEach(([x,cc]) => { B(x, 20, 5, 6, cc, '#9a948c'); P(x + 5, 22, '#9a948c'); }); R(88, 18, 4, 8, '#b3122c'); R(90, 18, 3, 8, '#6f8fb8'); }},
+    cf_plantas:{z:2, f:() => { [[60,12],[138,10]].forEach(([x,h]) => { R(x, 0, 1, h, '#8a5d40'); B(x - 4, h, 9, 5, '#c4704a'); [[-5,4],[-2,7],[3,6],[6,3],[0,9]].forEach(([dx,dy]) => { R(x + dx, h + dy - 3, 1, 5, '#4f8a4a'); P(x + dx - 1, h + dy, '#6faf5a'); }); }); }},
+    cf_gato:   {z:112, f:(c, t) => { const x = 136, y = 108; E(x, y + 1, 12, 3, '#e8b4c0'); E(x, y, 10, 2, '#f4c6d1'); EO(x - 1, y - 3, 7, 4, '#f1a95c', '#8a5a2a'); EO(x + 6, y - 6, 4, 3, '#f1a95c', '#8a5a2a'); P(x + 4, y - 10, '#8a5a2a'); P(x + 8, y - 10, '#8a5a2a'); R(x + 4, y - 6, 2, 1, '#3a2a24'); R(x + 7, y - 6, 2, 1, '#3a2a24'); R(x - 4, y - 5, 2, 1, '#d98a3a'); R(x, y - 6, 2, 1, '#d98a3a'); if(t % 10 < 5){ P(x + 12, y - 12, '#9a948c'); R(x + 13, y - 14, 2, 1, '#9a948c'); } }},
+    /* praia */
+    pr_toalha: {z:84, f:(c) => { for(let y = 0; y < 8; y++) R(106 + y, 86 + y, 38, 1, y % 2 ? c : sh(c, .3)); }},
+    pr_sol:    {z:83, f:(c, t) => { R(140, 62, 1, 30, '#fbf8f2'); for(let k = 0; k < 7; k++){ const w = 4 + k * 3; R(140 - w, 56 + k, 2 * w + 1, 1, k % 2 ? c : sh(c, .35)); } R(119, 63, 43, 1, sh(c, -.3)); }},
+    pr_castelo:{z:112, f:() => { const x = 22, y = 112; B(x, y - 8, 22, 8, '#e3c58c', '#b89660'); B(x + 2, y - 15, 6, 7, '#e3c58c', '#b89660'); B(x + 14, y - 15, 6, 7, '#e3c58c', '#b89660'); B(x + 7, y - 20, 8, 12, '#ecd09a', '#b89660'); R(x + 10, y - 26, 1, 6, '#6b4a36'); R(x + 11, y - 26, 4, 3, '#e35d6a'); R(x + 9, y - 4, 4, 4, '#b89660'); }},
+    pr_coqueiro:{z:72, f:() => { for(let y = 20; y < 72; y++) R(14 + Math.round(Math.sin(y / 10) * 3), y, 4, 1, y % 4 ? '#a87452' : '#8a5d40'); [[-15,4],[15,4],[-11,-3],[11,-3],[0,-5]].forEach(([dx,dy]) => { for(let k = 0; k < 14; k++) R(16 + dx * k / 14, 20 + dy * k / 14 + (k * k) / 28, 3, 2, k % 3 ? '#4f8a4a' : '#6faf5a'); }); EO(14, 24, 2, 2, '#8a5d40'); EO(18, 25, 2, 2, '#7a4a30'); }},
+    pr_prancha:{z:80, f:(c) => { EO(152, 66, 4, 14, c, sh(c, -.4)); R(152, 54, 1, 24, '#fbf8f2'); }},
+    pr_cooler: {z:114, f:() => { B(138, 104, 18, 10, '#6f8fb8', '#2f4a6a'); R(138, 104, 18, 3, '#fbf8f2'); EO(142, 101, 3, 3, '#6faf5a', '#3f7a48'); EO(150, 101, 3, 3, '#6faf5a', '#3f7a48'); R(143, 95, 1, 4, '#e35d6a'); }},
+    pr_gaivotas:{z:1, f:(c, t) => { [[30,10],[56,16],[100,8]].forEach(([x,y],k) => { const xx = (x + t + k * 20) % (LW + 10) - 5, a = (t + k) % 4 < 2; P(xx, y, '#3a3a44'); P(xx - 1, y - (a ? 1 : 0), '#3a3a44'); P(xx + 1, y - (a ? 1 : 0), '#3a3a44'); P(xx - 2, y - (a ? 2 : 1), '#3a3a44'); P(xx + 2, y - (a ? 2 : 1), '#3a3a44'); }); }},
+    pr_barco:  {z:1.5, f:(c, t) => { const x = 40 + (t % 120) / 2; R(x, 42, 14, 3, '#a87452'); R(x + 1, 45, 12, 1, '#8a5d40'); R(x + 6, 28, 1, 14, '#5a3a28'); for(let k = 0; k < 11; k++) R(x + 7, 29 + k, Math.round(k * .6), 1, '#fbf8f2'); R(x + 7, 29, 3, 2, '#e35d6a'); }},
+    /* igreja */
+    ig_bancos: {z:106, f:() => { [[74,86],[96,108]].forEach(([y0]) => { [[6,60],[100,154]].forEach(([a,b]) => { B(a, y0 - 12, b - a, 4, '#8a5d40', '#4a2e22'); R(a, y0 - 12, b - a, 1, '#a87452'); B(a, y0 - 5, b - a, 3, '#9a6b48', '#4a2e22'); R(a + 1, y0 - 2, 2, 4, '#4a2e22'); R(b - 3, y0 - 2, 2, 4, '#4a2e22'); }); }); }},
+    ig_tapete: {z:45, f:(c) => { R(70, 54, 20, LH - 54, c); R(70, 54, 1, LH - 54, '#e5c15a'); R(89, 54, 1, LH - 54, '#e5c15a'); R(71, 54, 18, 1, sh(c, .3)); }},
+    ig_petalas:{z:46, f:() => { [[73,64],[84,70],[76,80],[86,88],[72,96],[80,104],[86,112],[74,114],[82,60]].forEach(([x,y],k) => { R(x, y, 2, 1, k % 2 ? '#f4b8c6' : '#fbf8f2'); P(x + 1, y + 1, k % 2 ? '#e58fa5' : '#e8e2da'); }); }},
+    ig_altar:  {z:56, f:() => { R(79, 4, 2, 26, '#c9a65c'); R(73, 11, 14, 2, '#c9a65c'); R(80, 5, 1, 24, '#f3dca4'); B(64, 40, 32, 10, '#fbf8f2', '#b8aa94'); R(64, 40, 32, 2, '#e5c15a'); R(78, 42, 4, 6, '#e5c15a'); R(79, 43, 2, 1, '#fbf8f2'); }},
+    ig_vitrais:{z:1, f:(c, t) => { [[16],[128]].forEach(([x]) => { R(x, 12, 16, 24, '#5a4a3a'); E(x + 8, 12, 8, 7, '#5a4a3a'); const cs = ['#e35d6a','#6f8fb8','#f6d55a','#8fbf6a','#a58fc4','#f4b8c6']; for(let yy = 0; yy < 22; yy += 5) for(let xx = 0; xx < 14; xx += 5) R(x + 1 + xx, 13 + yy, 4, 4, cs[(xx + yy + x) % 6]); E(x + 8, 12, 6, 5, '#f6d55a'); heart(x + 6, 9, '#e35d6a'); if(!ST.noite){ g.fillStyle = 'rgba(255,240,200,.10)'; g.fillRect(x - 4, 36, 24, 30); } }); }},
+    ig_arco:   {z:3, f:() => { for(let a = 0; a <= 32; a++){ const ang = Math.PI * a / 32, x = 80 - Math.cos(ang) * 28, y = 46 - Math.sin(ang) * 34; EO(x, y, 3, 3, a % 3 === 0 ? '#fbf8f2' : a % 3 === 1 ? '#f4b8c6' : '#e58fa5', '#7aa06a'); if(a % 4 === 2) P(x + 2, y + 3, '#4f8a4a'); } }},
+    ig_velas:  {z:57, f:(c, t) => { [52, 108].forEach((x, k) => { R(x - 1, 30, 3, 24, '#c9a65c'); R(x - 4, 52, 9, 2, '#c9a65c'); R(x - 5, 28, 11, 2, '#c9a65c'); [-4, 0, 4].forEach((dx, j) => { R(x + dx, 22, 2, 6, '#fbf8f2'); P(x + dx, 20 - ((t + j + k) % 2), (t + j) % 3 ? '#f6b13b' : '#fff3c4'); }); }); }},
+    ig_flores: {z:107, f:() => { [[62,72],[96,72],[62,94],[96,94]].forEach(([x,y]) => { R(x, y + 2, 2, 6, '#4f8a4a'); EO(x + 1, y, 3, 2, '#fbf8f2', '#cfc6bb'); P(x - 1, y, '#f4b8c6'); P(x + 3, y + 1, '#f4b8c6'); }); }},
+    /* parque */
+    pq_toalha: {z:88, f:(c) => { for(let y = 0; y < 12; y++) for(let x = 0; x < 48; x += 4) R(56 + x, 90 + y, 4, 1, ((x / 4) + Math.floor(y / 3)) % 2 ? c : '#fbf8f2'); R(56, 102, 48, 1, sh(c, -.3)); }},
+    pq_cesta:  {z:102, f:() => { B(74, 92, 12, 7, '#c9925f', '#6b4a36'); for(let x = 75; x < 86; x += 2) R(x, 93, 1, 6, '#a87452'); R(76, 87, 1, 5, '#6b4a36'); R(83, 87, 1, 5, '#6b4a36'); R(76, 86, 8, 1, '#6b4a36'); EO(77, 91, 2, 2, '#e35d6a'); R(81, 89, 3, 2, '#f3dca4'); }},
+    pq_arvore: {z:76, f:() => { B(138, 30, 8, 46, '#8a5d40'); R(139, 32, 3, 42, '#a87452'); EO(142, 22, 20, 16, '#4f8a4a', '#2f5a2e'); E(134, 16, 9, 7, '#6faf5a'); E(150, 26, 8, 6, '#5f9a52'); [[130,24],[148,14],[154,28],[136,30]].forEach(([x,y]) => P(x, y, '#f4b8c6')); R(124, 36, 16, 2, '#8a5d40'); }},
+    pq_balanco:{z:78, f:(c, t) => { const o = t % 8 < 4 ? 0 : 1; R(126 + o, 38, 1, 30, '#6b4a36'); R(134 + o, 38, 1, 30, '#6b4a36'); B(124 + o * 2, 68, 13, 3, '#b3122c', '#5a1020'); }},
+    pq_lago:   {z:60, f:(c, t) => { EO(24, 58, 22, 8, '#6fb8d9', '#4f8a8a'); R(10, 56, 8, 1, '#a8e0f2'); R(26, 60, 6, 1, '#a8e0f2'); const dx = Math.round(Math.sin(t / 6) * 6); [[18 + dx, 57],[30 - dx, 60]].forEach(([x,y]) => { R(x, y, 5, 3, '#fbf8f2'); R(x + 4, y - 2, 2, 2, '#fbf8f2'); P(x + 6, y - 1, '#f6b13b'); P(x + 4, y - 2, '#1f1a17'); }); }},
+    pq_pipa:   {z:1, f:(c, t) => { const x = 104 + Math.round(Math.sin(t / 5) * 3), y = 8 + Math.round(Math.cos(t / 7) * 2); for(let k = 0; k < 5; k++) R(x - k, y + k, 2 * k + 1, 1, k < 3 ? c : sh(c, -.2)); for(let k = 0; k < 5; k++) R(x - 4 + k, y + 5 + k, 9 - 2 * k, 1, sh(c, -.2)); for(let k = 0; k < 26; k++) P(x + Math.round(Math.sin((k + t) / 3)), y + 10 + k, '#9a948c'); }},
+    pq_banco:  {z:86, f:(c) => { B(4, 82, 30, 4, c); B(4, 76, 30, 4, c); R(6, 86, 2, 6, '#2a2420'); R(30, 86, 2, 6, '#2a2420'); }},
+    pq_flores: {z:116, f:() => { [[4,112],[130,112]].forEach(([x0,y]) => { for(let i = 0; i < 26; i += 3){ R(x0 + i, y, 1, 4, '#4f8a4a'); P(x0 + i, y - 1, ['#e35d6a','#f4b8c6','#fbf8f2','#f3dca4'][(i / 3) % 4]); P(x0 + i + 1, y, ['#b3122c','#e58fa5','#e8e2da','#e5c15a'][(i / 3) % 4]); } }); }},
     arvore:  {z:86, f:() => { B(18, 50, 6, 36, '#8a5d40'); R(19, 52, 2, 32, '#a87452'); EO(21, 38, 15, 14, '#4f8a4a'); E(16, 32, 7, 6, '#6faf5a'); E(28, 40, 6, 5, '#5f9a52'); [[14,40],[26,30],[30,46],[18,46]].forEach(([x,y]) => P(x, y, '#e35d6a')); shadow(21, 86, 10); }},
     canteiro:{z:82, f:(c) => { [[40,80,30],[90,80,30]].forEach(([x,y,w]) => { B(x, y, w, 4, '#8a5d40'); for(let i = 0; i < w; i += 3){ R(x + i, y - 3, 1, 3, '#5f8a5a'); P(x + i, y - 4, i % 6 ? c : '#fbf8f2'); P(x + i + 1, y - 3, i % 6 ? sh(c, .3) : '#f3dca4'); } }); }},
     caminho: {z:72, f:() => { for(let k = 0; k < 6; k++){ const y = 82 + k * 7, x = 72 - k * 2 + (k % 2) * 4; EO(x + 4, y, 5, 2, '#d9d2c6', '#9a948c'); EO(x + 13 + k, y + 2, 4, 2, '#e6dfd4', '#9a948c'); } }},
@@ -3395,6 +4002,20 @@ function PixelRoom(cv){
         if(mih){ torso(skin, skS); R(x - 6, by - 18, 12, 9, '#b3122c'); dots(x - 5, by - 17, 10, 8, '#fbf8f2', 3); R(x - 6, y - 11, 12, 3, '#b3122c'); R(x - 3, by - 21, 1, 3, '#b3122c'); R(x + 2, by - 21, 1, 3, '#b3122c'); arms(skin, skS); }
         else { torso(skin, skS); R(x - 6, y - 12, 12, 6, '#6f8fb8'); R(x - 6, y - 12, 12, 1, '#fbf8f2'); R(x - 6, y - 10, 1, 4, '#fbf8f2'); R(x + 5, y - 10, 1, 4, '#fbf8f2'); R(x - 1, y - 12, 1, 6, '#5470a0'); arms(skin, skS); }
         break;
+      case 'casamento':
+        if(mih){ const rows = 14 - bob; for(let k = 0; k <= rows; k++){ const w = 6 + Math.floor(k / 2.5); R(x - w - 1, by - 13 + k, 2 * w + 2, 1, O); R(x - w, by - 13 + k, 2 * w, 1, k % 4 === 2 ? '#f1ece4' : '#fffdf8'); } R(x - 12, by - 13 + rows + 1, 24, 1, O); [[-6,-6],[4,-3],[-2,-9],[7,-8]].forEach(([dx,dy]) => P(x + dx, by + dy, '#f3dca4'));
+          torso('#fffdf8', '#efe8dc', 8); R(x - 6, by - 21, 3, 2, skin); R(x + 3, by - 21, 3, 2, skin); R(x - 6, by - 14, 12, 1, '#e5c15a'); arms(skin, skS); EO(x + 1, by - 11, 3, 2, '#f4b8c6', '#7aa06a'); P(x, by - 12, '#fbf8f2'); P(x + 2, by - 10, '#e35d6a'); }
+        else { legs('#1f1a17', '#111'); shoes('#1f1a17', '#111'); torso('#1f1a17', '#111'); R(x - 2, by - 21, 5, 8, '#fbf8f2'); R(x - 3, by - 21, 1, 9, '#2a2626'); R(x + 3, by - 21, 1, 9, '#2a2626'); R(x - 2, by - 21, 5, 1, '#b3122c'); P(x - 3, by - 20, '#b3122c'); P(x + 3, by - 20, '#b3122c'); P(x, by - 16, '#1f1a17'); P(x, by - 14, '#1f1a17'); R(x - 5, by - 19, 2, 2, '#fbf8f2'); P(x - 5, by - 19, '#f4b8c6'); arms('#1f1a17', '#111'); R(x - 8, by - 13, 2, 1, '#fbf8f2'); R(x + 6, by - 13, 2, 1, '#fbf8f2'); }
+        break;
+      case 'inverno':
+        if(mih){ legs('#3b4466', '#2c3350'); shoes('#6b4a36', '#4a2e22'); R(x - 6, y - 7, 5, 3, '#6b4a36'); R(x + 1, y - 7, 5, 3, '#6b4a36'); torso('#e8b4c0', '#d892a6', 13); R(x - 1, by - 21, 1, 13, '#d892a6'); P(x + 1, by - 17, '#fbf8f2'); P(x + 1, by - 13, '#fbf8f2'); arms('#e8b4c0', '#d892a6'); R(x - 6, by - 23, 12, 3, '#b3122c'); R(x + 2, by - 21, 3, 7, '#b3122c'); R(x + 2, by - 15, 3, 1, '#fbf8f2'); }
+        else { legs('#2f3346', '#22263a'); shoes('#2a1d17', '#fbf8f2'); torso('#6b4a36', '#5a3a28', 13); R(x - 1, by - 21, 1, 13, '#4a2e22'); P(x - 3, by - 17, '#e5c15a'); P(x - 3, by - 13, '#e5c15a'); arms('#6b4a36', '#5a3a28'); R(x - 6, by - 23, 12, 3, '#e5c15a'); R(x - 4, by - 21, 3, 7, '#e5c15a'); R(x - 4, by - 15, 3, 1, '#b3122c'); }
+        break;
+      case 'praiaroupa':
+        bareLegs(); shoes(mih ? '#f4b8c6' : '#6f8fb8', mih ? '#e58fa5' : '#4a6a8a');
+        if(mih){ for(let k = 0; k < 9; k++){ const w = 6 + Math.floor(k / 3); R(x - w - 1, by - 12 + k, 2 * w + 2, 1, O); R(x - w, by - 12 + k, 2 * w, 1, '#fbf8f2'); } R(x - 9, by - 3, 18, 1, O); torso('#fbf8f2', '#e8e2da', 9); [[-4,-18],[2,-15],[-2,-9],[4,-6],[-5,-5],[3,-11]].forEach(([dx,dy],k) => P(x + dx, by + dy, k % 2 ? '#e35d6a' : '#f4b8c6')); arms(skin, skS); }
+        else { R(x - 6, y - 12, 12, 6, '#6fae9a'); R(x - 6, y - 12, 12, 1, '#8fd0bc'); R(x - 1, y - 12, 1, 6, '#5a9684'); torso('#e58f5a', '#c8743f'); [[-4,-19],[1,-17],[-2,-14],[3,-13],[-4,-12]].forEach(([dx,dy],k) => { P(x + dx, by + dy, k % 2 ? '#fbf8f2' : '#f6d55a'); P(x + dx + 1, by + dy, '#fbf8f2'); }); R(x, by - 21, 1, 11, '#c8743f'); arms('#e58f5a', '#c8743f'); }
+        break;
       case 'festa':
         if(mih){ const rows = 13 - bob; for(let k = 0; k <= rows; k++){ const w = 6 + Math.floor(k / 3); R(x - w - 1, by - 13 + k, 2 * w + 2, 1, O); R(x - w, by - 13 + k, 2 * w, 1, k % 4 === 1 ? '#8e1d30' : '#7a1424'); } R(x - 10, by - 13 + rows + 1, 20, 1, O); R(x - 3, by - 10, 1, 10, '#5a1020'); R(x + 4, by - 8, 1, 8, '#5a1020'); P(x - 5 + (t % 5) * 2, by - 6 + (t % 3) * 2, '#ff9fb6'); P(x + 3 - (t % 4), by - 11 + (t % 2) * 3, '#ffd3de'); R(x - 4, y - 1, 2, 1, '#1f1a17'); R(x + 2, y - 1, 2, 1, '#1f1a17');
           torso('#7a1424', '#5a1020', 8); R(x - 6, by - 21, 3, 2, skin); R(x - 6, by - 14, 12, 1, '#e5c15a'); P(x, by - 14, '#fff3c4'); arms(skin, skS); R(x - 1, by - 22, 3, 1, '#e5c15a'); }
@@ -3425,6 +4046,7 @@ function PixelRoom(cv){
     if(look === 'natal'){ R(x - 8, hy - 7, 16, 3, '#fbf8f2'); R(x - 6, hy - 10, 12, 3, '#b3122c'); R(x - 3, hy - 12, 8, 2, '#b3122c'); R(x + 3, hy - 13, 4, 2, '#b3122c'); EO(x + 7, hy - 13, 1, 1, '#fbf8f2'); }
     if(acc.chapeu && look !== 'natal') chapeuFesta(x, hy, mih);
     if(look === 'banho' && mih){ R(x - 11, hy - 6, 22, 2, '#e8c98a'); R(x - 6, hy - 10, 12, 4, '#e8c98a'); R(x - 6, hy - 7, 12, 1, '#b3122c'); R(x - 11, hy - 5, 22, 1, '#c9a674'); }
+    if(look === 'casamento' && mih && !soCabeca){ g.fillStyle = 'rgba(255,255,255,.72)'; g.fillRect(x - 10, hy - 6, 3, 24); g.fillRect(x + 7, hy - 6, 3, 24); g.fillRect(x - 8, hy - 9, 16, 3); R(x - 4, hy - 9, 8, 1, '#e5c15a'); P(x, hy - 10, '#fbf8f2'); P(x - 3, hy - 10, '#f4b8c6'); P(x + 3, hy - 10, '#f4b8c6'); }
     if(look === 'banho' && !mih){ R(x - 5, hy - 2, 4, 2, '#1f1a17'); R(x + 1, hy - 2, 4, 2, '#1f1a17'); R(x - 1, hy - 2, 2, 1, '#1f1a17'); }
   }
 
@@ -3446,11 +4068,24 @@ function PixelRoom(cv){
     {id:'banco',  c:'fora',    req:'banco',     t:'Sentar no banco',      f:() => ({pose:'sentado', pos:[[12,98],[27,98]], z:99})},
     {id:'carro',  c:'fora',    req:'carro',     t:'Passear de carro',     f:() => ({pose:'carro', pos:[[126,90],[140,90]], z:119})},
     {id:'poltrona',c:'bebe',   req:'poltrona',  t:'Sentar na poltrona',   f:() => ({pose:'sentado', pos:[[26,70]], z:73})},
-    {id:'ninar',  c:'bebe',    req:'berco',     t:'Ninar o bebê',         f:() => ({pose:'costas', pos:[[70,74],[92,74]], z:75})}
+    {id:'ninar',  c:'bebe',    req:'berco',     t:'Ninar o bebê',         f:() => ({pose:'costas', pos:[[70,74],[92,74]], z:75})},
+    {id:'sorvete',c:'sorveteria', req:'sv_mesa', t:'Tomar sorvete',        f:() => ({pose:'sorvete', pos:[[34,100],[66,100]], z:100})},
+    {id:'escolher',c:'sorveteria', req:'sv_balcao', t:'Escolher o sabor',  f:() => ({pose:'costas', pos:[[112,88],[132,88]], z:88})},
+    {id:'filme',  c:'cinema',  req:'cn_poltronas', t:'Assistir um filme',  f:() => ({pose:'sentadoCostas', pos:[[71,106],[89,106]], z:105})},
+    {id:'cafe',   c:'cafeteria', req:'cf_mesa', t:'Tomar um café',         f:() => ({pose:'sentado', pos:[[34,100],[66,100]], z:100})},
+    {id:'pedir',  c:'cafeteria', req:'cf_balcao', t:'Pedir no balcão',     f:() => ({pose:'costas', pos:[[110,88],[134,88]], z:88})},
+    {id:'mar',    c:'praia',   req:'praia',     t:'Nadar no mar',         f:() => ({pose:'nadando', pos:[[60,54],[80,55]], z:56})},
+    {id:'canga',  c:'praia',   req:'pr_toalha', t:'Tomar sol na canga',   f:() => ({pose:'sol', pos:[[116,94],[134,94]], z:95})},
+    {id:'piquenique', c:'parque', req:'pq_toalha', t:'Fazer piquenique',  f:() => ({pose:'sentado', pos:[[64,100],[94,100]], z:101})},
+    {id:'orar',   c:'igreja',  req:'ig_bancos', t:'Orar juntos',          f:() => ({pose:'sentadoCostas', pos:[[24,84],[44,84]], z:83})},
+    {id:'casar',  c:'igreja',  req:'ig_altar',  t:'Casar no altar',       f:() => ({pose:'altar', pos:[[68,64],[92,64]], z:64})},
+    {id:'bancopq',c:'parque',  req:'pq_banco',  t:'Sentar no banco',      f:() => ({pose:'sentado', pos:[[12,86],[27,86]], z:87})}
   ];
   function emAcao(q, a, x, y, st){
     const p = a.pose;
     if(p === 'sentado' || p === 'costas' || p === 'sentadoCostas') return pessoa(q, x, y, st.look, st.acc, t, p);
+    if(p === 'altar'){ pessoa(q, x, y, st.look, st.acc, t); if(q === 'Di'){ const k = t % 12; heart(76, y - 44 - k, k < 8 ? '#e35d6a' : '#f4b8c6'); heart(82, y - 38 - (k + 6) % 12, '#f4b8c6'); } return; }
+    if(p === 'sorvete'){ pessoa(q, x, y, st.look, st.acc, t, 'sentado'); const hx = q === 'Di' ? x - 8 : x + 7, hy2 = y - 15 + (t % 4 < 2 ? 0 : -1); R(hx, hy2 + 2, 2, 3, '#d9a441'); P(hx, hy2 + 5, '#c48a3a'); EO(hx + 1, hy2, 2, 2, q === 'Di' ? '#7a4a36' : '#f4b8c6', '#5a3a28'); return; }
     if(p === 'deitado'){ const c = BED(st); pessoa(q, x, y + 28, st.look, st.acc, t, 'cabeca'); R(x - 8, y + 9, 16, 14, sh(c, .08)); R(x - 8, y + 9, 16, 1, sh(c, .35)); R(x - 8, y + 9, 1, 14, sh(c, -.15)); return; }
     if(p === 'banho'){ pessoa(q, x, y + 28, st.look, st.acc, t, 'cabeca'); [[-6,6,3],[0,7,3],[6,6,3],[-3,5,2],[4,4,2]].forEach(([dx,dy,r]) => EO(x + dx, y + dy, r, 2, '#ffffff', '#cfe6f0')); return; }
     if(p === 'nadando'){ pessoa(q, x, y, st.look, st.acc, t); R(x - 10, y - 15, 20, 16, '#4fb3d9'); R(x - 9, y - 15, 18, 1, '#9fe0f5'); R(x - 6, y - 12, 3, 1, '#9fe0f5'); R(x + 3, y - 10, 3, 1, '#9fe0f5'); return; }
@@ -3470,6 +4105,8 @@ function PixelRoom(cv){
       return;
     }
     room(cm, st);
+    const fechado = cm.lugar && !st.owned.has(cm.id);
+    if(fechado){ lugarFechado(cm); return; }
     const list = [];
     CASA.itens.forEach(i => { if(i.c === cm.id && st.owned.has(i.id) && D[i.id]) list.push({z:D[i.id].z, fn:() => D[i.id].f(st.cor[i.id] || (i.v ? PAL[i.v][0][1] : ''), t)}); });
     const usados = {};
@@ -3483,23 +4120,23 @@ function PixelRoom(cv){
     if(cm.out){ if(st.owned.has('cachorro')) hits.push({tipo:'pet', q:'cachorro', x0:14, x1:42, y0:86, y1:106}); if(st.owned.has('gatinho')) hits.push({tipo:'pet', q:'gatinho', x0:130, x1:156, y0:96, y1:112}); }
     if(cm.id === 'sala' && st.natal) list.push({z:104, fn:() => arvoreNatal()});
     if(cm.id === 'sala' && st.festa) list.push({z:2, fn:() => festaSala()});
-    if(st.festa && !cm.out && !cm.fachada && cm.id !== 'sala') list.push({z:2, fn:() => bandeirinhas()});
-    if(st.anoNovo && !cm.out && !cm.fachada) list.push({z:2.5, fn:() => { for(let x = 2; x < LW; x += 6){ const y = 3 + Math.round(Math.sin(x / 20) * 2); R(x, y, 3, 2, (x / 6 + t) % 3 ? '#e5c15a' : '#f3efe8'); P(x + 1, y + 2, '#c9a65c'); } }});
-    if(st.niver && (cm.out || cm.fachada || cm.id !== 'sala')) list.push({z:cm.out ? 60 : cm.fachada ? 80 : 2, fn:() => baloes(cm.out ? [[10,36],[16,30],[4,32]] : cm.fachada ? [[96,44],[102,38],[90,40]] : [[150,26],[144,20],[156,22]], cm.out ? 54 : cm.fachada ? 60 : 44)});
+    if(st.festa && !cm.out && !cm.fachada && !cm.lugar && cm.id !== 'sala') list.push({z:2, fn:() => bandeirinhas()});
+    if(st.anoNovo && !cm.out && !cm.fachada && !cm.lugar) list.push({z:2.5, fn:() => { for(let x = 2; x < LW; x += 6){ const y = 3 + Math.round(Math.sin(x / 20) * 2); R(x, y, 3, 2, (x / 6 + t) % 3 ? '#e5c15a' : '#f3efe8'); P(x + 1, y + 2, '#c9a65c'); } }});
+    if(st.niver && !cm.lugar && (cm.out || cm.fachada || cm.id !== 'sala')) list.push({z:cm.out ? 60 : cm.fachada ? 80 : 2, fn:() => baloes(cm.out ? [[10,36],[16,30],[4,32]] : cm.fachada ? [[96,44],[102,38],[90,40]] : [[150,26],[144,20],[156,22]], cm.out ? 54 : cm.fachada ? 60 : 44)});
     if(st.niver && cm.id === 'sala') list.push({z:96, fn:() => { B(28, 88, 20, 3, '#fbf8f2', '#b8aea0'); R(30, 91, 2, 6, '#b8aea0'); R(44, 91, 2, 6, '#b8aea0'); bolo(38, 87); }});
     if(cm.fachada && st.festa) list.push({z:3, fn:() => { for(let i = 0; i < 9; i++){ const x = 60 + i * 5, y = 50 + Math.round(Math.sin(i / 8 * Math.PI) * 3); R(x, y, 3, 3, ['#e35d6a','#f3dca4','#f4b8c6'][i % 3]); } }});
     list.sort((a, b) => a.z - b.z).forEach(o => o.fn());
-    if(st.chuva && (cm.out || cm.fachada)){ g.fillStyle = 'rgba(60,70,95,.14)'; g.fillRect(0, 0, LW, LH); for(let i = 0; i < 70; i++){ const x = (i * 37 + t * 2) % LW, y = (i * 53 + t * 9) % LH; R(x, y, 1, 3, 'rgba(225,235,250,.75)'); } }
-    if(st.anoNovo && (cm.out || cm.fachada)){ [[30,10,'#f6d55a'],[120,8,'#f4b8c6'],[80,16,'#9fd6ee']].forEach(([x,y,c],k) => { const fase = (t + k * 5) % 15; if(fase < 8){ const r = fase + 2; for(let a = 0; a < 12; a++){ const ang = a / 12 * Math.PI * 2; P(Math.round(x + Math.cos(ang) * r), Math.round(y + Math.sin(ang) * r * .8), c); } } else R(x, y + (15 - fase) * 2, 1, 2, c); }); }
+    if(st.chuva && (cm.out || cm.fachada || cm.ar)){ g.fillStyle = 'rgba(60,70,95,.14)'; g.fillRect(0, 0, LW, LH); for(let i = 0; i < 70; i++){ const x = (i * 37 + t * 2) % LW, y = (i * 53 + t * 9) % LH; R(x, y, 1, 3, 'rgba(225,235,250,.75)'); } }
+    if(st.anoNovo && (cm.out || cm.fachada || cm.ar)){ [[30,10,'#f6d55a'],[120,8,'#f4b8c6'],[80,16,'#9fd6ee']].forEach(([x,y,c],k) => { const fase = (t + k * 5) % 15; if(fase < 8){ const r = fase + 2; for(let a = 0; a < 12; a++){ const ang = a / 12 * Math.PI * 2; P(Math.round(x + Math.cos(ang) * r), Math.round(y + Math.sin(ang) * r * .8), c); } } else R(x, y + (15 - fase) * 2, 1, 2, c); }); }
     if(st.noite){
-      g.fillStyle = cm.out || cm.fachada ? 'rgba(16,20,58,.42)' : 'rgba(22,24,60,.36)'; g.fillRect(0, cm.out || cm.fachada ? 0 : 0, LW, LH);
+      g.fillStyle = cm.out || cm.fachada || cm.ar ? 'rgba(16,20,58,.42)' : cm.id === 'cinema' ? 'rgba(10,8,20,.12)' : 'rgba(22,24,60,.36)'; g.fillRect(0, cm.out || cm.fachada ? 0 : 0, LW, LH);
       const glow = (x, y, r, c) => { for(let k = r; k > 0; k -= 3){ E(x, y, k, Math.round(k * .7), c); } };
       const has = id => st.owned.has(id) && CASA.itens.find(i => i.id === id).c === cm.id;
       if(has('luminaria')){ glow(121, 40, 18, 'rgba(255,214,140,.07)'); D.luminaria.f('', 0); }
       if(has('criado')){ glow(116, 26, 14, 'rgba(255,214,140,.08)'); D.criado.f(st.cor.criado || PAL.madeira[0][1], t); }
       if(has('poste')){ glow(148, 44, 20, 'rgba(255,230,150,.08)'); R(143, 38, 10, 8, '#ffe9a8'); }
       if(cm.fachada){ [[54,53],[108,53]].forEach(([x,y]) => glow(x, y, 12, 'rgba(255,214,140,.07)')); [[46,46],[100,46]].forEach(([x,y]) => R(x + 1, y + 1, 14, 12, '#ffd98a')); }
-      ['luzinhas','neon','tv','pc','fliper','videogame'].forEach(id => { if(has(id)) D[id].f('', t); });
+      ['luzinhas','neon','tv','pc','fliper','videogame','jukebox','velas','estrelas','sv_neon','cn_telao','cn_luzes'].forEach(id => { if(has(id)) D[id].f('', t); });
       if(has('janela')) D.janela.f(st.cor.janela || PAL.cores[0][1], t);
       if(has('varal')) D.varal.f('', t);
     }
@@ -3517,19 +4154,41 @@ function PixelRoom(cv){
   return {draw, acoes:ACOES, set onTap(f){ onTap = f; }, dispose(){ clearInterval(timer); }};
 }
 
+function sequenciaHTML(chocs, eu, outro){
+  const meus = diasDeChoco(chocs, eu), deles = diasDeChoco(chocs, outro), hj = hoje();
+  const prev = location.hash.startsWith('#dia');
+  let ini = new Date((prev ? [...meus, ...deles, hj].sort()[0] : INICIO_STR) + 'T12:00:00'); ini = new Date(ini.getFullYear(), ini.getMonth(), 1);
+  let fim = new Date(hj + 'T12:00:00'); if(fim < ini) fim = new Date(INICIO_STR + 'T12:00:00');
+  const ofE = ofensiva(chocs, eu), ofO = ofensiva(chocs, outro), juntos = [...meus].filter(d => deles.has(d)).length;
+  const nomeO = outro === 'Di' ? 'Di' : 'Mihzinha';
+  let html = `<div class="sq-stats"><div><b>${maiorSeq(meus)}</b><small>sua maior sequência</small></div><div><b>${maiorSeq(deles)}</b><small>maior do ${outro === 'Di' ? 'Di' : 'da Mihzinha'}</small></div><div><b>${juntos}</b><small>dias que os dois entraram</small></div></div>`;
+  const meses = []; for(let d = new Date(fim.getFullYear(), fim.getMonth(), 1); d >= ini; d = new Date(d.getFullYear(), d.getMonth() - 1, 1)) meses.push(d);
+  meses.slice(0, 13).forEach(m => {
+    const nd = new Date(m.getFullYear(), m.getMonth() + 1, 0).getDate(), pad = m.getDay();
+    let cells = '<i class="sq-v"></i>'.repeat(pad);
+    for(let k = 1; k <= nd; k++){ const ds = dsStr(new Date(m.getFullYear(), m.getMonth(), k)), a = meus.has(ds), b = deles.has(ds);
+      const cls = ds > hj ? 'fut' : a && b ? 'ambos' : a ? 'eu' : b ? 'ele' : ds < INICIO_STR ? 'antes' : 'nada';
+      cells += `<i class="sq-d ${cls}${ds === hj ? ' hj' : ''}${ds === INICIO_STR ? ' ini' : ''}">${a && b ? icon('heart') : k}</i>`; }
+    html += `<div class="sq-mes"><p>${m.toLocaleDateString('pt-BR', {month:'long', year:'numeric'})}</p><div class="sq-grid">${['D','S','T','Q','Q','S','S'].map(x => `<b>${x}</b>`).join('')}${cells}</div></div>`;
+  });
+  html += `<div class="sq-leg"><span><i class="sq-d ambos">${icon('heart')}</i>os dois</span><span><i class="sq-d eu"></i>só você</span><span><i class="sq-d ele"></i>só ${outro === 'Di' ? 'o Di' : 'a Mihzinha'}</span></div>`;
+  if(!jaComecou()) html = `<p class="sq-aviso">A sequência começa a contar no dia 25 de dezembro.</p>` + html;
+  return html;
+}
 VIEWS.casinha = () => {
   document.getElementById('chtoast')?.remove();
   const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'Mihzinha' : 'Di';
-  let aba = store.get('casaAba', 'sala'), chocs = [], compras = [], cs = {};
-  if(!CASA.comodos.some(c => c.id === aba)) aba = 'sala';
+  let aba = store.get('casaAba2', 'nos'), chocs = [], compras = [], cs = {}, seqAberta = false;
+  if(!CASA.comodos.some(c => c.id === aba)) aba = 'nos';
   shell('a nossa casinha','Nossa casinha','Cada dia que vocês entram, ganham um chocolate. Junta e monta a casa de vocês',
     `<div class="cs-wrap"><div class="cs-top">
        <div class="cs-pills"><div class="cs-saldo"><span class="cs-ic">${CHOCO_SVG}</span><div><b id="cssaldo">0</b><small>chocolates</small></div></div>
-       <div class="cs-saldo cs-fogo"><span class="cs-ic">${FLAME_SVG}</span><div><b id="csfogo">0</b><small id="csfogot">dias seguidos</small></div></div></div>
+       <button type="button" class="cs-saldo cs-fogo" id="csfogob"><span class="cs-ic">${FLAME_SVG}</span><div><b id="csfogo">0</b><small id="csfogot">dias seguidos</small></div><span class="cs-ver">ver ${icon('calendar')}</span></button></div>
+       <div class="cs-seq" id="csseq" hidden></div>
        <div class="cs-hoje" id="cshoje"></div>
      </div>
      <div class="cs-mis" id="csmis"></div>
-     <div class="cs-tabs" id="cstabs">${CASA.comodos.map(c => `<button type="button" data-c="${c.id}">${c.t}</button>`).join('')}</div>
+     <div class="cs-tabs" id="cstabs">${CASA.comodos.map((c, k) => `${c.lugar && !CASA.comodos[k - 1].lugar ? '<span class="cs-tsep">passeios</span>' : ''}<button type="button" data-c="${c.id}"${c.lugar ? ' class="lug"' : ''}>${c.t}</button>`).join('')}</div>
      <div class="cs-scene px" id="csscene"><canvas id="cscv"></canvas></div>
      <p class="cs-fx" id="csfx"></p>
      <div class="cs-quem" id="csquem"></div>
@@ -3559,6 +4218,10 @@ VIEWS.casinha = () => {
     if(!$('csscene')) return;
     const saldo = chocoSaldo(chocs, compras), of = ofensiva(chocs, eu), ofo = ofensiva(chocs, outro);
     $('cssaldo').textContent = saldo; $('csfogo').textContent = of.seguidos; $('csfogot').textContent = `${of.seguidos === 1 ? 'dia seguido' : 'dias seguidos'} · ${of.total} no total`;
+    if(!jaComecou()){ const n = faltamInicio();
+      $('cshoje').innerHTML = `<span class="cs-espera">${icon('gift')} Os chocolates começam no dia 25 de dezembro</span><small>faltam ${n} ${n === 1 ? 'dia' : 'dias'}. Dá pra espiar tudo até lá</small>`;
+      $('csmis').innerHTML = `<div class="ms-head ms-off"><b>Missões da semana</b><small>começam no dia 25</small></div>`; }
+    else {
     $('cshoje').innerHTML = (of.hoje ? `<span class="ok">${icon('heart')} o seu de hoje já tá guardado</span>` : `<button type="button" id="cspega">${icon('gift')} Pegar o chocolate de hoje</button>`)
       + `<small>${outro === 'Di' ? 'O Di' : 'A Mihzinha'} ${ofo.hoje ? 'também já pegou hoje' : 'ainda não pegou hoje'}${ofo.seguidos ? ` · ${ofo.seguidos} ${ofo.seguidos === 1 ? 'dia seguido' : 'dias seguidos'}` : ''}</small><small class="cs-dica">a cada 7 dias seguidos, +${CASA.bonusOfensiva} chocolates de bônus</small>`;
     $('cspega')?.addEventListener('click', async e => { const r = e.currentTarget.getBoundingClientRect(); burst(r.left + r.width/2, r.top, 24); e.currentTarget.disabled = true; try{ await pegarChocolate(colC, chocs, eu); }catch(x){} });
@@ -3567,42 +4230,49 @@ VIEWS.casinha = () => {
       $('csmis').innerHTML = `<details ${aberto ? 'open' : ''}><summary class="ms-head"><b>Missões da semana</b><small>${prontas ? `<em>${prontas} pra resgatar</em>` : 'renova toda segunda'} ${icon('plus')}</small></summary><div class="ms-list">` + MISSOES.map(m => { const v = Math.min(m.meta, pr[m.id] || 0), id = `missao_${sem}_${m.id}_${eu}`, pego = chocs.some(c => c.id === id);
         return `<div class="ms-row ${pego ? 'done' : ''}"><div class="ms-tx"><span>${m.t}</span><div class="ms-bar"><i style="width:${v / m.meta * 100}%"></i></div></div><span class="ms-n">${v}/${m.meta}</span>${pego ? `<span class="ms-ok">${icon('heart')}</span>` : v >= m.meta ? `<button type="button" data-mis="${m.id}">+${m.premio}</button>` : `<span class="ms-pr">+${m.premio}</span>`}</div>`; }).join('') + `</div></details>`;
       $('csmis').querySelectorAll('[data-mis]').forEach(b => b.onclick = async () => { const m = MISSOES.find(x => x.id === b.dataset.mis); b.disabled = true; const r = b.getBoundingClientRect(); burst(r.left + r.width / 2, r.top, 20); try{ await colC.set(`missao_${sem}_${m.id}_${eu}`, {qtd:m.premio, autor:eu}); }catch(x){ b.disabled = false; } }); }
-    document.querySelectorAll('#cstabs button').forEach(b => b.classList.toggle('on', b.dataset.c === aba));
+    }
+    if(seqAberta) $('csseq').innerHTML = sequenciaHTML(chocs, eu, outro);
+    document.querySelectorAll('#cstabs button').forEach(b => { b.classList.toggle('on', b.dataset.c === aba); if(b.classList.contains('lug')) b.classList.toggle('lock', !tem(b.dataset.c)); });
     const cm = CASA.comodos.find(c => c.id === aba), owned = new Set(compras.map(c => c.id)), onde = ondeDe();
     const look = tem(cs.roupa) ? cs.roupa : 'base', usa = id => tem(id) && (cs.usando || {})[id] === true, acc = {oculos:usa('oculos'), laco:usa('laco'), aliancas:tem('aliancas'), bone:usa('bone'), tiara:usa('tiara'), carrinho: tem('passeio') && cs.noCarrinho ? ((cs.cor || {}).passeio || PAL.cores[0][1]) : ''};
     const pessoas = ['Mihzinha','Di'].concat(tem('bebe') ? ['Bebe'] : []);
     const gente = pessoas.filter(q => onde[q] === aba);
-    const lookAqui = cm.out ? 'banho' : look;
+    const lookAqui = cm.out ? 'banho' : cm.id === 'praia' ? (look === 'praiaroupa' ? 'praiaroupa' : 'banho') : look;
     const nv = niverHoje(); acc.chapeu = nv.length > 0;
     const mundo = {noite:ehNoite(), chuva:clima.chuva, natal:ehDezembro(), festa:!!ehFesta() || nv.length > 0, niver:nv.length > 0, anoNovo:ehAnoNovo()};
     px.draw({...mundo, cm, owned, cor:cs.cor || {}, parede:(cs.parede || {})[aba], piso:(cs.piso || {})[aba], gente, look:lookAqui, acc, acao:cs.acao || {}});
     const nome = q => q === 'Bebe' ? 'Bebê' : q;
-    $('csquem').innerHTML = cm.provador ? '' : `<span>quem tá aqui:</span>` + pessoas.map(q => `<button type="button" class="${onde[q] === aba ? 'on' : ''}" data-q="${q}">${nome(q)}</button>`).join('');
+    const fechadoAqui = cm.lugar && !tem(cm.id);
+    $('csquem').innerHTML = cm.provador ? '' : fechadoAqui ? `<p class="cs-acdica">${esc(cm.t)} ainda tá fechad${cm.id === 'cinema' || cm.id === 'parque' ? 'o' : 'a'}. Abre ali embaixo pra vocês poderem ir juntos</p>` : `<span>quem tá aqui:</span>` + pessoas.map(q => `<button type="button" class="${onde[q] === aba ? 'on' : ''}" data-q="${q}">${nome(q)}</button>`).join('');
     const disp = px.acoes.filter(a => a.c === aba && owned.has(a.req));
-    if(!cm.provador) $('csquem').innerHTML += gente.filter(q => q !== 'Bebe').map(q => `<div class="cs-acoes"><b>${q === 'Di' ? 'Di' : 'Mihzinha'}</b>${[{id:'', t:'Em pé'}].concat(disp).map(a => `<button type="button" class="${((cs.acao || {})[q] || '') === a.id || (a.id && !disp.some(d => d.id === (cs.acao || {})[q]) && false) ? 'on' : ''}" data-ac="${a.id}" data-p="${q}">${a.t}</button>`).join('')}</div>`).join('')
+    if(!cm.provador && !fechadoAqui) $('csquem').innerHTML += gente.filter(q => q !== 'Bebe').map(q => `<div class="cs-acoes"><b>${q === 'Di' ? 'Di' : 'Mihzinha'}</b>${[{id:'', t:'Em pé'}].concat(disp).map(a => `<button type="button" class="${((cs.acao || {})[q] || '') === a.id || (a.id && !disp.some(d => d.id === (cs.acao || {})[q]) && false) ? 'on' : ''}" data-ac="${a.id}" data-p="${q}">${a.t}</button>`).join('')}</div>`).join('')
       + (gente.some(q => q !== 'Bebe') && !disp.length ? `<p class="cs-acdica">compra móveis pra vocês poderem sentar, deitar, jogar…</p>` : '');
     $('csquem').querySelectorAll('[data-ac]').forEach(b => b.onclick = () => Sync.setFlag('casinha', 'acao', Object.assign({}, cs.acao || {}, {[b.dataset.p]:b.dataset.ac})));
     $('csquem').querySelectorAll('[data-q]').forEach(b => b.onclick = () => { const o = ondeDe(), q = b.dataset.q; o[q] = o[q] === aba ? (aba === 'sala' ? 'quarto' : 'sala') : aba; Sync.setFlag('casinha', 'onde', o); });
+    if(cm.lugar && !fechadoAqui) $('csquem').insertAdjacentHTML('afterbegin', `<button type="button" class="cs-juntos" id="csjuntos">${icon('heart')} Levar os dois pra cá</button>`);
+    $('csjuntos')?.addEventListener('click', () => { const o = ondeDe(); o.Di = aba; o.Mihzinha = aba; Sync.setFlag('casinha', 'onde', o); });
     const total = CASA.itens.length, comprados = CASA.itens.filter(i => tem(i.id)).length;
     $('csprog').textContent = `${comprados} de ${total} coisinhas conquistadas`;
     let html = '';
     if(cm.fachada){ const lista = PAL.wall.slice(0, 6), atual = (cs.parede || {})[aba]; html += `<div class="cs-item cs-dec"><span class="cs-nm">Cor da casa</span><div class="cs-sw">${lista.map((p, k) => { const id = `parede_${aba}_${k}`, liv = k === cm.wall || tem(id), sel = (atual ?? cm.wall) === k; return `<button type="button" class="sw ${sel ? 'sel' : ''} ${liv ? '' : 'lock'}" data-kind="parede" data-k="${k}" title="${p[0]}" style="--c:${p[1]}">${liv ? '' : `<b>${CASA.precoParede}</b>`}</button>`; }).join('')}</div></div>`; }
-    if(!cm.provador && !cm.out && !cm.fachada){
+    if(!cm.provador && !cm.out && !cm.fachada && !cm.lugar){
       const sw = (kind, lista, atual, padrao, preco) => `<div class="cs-item cs-dec"><span class="cs-nm">${kind === 'parede' ? 'Cor da parede' : 'Piso'}</span><div class="cs-sw">${lista.map((p, k) => { const id = `${kind}_${aba}_${k}`, liv = k === padrao || tem(id), sel = (atual ?? padrao) === k; return `<button type="button" class="sw ${sel ? 'sel' : ''} ${liv ? '' : 'lock'}" data-kind="${kind}" data-k="${k}" title="${p[0]}" style="--c:${kind === 'parede' ? p[1] : p[2]}">${liv ? '' : `<b>${preco}</b>`}</button>`; }).join('')}</div></div>`;
       html += sw('parede', PAL.wall, (cs.parede || {})[aba], cm.wall, CASA.precoParede) + sw('piso', PAL.floor, (cs.piso || {})[aba], cm.floor, CASA.precoPiso);
     }
     html += CASA.itens.filter(i => i.c === aba).map(i => {
-      const ok = tem(i.id), falta = i.req && !tem(i.req), req = falta ? CASA.itens.find(x => x.id === i.req).t : '';
+      const ok = tem(i.id), falta = i.req && !tem(i.req), ri = falta && CASA.itens.find(x => x.id === i.req), req = falta ? (ri.lugar ? 'abrir o lugar' : ri.t) : '';
       let btn;
       if(ok && i.roupa) btn = cs.roupa === i.id ? `<button type="button" class="ghost" data-tirar="1">Tirar</button>` : `<button type="button" data-vestir="${i.id}">Vestir</button>`;
       else if(ok && ['oculos','bone','laco','tiara'].includes(i.id)) btn = (cs.usando || {})[i.id] === true ? `<button type="button" class="ghost" data-usar="${i.id}" data-v="0">Tirar</button>` : `<button type="button" data-usar="${i.id}" data-v="1">Usar</button>`;
       else if(ok && i.id === 'passeio') btn = cs.noCarrinho ? `<button type="button" class="ghost" data-carrinho="0">Tirar o bebê</button>` : `<button type="button" data-carrinho="1">Pôr o bebê</button>`;
       else if(ok) btn = `<span class="cs-tem">${icon('heart')} conquistado</span>`;
-      else if(falta) btn = `<span class="cs-req">precisa de ${esc(req)}</span>`;
+      else if(falta) btn = `<span class="cs-req">${req === "abrir o lugar" ? "abre o lugar antes" : "precisa de " + esc(req)}</span>`;
       else btn = `<button type="button" data-buy="${i.id}" ${saldo < i.p ? 'class="poor"' : ''}>Comprar</button>`;
       let cores = '';
       if(ok && i.v){ const cur = (cs.cor || {})[i.id] || PAL[i.v][0][1]; cores = `<div class="cs-sw">${PAL[i.v].map((p, k) => { const id = `${i.id}__${k}`, liv = !k || tem(id); return `<button type="button" class="sw ${cur === p[1] ? 'sel' : ''} ${liv ? '' : 'lock'}" data-item="${i.id}" data-k="${k}" title="${p[0]}" style="--c:${p[1]}">${liv ? '' : `<b>${CASA.precoCor}</b>`}</button>`; }).join('')}</div>`; }
       if(ok && (i.id === 'cachorro' || i.id === 'gatinho')) cores += `<div class="cs-pet"><input type="text" maxlength="16" placeholder="Dá um nome pra ${i.id === 'cachorro' ? 'ele' : 'ela'}" value="${esc((cs.pets || {})[i.id] || '')}" data-petin="${i.id}"><button type="button" data-pet="${i.id}">Salvar</button></div>`;
+      if(i.lugar && !ok) return `<div class="cs-item cs-abrir"><span class="cs-pr">${CHOCO_SVG}<b>${i.p}</b></span><span class="cs-nm">${esc(i.t)}<small>libera ${CASA.itens.filter(x => x.c === i.c && !x.lugar).length} coisinhas e um passeio a dois</small></span>${btn}</div>`;
+      if(i.lugar) return `<div class="cs-item have cs-aberto"><span class="cs-nm">${icon('heart')} ${esc(cm.t)} aberta pra vocês</span></div>`.replace('aberta pra', cm.id === 'cinema' || cm.id === 'parque' ? 'aberto pra' : 'aberta pra');
       return `<div class="cs-item ${ok ? 'have' : ''}"><span class="cs-pr">${CHOCO_SVG}<b>${i.p}</b></span><span class="cs-nm">${esc(i.t)}${i.id === 'bebe' && !ok ? '<small>libera o bebê pra andar pela casa</small>' : ''}${i.id === 'passeio' ? '<small>o bebê passeia nele por qualquer cômodo</small>' : ''}</span>${btn}${cores}</div>`;
     }).join('');
     if(cm.provador) html = `<p class="cs-sub">Vocês dois já moram aqui. As roupas e os acessórios vão sendo conquistados</p>` + html;
@@ -3622,10 +4292,11 @@ VIEWS.casinha = () => {
       if(b.classList.contains('lock')) comprar(b, `${kind}_${aba}_${k}`, kind === 'parede' ? CASA.precoParede : CASA.precoPiso, escolhe); else escolhe();
     });
   };
-  $('cstabs').onclick = e => { const b = e.target.closest('button'); if(!b) return; aba = b.dataset.c; store.set('casaAba', aba); draw(); };
+  $('cstabs').onclick = e => { const b = e.target.closest('button'); if(!b) return; aba = b.dataset.c; store.set('casaAba2', aba); draw(); };
+  $('csfogob').onclick = () => { seqAberta = !seqAberta; $('csseq').hidden = !seqAberta; $('csfogob').classList.toggle('on', seqAberta); draw(); if(seqAberta) setTimeout(() => $('csseq').scrollIntoView({behavior:'smooth', block:'nearest'}), 60); };
   const offC = colC.on(l => {
     chocs = l;
-    if(!l.some(c => c.id === 'bonus_inicio')) colC.set('bonus_inicio', {qtd:CASA.bonusInicio, autor:'presente'}).catch(() => {});
+    if(jaComecou() && !l.some(c => c.id === 'bonus_inicio')) colC.set('bonus_inicio', {qtd:CASA.bonusInicio, autor:'presente'}).catch(() => {});
     draw();
   });
   const offP = colP.on(l => { compras = l; draw(); });
@@ -3910,16 +4581,59 @@ VIEWS.retro = () => {
 };
 
 /* ---------- prévia do Di ---------- */
-function entrarPrevia(){
-  try{ Object.keys(localStorage).filter(k => k.startsWith('previa_')).forEach(k => localStorage.removeItem(k));
-    localStorage.setItem('previa_col_conteudo', JSON.stringify(Sync.col('conteudo')._items ? Sync.col('conteudo')._items() : conteudoAtual)); }catch(e){}
-  location.replace(location.pathname + location.search + '#previa'); location.reload();
+const COLS_PREVIA = ['abraQuando','abracos','bilhetes','capsula','cartasData','cartasFilhos','chocolates','compras','contagens','datasMarcantes','diario','filmes','fotosMem','gastos','lugares','mesversario','musicas','planosLista','primeiras','respostas','roleta','saudade'];
+function entrarPrevia(quem, dia){
+  if(typeof quem !== 'string') quem = ''; dia = dia || '';
+  if(!quem){
+    try{ Object.keys(localStorage).filter(k => k.startsWith('previa_')).forEach(k => localStorage.removeItem(k));
+      localStorage.setItem('previa_col_conteudo', JSON.stringify(conteudoAtual)); }catch(e){}
+    location.replace(location.pathname + location.search + '#previa'); location.reload(); return;
+  }
+  /* viagem no tempo: leva uma cópia de tudo de vocês pra prévia, e lá nada é salvo de verdade */
+  const vai = () => { location.replace(location.pathname + location.search + `#previa-${quem}${dia ? '@' + dia : ''}`); location.reload(); };
+  if(PREVIA){ try{ Object.keys(localStorage).filter(k => /^previa_(viuFesta_|viuNatal|viuDedicatoria)/.test(k)).forEach(k => localStorage.removeItem(k)); localStorage.setItem('previa_quem', JSON.stringify(quem)); }catch(e){} vai(); return; }
+  const copia = {}, offs = [];
+  COLS_PREVIA.forEach(n => offs.push(Sync.col(n).on(l => { copia[n] = l; })));
+  let est = {}; offs.push(Sync.on('state', st => { est = st; }));
+  setTimeout(() => { offs.forEach(f => { try{ f(); }catch(e){} });
+    try{ Object.keys(localStorage).filter(k => k.startsWith('previa_')).forEach(k => localStorage.removeItem(k));
+      const L = (k, v) => localStorage.setItem('previa_' + k, JSON.stringify(v));
+      L('col_conteudo', conteudoAtual); Object.entries(copia).forEach(([n, l]) => L('col_' + n, l));
+      Object.entries(est).forEach(([g, v]) => L(g, v || {}));
+      L('quem', quem); L('entrou', true); L('viuLogin', true); L('installSeen', true); L('modoEdicao', false);
+    }catch(e){}
+    vai(); }, 1600);
+}
+function viagemHTML(){
+  const nv = typeof niverAtual !== 'undefined' ? niverAtual : {}, prox = q => { const b = nv[q]; if(!b) return ''; const y = new Date().getFullYear(); let d = `${y}-${b.slice(5)}`; if(d < hoje()) d = `${y + 1}-${b.slice(5)}`; return d; };
+  const chips = [['2026-12-25','Natal 2026'],['2027-01-01','Ano Novo'],['2027-01-12','Dia 12'],['2027-04-12','1 ano de namoro'],['2027-06-12','Dia dos Namorados'],[prox('Di'),'Niver do Di'],[prox('Mihzinha'),'Seu niver'],['2027-12-24','Véspera do fim'],['2027-12-25','Natal 2027 (fim)']].filter(c => c[0]);
+  const atual = window.__viagem ? window.__viagem.dia : '2026-12-25', q = window.__viagem ? window.__viagem.quem : 'Mihzinha';
+  return `<div class="vg-quem"><span>ver como</span><div class="ed-sw"><button type="button" data-vq="Mihzinha" class="${q === 'Mihzinha' ? 'on' : ''}">Eu</button><button type="button" data-vq="Di" class="${q === 'Di' ? 'on' : ''}">O Di</button></div></div>
+    <label class="fz-lab">Ir pro dia<input type="date" id="vgdia" value="${atual}" min="2026-10-01" max="2028-12-31"></label>
+    <div class="vg-chips">${chips.map(([d, t]) => `<button type="button" class="ghost" data-vd="${d}">${t}</button>`).join('')}</div>
+    <button type="button" id="vgir" class="vg-ir">${icon('play')} Viajar pra esse dia</button>`;
+}
+function ligarViagem(box){
+  let q = window.__viagem ? window.__viagem.quem : 'Mihzinha';
+  box.querySelectorAll('[data-vq]').forEach(b => b.onclick = () => { q = b.dataset.vq; box.querySelectorAll('[data-vq]').forEach(x => x.classList.toggle('on', x === b)); });
+  box.querySelectorAll('[data-vd]').forEach(b => b.onclick = () => { box.querySelector('#vgdia').value = b.dataset.vd; box.querySelectorAll('[data-vd]').forEach(x => x.classList.toggle('sel', x === b)); });
+  box.querySelector('#vgir').onclick = e => { const d = box.querySelector('#vgdia').value; if(!d) return; e.currentTarget.disabled = true; e.currentTarget.textContent = 'Preparando a viagem…'; entrarPrevia(q, d); };
+}
+function abrirViagem(){
+  document.getElementById('vgsheet')?.remove();
+  const w = document.createElement('div'); w.id = 'vgsheet'; w.className = 'vg-sheet';
+  w.innerHTML = `<div class="vg-card"><button type="button" class="vg-x" aria-label="Fechar">${icon('plus')}</button><h3>Viajar no tempo</h3><p>Escolhe um dia e vê o app do jeitinho que vai estar: o bilhete e a pergunta daquele dia, as telas de festa, as cartas que abrem só naquela data. É só uma prévia, nada do que você fizer lá é salvo e o Di não vê.</p>${viagemHTML()}</div>`;
+  document.body.append(w); requestAnimationFrame(() => w.classList.add('in'));
+  w.onclick = e => { if(e.target === w) w.remove(); }; w.querySelector('.vg-x').onclick = () => w.remove();
+  ligarViagem(w);
 }
 function sairPrevia(){
   try{ Object.keys(localStorage).filter(k => k.startsWith('previa_')).forEach(k => localStorage.removeItem(k)); }catch(e){}
   location.replace(location.pathname + location.search); setTimeout(() => location.reload(), 50);
 }
-if(PREVIA){ const bar = document.createElement('div'); bar.className = 'previa-bar'; bar.innerHTML = `<span><b>Prévia</b> · do jeitinho que o Di vê. Nada aqui é salvo.</span><button type="button">Sair</button>`; bar.querySelector('button').onclick = sairPrevia; document.body.append(bar); document.documentElement.classList.add('em-previa'); }
+if(PREVIA){ const bar = document.createElement('div'); bar.className = 'previa-bar'; const V = window.__viagem;
+  bar.innerHTML = V ? `<span><b>${new Date().toLocaleDateString('pt-BR', {day:'numeric', month:'short', year:'numeric'})}</b> · como ${V.quem === 'Di' ? 'o Di' : 'você'}</span><button type="button" class="pv-dia">trocar dia</button><button type="button" class="pv-sair">Sair</button>` : `<span><b>Prévia</b> · do jeitinho que o Di vê. Nada aqui é salvo.</span><button type="button" class="pv-sair">Sair</button>`;
+  bar.querySelector('.pv-sair').onclick = sairPrevia; bar.querySelector('.pv-dia')?.addEventListener('click', abrirViagem); document.body.append(bar); document.documentElement.classList.add('em-previa'); }
 let conteudoAtual = [];
 
 /* ---------- conteúdo editável (só a Mihzinha edita) ---------- */
@@ -3933,8 +4647,12 @@ const BASE = {
 };
 const ESCRITAS = [
   {grupo:'Do dia a dia'},
-  {k:'mensagens', t:'Bilhetes do dia', d:'um por linha, o app mostra um diferente por dia', tipo:'linhas'},
-  {k:'perguntas', t:'Perguntas do dia', d:'uma por linha', tipo:'linhas'},
+  {k:'mensagens', t:'Bilhetes do dia', d:'um por linha, na ordem dos dias: o 1º aparece em 25/12/2026 e o 364º em 23/12/2027. Nenhum se repete', tipo:'linhas', meta:364},
+  {k:'perguntas', t:'Perguntas do dia', d:'uma por linha, na mesma ordem: a 1ª em 25/12/2026 e a 364ª em 23/12/2027. Nenhuma se repete', tipo:'linhas', meta:364},
+  {k:'textos.antesInicio', t:'Bilhete antes do dia 25', d:'aparece até o Natal. {dias} vira "3 dias", "1 dia"…', tipo:'texto', rows:3},
+  {k:'textos.vespera', t:'Bilhete da véspera (24/12/2027)', tipo:'texto', rows:3},
+  {k:'textos.fimDiario', t:'Bilhete depois que acaba (a partir de 25/12/2027)', tipo:'texto', rows:3},
+  {k:'textos.perguntasFim', t:'Pergunta do dia depois que acaba', tipo:'texto', rows:3},
   {k:'mesversarios', t:'Mensagens do dia 12', d:'uma por linha, na ordem dos meses', tipo:'linhas'},
   {k:'mesversarioPadrao', t:'Mensagem do dia 12 depois do primeiro ano', tipo:'texto'},
   {grupo:'Cartas e surpresas'},
@@ -3960,6 +4678,9 @@ const ESCRITAS = [
   {k:'textos.natal25', t:'Mensagem que abre no dia 25', d:'aparece assim que ele entrar no app no dia de Natal. Linha em branco separa parágrafos', tipo:'texto', rows:6},
   {grupo:'Datas festivas'},
   {k:'textos.dedicatoria', t:'Recadinho da primeira vez', d:'aparece uma vez só, na primeira vez que o Di entra no app', tipo:'texto', rows:3},
+  {k:'festas.fim.titulo', t:'Encerramento (25/12/2027): título', tipo:'linha'},
+  {k:'festas.fim.sub', t:'Encerramento: embaixo do título', tipo:'linha'},
+  {k:'festas.fim.texto', t:'Encerramento: cartinha', d:'abre no Natal de 2027, quando o app completa um ano', tipo:'texto', rows:6},
   {k:'festas.anoNovo.titulo', t:'Ano Novo: título', d:'{ano} vira o ano novo, tipo 2027', tipo:'linha'},
   {k:'festas.anoNovo.sub', t:'Ano Novo: embaixo do título', tipo:'linha'},
   {k:'festas.anoNovo.texto', t:'Ano Novo: cartinha', tipo:'texto', rows:5},
@@ -3973,6 +4694,7 @@ const ESCRITAS = [
   {k:'festas.niverDi.sub', t:'Aniversário do Di: embaixo do título', tipo:'linha'},
   {k:'festas.niverDi.texto', t:'Aniversário do Di: cartinha', tipo:'texto', rows:5},
   {grupo:'Jogos'},
+  {k:'textos.memoriaFim', t:'Jogo da memória: mensagem do final', d:'aparece quando ele acha todos os pares. As fotos do jogo ficam na aba Fotos', tipo:'texto', rows:3},
   {k:'motivos', t:'Pegue os corações (motivos)', d:'um por linha', tipo:'linhas'},
   {k:'dates', t:'Roleta do date', d:'uma ideia por linha', tipo:'linhas'},
   {k:'quiz', t:'Quanto você me conhece?', tipo:'objs', campos:[['p','Pergunta'],['o','Opções (separa com |)','arr'],['c','Qual é a certa (1, 2, 3…)','idx']]},
@@ -4006,12 +4728,28 @@ function aplicarConteudo(list){
 }
 Sync.col('conteudo').on(l => { conteudoAtual = l; aplicarConteudo(l); });
 
+const RESET_OPC = [
+  {id:'casinha', on:1, t:'Casinha, chocolates e ofensiva', d:'chocolates, dias seguidos, missões, tudo que vocês compraram e montaram', cols:['chocolates','compras'], grupos:['casinha']},
+  {id:'vales', on:1, t:'Vales resgatados', d:'todos os vales voltam a ficar disponíveis', grupos:['vales']},
+  {id:'planos', on:1, t:'Planos marcados como feitos', grupos:['planos'], d:'os planos continuam, só desmarca'},
+  {id:'lidas', on:1, t:'Cartas e coisas já lidas', d:'tudo volta a aparecer como novidade', grupos:['lidas'], local:['seenBilhetes','abracosVistos']},
+  {id:'pensei', on:1, t:'"Pensei em você" e abraços', d:'zera as contagens e os abraços enviados', grupos:['pensei'], cols:['abracos']},
+  {id:'respostas', on:0, t:'Respostas das perguntas do dia', d:'o que vocês responderam nas perguntas', cols:['respostas']},
+  {id:'trocas', on:0, t:'Bilhetinhos e saudades que vocês mandaram', d:'os recadinhos trocados entre vocês dois (não mexe nos bilhetes do dia)', cols:['bilhetes','saudade']},
+  {id:'diario', on:0, t:'Diário, gastos, filmes e lugares', d:'o que foi anotado nessas partes', cols:['diario','gastos','filmes','lugares','contagens']},
+  {id:'meuapp', on:0, t:'Meu celular do começo também', d:'o seu app abre de novo desde "Quem está aí?", pra você começar junto com o Di'}
+];
 VIEWS.editar = (foco, origem, abaIni) => {
   document.getElementById('edfab')?.remove();
   if(Sync.quem !== 'Mihzinha'){ shell('só da Mihzinha','Editar o app','Essa parte é só dela', `<p class="lead hq-empty">Aqui é segredo da Mihzinha.</p>`); return; }
   let aba = abaIni || store.get('edAba', 'fotos'); if(foco) store.set('edSec', foco);
   shell('só você vê','Editar o app','Troca as fotos e todas as escritas do app. O Di não consegue mexer aqui',
     `<article class="ed-card ed-previa"><div class="ed-tx"><h3>Ver como o Di, do começo</h3><p>Abre o app do zero, desde o "Qual é o seu nome?", as datas, o login e a mensagem do dia, do jeitinho que ele vai ver. Nada do que você fizer na prévia é salvo e as coisas de vocês continuam intactas.</p></div><button type="button" id="edprevia">Recomeçar como o Di</button></article>
+     <article class="ed-card ed-viagem" id="edviagem"><div class="ed-tx"><h3>Viajar no tempo</h3><p>Vê qualquer dia antes da hora: o bilhete e a pergunta do dia, as festas, as cartas com data, a casinha. É uma prévia, nada é salvo e o Di não vê.</p></div><div id="edvgbox">${viagemHTML()}</div></article>
+     <details class="ed-card ed-reset" id="edreset"><summary><span><b>Recomeçar o app de verdade</b><small>zera as conquistas pra vocês começarem juntos</small></span>${icon('plus')}</summary>
+       <p class="ed-d">Marca o que quer zerar. Tudo que você escreveu e colocou no Editar (os bilhetes do dia, cartas, fotos, perguntas, quiz, vales) continua igualzinho.</p>
+       <div class="rs-list">${RESET_OPC.map(o => `<label class="rs-op"><input type="checkbox" data-rs="${o.id}" ${o.on ? 'checked' : ''}><span><b>${o.t}</b><small>${o.d}</small></span></label>`).join('')}</div>
+       <button type="button" id="edzerar" class="rs-btn">Zerar o que marquei</button><p class="msg" id="rsmsg" role="status"></p></details>
      <div class="fz-tabs ed-tabs"><button type="button" data-a="fotos">Fotos</button><button type="button" data-a="cartas">Cartas</button><button type="button" data-a="textos">Escritas</button></div>
      <div id="edb"></div><input type="file" id="edfile" accept="image/*" hidden>`);
   const col = Sync.col('conteudo'), $ = id => document.getElementById(id);
@@ -4030,7 +4768,11 @@ VIEWS.editar = (foco, origem, abaIni) => {
       ${sl.leg ? `<label class="fz-lab">Legenda<input type="text" maxlength="60" data-leg value="${esc(sl.leg() || '')}"></label>` : ''}
       ${sl.verso ? `<label class="fz-lab">Atrás da foto<textarea rows="2" maxlength="300" data-verso>${esc(sl.verso() || '')}</textarea></label>` : ''}
       ${sl.leg ? `<button type="button" class="ed-save" data-salva="${sl.id}">Salvar texto</button>` : ''}
-    </article>`).join('') + `<p class="ed-dica">${icon('heart')} As fotos de "Nossas memórias", "Datas marcantes" e "Nossos lugares" você coloca direto nelas. O Di só vê.</p>`;
+    </article>`).join('') + memGrid() + `<p class="ed-dica">${icon('heart')} As fotos de "Nossas memórias", "Datas marcantes" e "Nossos lugares" você coloca direto nelas. O Di só vê.</p>`;
+  const memGrid = () => { const fs = conteudoAtual.filter(x => /^memfoto_\d+$/.test(x.id) && x.img).length;
+    return `<article class="ed-card ed-mem" id="ed-memjogo"><div class="ed-tx"><h3>Fotos do jogo da memória</h3><p>Até 8 fotos, cada uma vira um par de cartas. ${fs < 6 ? `Com menos de 6, o jogo completa com coraçõezinhos.` : ''}</p></div>
+      <div class="ed-memgrid">${[0,1,2,3,4,5,6,7].map(k => { const d = conteudoAtual.find(x => x.id === 'memfoto_' + k), img = d && d.img;
+        return `<div class="ed-memslot" data-slot="memfoto_${k}"><button type="button" class="ed-ph ed-memph" data-troca="memfoto_${k}" aria-label="foto ${k + 1}">${img ? `<img src="${img}" alt="">` : `<span>${icon('plus')}</span>`}</button>${img ? `<button type="button" class="ghost ed-memx" data-tira="memfoto_${k}">Excluir</button>` : ''}</div>`; }).join('')}</div></article>`; };
   const cartas = () => `<div id="edcl">${C.cartas.map((c, k) => `<article class="ed-card ed-carta" data-k="${k}">
       <label class="fz-lab">Título<input type="text" maxlength="60" data-f="titulo" value="${esc(c.titulo)}"></label>
       <div class="fz-row"><label class="fz-lab">Abre em (opcional)<input type="date" data-f="abre" value="${dIso(c.abre)}"></label><label class="fz-lab">Ou quando<input type="text" maxlength="60" data-f="quando" placeholder="ex: no dia do noivado" value="${esc(c.quando || '')}"></label></div>
@@ -4040,7 +4782,7 @@ VIEWS.editar = (foco, origem, abaIni) => {
     <p class="ed-dica">${icon('heart')} As cartas do "Abra quando…" você escreve direto lá dentro.</p>`;
   const textos = () => { let html = '', aberto = store.get('edSec', ''); ESCRITAS.forEach(e => { if(e.grupo){ html += `<h3 class="ed-grupo">${e.grupo}</h3>`; return; }
       const v = getP(C, e.k); let corpo = '';
-      if(e.tipo === 'linhas') corpo = `<textarea rows="10" data-campo>${esc((v || []).join('\n'))}</textarea><p class="ed-cont">${(v || []).length} linhas</p>`;
+      if(e.tipo === 'linhas') corpo = `<textarea rows="10" data-campo>${esc((v || []).join('\n'))}</textarea><p class="ed-cont">${(v || []).length}${e.meta ? ` de ${e.meta}${(v || []).length < e.meta ? ` · faltam ${e.meta - (v || []).length}` : ''}` : ' linhas'}</p>`;
       else if(e.tipo === 'texto') corpo = `<textarea rows="${e.rows || 5}" data-campo>${esc(v || '')}</textarea>`;
       else if(e.tipo === 'linha') corpo = `<input type="text" data-campo value="${esc(v || '')}">`;
       else corpo = `<div class="ed-objs">${(v || []).map((o, i) => `<div class="ed-obj" data-i="${i}"><span class="ed-n">${i + 1}</span>${e.campos.map(([c, rot, kind]) => { let val = o[c]; if(kind === 'arr') val = (val || []).join(' | '); if(kind === 'idx') val = (+val || 0) + 1; return `<label class="fz-lab">${rot}${String(val || '').length > 60 ? `<textarea rows="3" data-c="${c}" data-k="${kind || ''}">${esc(val)}</textarea>` : `<input type="text" data-c="${c}" data-k="${kind || ''}" value="${esc(val ?? '')}">`}</label>`; }).join('')}${e.fixo ? '' : `<button type="button" class="ghost ed-rm">Excluir</button>`}</div>`).join('')}</div>${e.fixo ? '' : `<button type="button" class="ghost ed-add">${icon('plus')} Adicionar ${e.k === 'quiz' || e.k === 'provavel' ? 'pergunta' : e.k === 'vales' ? 'vale' : ''}</button>`}`;
@@ -4072,11 +4814,28 @@ VIEWS.editar = (foco, origem, abaIni) => {
     $('edsalvat')?.addEventListener('click', async e => { await col.set('textos', {natal:$('txn').value.trim(), segredo:$('txs').value.trim(), retro:$('txr').value.trim(), mes:[...$('edb').querySelectorAll('[data-mes]')].map(t => t.value.trim())}); salvo(e.target, 'Textos salvos!'); });
   };
   $('edfile').onchange = async () => { const f = $('edfile').files[0]; if(!f || !alvo) return; const card = $('edb').querySelector(`[data-slot="${alvo}"] .ed-ph`); if(card) card.innerHTML = '<span><small>preparando…</small></span>';
-    try{ const img = await compressImage(f, 900, .74); await col.set(alvo, {img}); }catch(e){ if(card) card.innerHTML = '<span><small>não deu, tenta outra</small></span>'; } };
+    try{ const img = await compressImage(f, alvo.startsWith('memfoto') ? 520 : 900, .74); await col.set(alvo, {img}); }catch(e){ if(card) card.innerHTML = '<span><small>não deu, tenta outra</small></span>'; } };
   document.querySelectorAll('.ed-tabs button').forEach(b => b.onclick = () => { aba = b.dataset.a; store.set('edAba', aba); draw(); });
+  ligarViagem($('edvgbox'));
+  $('edzerar').onclick = async e => { const b = e.currentTarget, msg = $('rsmsg'), sel = [...document.querySelectorAll('[data-rs]:checked')].map(x => x.dataset.rs);
+    if(!sel.length){ msg.textContent = 'Marca pelo menos uma coisa.'; return; }
+    if(!b.dataset.sure){ b.dataset.sure = 1; b.textContent = 'Tem certeza? Toca de novo'; setTimeout(() => { if(b.isConnected){ delete b.dataset.sure; b.textContent = 'Zerar o que marquei'; } }, 3500); return; }
+    delete b.dataset.sure; b.disabled = true; b.textContent = 'Zerando…'; msg.textContent = '';
+    try{ for(const id of sel){ const o = RESET_OPC.find(x => x.id === id);
+        for(const c of o.cols || []) await Sync.clearCol(c);
+        for(const g of o.grupos || []) await Sync.clearGroup(g);
+        (o.local || []).forEach(k => store.set(k, k === 'seenBilhetes' || k === 'abracosVistos' ? 0 : {})); }
+      const tudo = sel.includes('meuapp');
+      b.textContent = 'Pronto!'; sparkle(b); burst(innerWidth / 2, innerHeight / 2, 40);
+      msg.textContent = tudo ? 'Zerado! Agora o seu celular vai abrir do começo.' : 'Zerado! Vocês começam do zero juntos.';
+      if(tudo) setTimeout(() => { try{ Object.keys(localStorage).filter(k => k.startsWith(PFX) && !/^.*col_conteudo$/.test(k)).forEach(k => localStorage.removeItem(k)); }catch(err){} location.reload(); }, 1600);
+      else setTimeout(() => { if(b.isConnected){ b.disabled = false; b.textContent = 'Zerar o que marquei'; } }, 2500);
+    }catch(err){ b.disabled = false; b.textContent = 'Zerar o que marquei'; msg.textContent = 'Não deu pra zerar agora. Confere a internet e tenta de novo.'; }
+  };
   $('edprevia').onclick = e => { const b = e.currentTarget; if(!b.dataset.sure){ b.dataset.sure = 1; b.textContent = 'Toca de novo pra abrir'; setTimeout(() => { delete b.dataset.sure; b.textContent = 'Recomeçar como o Di'; }, 3000); return; } entrarPrevia(); };
   const off = col.on(l => { list = l; if(aba !== 'textos' && aba !== 'cartas' || !$('edb').innerHTML) draw(); });
   const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { off(); prev(); };
+  if(foco === 'memjogo') setTimeout(() => document.getElementById('ed-memjogo')?.scrollIntoView({behavior:'smooth', block:'start'}), 400);
   if(foco) setTimeout(() => { const sec = document.querySelector(`.ed-sec[data-k="${foco}"]`); if(sec){ sec.open = true; sec.scrollIntoView({behavior:'smooth', block:'start'}); } }, 350);
   if(origem){ const bk = document.getElementById('back'), pv = bk.onclick; bk.onclick = () => { pv(); setTimeout(() => openStop(origem), 30); }; }
 };
@@ -4360,16 +5119,20 @@ VIEWS.filhos = () => {
 /* ---------- vales ---------- */
 VIEWS.vales = () => {
   shell('pra usar comigo','Vales-presente', Sync.quem === 'Mihzinha' ? 'Os vales que você deu pro Di. Aqui você vê quais ele já usou' : 'Cada vale só pode ser resgatado uma vez. Quando resgatar, me manda o ticket',
-    `<div class="vales">${C.vales.map((v,k)=>`<div class="vale st" style="--i:${k}"><span class="ico">${icon(v.i)}</span><b>${esc(v.t)}</b>${Sync.quem === 'Mihzinha' ? `<span class="vstatus" data-s="${k}">ainda não resgatado</span>` : `<button data-k="${k}">Resgatar</button>`}</div>`).join('')}</div>`);
+    `<div class="vales">${C.vales.map((v,k)=>`<div class="vale st" style="--i:${k}"><span class="ico">${icon(v.i)}</span><b>${esc(v.t)}</b>${Sync.quem === 'Mihzinha' ? `<span class="vstatus" data-s="${k}">ainda não resgatado</span><button type="button" class="ghost vlib" data-lib="${k}" hidden>Liberar de novo</button>` : `<button data-k="${k}">Resgatar</button>`}</div>`).join('')}</div>
+     ${Sync.quem === 'Mihzinha' && !PREVIA ? `<button type="button" class="vale-add" id="valeadd">${icon('plus')} Criar ou editar vales</button>` : ''}`);
+  document.getElementById('valeadd')?.addEventListener('click', () => { curView = 'editar'; VIEWS.editar('vales', 'vales', 'textos'); });
+  app.querySelectorAll('[data-lib]').forEach(b => b.onclick = async () => { if(!b.dataset.sure){ b.dataset.sure = 1; b.textContent = 'Toca de novo'; setTimeout(() => { if(b.isConnected){ delete b.dataset.sure; b.textContent = 'Liberar de novo'; } }, 2500); return; }
+    delete b.dataset.sure; await Sync.setFlag('vales', b.dataset.lib, null); sparkle(b); });
   let used = {};
-  const btns = [...app.querySelectorAll('.vale button')];
+  const btns = [...app.querySelectorAll('.vale button[data-k]')];
   const paint = () => btns.forEach(b => {
     const u = used[b.dataset.k];
     b.parentElement.classList.toggle('used', !!u);
     if(!b.dataset.sure) b.textContent = u ? 'Ver ticket' : 'Resgatar';
   });
   const off = Sync.on('state', st => { used = st.vales || {}; paint();
-    app.querySelectorAll('.vstatus').forEach(e => { const u = used[e.dataset.s]; e.parentElement.classList.toggle('used', !!u); e.textContent = u ? `resgatado em ${new Date(u.em || Date.now()).toLocaleDateString('pt-BR')}` : 'ainda não resgatado'; }); });
+    app.querySelectorAll('.vstatus').forEach(e => { const u = used[e.dataset.s]; e.parentElement.classList.toggle('used', !!u); e.textContent = u ? `resgatado em ${new Date(u.em || Date.now()).toLocaleDateString('pt-BR')}` : 'ainda não resgatado'; const lb = app.querySelector(`[data-lib="${e.dataset.s}"]`); if(lb) lb.hidden = !u; }); });
   btns.forEach(b => b.onclick = async () => {
     const k = b.dataset.k, u = used[k];
     if(u){ showTicket(k, u); return; }
@@ -4424,10 +5187,10 @@ VIEWS.mensagem = () => renderDaily();
 
 /* ---------- pergunta do dia ---------- */
 VIEWS.pergunta = () => {
-  const n = C.perguntas.length, pq = C.perguntas[((diaDoAno() * 3) % n + n) % n];
+  const dj = diaJornada(), ANTESQ = dj < 1, FIMQ = dj >= 365 || ANTESQ, pq = FIMQ ? '' : itemDoDia(C.perguntas, 3);
   const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'Mihzinha' : 'Di';
   shell('hoje','Pergunta do dia','Responde, e aí você vê o que o outro respondeu',
-    `<div class="qcard"><p class="eyebrow">${new Date().toLocaleDateString('pt-BR',{day:'numeric',month:'long'})}</p><h3>${esc(pq)}</h3>
+    `<div class="qcard"><p class="eyebrow">${new Date().toLocaleDateString('pt-BR',{day:'numeric',month:'long'})}${dj >= 1 && dj <= 364 ? ` · pergunta ${dj} de 364` : ''}</p>${ANTESQ ? `<h3>As perguntas começam no Natal</h3><p class="lead">A primeira chega no dia 25 de dezembro. Faltam ${1 - dj} ${1 - dj === 1 ? 'dia' : 'dias'}. São 364, uma por dia, e nenhuma se repete.</p>` : FIMQ ? `<h3>Fim das perguntas</h3><p class="lead">${esc(C.textos.perguntasFim)}</p>` : `<h3>${esc(pq)}</h3>`}
       <form class="write" id="qf"><textarea id="qta" rows="4" placeholder="Sua resposta…" aria-label="Sua resposta"></textarea><button type="submit">Responder</button><p class="werr" id="qerr" role="status"></p></form>
       <div id="qans"></div></div>
      <section class="hqwrap" id="qold"></section>`);
@@ -4435,7 +5198,7 @@ VIEWS.pergunta = () => {
   const off = col.on(list => {
     const box = document.getElementById('qans'); if(!box) return;
     const minha = list.find(r => r.dia === hoje() && r.quem === eu), dele = list.find(r => r.dia === hoje() && r.quem === outro);
-    document.getElementById('qf').hidden = !!minha;
+    document.getElementById('qf').hidden = !!minha || FIMQ;
     box.innerHTML = (minha ? `<div class="ans mine"><small>você respondeu</small><p>${esc(minha.texto)}</p></div>` : '') +
       (dele ? (minha ? `<div class="ans unfold"><small>${outro} respondeu</small><p>${esc(dele.texto)}</p></div>` : `<p class="lead locked-ans">${icon('lock')} ${outro} já respondeu. Responde pra ver!</p>`)
             : (minha ? `<p class="lead">${outro} ainda não respondeu. Volta mais tarde!</p>` : ''));
