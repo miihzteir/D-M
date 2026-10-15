@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=15">
-<link rel="apple-touch-icon" href="icon-180.png?v=15">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=15">
+<link rel="manifest" href="manifest.json?v=17">
+<link rel="apple-touch-icon" href="icon-180.png?v=17">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=17">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -348,6 +348,12 @@ textarea:focus,.card-form input:focus,.addopt input:focus{border-color:var(--pin
 .vale b{font-weight:700;color:var(--plum);font-size:15px;line-height:1.25}
 .vale button{padding:9px;font-size:14px;margin-top:auto}
 .vale.used{opacity:.65}
+.gs-grid > p{grid-column:1/-1}
+.gs-catsed{margin-top:6px;min-width:0;max-width:100%}.gs-det{min-width:0}.gs-catsed > div{padding:0 14px 14px;display:flex;flex-direction:column;gap:8px}
+.gs-catdica{margin:0;font-size:12.5px;color:#8a6a6f;text-align:left}
+.gs-catrow{display:flex;gap:8px;align-items:center;min-width:0}.gs-catrow > *{flex:none}.gs-catrow input{flex:1 1 0!important;width:auto!important;min-width:0!important;min-height:42px;border-radius:12px;border:1.5px solid #ecd4d6;background:#fffaf6;padding:0 12px;font:inherit}.gs-catrow button:not(.ib){width:auto!important;padding:0 16px!important}
+form.editando{outline:2px solid #e8798f;outline-offset:2px}
+.ed-cancel{width:auto!important}
 .fz-hoje{align-self:center;width:auto!important;min-height:32px!important;padding:0 14px!important;font-size:13px!important;display:inline-flex;align-items:center;gap:6px;background:#fff!important;color:var(--wine)!important;border:1px solid #ecd4d6!important;box-shadow:none!important;margin:-6px auto 0}
 .endinst{width:auto!important;margin:14px auto 0;display:inline-flex;align-items:center;gap:6px;font-size:13px!important;min-height:38px!important;padding:0 16px!important}
 .inst-aviso{margin:0 0 10px;font-size:13.5px;color:#7a1424;background:#fbeef0;border-radius:12px;padding:10px 12px;text-align:left}
@@ -2793,7 +2799,7 @@ function renderXmas(){
 /* ---------- mensagem do dia ---------- */
 function diaDoAno(d = new Date()){ return Math.floor((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - Date.UTC(2026,0,1)) / 86400000); }
 /* 364 bilhetes: um diferente pra cada dia, sem repetir no ano */
-/* a contagem começa no Natal de 2026: dia 1 = 25/12/2026 … dia 364 = 23/12/2027, dia 365 = véspera, dia 366 em diante = encerrado (horário de Manaus) */
+/* a contagem começa no Natal de 2026: dia 1 = 25/12/2026 … dia 364 = 23/12/2027, dia 365 = véspera, dia 366 em diante = encerrado (horário do celular) */
 const INICIO_JORNADA = Date.UTC(2026, 11, 25);
 function diaJornada(){ const m = location.hash.match(/^#dia(\d+)$/); if(m) return +m[1]; const d = agoraMT(); return Math.floor((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - INICIO_JORNADA) / 86400000) + 1; }
 function itemDoDia(lista, mult){ const n = lista.length; if(!n) return ''; const dj = diaJornada(); if(dj >= 1) return lista[(dj - 1) % n]; return lista[((diaDoAno() * mult) % n + n) % n]; }
@@ -2977,7 +2983,7 @@ function renderHome(y = 0){
       <p class="endtitle">${esc(C.textos.fimNome)}</p>
       <p class="endyear">2026</p>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
-      <p class="endver">versão de 15/10 · 02h40</p>
+      <p class="endver">versão de 15/10 · 03h20</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
@@ -3040,9 +3046,9 @@ function showSecret(){
   document.getElementById('tkclose').onclick = closeTicket;
 }
 /* Natal: presentinho balançando na home de 18 a 25/12; no dia 26 ele sai e o Natal fica em Datas comemorativas */
-/* tudo que é data segue o horário de Manaus */
+/* tudo que é data segue o fuso do próprio celular (o de vocês é o do Amazonas); se viajarem, acompanha o fuso de onde estiverem */
 const jaNatal = () => location.hash === '#natal25' || agoraMT() >= new Date(2026, 11, 25);
-const agoraMT = () => { try{ return new Date(new Date().toLocaleString('en-US', {timeZone:'America/Manaus'})); }catch(e){ return new Date(); } };
+const agoraMT = () => new Date();
 const mdMT = () => { const d = agoraMT(); return `${String(d.getMonth() + 1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; };
 const XMAS = new Date(2026, 11, 25);
 const NATAL_INI = new Date(2026, 9, 14); /* liberado já */
@@ -3283,7 +3289,7 @@ VIEWS.memoria = () => {
 let gameRAF = null;
 function stopGame(){ if(gameRAF) cancelAnimationFrame(gameRAF); gameRAF = null; }
 VIEWS.coracoes = () => {
-  const META = C.motivos.length, VIDAS = 5;
+  const META = Math.min(25, C.motivos.length), VIDAS = 5;
   shell('jogo','Pegue os corações',`Cada coração tem uma coisa que eu amo em você. Pega os ${META}!`,
     `<div class="game" id="game"><canvas id="gc"></canvas>
       <div class="hud" aria-live="polite"><span id="hp"></span><span id="hs">♥︎ 0 / ${META}</span></div>
@@ -4656,15 +4662,17 @@ VIEWS.filmes = () => {
     const l = list.filter(f => aba === 'visto' ? f.visto : !f.visto);
     $('fll').innerHTML = l.length ? l.map(f => `<article class="fl-card"><div class="fl-top"><span class="fl-k">${esc(f.tipo || 'Filme')}</span><h3>${esc(f.titulo)}</h3>
         ${f.visto ? `<div class="fl-notas"><div><small>sua nota</small>${notas(f, eu, true)}</div><div><small>${outro}</small>${notas(f, outro, false)}</div></div>` : ''}</div>
-        <div class="fl-act">${f.visto ? `<button type="button" class="ghost" data-volta="${f.id}">Voltar pra lista</button>` : `<button type="button" data-vi="${f.id}">Vimos!</button>`}<button class="ib" type="button" data-del="${f.id}" aria-label="Apagar">${icon('trash')}</button></div></article>`).join('')
+        <div class="fl-act">${f.visto ? `<button type="button" class="ghost" data-volta="${f.id}">Voltar pra lista</button>` : `<button type="button" data-vi="${f.id}">Vimos!</button>`}<button class="ib" type="button" data-fed="${f.id}" aria-label="Editar">${icon('pencil')}</button><button class="ib" type="button" data-del="${f.id}" aria-label="Apagar">${icon('trash')}</button></div></article>`).join('')
       : `<p class="lead hq-empty">${aba === 'ver' ? 'Lista vazia. Bora escolher o próximo?' : 'Quando vocês assistirem, toca em "Vimos!" e dão nota.'}</p>`;
     $('fll').querySelectorAll('[data-vi]').forEach(b => b.onclick = () => { col.set(b.dataset.vi, Object.assign({}, list.find(x => x.id === b.dataset.vi), {visto:true, vistoEm:hoje()})); sparkle(b); });
     $('fll').querySelectorAll('[data-volta]').forEach(b => b.onclick = () => col.set(b.dataset.volta, Object.assign({}, list.find(x => x.id === b.dataset.volta), {visto:false})));
     $('fll').querySelectorAll('.fl-n.edit i').forEach(i => i.onclick = () => { const id = i.parentElement.dataset.id, f = list.find(x => x.id === id); col.set(id, Object.assign({}, f, {notas:Object.assign({}, f.notas || {}, {[eu]:+i.dataset.k})})); });
     $('fll').querySelectorAll('[data-del]').forEach(b => b.onclick = () => { if(!b.dataset.sure){ b.dataset.sure = 1; b.classList.add('sure'); setTimeout(() => { delete b.dataset.sure; b.classList.remove('sure'); }, 2500); return; } col.remove(b.dataset.del); });
+    $('fll').querySelectorAll('[data-fed]').forEach(b => b.onclick = () => { const f = list.find(x => x.id === b.dataset.fed); if(f) fed.abrir(f.id, {flt:f.titulo, flk:f.tipo || 'Filme'}); });
   };
+  const fed = editavel($('flf'), document.querySelector('#flf button[type=submit]'), 'Adicionar à lista');
   document.querySelectorAll('.fl-tabs button').forEach(b => b.onclick = () => { aba = b.dataset.a; document.querySelectorAll('.fl-tabs button').forEach(x => x.classList.toggle('on', x === b)); draw(); });
-  $('flf').onsubmit = async e => { e.preventDefault(); const t = $('flt').value.trim(); if(!t) return; try{ await col.add({titulo:t, tipo:$('flk').value, visto:false, autor:eu, notas:{}}); $('flt').value = ''; sparkle(e.target.querySelector('button')); }catch(x){} };
+  $('flf').onsubmit = async e => { e.preventDefault(); const t = $('flt').value.trim(); if(!t) return; try{ if(fed.id){ const f = list.find(x => x.id === fed.id) || {}; await col.set(fed.id, Object.assign({}, f, {titulo:t, tipo:$('flk').value})); fed.fechar(); } else await col.add({titulo:t, tipo:$('flk').value, visto:false, autor:eu, notas:{}}); $('flt').value = ''; sparkle(e.target.querySelector('button[type=submit]')); }catch(x){} };
   const off = col.on(l => { list = l.slice().reverse(); draw(); });
   const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { off(); prev(); };
 };
@@ -4690,12 +4698,14 @@ VIEWS.lugares = () => {
     const l = [...list].sort((a, b) => (b.data || '').localeCompare(a.data || ''));
     $('lgl2').innerHTML = l.length ? l.map((p, k) => `<article class="lg-card" style="--r:${[-1.4,1.2,-.8,1.6][k % 4]}deg">${p.img ? `<div class="lg-ph"><img src="${p.img}" alt="" loading="lazy"></div>` : ''}
       <div class="lg-tx"><h3>${esc(p.nome)}</h3><p class="lg-meta">${icon('compass')} ${esc(p.cidade || '')}${p.data ? ` · ${new Date(p.data + 'T12:00:00').toLocaleDateString('pt-BR')}` : ''}</p>${p.legenda ? `<p class="lg-leg">${esc(p.legenda)}</p>` : ''}
-      <div class="lg-act"><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.nome + ' ' + (p.cidade || ''))}" target="_blank" rel="noopener">ver no mapa</a><button class="ib" type="button" data-del="${p.id}" aria-label="Apagar">${icon('trash')}</button></div></div></article>`).join('')
+      <div class="lg-act"><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.nome + ' ' + (p.cidade || ''))}" target="_blank" rel="noopener">ver no mapa</a><button class="ib" type="button" data-led="${p.id}" aria-label="Editar">${icon('pencil')}</button><button class="ib" type="button" data-del="${p.id}" aria-label="Apagar">${icon('trash')}</button></div></div></article>`).join('')
       : `<p class="lead hq-empty">Começa pelo shopping do primeiro encontro?</p>`;
     $('lgl2').querySelectorAll('[data-del]').forEach(b => b.onclick = () => { if(!b.dataset.sure){ b.dataset.sure = 1; b.classList.add('sure'); setTimeout(() => { delete b.dataset.sure; b.classList.remove('sure'); }, 2500); return; } col.remove(b.dataset.del); });
+    $('lgl2').querySelectorAll('[data-led]').forEach(b => b.onclick = () => { const p = list.find(x => x.id === b.dataset.led); if(!p) return; $('lgdet').open = true; img = p.img || ''; $('lgprev').innerHTML = img ? `<img src="${img}" alt="">` : `${icon('image')}<small>escolher foto</small>`; led.abrir(p.id, {lgn:p.nome, lgc:p.cidade, lgd:p.data, lgl:p.legenda}); });
   };
+  const led = editavel($('lgf'), $('lgs'), 'Guardar lugar');
   $('lgf').onsubmit = async e => { e.preventDefault(); const n = $('lgn').value.trim(); if(!n){ $('lge').textContent = 'Coloca o nome do lugar.'; return; } $('lge').textContent = '';
-    const b = $('lgs'); b.disabled = true; try{ await col.add({nome:n, cidade:$('lgc').value.trim(), data:$('lgd').value, legenda:$('lgl').value.trim(), img, autor:eu}); e.target.reset(); img = ''; $('lgprev').innerHTML = `${icon('image')}<small>escolher foto</small>`; sparkle(b); }catch(x){ $('lge').textContent = 'Não deu pra guardar.'; } b.disabled = false; };
+    const b = $('lgs'); b.disabled = true; try{ const dados = {nome:n, cidade:$('lgc').value.trim(), data:$('lgd').value, legenda:$('lgl').value.trim(), img}; if(led.id){ const p = list.find(x => x.id === led.id) || {}; await col.set(led.id, Object.assign({autor:p.autor || eu}, dados)); led.fechar(); } else await col.add(Object.assign({autor:eu}, dados)); e.target.reset(); img = ''; $('lgprev').innerHTML = `${icon('image')}<small>escolher foto</small>`; sparkle(b); }catch(x){ $('lge').textContent = 'Não deu pra guardar.'; } b.disabled = false; };
   let prim = true;
   const off = col.on(l => { list = l; if(prim){ prim = false; if(!l.length) $('lgdet').open = true; } draw(); });
   const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { off(); prev(); };
@@ -4771,7 +4781,7 @@ VIEWS.retro = () => {
 };
 
 /* ---------- prévia do Di ---------- */
-const COLS_PREVIA = ['gostos','recados','abraQuando','abracos','bilhetes','capsula','cartasData','cartasFilhos','chocolates','compras','contagens','datasMarcantes','diario','filmes','fotosMem','gastos','lugares','mesversario','musicas','planosLista','primeiras','respostas','roleta','saudade'];
+const COLS_PREVIA = ['gostos','gostosCats','recados','abraQuando','abracos','bilhetes','capsula','cartasData','cartasFilhos','chocolates','compras','contagens','datasMarcantes','diario','filmes','fotosMem','gastos','lugares','mesversario','musicas','planosLista','primeiras','respostas','roleta','saudade'];
 function entrarPrevia(quem, dia){
   if(typeof quem !== 'string') quem = ''; dia = dia || '';
   if(!quem){
@@ -4887,7 +4897,7 @@ const ESCRITAS = [
   {k:'gostosCats', t:'Categorias', d:'uma por linha. As coisas que já estão numa categoria que você apagar continuam aparecendo', tipo:'linhas'},
   {grupo:'Jogos'},
   {k:'textos.memoriaFim', t:'Jogo da memória: mensagem do final', d:'aparece quando ele acha todos os pares. As fotos do jogo ficam na aba Fotos', tipo:'texto', rows:3},
-  {k:'motivos', t:'Pegue os corações (motivos)', d:'um por linha', tipo:'linhas'},
+  {k:'motivos', t:'Pegue os corações (motivos)', d:'um por linha. O jogo pede 25 corações e sorteia entre todos daqui, então quanto mais tiver, mais varia', tipo:'linhas'},
   {k:'dates', t:'Roleta do date', d:'uma ideia por linha', tipo:'linhas'},
   {k:'quiz', t:'Quanto você me conhece?', tipo:'objs', campos:[['p','Pergunta'],['o','Opções (separa com |)','arr'],['c','Qual é a certa (1, 2, 3…)','idx']]},
   {k:'provavel', t:'Quem é mais provável', tipo:'objs', campos:[['p','Pergunta'],['r','Resposta (O Di, A Mihzinha ou Os dois)'],['obs','Comentário depois']]},
@@ -5033,16 +5043,20 @@ VIEWS.editar = (foco, origem, abaIni) => {
 };
 
 /* ---------- coisas que cada um ama: eu coloco as dele, ele coloca as minhas ---------- */
-const gcats = () => { const l = (C.gostosCats || []).map(t => String(t).trim()).filter(Boolean); return (l.length ? l : ['Outras coisas']).map(t => [t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-'), t]); };
+const slugCat = t => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-');
+let gcatsCol = null;
+const gcats = () => { if(gcatsCol && gcatsCol.length) return gcatsCol.filter(c => c.nome).sort((a, b) => (a.ordem ?? 0) - (b.ordem ?? 0)).map(c => [c.id, c.nome]);
+  const l = (C.gostosCats || []).map(t => String(t).trim()).filter(Boolean); return (l.length ? l : ['Outras coisas']).map(t => [slugCat(t), t]); };
 const GVELHAS = {jogo:'Jogos', filme:'Filmes e séries', musica:'Músicas', comida:'Comidas', doce:'Doces', lugar:'Lugares', outro:'Outras coisas'};
-const nomeCat = id => (gcats().find(c => c[0] === id) || [0, GVELHAS[id] || 'Outras coisas'])[1];
+const nomeCat = id => (gcats().find(c => c[0] === id) || [0, GVELHAS[id] || 'Sem categoria'])[1];
 VIEWS.gostos = () => {
   const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'Mihzinha' : 'Di';
   let aba = store.get('gsAba', outro), filtro = 'tudo', list = [], foto = '';
   const nome = q => q === 'Di' ? 'o Di' : 'a Mihzinha';
   shell('o que cada um ama','O que cada um ama','Você coloca o que o outro ama, com foto e legenda. Assim cada um mostra que presta atenção',
     `<div class="fz-tabs gs-tabs"><button type="button" data-a="Di">O que o Di ama</button><button type="button" data-a="Mihzinha">O que a Mihzinha ama</button></div>
-     <div id="gsform"></div><div class="gs-cats" id="gscats"></div><div class="gs-grid" id="gsgrid"></div><input type="file" id="gsfile" accept="image/*" hidden>`);
+     <div id="gsform"></div><div class="gs-cats" id="gscats"></div><div class="gs-grid" id="gsgrid"></div><input type="file" id="gsfile" accept="image/*" hidden>
+     <details class="gs-det gs-catsed" id="gscated"><summary>${icon('pencil')} Mexer nas categorias</summary><div id="gscatbox"></div></details>`);
   const $ = id => document.getElementById(id), col = Sync.col('gostos');
   let formAberto = false, editando = null;
   const form = () => aba === outro ? `<details class="gs-det" id="gsdet" ${formAberto || !list.some(x => x.sobre === outro) ? 'open' : ''}><summary>${icon('plus')} Colocar uma coisa que ${nome(outro)} ama</summary><form class="gs-form" id="gsf">
@@ -5057,7 +5071,7 @@ VIEWS.gostos = () => {
     if(filtro !== 'tudo' && !cats.some(([v]) => v === filtro)) filtro = 'tudo';
     $('gscats').innerHTML = meus.length ? [['tudo','Tudo'], ...cats].map(([v, t]) => `<button type="button" class="${filtro === v ? 'on' : ''}" data-f="${v}">${t}</button>`).join('') : '';
     const vis = meus.filter(x => filtro === 'tudo' || x.cat === filtro).slice().reverse();
-    $('gsgrid').innerHTML = vis.length ? vis.map(x => `<article class="gs-card">${x.img ? `<img src="${x.img}" alt="">` : `<span class="gs-sem">${icon('star')}</span>`}<div><small>${esc(nomeCat(x.cat))}</small><p>${esc(x.legenda || '')}</p>${x.autor === eu ? `<span class="gs-acts"><button type="button" class="linkbtn" data-ed="${x.id}">editar</button><button type="button" class="linkbtn" data-del="${x.id}">apagar</button></span>` : ''}</div></article>`).join('')
+    $('gsgrid').innerHTML = vis.length ? vis.map(x => `<article class="gs-card">${x.img ? `<img src="${x.img}" alt="">` : `<span class="gs-sem">${icon('star')}</span>`}<div><small>${esc(nomeCat(x.cat))}</small><p>${esc(x.legenda || '')}</p>${x.sobre === outro || x.autor === eu ? `<span class="gs-acts"><button type="button" class="linkbtn" data-ed="${x.id}">editar</button><button type="button" class="linkbtn" data-del="${x.id}">apagar</button></span>` : ''}</div></article>`).join('')
       : `<p class="lead hq-empty">${aba === outro ? `Ainda não tem nada aqui. Coloca a primeira coisa que ${nome(outro)} ama!` : `${eu === 'Di' ? 'A Mihzinha' : 'O Di'} ainda não colocou nada. Logo aparece!`}</p>`;
     $('gscats').querySelectorAll('[data-f]').forEach(b => b.onclick = () => { filtro = b.dataset.f; draw(); });
     $('gsgrid').querySelectorAll('[data-del]').forEach(d => d.onclick = () => { if(d.dataset.sure) col.remove(d.dataset.del); else { d.dataset.sure = 1; d.textContent = 'toca de novo'; } });
@@ -5073,9 +5087,20 @@ VIEWS.gostos = () => {
     try{ foto = await compressImage(f, 700, .74); $('gspick').innerHTML = `<img src="${foto}" alt="">`; }catch(e){ $('gspick').innerHTML = '<span><small>não deu, tenta outra</small></span>'; } };
   document.querySelectorAll('.gs-tabs button').forEach(b => b.onclick = () => { aba = b.dataset.a; store.set('gsAba', aba); foto = ''; editando = null; drawForm(); draw(); });
   drawForm();
+  /* categorias: os dois criam, renomeiam e apagam */
+  const colCat = Sync.col('gostosCats');
+  const semear = async () => { if(gcatsCol && gcatsCol.length) return; const base = gcats(); for(let k = 0; k < base.length; k++) await colCat.set(base[k][0], {nome:base[k][1], ordem:k}); };
+  const drawCats = () => { const box = $('gscatbox'); if(!box) return; const cs = gcats();
+    box.innerHTML = `<p class="gs-catdica">Os dois podem criar, renomear e apagar. O que já tá numa categoria apagada vai pra "sem categoria".</p>` + cs.map(([id, nm]) => `<div class="gs-catrow"><input type="text" size="1" maxlength="30" value="${esc(nm)}" data-cid="${id}"><button type="button" class="ib" data-cdel="${id}" aria-label="Apagar categoria">${icon('trash')}</button></div>`).join('')
+      + `<div class="gs-catrow"><input type="text" size="1" maxlength="30" id="gsnovacat" placeholder="Nova categoria (ex: Séries de anime)"><button type="button" id="gsaddcat">Criar</button></div>`;
+    box.querySelectorAll('[data-cid]').forEach(i => i.onchange = async () => { const v = i.value.trim(); if(!v) return; await semear(); const atual = (gcatsCol || []).find(c => c.id === i.dataset.cid) || {}; await colCat.set(i.dataset.cid, {nome:v, ordem:atual.ordem ?? 0}); sparkle(i); });
+    box.querySelectorAll('[data-cdel]').forEach(b => b.onclick = async () => { if(!b.dataset.sure){ b.dataset.sure = 1; b.classList.add('sure'); setTimeout(() => { delete b.dataset.sure; b.classList.remove('sure'); }, 2500); return; } await semear(); await colCat.remove(b.dataset.cdel); });
+    $('gsaddcat').onclick = async () => { const v = $('gsnovacat').value.trim(); if(!v) return; await semear(); const ord = Math.max(0, ...((gcatsCol || []).map(c => c.ordem ?? 0))) + 1; await colCat.set('c' + Date.now().toString(36), {nome:v, ordem:ord}); sparkle($('gsaddcat')); };
+  };
+  const offCat = colCat.on(l => { gcatsCol = l; drawCats(); if(!editando) drawForm(); draw(); });
   let primeira = true;
   const off = col.on(l => { list = l; if(primeira){ primeira = false; drawForm(); } draw(); });
-  const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { off(); prev(); };
+  const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { off(); offCat(); prev(); };
 };
 
 /* ---------- datas comemorativas ---------- */
@@ -5558,24 +5583,38 @@ VIEWS.primeiras = () => {
       <textarea id="px" rows="3" placeholder="Conta como foi (opcional)" aria-label="Como foi"></textarea><button type="submit">Adicionar</button><p class="werr" id="perr"></p></form>
      <ol class="timeline" id="pl"></ol>`);
   const col = Sync.col('primeiras');
+  let lista = [];
   const off = col.on(list => {
     const ol = document.getElementById('pl'); if(!ol) return;
     const ord = [...list].sort((a,b) => (b.data || '').localeCompare(a.data || ''));
-    ol.innerHTML = ord.length ? ord.map(p => `<li><time>${p.data ? p.data.split('-').reverse().join(' · ') : ''}</time><h3>${esc(p.titulo)}</h3>${p.texto ? `<p>${esc(p.texto)}</p>` : ''}<p class="by">por ${esc(p.autor)}${p.autor === eu ? ` · <button class="linkbtn" data-del="${p.id}">apagar</button>` : ''}</p></li>`).join('')
+    ol.innerHTML = ord.length ? ord.map(p => `<li><time>${p.data ? p.data.split('-').reverse().join(' · ') : ''}</time><h3>${esc(p.titulo)}</h3>${p.texto ? `<p>${esc(p.texto)}</p>` : ''}<p class="by">por ${esc(p.autor)} · <button class="linkbtn" data-ed="${p.id}">editar</button> · <button class="linkbtn" data-del="${p.id}">apagar</button></p></li>`).join('')
       : `<li class="emptyli"><p class="lead">Nenhuma ainda. Que tal começar pelo primeiro encontro no shopping?</p></li>`;
     ol.querySelectorAll('[data-del]').forEach(d => d.onclick = () => { if(d.dataset.sure) col.remove(d.dataset.del); else { d.dataset.sure = 1; d.textContent = 'toca de novo'; } });
+    ol.querySelectorAll('[data-ed]').forEach(d => d.onclick = () => { const p = list.find(x => x.id === d.dataset.ed); if(p) ed.abrir(p.id, {pt:p.titulo, pd:p.data, px:p.texto}); });
+    lista = list;
   });
+  const ed = editavel(document.getElementById('pf'), document.querySelector('#pf button[type=submit]'), 'Adicionar');
   document.getElementById('pf').onsubmit = async e => {
     e.preventDefault(); const t = document.getElementById('pt').value.trim();
     if(!t){ document.getElementById('perr').textContent = 'Escreve o que foi.'; return; }
-    const b = e.target.querySelector('button'); b.disabled = true;
-    try{ await col.add({autor:eu, titulo:t, data:document.getElementById('pd').value, texto:document.getElementById('px').value.trim()}); e.target.reset(); sparkle(b); }
+    const b = e.target.querySelector('button[type=submit]'); b.disabled = true;
+    const dados = {titulo:t, data:document.getElementById('pd').value, texto:document.getElementById('px').value.trim()};
+    try{ if(ed.id){ const p = lista.find(x => x.id === ed.id) || {}; await col.set(ed.id, Object.assign({autor:p.autor || eu}, dados)); ed.fechar(); } else await col.add(Object.assign({autor:eu}, dados)); e.target.reset(); sparkle(b); }
     catch(err){ document.getElementById('perr').textContent = 'Não deu pra salvar. Tenta de novo.'; }
     b.disabled = false;
   };
   const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { off(); prev(); };
 };
 
+/* deixa qualquer lista editável: preenche o formulário de cima e salva por cima */
+function editavel(form, btn, txtNovo){
+  const st = {id:null};
+  st.abrir = (id, valores) => { st.id = id; Object.entries(valores).forEach(([k, v]) => { const el = document.getElementById(k); if(el) el.value = v ?? ''; });
+    btn.textContent = 'Salvar alterações'; form.classList.add('editando'); let c = form.querySelector('.ed-cancel'); if(!c){ c = document.createElement('button'); c.type = 'button'; c.className = 'ghost ed-cancel'; c.textContent = 'Cancelar'; btn.insertAdjacentElement('beforebegin', c); c.onclick = () => st.fechar(true); }
+    form.scrollIntoView({behavior:'smooth', block:'start'}); };
+  st.fechar = limpar => { st.id = null; btn.textContent = txtNovo; form.classList.remove('editando'); form.querySelector('.ed-cancel')?.remove(); if(limpar) form.reset(); };
+  return st;
+}
 /* ---------- playlist ---------- */
 VIEWS.playlist = () => {
   const eu = Sync.quem || 'Di';
@@ -5585,6 +5624,7 @@ VIEWS.playlist = () => {
       <button type="submit">Adicionar música</button><p class="werr" id="merr"></p></form>
      <div class="songs" id="songs"></div>`);
   const col = Sync.col('musicas');
+  let lista = [];
   const off = col.on(list => {
     const box = document.getElementById('songs'); if(!box) return;
     box.innerHTML = list.length ? [...list].reverse().map((m,k) => {
@@ -5592,15 +5632,19 @@ VIEWS.playlist = () => {
       const fonte = /spotify/i.test(link) ? 'Ouvir no Spotify' : /youtu/i.test(link) ? 'Ver no YouTube' : /deezer/i.test(link) ? 'Ouvir no Deezer' : 'Abrir link';
       return `<div class="song st" style="--i:${k}">
         ${link ? `<a class="play" href="${esc(link)}" target="_blank" rel="noopener" aria-label="Ouvir">${icon('play')}</a>` : `<span class="play off">${icon('music')}</span>`}
-        <div class="sinfo">${link ? `<a class="stitle-a" href="${esc(link)}" target="_blank" rel="noopener">${esc(m.titulo)}</a>` : `<b>${esc(m.titulo)}</b>`}<small>${esc(m.artista || '')}</small>${m.porque ? `<p>${esc(m.porque)}</p>` : ''}${link ? `<a class="slink" href="${esc(link)}" target="_blank" rel="noopener">${icon('play')}${fonte}</a>` : ''}<small class="by">${esc(m.autor)}${m.autor === eu ? ` · <button class="linkbtn" data-del="${m.id}">tirar</button>` : ''}</small></div></div>`;
+        <div class="sinfo">${link ? `<a class="stitle-a" href="${esc(link)}" target="_blank" rel="noopener">${esc(m.titulo)}</a>` : `<b>${esc(m.titulo)}</b>`}<small>${esc(m.artista || '')}</small>${m.porque ? `<p>${esc(m.porque)}</p>` : ''}${link ? `<a class="slink" href="${esc(link)}" target="_blank" rel="noopener">${icon('play')}${fonte}</a>` : ''}<small class="by">${esc(m.autor)} · <button class="linkbtn" data-ed="${m.id}">editar</button> · <button class="linkbtn" data-del="${m.id}">tirar</button></small></div></div>`;
     }).join('') : `<p class="lead empty">A playlist ainda está vazia. Qual é a primeira música de vocês?</p>`;
     box.querySelectorAll('[data-del]').forEach(d => d.onclick = () => { if(d.dataset.sure) col.remove(d.dataset.del); else { d.dataset.sure = 1; d.textContent = 'toca de novo'; } });
+    box.querySelectorAll('[data-ed]').forEach(d => d.onclick = () => { const m = list.find(x => x.id === d.dataset.ed); if(m) ed.abrir(m.id, {mt:m.titulo, ma:m.artista, ml:m.link, mp:m.porque}); });
+    lista = list;
   });
+  const ed = editavel(document.getElementById('mf'), document.querySelector('#mf button[type=submit]'), 'Adicionar música');
   document.getElementById('mf').onsubmit = async e => {
     e.preventDefault(); const t = document.getElementById('mt').value.trim();
     if(!t){ document.getElementById('merr').textContent = 'Coloca o nome da música.'; return; }
-    const b = e.target.querySelector('button'); b.disabled = true;
-    try{ await col.add({autor:eu, titulo:t, artista:document.getElementById('ma').value.trim(), link:document.getElementById('ml').value.trim(), porque:document.getElementById('mp').value.trim()}); e.target.reset(); sparkle(b); }
+    const b = e.target.querySelector('button[type=submit]'); b.disabled = true;
+    const dados = {titulo:t, artista:document.getElementById('ma').value.trim(), link:document.getElementById('ml').value.trim(), porque:document.getElementById('mp').value.trim()};
+    try{ if(ed.id){ const m = lista.find(x => x.id === ed.id) || {}; await col.set(ed.id, Object.assign({autor:m.autor || eu}, dados)); ed.fechar(); } else await col.add(Object.assign({autor:eu}, dados)); e.target.reset(); sparkle(b); }
     catch(err){ document.getElementById('merr').textContent = 'Não deu pra salvar. Tenta de novo.'; }
     b.disabled = false;
   };
