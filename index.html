@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=20">
-<link rel="apple-touch-icon" href="icon-180.png?v=20">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=20">
+<link rel="manifest" href="manifest.json?v=30">
+<link rel="apple-touch-icon" href="icon-180.png?v=30">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=30">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -348,6 +348,22 @@ textarea:focus,.card-form input:focus,.addopt input:focus{border-color:var(--pin
 .vale b{font-weight:700;color:var(--plum);font-size:15px;line-height:1.25}
 .vale button{padding:9px;font-size:14px;margin-top:auto}
 .vale.used{opacity:.65}
+.view .fz-tabs button.on,.view .gs-cats button.on{background:var(--pc)!important;border-color:var(--pc)!important}
+.wcard:nth-child(1){background:linear-gradient(170deg,#fff 40%,#ffe1e8)!important;border-color:#ffd0dc!important}
+.wcard:nth-child(2){background:linear-gradient(170deg,#fff 40%,#e0ecfb)!important;border-color:#cfe0f6!important}
+.wcard:nth-child(3){background:linear-gradient(170deg,#fff 40%,#e3f0dc)!important;border-color:#d3e8c9!important}
+.pills2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.pill2{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:10px;text-align:left;min-height:132px!important;padding:14px 14px 16px!important;border-radius:22px!important;background:linear-gradient(160deg,#fff 0%,#fff 45%,var(--bg) 100%)!important;border:1.5px solid var(--bg)!important;box-shadow:0 12px 24px -18px var(--fg)!important;color:var(--ink)!important;overflow:hidden;transition:transform .2s}
+.pill2:active{transform:scale(.97)}
+.pill2::after{content:"";position:absolute;right:-18px;bottom:-18px;width:64px;height:64px;border-radius:50%;background:var(--bg);opacity:.8}
+.p2i{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:var(--fg);color:#fff;font-size:21px;box-shadow:0 8px 14px -8px var(--fg)}
+.p2i .icn{stroke:#fff}
+.p2t{display:flex;flex-direction:column;gap:3px;position:relative;z-index:1}
+.p2t b{font-size:15px;font-weight:700;line-height:1.2;color:#2a1d22}
+.p2t small{font-size:12px;line-height:1.3;color:#7a6a6e}
+.hoje2 .pills2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.vh-ic{width:58px;height:58px;margin:0 auto 2px;border-radius:18px;display:grid;place-items:center;background:var(--fg);color:#fff;font-size:27px;box-shadow:0 12px 22px -10px var(--fg);transform:rotate(-4deg)}
+.vh-ic .icn{stroke:#fff}
 .fm-sec{display:flex;flex-direction:column;gap:12px;scroll-margin-top:70px}
 .fm-head{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;text-align:left}
 .fm-head h3{margin:0;font-family:var(--f-display);font-size:21px;color:var(--plum)}.fm-head p{margin:2px 0 0;font-size:13px;color:var(--muted)}
@@ -1550,6 +1566,47 @@ details.cd-env{display:block}details.cd-env summary{display:flex;align-items:cen
 @keyframes breathe{50%{transform:scale(1.04)}}
 .xhint{margin:0;font-size:13px;color:#8b8a73}
 .xholly{width:64px!important;margin:0 auto}
+.home .band.b-jogos{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' fill='none' stroke='%234f7fc4' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' opacity='.13'%3E %3Cg transform='translate(10 14)'%3E%3Crect x='0' y='6' width='34' height='18' rx='9'/%3E%3Cpath d='M8 15h8M12 11v8'/%3E%3Ccircle cx='24' cy='13' r='1.6' fill='%234f7fc4'/%3E%3Ccircle cx='28' cy='17' r='1.6' fill='%234f7fc4'/%3E%3C/g%3E %3Cg transform='translate(84 8) rotate(12)'%3E%3Crect x='0' y='0' width='22' height='22' rx='5'/%3E%3Ccircle cx='6' cy='6' r='1.6' fill='%234f7fc4'/%3E%3Ccircle cx='11' cy='11' r='1.6' fill='%234f7fc4'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%234f7fc4'/%3E%3C/g%3E %3Cg transform='translate(18 74)'%3E%3Cpath d='M12 21s-9-5.6-9-12a5 5 0 019-3 5 5 0 019 3c0 6.4-9 12-9 12z'/%3E%3C/g%3E %3Cg transform='translate(70 66)'%3E%3Cpath d='M12 2l3 6.5 7 1-5 4.8 1.2 7L12 18l-6.2 3.3 1.2-7-5-4.8 7-1z'/%3E%3C/g%3E %3Cg transform='translate(104 92)'%3E%3Cpath d='M8 0v14M3 14h10a4 4 0 014 4v2H-1v-2a4 4 0 014-4z'/%3E%3Ccircle cx='8' cy='0' r='3'/%3E%3C/g%3E %3Cg transform='translate(44 112) rotate(-8)'%3E%3Crect x='0' y='0' width='16' height='22' rx='3'/%3E%3Cpath d='M8 7l3 4-3 4-3-4z'/%3E%3C/g%3E %3Cg transform='translate(116 44)'%3E%3Cpath d='M0 0h6v6h6v6H6v6H0v-6h-6V6h6z' transform='scale(.8)'/%3E%3C/g%3E %3C/svg%3E") repeat, linear-gradient(180deg,#eef5fd 0%,#e4eefb 100%)!important;background-size:140px 140px, auto!important;position:relative;overflow:hidden;border-radius:0;box-shadow:none}
+.home .band.b-jogos::before,.home .band.b-jogos::after{content:"";position:absolute;left:50%;transform:translateX(-50%);width:56px;height:6px;border-radius:999px;background:repeating-linear-gradient(90deg,#f4b8c6 0 14px,#c9b8ee 14px 28px,#a9cdf0 28px 42px,#bfe3b8 42px 56px);opacity:.9}
+.home .band.b-jogos::before{top:14px}.home .band.b-jogos::after{bottom:14px;top:auto}
+.home .b-jogos .btitle::after{background:#9fc0ea!important}
+.jg-start{margin:0 auto -6px!important;width:auto!important;display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border-radius:999px;background:#fff;color:#3f74c4;font-size:10.5px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;border:1px solid #d3e2f4}
+.jg-start .icn{width:11px;height:11px}
+.home .b-jogos .pill2{box-shadow:0 10px 22px -18px #3f74c4!important}
+
+/* fundo creme liso; cor só no bilhete do dia (rosado) e nos jogos (azul) */
+html body .home .band.b-sage,html body .home .band.b-pink,html body .home .band.b-blue:not(.b-jogos),html body .home .band.b-light{background:transparent!important}
+html body .home .band.b-stripes-blue{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='46' height='46'%3E%3Cpath d='M23 30s-7-4.4-7-9.4a3.9 3.9 0 017-2.3 3.9 3.9 0 017 2.3c0 5-7 9.4-7 9.4z' fill='%23e8a3b1' opacity='.35'/%3E%3C/svg%3E") 0 0/46px 46px, linear-gradient(180deg,#fcebed 0%,#f8dfe2 100%)!important}
+.home .band{position:relative}
+.jg-toy{position:absolute!important;max-width:none!important;pointer-events:none;z-index:0;filter:drop-shadow(0 6px 8px rgba(63,116,196,.18));transform-origin:50% 0;animation:jgswing 3.2s ease-in-out infinite}
+.jg-toy svg{display:block;width:100%;height:auto}
+.jt1{width:58px!important;top:22px;left:14px;animation-delay:-.4s}.jt2{width:34px!important;top:30px;right:18px;animation-delay:-1.2s}
+.jt3{width:30px!important;top:118px;right:30px;animation-duration:3.8s}.jt4{width:28px!important;top:124px;left:30px;animation-duration:2.8s;animation-delay:-.8s}
+.jt5{width:46px!important;bottom:26px;right:16px;animation-delay:-2s;opacity:.85}
+@keyframes jgswing{0%,100%{transform:rotate(-9deg) translateY(0)}50%{transform:rotate(9deg) translateY(4px)}}
+.home .b-jogos > :not(.jg-toy){position:relative;z-index:1}
+@media (prefers-reduced-motion:reduce){.jg-toy{animation:none}}
+
+/* ---------- computador: o app vira uma "folha" no centro, com moldura bonita ---------- */
+@media (min-width: 760px){
+  html body{background:radial-gradient(circle at 15% 20%, rgba(244,184,198,.35), transparent 40%), radial-gradient(circle at 85% 75%, rgba(169,196,224,.30), transparent 42%), linear-gradient(160deg,#f7efe9,#efe6ef)!important;background-attachment:fixed!important}
+  main#app{width:480px;max-width:480px;margin:28px auto;min-height:calc(100vh - 56px);background:var(--ivory,#f5efe6);border-radius:36px;box-shadow:0 40px 90px -40px rgba(74,18,36,.45), 0 0 0 1px rgba(122,20,36,.06);overflow:clip;container-type:inline-size;padding-block:0;place-items:start center}
+  main#app .band{width:100cqw!important;margin-left:calc(50% - 50cqw)!important;margin-right:calc(50% - 50cqw)!important}
+  main#app .vbar{margin:0 -16px!important;padding-left:16px!important;padding-right:16px!important;border-radius:36px 36px 0 0}
+  .edfab{right:calc(50% - 240px + 16px)!important}
+  .chtoast,.cstoast{max-width:440px!important}
+  #petals{opacity:.6}
+  .xgift{right:calc(50% - 240px + 14px)!important;top:40px!important}
+  main#app{padding-top:34px!important;padding-bottom:10px!important}
+  main#app > .gate,main#app > .daily{min-height:calc(100vh - 110px)}
+  .vg-card{max-width:480px}
+}
+@media (hover:hover) and (pointer:fine){
+  .cs-tabs,.gs-cats,.bk-anos{scrollbar-width:thin!important;scrollbar-color:rgba(122,20,36,.35) transparent;cursor:grab}
+  .cs-tabs::-webkit-scrollbar,.gs-cats::-webkit-scrollbar,.bk-anos::-webkit-scrollbar{height:6px;display:block}
+  .cs-tabs::-webkit-scrollbar-thumb,.gs-cats::-webkit-scrollbar-thumb,.bk-anos::-webkit-scrollbar-thumb{background:rgba(122,20,36,.3);border-radius:6px}
+  .arrastando{cursor:grabbing!important;user-select:none;scroll-behavior:auto!important}
+}
 </style>
 
 <canvas id="petals" aria-hidden="true"></canvas>
@@ -2926,7 +2983,14 @@ const RIBBON_OLD = `<svg viewBox="0 0 120 120" aria-hidden="true"><path d="M60 4
   <path d="M56 50C48 72 40 92 30 112M64 50C72 72 82 92 94 112" stroke="#f2b8c4" stroke-width="9" stroke-linecap="round" fill="none"/><ellipse cx="60" cy="47" rx="9" ry="8" fill="#e99aac"/></svg>`;
 const RIBBON = RIBBON_OLD.replace(/#f2b8c4/g,'#9b1b30').replace(/#e99aac/g,'#6d0f1f');
 const DAISY = (c, m) => `<svg viewBox="0 0 40 40" aria-hidden="true">${[0,1,2,3,4,5].map(k => `<ellipse cx="20" cy="9" rx="6" ry="9" fill="${c}" transform="rotate(${k*60} 20 20)"/>`).join('')}<circle cx="20" cy="20" r="5.5" fill="${m}"/></svg>`;
-const pills = list => `<div class="pills">${list.map(r => `<button class="pill" data-go="${r.id}"><span class="pl">${icon(r.ico)}</span><span class="pr"><b>${r.t}</b><small>${r.s}</small></span></button>`).join('')}</div>`;
+/* cada cantinho do app com a sua cor */
+const PAL_UI = {rosa:['#ffe1e8','#d6456b'], vinho:['#f8dde2','#9b1630'], lavanda:['#ece4fb','#7b5cc4'], azul:['#e0ecfb','#3f74c4'], salvia:['#e3f0dc','#4f8a4a'], pessego:['#ffe8d9','#d9733b'], mostarda:['#fbf0d0','#b0820f'], coral:['#ffe3df','#e0574a'], menta:['#dcf3ec','#2f9a7a']};
+const COR_UI = {saudade:'rosa', diario:'pessego', pergunta:'rosa', bilhetes:'azul', mes:'salvia', mensagem:'vinho',
+  primeiras:'lavanda', playlist:'azul', planos:'salvia', datas:'mostarda', comemorativas:'vinho', contagem:'menta', lugares:'azul', gostos:'coral', filmes:'lavanda', financas:'salvia', fotos:'rosa', memoria2:'rosa',
+  casinha:'pessego', roleta:'mostarda', coracoes:'rosa', memoria:'lavanda', raspa:'menta', quiz:'azul', provavel:'coral',
+  abra:'rosa', album:'lavanda', cartas:'vinho', cartadata:'pessego', retro:'mostarda', capsula:'menta', filhos:'azul', vales:'coral', carta:'vinho', editar:'lavanda'};
+const corDe = id => PAL_UI[COR_UI[id] || 'rosa'];
+const pills = list => `<div class="pills2">${list.map(r => { const [bg, fg] = corDe(r.id); return `<button class="pill2" data-go="${r.id}" style="--bg:${bg};--fg:${fg}"><span class="p2i">${icon(r.ico)}</span><span class="p2t"><b>${r.t}</b><small>${r.s}</small></span></button>`; }).join('')}</div>`;
 function renderHome(y = 0){
   curView = ''; document.getElementById('edfab')?.remove();
   const eu = Sync.quem || 'Di', outro = eu === 'Mihzinha' ? 'Di' : 'Mihzinha';
@@ -2982,7 +3046,9 @@ function renderHome(y = 0){
       <div class="rv">${pills(LISTS.nos)}</div>
     </section>
 
-    <section class="band b-blue">
+    <section class="band b-blue b-jogos">
+      <span class="jg-toy jt1"><svg viewBox="0 0 64 40" aria-hidden="true"><rect x="2" y="6" width="60" height="30" rx="15" fill="#fff" stroke="#3f74c4" stroke-width="2.5"/><path d="M14 21h12M20 15v12" stroke="#3f74c4" stroke-width="3" stroke-linecap="round"/><circle cx="44" cy="17" r="3" fill="#e35d6a"/><circle cx="51" cy="23" r="3" fill="#f6b13b"/><circle cx="44" cy="27" r="2.4" fill="#8fbf6a"/></svg></span><span class="jg-toy jt2"><svg viewBox="0 0 40 48" aria-hidden="true"><rect x="4" y="30" width="32" height="14" rx="5" fill="#fff" stroke="#3f74c4" stroke-width="2.5"/><path d="M20 30V14" stroke="#3f74c4" stroke-width="3" stroke-linecap="round"/><circle cx="20" cy="10" r="7" fill="#e35d6a" stroke="#3f74c4" stroke-width="2.5"/><circle cx="30" cy="37" r="2.5" fill="#f6b13b"/></svg></span><span class="jg-toy jt3"><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="3" y="3" width="34" height="34" rx="8" fill="#fff" stroke="#3f74c4" stroke-width="2.5"/><circle cx="12" cy="12" r="3" fill="#3f74c4"/><circle cx="20" cy="20" r="3" fill="#e35d6a"/><circle cx="28" cy="28" r="3" fill="#3f74c4"/></svg></span><span class="jg-toy jt4"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 35s-15-9.3-15-20a8.3 8.3 0 0115-5 8.3 8.3 0 0115 5c0 10.7-15 20-15 20z" fill="#f4b8c6" stroke="#3f74c4" stroke-width="2.5"/></svg></span><span class="jg-toy jt5"><svg viewBox="0 0 64 40" aria-hidden="true"><rect x="2" y="6" width="60" height="30" rx="15" fill="#fff" stroke="#3f74c4" stroke-width="2.5"/><path d="M14 21h12M20 15v12" stroke="#3f74c4" stroke-width="3" stroke-linecap="round"/><circle cx="44" cy="17" r="3" fill="#e35d6a"/><circle cx="51" cy="23" r="3" fill="#f6b13b"/><circle cx="44" cy="27" r="2.4" fill="#8fbf6a"/></svg></span>
+      <p class="jg-start rv">${icon('play')} press start</p>
       <h2 class="btitle rv">Pra gente brincar</h2>
       <div class="rv">${pills(LISTS.brincar)}</div>
     </section>
@@ -2999,7 +3065,7 @@ function renderHome(y = 0){
       <p class="endtitle">${esc(C.textos.fimNome)}</p>
       <p class="endyear">2026</p>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
-      <p class="endver">versão de 15/10 · 07h00</p>
+      <p class="endver">versão de 15/10 · 12h20</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
@@ -3230,9 +3296,10 @@ function shell(eb, title, sub, body){
     f.onclick = () => { f.remove(); store.set('edAba', alvo[0]); curView = 'editar'; VIEWS.editar(alvo[1], origem, alvo[0]); }; document.body.append(f); }, 0);
   document.getElementById('xgift')?.remove(); document.getElementById('chtoast')?.remove(); document.getElementById('abtoast')?.remove();
   window.scrollTo(0,0); document.getElementById('tabbar')?.remove();
-  app.innerHTML = `<div class="view page">
+  const [pcb, pc] = corDe(curView);
+  app.innerHTML = `<div class="view page" style="--pc:${pc};--pcb:${pcb}">
     <div class="vbar"><button class="vback" id="back" aria-label="Voltar"><svg viewBox="0 0 24 24" class="icn"><path d="M15 5l-7 7 7 7"/></svg><span>Voltar</span></button></div>
-    <header class="vhead"><h2>${title}</h2>${sub ? `<p>${sub}</p>` : ''}</header>
+    <header class="vhead">${(it => it ? (([bg, fg]) => `<span class="vh-ic" style="--bg:${bg};--fg:${fg}">${icon(it.ico)}</span>`)(corDe(it.id)) : '')(Object.values(LISTS).flat().find(x => x.id === curView))}<h2>${title}</h2>${sub ? `<p>${sub}</p>` : ''}</header>
     ${body}</div>`;
   document.getElementById('back').onclick = () => { stopGame(); renderHome(homeY); };
 }
@@ -6058,6 +6125,19 @@ function heroSnow(){
 /* começa perguntando quem é; depois o app lembra */
 (async () => {
   nextStep();
+})();
+
+/* arrastar com o mouse pros lados (PC) */
+(function(){
+  const rolavel=el=>{for(;el&&el!==document.body;el=el.parentElement){if(el.scrollWidth>el.clientWidth+4){const o=getComputedStyle(el).overflowX;if(o==='auto'||o==='scroll')return el}}return null};
+  let alvo=null,x0=0,s0=0,moveu=false;
+  document.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse'||e.button!==0)return;if(e.target.closest('input,textarea,select,canvas'))return;const el=rolavel(e.target);if(!el)return;alvo=el;x0=e.clientX;s0=el.scrollLeft;moveu=false},true);
+  document.addEventListener('pointermove',e=>{if(!alvo)return;const dx=e.clientX-x0;if(Math.abs(dx)>5){moveu=true;alvo.classList.add('arrastando')}if(moveu){alvo.scrollLeft=s0-dx;e.preventDefault()}},true);
+  const fim=()=>{if(alvo)alvo.classList.remove('arrastando');alvo=null;setTimeout(()=>moveu=false,0)};
+  document.addEventListener('pointerup',fim,true);document.addEventListener('pointercancel',fim,true);
+  document.addEventListener('click',e=>{if(moveu){e.stopPropagation();e.preventDefault();moveu=false}},true);
+  document.addEventListener('wheel',e=>{if(Math.abs(e.deltaX)>Math.abs(e.deltaY))return;const el=rolavel(e.target);if(!el)return;const max=el.scrollWidth-el.clientWidth;if((e.deltaY>0&&el.scrollLeft<max-1)||(e.deltaY<0&&el.scrollLeft>0)){el.scrollLeft+=e.deltaY;e.preventDefault()}},{passive:false});
+  document.addEventListener('dragstart',e=>{if(rolavel(e.target))e.preventDefault()});
 })();
 </script>
 
