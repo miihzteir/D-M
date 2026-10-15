@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=37">
-<link rel="apple-touch-icon" href="icon-180.png?v=37">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=37">
+<link rel="manifest" href="manifest.json?v=39">
+<link rel="apple-touch-icon" href="icon-180.png?v=39">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=39">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -945,7 +945,7 @@ body{background:linear-gradient(180deg,#fdf5f7,#f2f6fb) fixed}
 .logo.tap{animation:pop .3s}
 .wax{width:72px;height:72px;margin-left:-36px;top:-36px;padding:0;background:none!important;border:0;box-shadow:0 10px 20px -10px rgba(61,90,120,.6)}
 .dlogo{width:96px;height:96px;padding:0;background:none;box-shadow:0 12px 24px -12px rgba(61,90,120,.6)}
-.bk-mono{display:block;width:54px;height:54px;margin:0 auto}
+.bk-mono{display:block;width:54px;height:54px;margin:0 auto}.bk-mono img{width:100%;height:100%;object-fit:cover;display:block}
 .endlogo{display:block;width:84px;height:84px;margin:0 auto var(--s2);border-radius:50%;box-shadow:0 12px 24px -14px rgba(61,90,120,.6);animation:float 6s ease-in-out infinite}
 .endyear{margin:var(--s1) 0 0;font-family:var(--f-display);font-size:var(--t-sm);letter-spacing:.4em;color:var(--olive)}
 
@@ -1783,6 +1783,27 @@ html body .pz-sug button{width:auto;min-height:0;padding:6px 10px;font-size:12px
 html body .cs-premios{display:flex;align-items:center;gap:11px;width:100%;min-height:0;margin:2px 0 10px;padding:12px;border-radius:20px;background:linear-gradient(135deg,#fff8e6,#ffedc4);border:0;color:var(--ink);text-align:left;box-shadow:0 10px 24px -16px rgba(170,110,20,.55)}
 .cs-premios b{display:block;font-size:14.5px}.cs-premios small{font-size:11.5px;color:#8a6a2a;font-weight:600}.cs-premios > span:nth-child(2){flex:1}
 .cs-seta{font-size:22px;color:#c9822a;font-weight:700}
+/* notificações */
+.ntoast{position:fixed;left:50%;top:max(12px,env(safe-area-inset-top));transform:translate(-50%,-140%);z-index:9500;display:flex;align-items:center;gap:11px;width:calc(100% - 24px);max-width:420px;min-height:0;padding:10px 14px 10px 10px;border-radius:20px;background:rgba(255,255,255,.97);border:0;color:var(--ink);text-align:left;box-shadow:0 18px 40px -14px rgba(60,10,25,.45), 0 0 0 1px rgba(200,24,44,.08);transition:transform .45s cubic-bezier(.3,1.3,.5,1)}
+.ntoast.in{transform:translate(-50%,0)}
+.ntoast img{width:42px;height:42px;border-radius:11px;flex:none;object-fit:cover}
+.ntoast b{display:block;font-size:14px;line-height:1.25}.ntoast small{display:block;font-size:12.5px;color:var(--muted);font-weight:600;margin-top:2px;line-height:1.3}
+.ncv{display:flex;align-items:center;gap:10px;padding:10px 10px 10px 12px;border-radius:20px;background:linear-gradient(135deg,#efe7fb,#e6eefb);box-shadow:0 10px 24px -18px rgba(80,60,160,.6);text-align:left}
+.ncv-ic{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:#fff;color:#7b5cc4;font-size:18px;flex:none}
+.ncv-t{flex:1;min-width:0}.ncv-t b{display:block;font-size:13.5px;color:var(--ink)}.ncv-t small{font-size:11.5px;color:#5f4c8b;font-weight:600;line-height:1.25;display:block}
+html body .ncv button#ncvok{width:auto;min-height:0;padding:7px 13px;font-size:13px;border-radius:99px;background:#7b5cc4;flex:none}
+html body .ncv-x{width:26px;height:26px;min-height:0;padding:0;border-radius:50%;background:none;border:0;box-shadow:none;color:#5f4c8b;display:grid;place-items:center;flex:none}.ncv-x .icn{transform:rotate(45deg)}
+.nt-card{background:#fff;border-radius:22px;padding:16px;display:flex;flex-direction:column;gap:12px;box-shadow:0 12px 28px -20px rgba(122,20,36,.5)}
+.nt-st{display:flex;align-items:center;gap:10px;font-size:15px}.nt-dot{width:12px;height:12px;border-radius:50%;background:#c9b3ba;flex:none}
+.nt-st.ok .nt-dot{background:#5d8f52;box-shadow:0 0 0 4px #e2efdc}.nt-st.meio .nt-dot{background:#e3a118;box-shadow:0 0 0 4px #fbf0d0}.nt-st.nao .nt-dot{background:#c8182c;box-shadow:0 0 0 4px #fde3e8}
+.nt-aj,.nt-nota,.nt-msg{font-size:13px;line-height:1.45;color:var(--ink2);margin:0}.nt-nota{color:var(--muted);font-size:12px;margin-top:8px}.nt-msg{color:#4f8a4a;font-weight:700}
+.nt-sons{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+html body .nt-sons button{display:flex;align-items:center;gap:9px;width:100%;min-height:0;padding:12px;border-radius:16px;background:#fff;color:var(--ink);border:1.5px solid transparent;box-shadow:0 6px 16px -14px rgba(122,20,36,.5);font-size:13.5px;font-weight:700;text-align:left}
+html body .nt-sons button.on{border-color:#b0485a;background:#fff5f7}
+.nt-r{width:16px;height:16px;border-radius:50%;border:2px solid #d9b3bb;flex:none}.nt-sons .on .nt-r{border-color:#b0485a;background:radial-gradient(circle,#b0485a 45%,transparent 50%)}
+.nt-lista{margin:0;padding:0 0 0 18px;font-size:13.5px;line-height:1.7;color:var(--ink2)}
+.nt-cfg{margin-top:18px;background:#fff;border-radius:18px;padding:12px 14px}.nt-cfg summary{font-weight:700;font-size:13.5px;color:var(--muted);cursor:pointer}
+.nt-cfg .fz-lab{margin-top:10px}
 </style>
 
 <canvas id="petals" aria-hidden="true"></canvas>
@@ -2721,6 +2742,7 @@ const ICONS = {
   pencil:'<path d="M4 20l1-4L16 5l3 3L8 19z"/><path d="M14 7l3 3"/>',
   image:'<rect x="3.5" y="4.5" width="17" height="15" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="M4 18l5-5 4 4 3-3 4 4"/>',
   trash:'<path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12"/>',
+  bell:'<path d="M6 16V11a6 6 0 0112 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 004 0"/>',
   mic:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/>',
   play:'<circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/>',
   whats:'<path d="M4 20l1.3-4A8 8 0 1112 20a8 8 0 01-4-1z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 .8c-1-.4-1.9-1.3-2.3-2.3l.8-1-1-2z"/>'
@@ -2784,9 +2806,9 @@ const Sync = (() => {
     };
     c.api = {
       on(f){ c.L.push(f); f(c.items); ready.then(c.attach); return () => { c.L = c.L.filter(x => x !== f); }; },
-      async add(o){ await ready; if(online()) return fdb.collection(name).add({...o, uid:user.uid, criadoEm:ts()});
+      async add(o){ await ready; if(online()){ const r = await fdb.collection(name).add({...o, uid:user.uid, criadoEm:ts()}); try{ window.pushEvento && pushEvento(name, o, null); }catch(e){} return r; }
         c.items = [...c.items, {...o, id:'l' + Date.now() + Math.random().toString(36).slice(2,6), criadoEm:Date.now()}]; saveLocal(); },
-      async set(id, o){ await ready; if(online()) return fdb.collection(name).doc(id).set({...o, uid:user.uid, criadoEm:ts()}, {merge:true});
+      async set(id, o){ await ready; if(online()){ const antes = c.items.find(x => x.id === id) || null; const r = await fdb.collection(name).doc(id).set({...o, uid:user.uid, criadoEm:ts()}, {merge:true}); try{ window.pushEvento && pushEvento(name, Object.assign({}, antes || {}, o), antes); }catch(e){} return r; }
         c.items = [...c.items.filter(x => x.id !== id), {...o, id, criadoEm:Date.now()}]; saveLocal(); },
       async remove(id){ await ready; if(online()) return fdb.collection(name).doc(id).delete();
         c.items = c.items.filter(x => x.id !== id); saveLocal(); }
@@ -2830,7 +2852,7 @@ const Sync = (() => {
     },
     async pensei(){
       await ready; const d = hoje(), q = quem || 'Di';
-      if(online()) return fdb.doc('compartilhado/estado').set({pensei:{[d]:{[q]:firebase.firestore.FieldValue.increment(1)}}}, {merge:true});
+      if(online()){ const n = ((state.pensei[d] || {})[q] || 0) + 1; const r = await fdb.doc('compartilhado/estado').set({pensei:{[d]:{[q]:firebase.firestore.FieldValue.increment(1)}}}, {merge:true}); try{ window.pushEvento && pushEvento('pensei', {quem:q, n}, null); }catch(e){} return r; }
       const day = {...(state.pensei[d] || {})}; day[q] = (day[q] || 0) + 1;
       state = {...state, pensei:{...state.pensei, [d]:day}}; store.set('pensei', state.pensei); emitState();
     },
@@ -3085,7 +3107,8 @@ const TABS = [
 const LISTS = {
   hoje2: [
     {id:'saudade',  ico:'heart',    t:'Termômetro de saudade', s:'Aperta quando bater'},
-    {id:'diario',   ico:'note',     t:'Diário do casal',     s:'Como foi o seu dia?'}],
+    {id:'diario',   ico:'note',     t:'Diário do casal',     s:'Como foi o seu dia?'},
+    {id:'notificacoes', ico:'bell', t:'Notificações',        s:'Avisos e sons'}],
   hoje: [
     {id:'pergunta', ico:'chat',     t:'Pergunta do dia',     s:'Os dois respondem'},
     {id:'bilhetes', ico:'note',     t:'Bilhetinhos',         s:'Recados de um pro outro'},
@@ -3166,7 +3189,7 @@ const PAL_UI = {rosa:['#ffe1e8','#d6456b'], vinho:['#f8dde2','#9b1630'], lavanda
 const COR_UI = {saudade:'rosa', diario:'pessego', pergunta:'rosa', bilhetes:'azul', mes:'salvia', mensagem:'vinho',
   primeiras:'lavanda', playlist:'azul', planos:'salvia', datas:'mostarda', comemorativas:'vinho', contagem:'menta', lugares:'azul', gostos:'coral', filmes:'lavanda', financas:'salvia', fotos:'rosa', memoria2:'rosa',
   casinha:'pessego', roleta:'mostarda', coracoes:'rosa', memoria:'lavanda', raspa:'menta', quiz:'azul', provavel:'coral',
-  abra:'rosa', album:'lavanda', cartas:'vinho', cartadata:'pessego', retro:'mostarda', capsula:'menta', filhos:'azul', vales:'coral', premios:'mostarda', carta:'vinho', editar:'lavanda'};
+  abra:'rosa', album:'lavanda', cartas:'vinho', cartadata:'pessego', retro:'mostarda', capsula:'menta', filhos:'azul', vales:'coral', premios:'mostarda', notificacoes:'lavanda', carta:'vinho', editar:'lavanda'};
 const corDe = id => PAL_UI[COR_UI[id] || 'rosa'];
 const pills = list => `<div class="pills2">${list.map(r => { const [bg, fg] = corDe(r.id); return `<button class="pill2" data-go="${r.id}" style="--bg:${bg};--fg:${fg}"><span class="p2i">${icon(r.ico)}</span><span class="p2t"><b>${r.t}</b><small>${r.s}</small></span></button>`; }).join('')}</div>`;
 function renderHome(y = 0){
@@ -3184,6 +3207,7 @@ function renderHome(y = 0){
       <div id="nvbox" class="nvbox"></div>
       <div id="mdiabox" class="mdiabox"></div>
       <div id="hjbox" class="mdiabox"></div>
+      <div id="ncvbox" class="mdiabox"></div>
       <div class="flower float">${FLOWER('fl1','nós dois', C.fotoInicio || f0.foto).replace('#fbe6ea','#f1e6dc').replace('#e9b3c0','#d2b8a9')}<span class="ribbon sway">${RIBBON}</span></div>
       <div class="hcounter" aria-label="Tempo juntos">
         <div><b id="cd">0</b><span>dias</span></div><div><b id="ch">0</b><span>horas</span></div>
@@ -3245,12 +3269,12 @@ function renderHome(y = 0){
       <p class="endtitle">${esc(C.textos.fimNome)}</p>
       <p class="endyear">2026</p>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
-      <p class="endver">versão de 15/10 · 16h40</p>
+      <p class="endver">versão de 15/10 · 18h00</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
   clearInterval(timer); tick(); timer = setInterval(tick, 1000);
-  missoesBox(document.getElementById('mdiabox')); painelOutro(document.getElementById('hjbox')); setTimeout(tourInicio, 1800);
+  missoesBox(document.getElementById('mdiabox')); painelOutro(document.getElementById('hjbox')); convitePush(document.getElementById('ncvbox')); vigiar(); irDoLink(); setTimeout(tourInicio, 1800);
   setTimeout(chocoDoDia, 1200); setTimeout(avisoAbraco, 400); setTimeout(dedicatoria, 900); setTimeout(avisoRecado, 2600);
   document.getElementById('edprev2')?.addEventListener('click', () => entrarPrevia());
   document.getElementById('edviajar')?.addEventListener('click', abrirViagem);
@@ -3262,7 +3286,7 @@ function renderHome(y = 0){
         if(!festejou){ festejou = true; setTimeout(() => burst(innerWidth / 2, innerHeight / 3, 60), 700); } }
       else { const prox = ['Di','Mihzinha'].map(q => ({q, p:proxNiver(q)})).filter(x => x.p && x.p.dias <= 30).sort((a, b) => a.p.dias - b.p.dias)[0];
         if(prox) html = `<button class="nv-card ${prox.p.dias <= 7 ? 'perto' : ''}" data-go="comemorativas"><span class="nv-ic">${icon('gift')}</span><span><b>${prox.p.dias === 1 ? 'Amanhã' : `Faltam ${prox.p.dias} dias pro`} aniversário ${prox.q === eu ? 'seu' : doDa(prox.q)}${prox.p.dias === 1 ? '!' : ''}</b><small>${new Date(prox.p.data + 'T12:00:00').toLocaleDateString('pt-BR', {day:'numeric', month:'long'})}</small></span></button>`;
-        else if(!niverAtual[eu]) html = `<button class="nv-card leve" data-go="comemorativas"><span class="nv-ic">${icon('cake')}</span><span><b>Coloca a data do seu aniversário</b><small>pra casinha fazer festa no seu dia</small></span></button>`; }
+        else if(!niverAtual[eu]) html = `<button class="nv-card leve" data-go="comemorativas"><span class="nv-ic">${icon('cake')}</span><span><b>Coloca a data do seu aniversário</b><small>para comemorarmos juntos!</small></span></button>`; }
       box.innerHTML = html; box.querySelectorAll('[data-go]').forEach(b => b.onclick = () => openStop(b.dataset.go)); }); }
   document.getElementById('xgift')?.remove();
   if(natalAberto()){ const g = document.createElement('button'); g.id = 'xgift'; g.className = 'xgift'; g.setAttribute('aria-label','Abrir o presente de Natal');
@@ -3414,8 +3438,10 @@ function mostraRecado(html, ligar){
 }
 function fechaRecado(){ const w = document.getElementById('rcwrap'); if(!w) return; w.classList.remove('in'); setTimeout(() => w.remove(), 400); }
 /* recadinho da primeira vez que ele entra */
+const tourPendente = () => !store.get('viuTour', false) && (jaComecou() || PREVIA) && (C.tour || []).some(p => p && (p.t || p.s));
 function dedicatoria(){
   if(Sync.quem !== 'Di' || store.get('viuDedicatoria', false) || document.getElementById('dedic')) return;
+  if(tourPendente() || document.getElementById('tour')) return;
   store.set('viuDedicatoria', true);
   const w = document.createElement('div'); w.id = 'dedic'; w.className = 'dedic';
   w.innerHTML = `<div class="dedic-card"><span class="dedic-ic">${icon('heart')}</span><p>${esc(C.textos.dedicatoria)}</p><p class="sign">Mihzinha</p><button type="button">Eu também te amo</button></div>`;
@@ -4977,12 +5003,146 @@ function missoesBox(el, compacto){
 }
 
 
+
+/* ---------- notificações ---------- */
+const APP_URL = 'https://miihzteir.github.io/D-M/';
+const carregaJS = src => new Promise((ok, no) => { if(document.querySelector(`script[src="${src}"]`)) return ok(); const sc = document.createElement('script'); sc.src = src; sc.onload = ok; sc.onerror = no; document.head.append(sc); });
+const SONS = [
+  {id:'sino', t:'Sininho', notas:[[1318.5, 0, .9, 'sine'], [1760, .12, 1.1, 'sine']]},
+  {id:'coracao', t:'Tum-tum', notas:[[95, 0, .18, 'sine', 1], [80, .2, .25, 'sine', 1]]},
+  {id:'harpa', t:'Harpinha', notas:[[523.3, 0, .7, 'triangle'], [659.3, .07, .7, 'triangle'], [784, .14, .7, 'triangle'], [1046.5, .21, .9, 'triangle']]},
+  {id:'bolha', t:'Bolhinha', notas:[[420, 0, .16, 'sine', 0, 980]]},
+  {id:'caixinha', t:'Caixinha de música', notas:[[1568, 0, .9, 'sine'], [1318.5, .16, .9, 'sine'], [1046.5, .32, .9, 'sine'], [1318.5, .48, 1.2, 'sine']]},
+  {id:'nenhum', t:'Sem som', notas:[]}
+];
+let audioCtx = null;
+function tocaSom(id = store.get('notifSom', 'sino')){
+  const sm = SONS.find(x => x.id === id); if(!sm || !sm.notas.length) return;
+  try{ audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)(); if(audioCtx.state === 'suspended') audioCtx.resume();
+    const t0 = audioCtx.currentTime + .02;
+    sm.notas.forEach(([f, at, dur, tipo, grave, ate]) => { const o = audioCtx.createOscillator(), g = audioCtx.createGain(); o.type = tipo; o.frequency.setValueAtTime(f, t0 + at); if(ate) o.frequency.exponentialRampToValueAtTime(ate, t0 + at + dur);
+      g.gain.setValueAtTime(0, t0 + at); g.gain.linearRampToValueAtTime(grave ? .55 : .22, t0 + at + .012); g.gain.exponentialRampToValueAtTime(.0001, t0 + at + dur);
+      o.connect(g).connect(audioCtx.destination); o.start(t0 + at); o.stop(t0 + at + dur + .05); });
+  }catch(e){}
+}
+const notifSuportada = () => 'Notification' in window;
+const pushAtivo = () => !!store.get('pushToken', '') && notifSuportada() && Notification.permission === 'granted' && !!workerURL();
+const vapidChave = () => ((conteudoAtual || []).find(x => x.id === 'config') || {}).vapid || '';
+function notiToast(n){
+  let w = document.getElementById('ntoast'); if(w) w.remove();
+  w = document.createElement('button'); w.type = 'button'; w.id = 'ntoast'; w.className = 'ntoast';
+  w.innerHTML = `<img src="${APP_ICON}" alt=""><span><b>${esc(n.titulo)}</b>${n.corpo ? `<small>${esc(n.corpo)}</small>` : ''}</span>`;
+  document.body.append(w); requestAnimationFrame(() => w.classList.add('in'));
+  w.onclick = () => { w.remove(); irPara(n.go); };
+  setTimeout(() => { w.classList.remove('in'); setTimeout(() => w.remove(), 400); }, 6000);
+  tocaSom(); if(navigator.vibrate) try{ navigator.vibrate([90, 50, 90]); }catch(e){}
+}
+function irPara(go){ if(!go) return renderHome(0); if(VIEWS[go]) openStop(go); }
+async function avisar(n){
+  if(document.visibilityState === 'visible') return notiToast(n);
+  if(pushAtivo() || !notifSuportada() || Notification.permission !== 'granted') return;
+  try{ const reg = 'serviceWorker' in navigator && await navigator.serviceWorker.getRegistration();
+    const op = {body:n.corpo || '', icon:'icon-192.png', badge:'icon-badge.png', tag:n.tag || n.go || 'dm', renotify:true, data:{url:APP_URL + (n.go ? '#ir-' + n.go : '')}};
+    if(reg) reg.showNotification(n.titulo, op); else new Notification(n.titulo, op); }catch(e){}
+}
+
+/* avisa o servidor (Cloudflare) pra mandar notificação pro outro celular */
+const EVENTOS_PUSH = ['bilhetes','respostas','abraQuando','cartasData','abracos','missoesEsp','gostos','musicas','saudade','premios','pensei','teste'];
+const workerURL = () => ((conteudoAtual || []).find(x => x.id === 'config') || {}).worker || '';
+async function pushEvento(col, doc, antes){
+  if(PREVIA || !EVENTOS_PUSH.includes(col) || !workerURL() || Sync.mode !== 'online' || !window.firebase || !firebase.auth().currentUser) return null;
+  if(col !== 'teste' && !jaComecou()) return null;
+  const limpa = o => { if(!o) return null; const x = {}; Object.entries(o).forEach(([k, v]) => { if(k === 'audio' || k === 'img' || k === 'foto') return; if(typeof v === 'string') x[k] = v.slice(0, 300); else if(typeof v !== 'object' || v === null) x[k] = v; }); return x; };
+  const idToken = await firebase.auth().currentUser.getIdToken();
+  const r = await fetch(workerURL(), {method:'POST', keepalive:true, headers:{'content-type':'application/json'}, body:JSON.stringify({idToken, col, doc:limpa(doc), antes:limpa(antes)})});
+  return r.json().catch(() => ({}));
+}
+window.pushEvento = pushEvento;
+/* fica de olho no que o outro faz enquanto o app tá aberto */
+let vigiando = false;
+function vigiar(){
+  if(vigiando || PREVIA || !Sync.quem) return; vigiando = true;
+  const eu = Sync.quem, outro = eu === 'Di' ? 'Mihzinha' : 'Di', Ele = outro === 'Di' ? 'O Di' : 'A Mihzinha', ele = outro === 'Di' ? 'ele' : 'ela';
+  const t0 = Date.now() - 3000, vistos = new Set(), novo = (k, it) => { if(vistos.has(k) || !(it.criadoEm > t0)) return false; vistos.add(k); return true; };
+  const ok = () => jaComecou();
+  const corta = (t, n = 90) => !t ? '' : t.length > n ? t.slice(0, n - 1) + '…' : t;
+  const regras = {
+    bilhetes: b => b.autor === outro && {titulo:`${Ele} colou um bilhetinho pra você`, corpo:b.texto ? corta(b.texto) : 'Tem um áudio novo', go:'bilhetes'},
+    respostas: r => r.quem === outro && {titulo:`${Ele} respondeu a pergunta de hoje`, corpo:`Vem ver o que ${ele} disse`, go:'pergunta'},
+    abraQuando: c => (c.autor || '') === outro && {titulo:`${Ele} escreveu uma carta nova pra você`, corpo:'Tem envelope novo no Abra quando…', go:'abra'},
+    cartasData: c => c.de === outro && c.para === eu && {titulo:`${Ele} lacrou uma cartinha pra você`, corpo:`Ela abre em ${new Date(c.abreEm + 'T12:00:00').toLocaleDateString('pt-BR')}`, go:'cartadata'},
+    abracos: a => a.de === outro && a.para === eu && {titulo:`${Ele} te deu um abraço`, corpo:'Lá na nossa casinha ♥', go:'casinha', tag:'abraco'},
+    missoesEsp: m => m.autor === outro && m.para === eu && {titulo:`${Ele} criou uma missão especial pra você`, corpo:corta(m.t), go:''},
+    saudade: x => x.quem === outro && {titulo:`${Ele} tá com saudade de você`, corpo:`${x.n || 1}x hoje no termômetro`, go:'saudade', tag:'saudade', k:'n' + (x.n || 1)},
+    gostos: g => g.autor === outro && g.sobre === eu && {titulo:`${Ele} colocou uma coisa que você ama`, corpo:corta(g.legenda), go:'gostos'},
+    musicas: m => m.autor === outro && {titulo:`${Ele} colocou uma música na nossa playlist`, corpo:'', go:'playlist'},
+    premios: p => p.autor === outro && p.para === eu && !p.comprado ? {titulo:`${Ele} ofereceu um prêmio pra você`, corpo:corta(p.t), go:'premios', k:'novo'}
+      : p.autor === eu && p.comprado && !p.entregue && p.por === outro ? {titulo:`${Ele} trocou chocolates por um prêmio`, corpo:`${corta(p.t)}. Hora de cumprir ♥`, go:'premios', k:'troca'}
+      : p.para === eu && p.entregue && p.autor === outro ? {titulo:`${Ele} cumpriu o seu prêmio`, corpo:corta(p.t), go:'premios', k:'ok'} : null
+  };
+  Object.entries(regras).forEach(([nome, f]) => Sync.col(nome).on(l => { if(!ok()) return; l.forEach(it => { const n = f(it); if(n && novo(nome + it.id + (n.k || ''), it)) avisar(n); }); }));
+  let pAntes = null;
+  Sync.on('state', st => { const v = ((st.pensei || {})[hoje()] || {})[outro] || 0; if(pAntes !== null && v > pAntes && ok()) avisar({titulo:`${Ele} pensou em você ♥`, corpo:`${v}x hoje`, tag:'pensei', go:''}); pAntes = v; });
+  presenca(); renovaPush();
+}
+/* avisa o servidor que entrou hoje (pro lembrete das 21h) */
+function presenca(){ try{ if(Sync.mode !== 'online' || !Sync.user || !window.firebase) return; firebase.firestore().doc('presenca/' + Sync.quem).set({dia:hoje(), tz:Intl.DateTimeFormat().resolvedOptions().timeZone || 'America/Cuiaba', em:Date.now()}, {merge:true}).catch(() => {}); }catch(e){} }
+async function ativarPush(){
+  if(!notifSuportada()) return 'sem';
+  const perm = await Notification.requestPermission(); if(perm !== 'granted') return perm;
+  store.set('notifOn', true);
+  const vapid = vapidChave();
+  if(!vapid || Sync.mode !== 'online' || !Sync.user || !('serviceWorker' in navigator) || !/github\.io$/.test(location.hostname)) return 'local';
+  try{ await carregaJS('https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js');
+    const reg = await navigator.serviceWorker.register('sw.js'); await navigator.serviceWorker.ready;
+    const tk = await firebase.messaging().getToken({vapidKey:vapid, serviceWorkerRegistration:reg}); if(!tk) return 'local';
+    await firebase.firestore().collection('tokens').doc(tk).set({quem:Sync.quem, token:tk, tz:Intl.DateTimeFormat().resolvedOptions().timeZone || '', em:Date.now(), ua:navigator.userAgent.slice(0, 120)});
+    store.set('pushToken', tk); return 'push';
+  }catch(e){ console.warn(e); return 'erro:' + (e && (e.code || e.message) || ''); }
+}
+function renovaPush(){ if(notifSuportada() && Notification.permission === 'granted' && store.get('notifOn', false)) setTimeout(() => ativarPush().catch(() => {}), 4000); }
+/* cartãozinho na tela inicial convidando a ligar */
+function convitePush(el){
+  if(!el || PREVIA || !notifSuportada() || Notification.permission !== 'default' || store.get('notifConviteFechado', false)) return;
+  const outro = (Sync.quem || 'Di') === 'Di' ? 'a Mihzinha' : 'o Di';
+  el.innerHTML = `<div class="ncv"><span class="ncv-ic">${icon('bell')}</span><span class="ncv-t"><b>Ligar as notificações?</b><small>pra saber na hora quando ${outro} fizer algo pra você</small></span><button type="button" id="ncvok">Ligar</button><button type="button" class="ncv-x" id="ncvx" aria-label="Agora não">${icon('plus')}</button></div>`;
+  el.querySelector('#ncvx').onclick = () => { store.set('notifConviteFechado', true); el.innerHTML = ''; };
+  el.querySelector('#ncvok').onclick = () => openStop('notificacoes');
+}
+VIEWS.notificacoes = () => {
+  const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'a Mihzinha' : 'o Di';
+  const ua = navigator.userAgent, ios = /iphone|ipad|ipod/i.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+  shell('avisos','Notificações',`Pra saber na hora quando ${outro} fizer algo pra você`, `<div id="ntbox"></div>`);
+  const $ = id => document.getElementById(id);
+  const draw = (msg = '') => { if(!$('ntbox')) return;
+    const perm = notifSuportada() ? Notification.permission : 'sem', som = store.get('notifSom', 'sino');
+    const estado = perm === 'granted' ? (pushAtivo() ? ['ok', 'Ligadas, até com o app fechado'] : ['meio', 'Ligadas enquanto o app estiver aberto']) : perm === 'denied' ? ['nao', 'Bloqueadas no navegador'] : perm === 'sem' ? ['nao', 'Esse navegador não tem notificações'] : ['nao', 'Desligadas'];
+    $('ntbox').innerHTML = `<div class="nt-card"><div class="nt-st ${estado[0]}"><span class="nt-dot"></span><b>${estado[1]}</b></div>
+        ${perm === 'granted' ? `<button type="button" class="ghost" id="nttest">${icon('bell')} Testar</button>` : perm === 'denied' ? `<p class="nt-aj">Libera em: cadeado do site (ou configurações do app) › <b>Notificações</b> › <b>Permitir</b>.</p>` : perm === 'sem' ? (ios ? `<p class="nt-aj">No iPhone, só funciona com o app instalado na tela de início.</p>` : '') : `<button type="button" id="ntligar">${icon('bell')} Ligar notificações</button>`}
+        ${perm === 'granted' && !pushAtivo() && /github\.io$/.test(location.hostname) && vapidChave() && workerURL() ? `<button type="button" class="ghost" id="ntligar">Ligar com o app fechado também</button>` : ''}
+        ${msg ? `<p class="nt-msg">${msg}</p>` : ''}</div>
+      <p class="ct-sep">Som</p>
+      <div class="nt-sons">${SONS.map(x => `<button type="button" class="${x.id === som ? 'on' : ''}" data-som="${x.id}"><span class="nt-r"></span>${x.t}</button>`).join('')}</div>
+      <p class="nt-nota">Com o app fechado, toca o som do celular.</p>
+      ${eu === 'Mihzinha' ? `<details class="nt-cfg" ${vapidChave() && workerURL() ? '' : 'open'}><summary>Configuração (só você vê)</summary><label class="fz-lab">Chave de push do Firebase<input type="text" id="ntvapid" value="${esc(vapidChave())}" placeholder="cola a chave aqui"></label><label class="fz-lab">Endereço do Cloudflare<input type="url" id="ntworker" value="${esc(workerURL())}" placeholder="https://dm-avisos….workers.dev"></label><button type="button" class="ghost" id="ntvsalva">Salvar</button><p class="nt-msg" id="ntvm"></p></details>` : ''}`;
+    $('ntbox').querySelectorAll('[data-som]').forEach(b => b.onclick = () => { store.set('notifSom', b.dataset.som); tocaSom(b.dataset.som); draw(); });
+    $('ntligar')?.addEventListener('click', async e => { e.currentTarget.disabled = true; const r = await ativarPush();
+      draw(r === 'push' ? 'Prontinho! Agora chega aviso até com o app fechado.' : r === 'local' ? 'Ligadas! Avisam enquanto o app estiver aberto.' : r === 'denied' ? 'Você não permitiu. Dá pra liberar nas configurações.' : String(r).startsWith('erro') ? 'Não deu pra ligar com o app fechado (' + esc(String(r).slice(5, 60)) + ')' : ''); });
+    $('nttest')?.addEventListener('click', async () => { tocaSom(); try{ const reg = 'serviceWorker' in navigator && await navigator.serviceWorker.getRegistration(); const op = {body:'É assim que vai chegar ♥', icon:'icon-192.png', badge:'icon-badge.png', tag:'teste'}; reg ? reg.showNotification('D&M', op) : new Notification('D&M', op); }catch(e){ notiToast({titulo:'D&M', corpo:'É assim que vai chegar ♥'}); }
+      if(pushAtivo()) try{ const r = await pushEvento('teste', {}, null); if(r && r.erro) draw('O servidor respondeu: ' + esc(r.erro)); else if(r && r.enviados === 0) draw('O servidor não achou o seu celular. Toca em "Ligar com o app fechado" de novo.'); }catch(e){ draw('Não consegui falar com o servidor.'); } });
+    $('ntvsalva')?.addEventListener('click', async () => { const v = $('ntvapid').value.trim(), wk = $('ntworker').value.trim(); try{ await Sync.col('conteudo').set('config', {vapid:v, worker:wk}); $('ntvm').textContent = 'Salvo! Agora toca em "Ligar com o app fechado".'; setTimeout(() => draw(), 1500); }catch(e){ $('ntvm').textContent = 'Não deu pra salvar.'; } });
+  };
+  draw();
+};
+/* abrir direto numa tela quando toca na notificação */
+function irDoLink(){ const m = location.hash.match(/^#ir-([a-z0-9]+)$/i); if(!m) return; history.replaceState(null, '', location.pathname + location.search); setTimeout(() => irPara(m[1]), 600); }
+
 /* ---------- primeiro dia guiado ---------- */
 const TOUR_IC = ['heart','note','gift','mail','sparkle'], TOUR_COR = [['#fde3e8','#c8182c'],['#e6eefb','#3f74c4'],['#fff1d6','#c9822a'],['#efe7fb','#7b5cc4'],['#e3f0dc','#4f8a4a']];
 function tourInicio(forcar){
   if(!forcar && (store.get('viuTour', false) || !(jaComecou() || PREVIA))) return;
   if(!document.querySelector('.home') && !forcar) return;
-  if(!forcar && (document.getElementById('dedic') || document.querySelector('.tk-wrap') || document.getElementById('inst'))) return setTimeout(tourInicio, 1500);
+  if(!forcar && (document.querySelector('.tk-wrap') || document.getElementById('inst'))) return setTimeout(tourInicio, 1500);
   if(document.getElementById('tour')) return;
   store.set('viuTour', true);
   const passos = (C.tour || []).filter(p => p && (p.t || p.s)), eu = Sync.quem || 'Di';
@@ -5000,7 +5160,7 @@ function tourInicio(forcar){
     w.querySelector('#tourn').onclick = e => { if(ult){ const r = e.currentTarget.getBoundingClientRect(); burst(r.left + r.width / 2, r.top, 60); fecha(); } else { k++; draw(); } };
     w.querySelector('#tourv')?.addEventListener('click', () => { k--; draw(); });
     w.querySelector('#tourx').onclick = fecha; };
-  const fecha = () => { w.classList.remove('in'); setTimeout(() => w.remove(), 350); };
+  const fecha = () => { w.classList.remove('in'); setTimeout(() => { w.remove(); dedicatoria(); }, 350); };
   draw(); document.body.append(w); requestAnimationFrame(() => w.classList.add('in'));
 }
 
@@ -5396,11 +5556,11 @@ const BASE = {
   mesversarios: C.mesversarios.slice()
 };
 C.tour = [
-  {t:'Oi, meu amor', s:'Esse é o nosso cantinho. Deixa eu te mostrar rapidinho como ele funciona.'},
-  {t:'Todo dia tem um bilhete novo', s:'Logo no começo da tela tem um bilhetinho meu pra você. São 364, um pra cada dia do nosso ano, e nenhum se repete.'},
-  {t:'Missões e chocolates', s:'Todo dia você ganha um chocolate só por entrar, e mais alguns fazendo as missões do dia. Com eles a gente monta a nossa casinha e troca por prêmios de verdade.'},
-  {t:'Cartas pra cada momento', s:'Tem envelopes pra quando bater saudade, pra um dia ruim, pra quando não conseguir dormir. Abre quando precisar. Algumas têm a minha voz.'},
-  {t:'Sem pressa', s:'Não precisa ver tudo hoje. Vai descobrindo aos pouquinhos. E toca no coração "pensei em você" sempre que lembrar de mim.'}
+  {t:'Oi, meu amor', s:'Esse é o nosso cantinho. Deixa eu te mostrar rapidinho.'},
+  {t:'Um bilhete por dia', s:'Todo dia tem um bilhetinho novo meu pra você.'},
+  {t:'Missões e chocolates', s:'Entrando e fazendo as missões você ganha chocolates. Com eles a gente monta a nossa casinha e troca por prêmios de verdade.'},
+  {t:'Cartas pra cada momento', s:'Saudade, dia ruim, insônia… Abre o envelope quando precisar. Algumas têm a minha voz.'},
+  {t:'Sem pressa', s:'Vai descobrindo aos pouquinhos. E toca no "pensei em você" sempre que lembrar de mim.'}
 ];
 const ESCRITAS = [
   {grupo:'Do dia a dia'},
@@ -6400,7 +6560,7 @@ VIEWS.album = () => {
     if(!pg) return '';
     if(pg.type === 'cover') return `<div class="bk-cover">
         <span class="bk-ribbon"></span>
-        <div class="bk-ctext"><span class="bk-mono">${LOGO()}</span><h3>Nossas cartas</h3><p class="bk-sub">${pg.n ? `${pg.n} ${pg.n === 1 ? 'carta aberta' : 'cartas abertas'}` : 'ainda vazio'}</p><p class="bk-year">${pg.ano || new Date().getFullYear()}</p></div>
+        <div class="bk-ctext"><span class="bk-mono"><img src="${APP_ICON}" alt="D&amp;M"></span><h3>Nossas cartas</h3><p class="bk-sub">${pg.n ? `${pg.n} ${pg.n === 1 ? 'carta aberta' : 'cartas abertas'}` : 'ainda vazio'}</p><p class="bk-year">${pg.ano || new Date().getFullYear()}</p></div>
         <span class="bk-bow">${RIBBON}</span></div>`;
     if(pg.type === 'end') return `<div class="bk-paper bk-endpage"><span class="bk-flower">${DAISY('#f0bac6','#fff')}</span>
         <p class="bk-endtxt">${pg.n ? 'E ainda tem muitas cartas esperando por você no "Abra quando…"' : 'Quando uma carta do "Abra quando…" for aberta, ela vem morar aqui pra sempre'}</p><p class="sign">Mihzinha</p>${LIPS('kiss')}</div>`;
