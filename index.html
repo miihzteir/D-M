@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=31">
-<link rel="apple-touch-icon" href="icon-180.png?v=31">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=31">
+<link rel="manifest" href="manifest.json?v=36">
+<link rel="apple-touch-icon" href="icon-180.png?v=36">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=36">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -1612,6 +1612,102 @@ html body .home .band.b-stripes-blue{background:url("data:image/svg+xml,%3Csvg x
   main#app > .gate{min-height:0!important;max-width:460px!important;background:transparent!important;box-shadow:none!important;width:100%;padding:48px 0!important}
   main#app > .gate .sheet{border-radius:30px!important;box-shadow:0 30px 70px -30px rgba(74,18,36,.40), 0 0 0 1px rgba(122,20,36,.06)!important;padding:56px 36px 36px!important;margin-top:38px}
 }
+/* envelopes coloridos */
+html body .envl{--e-bg:#ee8aa2;--e-fr:#f6a9bb;--e-fl:#e7718c;--e-fl2:#d65a77;--e-tx:#5a0f1e;--e-sub:#7a2a3a;--e-pt:%23ffffff}
+html body .envl.ev1{--e-bg:#861828;--e-fr:#9e2034;--e-fl:#7a1424;--e-fl2:#5e0e1b;--e-tx:#fff;--e-sub:#f6cbd3}
+html body .envl.ev2{--e-bg:#86aee0;--e-fr:#a9c8ee;--e-fl:#7aa3d6;--e-fl2:#5f8bc6;--e-tx:#173a6b;--e-sub:#2f5a92}
+html body .envl.ev3{--e-bg:#d7ad7c;--e-fr:#e6c49b;--e-fl:#cf9f69;--e-fl2:#b88650;--e-tx:#4a2a12;--e-sub:#6e4524}
+html body .envl.ev4{--e-bg:#b49ae6;--e-fr:#cbb8f1;--e-fl:#a68ae0;--e-fl2:#8c6dd2;--e-tx:#34206b;--e-sub:#53408f}
+html body .envl.ev5{--e-bg:#9cc58c;--e-fr:#b9d8ab;--e-fl:#8fbb7d;--e-fl2:#74a362;--e-tx:#22451a;--e-sub:#3b6630}
+html body .envl .eb{background:var(--e-bg)!important;box-shadow:0 22px 34px -16px rgba(74,18,36,.45), 0 0 0 1px rgba(0,0,0,.05)!important}
+html body .envl .ef{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='38' height='38'%3E%3Cpath d='M19 27s-7-4.4-7-9.3a3.9 3.9 0 017-2.3 3.9 3.9 0 017 2.3c0 4.9-7 9.3-7 9.3z' fill='%23ffffff' opacity='.18'/%3E%3C/svg%3E") 0 0/38px 38px, linear-gradient(180deg,var(--e-fr),var(--e-bg))!important}
+html body .envl .efl{background:linear-gradient(180deg,var(--e-fl) 0%,var(--e-fl2) 100%)!important}
+html body .envl .ep{background-color:#fffdf8!important}
+html body .envl .label{color:var(--e-tx)!important;font-size:24px;text-shadow:0 1px 0 rgba(255,255,255,.18)}
+html body .envl.ev1 .label{text-shadow:0 1px 2px rgba(0,0,0,.25)}
+html body .envl .label small{color:var(--e-sub)!important;font-size:11.5px;opacity:.95}
+html body .envl .seal{width:46px;height:46px;margin:-23px 0 0 -23px;background:radial-gradient(circle at 35% 30%, #d8364c, #9b1630 60%, #5e0e1b)!important;box-shadow:0 0 0 3px rgba(255,255,255,.55), 0 6px 14px rgba(74,18,36,.45)!important}
+html body .envl.ev1 .seal{background:radial-gradient(circle at 35% 30%, #f3d58c, #c9a14a 60%, #8a6a24)!important;color:#5e0e1b!important}
+html body .envl.locked .seal{background:radial-gradient(circle at 35% 30%, #b8304a, #6d0f1f 70%)!important}
+html body .envl .est{top:9%;right:5%;width:34px;height:40px;z-index:4;display:grid;place-items:center;background:repeating-linear-gradient(45deg,#fffdf8 0 6px,#fdf3ef 6px 12px);color:#c8182c;font-size:15px;border-radius:3px;box-shadow:0 2px 5px rgba(0,0,0,.22);outline:1.5px dashed rgba(200,24,44,.45);outline-offset:-5px;transform:rotate(6deg);transition:opacity .3s}
+html body .envl.open .est{opacity:0}
+/* missões do dia */
+.mdiabox:empty{display:none}
+.mdiabox{width:100%;max-width:420px;margin:14px auto 6px;position:relative;z-index:2}
+.mdia{background:linear-gradient(180deg,#fff 0%,#fff7f8 100%);border-radius:24px;padding:14px 12px 10px;box-shadow:0 18px 40px -22px rgba(122,20,36,.55), 0 0 0 1.5px rgba(200,24,44,.14);text-align:left}
+.mdia-h{display:flex;align-items:center;gap:10px;padding:0 4px 10px}
+.mdia-ic{width:38px;height:38px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(135deg,#e8506a,#9b1630);color:#fff;font-size:19px;flex:none;box-shadow:0 6px 14px -6px rgba(155,22,48,.7)}
+.mdia-ht{flex:1;min-width:0;display:flex;flex-direction:column}
+.mdia-ht b{font-family:var(--f-display);font-style:italic;font-size:20px;color:var(--ink);line-height:1.1}
+.mdia-ht small{font-size:11.5px;color:var(--muted);font-weight:600;margin-top:2px}
+.mdia-n{font-weight:800;font-size:13px;color:#9b1630;background:#fde3e8;border-radius:99px;padding:5px 11px;flex:none}
+html body .mdia-row{display:flex;align-items:center;gap:11px;width:100%;min-height:0;margin:0 0 7px;padding:11px 12px;border-radius:17px;background:#fdf1f3;border:1.5px solid transparent;color:var(--ink);text-align:left;box-shadow:none;font:inherit;cursor:pointer;transition:transform .15s, background .2s}
+html body .mdia-row:active{transform:scale(.98)}
+.mdia-row .mr-ic{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:#fff;color:#c8182c;font-size:17px;flex:none;box-shadow:0 2px 6px -2px rgba(122,20,36,.3)}
+.mdia-row .mr-t{flex:1;min-width:0;font-size:14px;font-weight:700;line-height:1.25;color:var(--ink)}
+.mdia-row .mr-t small{display:block;font-size:11.5px;font-weight:600;color:var(--muted);margin-top:2px}
+.mdia-row .mr-r{flex:none;font-weight:800;font-size:13px;color:#7a1424;background:#fff;border-radius:99px;padding:6px 11px;box-shadow:0 2px 6px -3px rgba(122,20,36,.35)}
+html body .mdia-row.pronta{background:linear-gradient(135deg,#fff4d6,#ffe6b0);border-color:#f0c35a;animation:mglow 1.6s ease-in-out infinite}
+.mdia-row.pronta .mr-r{background:linear-gradient(135deg,#e8506a,#9b1630);color:#fff}
+.mdia-row.pronta .mr-t small{color:#9a6a12}
+html body .mdia-row.pego{background:#f1f6ee;cursor:default}
+.mdia-row.pego .mr-t{color:#6b7f62;text-decoration:line-through;text-decoration-color:rgba(107,127,98,.5)}
+.mdia-row.pego .mr-ic{color:#5d8f52}
+.mdia-row.pego .mr-r{color:#5d8f52;background:#e2efdc;box-shadow:none}
+@keyframes mglow{50%{box-shadow:0 0 0 4px rgba(240,195,90,.35)}}
+.mpulse{animation:mpulse 1.2s ease 2}
+@keyframes mpulse{50%{transform:scale(1.18);box-shadow:0 0 0 10px rgba(200,24,44,.18)}}
+.cs-mis:has(.mdia){background:none!important;border:0!important;box-shadow:none!important;padding:0!important}
+.mdia-c{margin-bottom:4px}
+html body .envl.ev-natal{--e-bg:#b3122c;--e-fr:#c8243a;--e-fl:#2f6b3a;--e-fl2:#1f4f2a;--e-tx:#fff;--e-sub:#ffd9de}
+html body .envl.ev-natal .seal{background:radial-gradient(circle at 35% 30%, #f3d58c, #c9a14a 60%, #8a6a24)!important;color:#7a1424!important}
+html body .envl.ev-noite{--e-bg:#24305e;--e-fr:#2f3d73;--e-fl:#1c2650;--e-fl2:#141b3b;--e-tx:#fff;--e-sub:#c9d3f5}
+html body .envl.ev-noite .ef{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cpath d='M12 8l1.2 3 3 1.2-3 1.2L12 16.4l-1.2-3-3-1.2 3-1.2z' fill='%23fff3c4' opacity='.75'/%3E%3Ccircle cx='32' cy='30' r='1.3' fill='%23fff' opacity='.6'/%3E%3Ccircle cx='26' cy='12' r='.9' fill='%23fff' opacity='.5'/%3E%3C/svg%3E") 0 0/44px 44px, linear-gradient(180deg,var(--e-fr),var(--e-bg))!important}
+html body .envl.ev-noite .seal{background:radial-gradient(circle at 35% 30%, #fff6cf, #f1cf6a 60%, #b8902e)!important;color:#24305e!important}
+html body .envl.ev-sol{--e-bg:#f6c94c;--e-fr:#fbdc7a;--e-fl:#f2b92e;--e-fl2:#e3a118;--e-tx:#5a3a05;--e-sub:#7a5410}
+html body .envl.ev-ouro{--e-bg:#d9b45a;--e-fr:#ead08a;--e-fl:#c99c3c;--e-fl2:#a97f25;--e-tx:#3f2a06;--e-sub:#5c420f}
+html body .envl.ev-perola{--e-bg:#ece4da;--e-fr:#faf6f0;--e-fl:#e2d6c8;--e-fl2:#cdbda9;--e-tx:#5a2a32;--e-sub:#8a6a5a}
+html body .envl.ev-perola .ef{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='38' height='38'%3E%3Cpath d='M19 27s-7-4.4-7-9.3a3.9 3.9 0 017-2.3 3.9 3.9 0 017 2.3c0 4.9-7 9.3-7 9.3z' fill='%23c9a96a' opacity='.22'/%3E%3C/svg%3E") 0 0/38px 38px, linear-gradient(180deg,var(--e-fr),var(--e-bg))!important}
+html body .envl.ev-amor{--e-bg:#d92a3d;--e-fr:#e8506a;--e-fl:#c8182c;--e-fl2:#a3101f;--e-tx:#fff;--e-sub:#ffe0e5}
+html body .envl.ev-amor .label,html body .envl.ev-natal .label,html body .envl.ev-noite .label{text-shadow:0 1px 2px rgba(0,0,0,.3)}
+/* envelopes em tons pastel */
+html body .envl{--e-bg:#f4c6d0;--e-fr:#f9dbe2;--e-fl:#eeb3c1;--e-fl2:#e5a0b1;--e-tx:#6b2a3a;--e-sub:#8f5262}
+html body .envl.ev1{--e-bg:#e9b0ad;--e-fr:#f3cbc7;--e-fl:#dfa09c;--e-fl2:#d38e8a;--e-tx:#5e1f24;--e-sub:#7d3f42}
+html body .envl.ev2{--e-bg:#bcd6ee;--e-fr:#d6e6f6;--e-fl:#a9c8e6;--e-fl2:#97badd;--e-tx:#24456b;--e-sub:#4a6b8f}
+html body .envl.ev3{--e-bg:#e6cdb2;--e-fr:#f1dfcc;--e-fl:#ddbfa0;--e-fl2:#d1b08f;--e-tx:#5a3a1f;--e-sub:#7a5a3c}
+html body .envl.ev4{--e-bg:#d6c6ee;--e-fr:#e7ddf6;--e-fl:#c9b5e8;--e-fl2:#b9a3df;--e-tx:#3f2c6b;--e-sub:#5f4c8b}
+html body .envl.ev5{--e-bg:#c6dcbc;--e-fr:#dcebd4;--e-fl:#b6d1aa;--e-fl2:#a5c598;--e-tx:#2f4a26;--e-sub:#557049}
+html body .envl.ev-natal{--e-bg:#eeb8ba;--e-fr:#f6d0d0;--e-fl:#b3d0ad;--e-fl2:#9fc198;--e-tx:#6a1f28;--e-sub:#8a4048}
+html body .envl.ev-noite{--e-bg:#b2badf;--e-fr:#c9cfec;--e-fl:#a0a9d6;--e-fl2:#8e98cb;--e-tx:#2c3263;--e-sub:#4b5288}
+html body .envl.ev-sol{--e-bg:#f6e3a6;--e-fr:#fbefca;--e-fl:#f1d68a;--e-fl2:#e9c972;--e-tx:#6a4c10;--e-sub:#8a6a2a}
+html body .envl.ev-ouro{--e-bg:#ecd9b0;--e-fr:#f6eacf;--e-fl:#e3cb98;--e-fl2:#d6ba82;--e-tx:#5a4214;--e-sub:#7a6234}
+html body .envl.ev-amor{--e-bg:#f2b2be;--e-fr:#f8cdd5;--e-fl:#ea9dad;--e-fl2:#e08a9c;--e-tx:#6b1a2c;--e-sub:#8e3e50}
+html body .envl.ev-perola{--e-bg:#efe8df;--e-fr:#fbf8f3;--e-fl:#e6dccf;--e-fl2:#d8cbbb;--e-tx:#5a2a32;--e-sub:#8a6a5a}
+html body .envl .label{text-shadow:0 1px 0 rgba(255,255,255,.45)!important}
+html body .envl .eb{box-shadow:0 20px 30px -18px rgba(120,70,80,.38), 0 0 0 1px rgba(0,0,0,.035)!important}
+html body .envl .ef{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='38' height='38'%3E%3Cpath d='M19 27s-7-4.4-7-9.3a3.9 3.9 0 017-2.3 3.9 3.9 0 017 2.3c0 4.9-7 9.3-7 9.3z' fill='%23ffffff' opacity='.32'/%3E%3C/svg%3E") 0 0/38px 38px, linear-gradient(180deg,var(--e-fr),var(--e-bg))!important}
+html body .envl.ev-noite .ef{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cpath d='M12 8l1.2 3 3 1.2-3 1.2L12 16.4l-1.2-3-3-1.2 3-1.2z' fill='%23ffffff' opacity='.8'/%3E%3Ccircle cx='32' cy='30' r='1.3' fill='%23fff' opacity='.7'/%3E%3Ccircle cx='26' cy='12' r='.9' fill='%23fff' opacity='.6'/%3E%3C/svg%3E") 0 0/44px 44px, linear-gradient(180deg,var(--e-fr),var(--e-bg))!important}
+html body .envl.ev-perola .ef{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='38' height='38'%3E%3Cpath d='M19 27s-7-4.4-7-9.3a3.9 3.9 0 017-2.3 3.9 3.9 0 017 2.3c0 4.9-7 9.3-7 9.3z' fill='%23c9a96a' opacity='.22'/%3E%3C/svg%3E") 0 0/38px 38px, linear-gradient(180deg,var(--e-fr),var(--e-bg))!important}
+html body .envl .seal{background:radial-gradient(circle at 35% 30%, #d9707f, #b0485a 60%, #8a2f40)!important;box-shadow:0 0 0 3px rgba(255,255,255,.7), 0 6px 14px rgba(120,50,60,.3)!important;color:#fff!important}
+html body .envl.ev1 .seal,html body .envl.ev-natal .seal,html body .envl.ev-noite .seal,html body .envl.ev-ouro .seal{background:radial-gradient(circle at 35% 30%, #fbecc0, #e3c37a 60%, #b8964a)!important;color:#6b4a14!important}
+html body .envl.locked .seal{background:radial-gradient(circle at 35% 30%, #d9a3ad, #a8707c 65%)!important;color:#fff!important}
+html body .envl .est{color:#d06b7c}
+/* ajustar foto */
+@keyframes crfade{from{opacity:0}}
+.cr-wrap{position:fixed;inset:0;z-index:9999;background:rgba(40,20,28,.55);backdrop-filter:blur(4px);display:grid;place-items:center;padding:16px;animation:crfade .2s}
+.cr-box{background:#fffaf6;border-radius:26px;padding:18px 16px 16px;width:100%;max-width:380px;box-shadow:0 30px 70px -20px rgba(0,0,0,.5);display:flex;flex-direction:column;align-items:center;gap:12px}
+.cr-tit{font-family:var(--f-display);font-style:italic;font-size:22px;color:var(--ink);margin:0}
+.cr-stage{border-radius:16px;overflow:hidden;line-height:0;touch-action:none}
+.cr-stage canvas{touch-action:none;cursor:grab}
+.cr-rat{display:flex;gap:5px;flex-wrap:nowrap;justify-content:center}
+html body .cr-rat button{width:auto;min-height:0;padding:6px 10px;font-size:12px;white-space:nowrap;border-radius:99px;background:#f6e6ea;color:#8a2f40;box-shadow:none;border:0}
+html body .cr-rat button.on{background:var(--wine,#7a1424);color:#fff}
+.cr-zoom{display:flex;align-items:center;gap:10px;width:100%;max-width:300px;color:var(--muted);font-weight:700}
+.cr-zoom input{flex:1;accent-color:#b0485a}
+.cr-dica{font-size:11.5px;color:var(--muted);text-align:center}
+.cr-acts{display:flex;gap:8px;width:100%}
+html body .cr-acts button{flex:1;min-height:42px;padding:0 8px;font-size:14px}
+body.cr-aberto{overflow:hidden}
 </style>
 
 <canvas id="petals" aria-hidden="true"></canvas>
@@ -3009,6 +3105,7 @@ function renderHome(y = 0){
       <h1 class="names" aria-label="Diogo e Milena"><span class="n1">Diogo</span><button class="n2" id="logo" aria-label="coração">${RHEART()}</button><span class="n3">Milena</span></h1>
       <p class="hdate">desde 12 de abril de 2026</p>
       <div id="nvbox" class="nvbox"></div>
+      <div id="mdiabox" class="mdiabox"></div>
       <div class="flower float">${FLOWER('fl1','nós dois', C.fotoInicio || f0.foto).replace('#fbe6ea','#f1e6dc').replace('#e9b3c0','#d2b8a9')}<span class="ribbon sway">${RIBBON}</span></div>
       <div class="hcounter" aria-label="Tempo juntos">
         <div><b id="cd">0</b><span>dias</span></div><div><b id="ch">0</b><span>horas</span></div>
@@ -3070,11 +3167,12 @@ function renderHome(y = 0){
       <p class="endtitle">${esc(C.textos.fimNome)}</p>
       <p class="endyear">2026</p>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
-      <p class="endver">versão de 15/10 · 12h30</p>
+      <p class="endver">versão de 15/10 · 15h25</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
   clearInterval(timer); tick(); timer = setInterval(tick, 1000);
+  missoesBox(document.getElementById('mdiabox'));
   setTimeout(chocoDoDia, 1200); setTimeout(avisoAbraco, 400); setTimeout(dedicatoria, 900); setTimeout(avisoRecado, 2600);
   document.getElementById('edprev2')?.addEventListener('click', () => entrarPrevia());
   document.getElementById('edviajar')?.addEventListener('click', abrirViagem);
@@ -3382,7 +3480,7 @@ VIEWS.memoria = () => {
     if(first.dataset.v === b.dataset.v){
       first.classList.add('got'); b.classList.add('got'); first = null; pairs++;
       document.getElementById('pr').textContent = `${pairs} de ${N} pares`;
-      if(pairs === N){ burst(innerWidth/2, innerHeight/2);
+      if(pairs === N){ burst(innerWidth/2, innerHeight/2); jogou('memoria');
         document.getElementById('memEnd').innerHTML = `<div class="paper unfold"><p>Achou todos em ${moves} jogadas!</p>${C.textos.memoriaFim ? `<p>${esc(C.textos.memoriaFim)}</p>` : ''}</div>`; }
     } else { lock = true; setTimeout(()=>{ first.classList.remove('up'); b.classList.remove('up'); first = null; lock = false; }, 800); }
   });
@@ -3467,7 +3565,7 @@ VIEWS.coracoes = () => {
     setTimeout(() => w.scrollIntoView({behavior:'smooth', block:'start'}), 900);
   }
   function end(win, why){
-    stopGame();
+    stopGame(); jogou('coracoes');
     const ov = document.getElementById('ov'); ov.hidden = false;
     if(win){ burst(innerWidth/2, innerHeight/2, 70);
       ov.innerHTML = `<h3>Pegou todos!</h3><p class="lead">Olha embaixo tudo o que eu amo em você.</p><button id="start">Jogar de novo</button>`; }
@@ -3623,16 +3721,73 @@ function desenhaFoto(src, w, h, max, q){ let k = Math.min(1, max / Math.max(w, h
 function compressImage(file, max = 1000, q = .72){
   return new Promise((ok, no) => {
     const img = new Image(), url = URL.createObjectURL(file);
-    img.onload = () => { try{ const r = desenhaFoto(img, img.naturalWidth || img.width, img.naturalHeight || img.height, max, q); URL.revokeObjectURL(url); ok(r); }catch(e){ URL.revokeObjectURL(url); no(e); } };
+    const segue = async (src, w, h) => { try{ const c = await ajustarFoto(src, w, h); ok(desenhaFoto(c, c.width, c.height, max, q)); }catch(e){ no(e); } };
+    img.onload = () => { URL.revokeObjectURL(url); segue(img, img.naturalWidth || img.width, img.naturalHeight || img.height); };
     img.onerror = async () => { URL.revokeObjectURL(url);
-      try{ const bmp = await createImageBitmap(file); ok(desenhaFoto(bmp, bmp.width, bmp.height, max, q)); }
+      try{ const bmp = await createImageBitmap(file); segue(bmp, bmp.width, bmp.height); }
       catch(e){ const er = new Error('formato'); er.code = 'formato'; no(er); } };
     img.src = url;
+  });
+}
+/* ajustar a foto antes de salvar: recortar, dar zoom, posicionar e girar */
+function ajustarFoto(src0, w0, h0){
+  return new Promise((ok, no) => {
+    const LIM = 2400, k0 = Math.min(1, LIM / Math.max(w0, h0));
+    let base = document.createElement('canvas'); base.width = Math.round(w0 * k0); base.height = Math.round(h0 * k0); base.getContext('2d').drawImage(src0, 0, 0, base.width, base.height);
+    const wrap = document.createElement('div'); wrap.className = 'cr-wrap';
+    const RAT = [['orig','Original'],['1','Quadrada'],['0.8','Retrato'],['1.333','Paisagem']];
+    wrap.innerHTML = `<div class="cr-box"><p class="cr-tit">Ajustar a foto</p>
+      <div class="cr-stage" id="crst"><canvas id="crcv"></canvas></div>
+      <div class="cr-rat">${RAT.map(([v, t]) => `<button type="button" data-r="${v}" class="${v === 'orig' ? 'on' : ''}">${t}</button>`).join('')}</div>
+      <div class="cr-zoom"><span>−</span><input type="range" id="crz" min="1" max="4" step="0.01" value="1" aria-label="Zoom"><span>+</span></div>
+      <small class="cr-dica">arrasta pra posicionar · pinça ou usa a barrinha pro zoom</small>
+      <div class="cr-acts"><button type="button" class="ghost" id="crgir">↻ Girar</button><button type="button" class="ghost" id="crcan">Cancelar</button><button type="button" id="crok">Pronto</button></div></div>`;
+    document.body.append(wrap); document.body.classList.add('cr-aberto');
+    const cv = wrap.querySelector('#crcv'), st = wrap.querySelector('#crst'), z = wrap.querySelector('#crz'), x = cv.getContext('2d'), dpr = Math.min(2, devicePixelRatio || 1);
+    const S = Math.min(340, innerWidth - 56), PAD = 14;
+    cv.width = S * dpr; cv.height = S * dpr; cv.style.width = cv.style.height = S + 'px';
+    let ratio = 'orig', fw, fh, fx, fy, s, ox, oy, zoom = 1;
+    const quadro = () => { const a = ratio === 'orig' ? base.width / base.height : +ratio, m = S - PAD * 2;
+      if(a >= 1){ fw = m; fh = m / a; } else { fh = m; fw = m * a; } fx = (S - fw) / 2; fy = (S - fh) / 2; };
+    const prende = () => { const iw = base.width * s, ih = base.height * s; ox = Math.min(fx, Math.max(fx + fw - iw, ox)); oy = Math.min(fy, Math.max(fy + fh - ih, oy)); };
+    const escala = (nz, cx = fx + fw / 2, cy = fy + fh / 2) => { const b = Math.max(fw / base.width, fh / base.height), ns = b * nz;
+      if(s){ ox = cx - (cx - ox) * ns / s; oy = cy - (cy - oy) * ns / s; } else { ox = fx + (fw - base.width * ns) / 2; oy = fy + (fh - base.height * ns) / 2; }
+      s = ns; zoom = nz; z.value = nz; prende(); desenha(); };
+    const desenha = () => { x.setTransform(dpr, 0, 0, dpr, 0, 0); x.fillStyle = '#2b2226'; x.fillRect(0, 0, S, S);
+      x.drawImage(base, ox, oy, base.width * s, base.height * s);
+      x.fillStyle = 'rgba(30,18,22,.55)'; x.beginPath(); x.rect(0, 0, S, S); x.rect(fx, fy, fw, fh); x.fill('evenodd');
+      x.strokeStyle = '#fff'; x.lineWidth = 2; x.strokeRect(fx, fy, fw, fh);
+      x.strokeStyle = 'rgba(255,255,255,.35)'; x.lineWidth = 1; x.beginPath();
+      for(let i = 1; i < 3; i++){ x.moveTo(fx + fw * i / 3, fy); x.lineTo(fx + fw * i / 3, fy + fh); x.moveTo(fx, fy + fh * i / 3); x.lineTo(fx + fw, fy + fh * i / 3); } x.stroke(); };
+    const reinicia = () => { quadro(); s = 0; escala(1); };
+    reinicia();
+    const pts = new Map(); let ini = null;
+    const pos = e => { const r = cv.getBoundingClientRect(); return {x:e.clientX - r.left, y:e.clientY - r.top}; };
+    cv.addEventListener('pointerdown', e => { cv.setPointerCapture(e.pointerId); pts.set(e.pointerId, pos(e)); ini = null; e.preventDefault(); });
+    cv.addEventListener('pointermove', e => { if(!pts.has(e.pointerId)) return; const p = pos(e), a = pts.get(e.pointerId);
+      if(pts.size === 1){ ox += p.x - a.x; oy += p.y - a.y; prende(); desenha(); }
+      else if(pts.size === 2){ const [o] = [...pts.entries()].filter(([id]) => id !== e.pointerId).map(([, v]) => v); const d = Math.hypot(p.x - o.x, p.y - o.y);
+        if(!ini) ini = {d, z:zoom}; else escala(Math.min(4, Math.max(1, ini.z * d / ini.d)), (p.x + o.x) / 2, (p.y + o.y) / 2); }
+      pts.set(e.pointerId, p); e.preventDefault(); });
+    const solta = e => { pts.delete(e.pointerId); ini = null; };
+    cv.addEventListener('pointerup', solta); cv.addEventListener('pointercancel', solta);
+    cv.addEventListener('wheel', e => { e.preventDefault(); const p = pos(e); escala(Math.min(4, Math.max(1, zoom * (e.deltaY < 0 ? 1.08 : 1 / 1.08))), p.x, p.y); }, {passive:false});
+    z.oninput = () => escala(+z.value);
+    wrap.querySelectorAll('[data-r]').forEach(b => b.onclick = () => { ratio = b.dataset.r; wrap.querySelectorAll('[data-r]').forEach(o => o.classList.toggle('on', o === b)); reinicia(); });
+    const fecha = () => { wrap.remove(); document.body.classList.remove('cr-aberto'); };
+    wrap.querySelector('#crgir').onclick = () => { const c = document.createElement('canvas'); c.width = base.height; c.height = base.width; const g = c.getContext('2d');
+      g.translate(c.width, 0); g.rotate(Math.PI / 2); g.drawImage(base, 0, 0); base = c; reinicia(); };
+    wrap.querySelector('#crcan').onclick = () => { fecha(); const e = new Error('cancel'); e.code = 'cancel'; no(e); };
+    wrap.querySelector('#crok').onclick = () => {
+      const sx = (fx - ox) / s, sy = (fy - oy) / s, sw = fw / s, sh = fh / s, c = document.createElement('canvas');
+      c.width = Math.max(1, Math.round(sw)); c.height = Math.max(1, Math.round(sh)); c.getContext('2d').drawImage(base, sx, sy, sw, sh, 0, 0, c.width, c.height);
+      fecha(); ok(c); };
   });
 }
 /* explica em português o que deu errado ao salvar */
 function erroFoto(e){
   const c = (e && (e.code || e.message)) || '';
+  if(/cancel/.test(c)) return 'Foto não trocada.';
   if(/formato/.test(c)) return 'Esse formato de foto não abriu aqui. Tira um print dela e manda o print.';
   if(/permission|insufficient/i.test(c)) return 'O banco não deixou salvar (permissão). Me manda essa mensagem que eu te ajudo a liberar.';
   if(/unauthenticated/i.test(c) || (Sync.mode === 'online' && !Sync.user)) return 'Você não tá logada com o Google, por isso não salvou. Sai do app e entra de novo.';
@@ -4530,16 +4685,11 @@ VIEWS.casinha = () => {
     $('cssaldo').textContent = chocoInfinito() ? '∞' : saldo; $('csfogo').textContent = of.seguidos; $('csfogot').textContent = `${of.seguidos === 1 ? 'dia seguido' : 'dias seguidos'} · ${of.total} no total`;
     if(!jaComecou() && !PREVIA){ const n = faltamInicio();
       $('cshoje').innerHTML = `<span class="cs-espera">${icon('gift')} Os chocolates começam no dia 25 de dezembro</span><small>faltam ${n} ${n === 1 ? 'dia' : 'dias'}. Dá pra espiar tudo até lá</small>`;
-      $('csmis').innerHTML = `<div class="ms-head ms-off"><b>Missões da semana</b><small>começam no dia 25</small></div>`; }
+      $('csmis').innerHTML = `<div class="ms-head ms-off"><b>Missões do dia</b><small>começam no dia 25</small></div>`; }
     else {
     $('cshoje').innerHTML = (of.hoje ? `<span class="ok">${icon('heart')} o seu de hoje já tá guardado</span>` : `<button type="button" id="cspega">${icon('gift')} Pegar o chocolate de hoje</button>`)
       + `<small>${outro === 'Di' ? 'O Di' : 'A Mihzinha'} ${ofo.hoje ? 'também já pegou hoje' : 'ainda não pegou hoje'}${ofo.seguidos ? ` · ${ofo.seguidos} ${ofo.seguidos === 1 ? 'dia seguido' : 'dias seguidos'}` : ''}</small><small class="cs-dica">a cada 7 dias seguidos, +${CASA.bonusOfensiva} chocolates de bônus</small>`;
     $('cspega')?.addEventListener('click', async e => { const r = e.currentTarget.getBoundingClientRect(); burst(r.left + r.width/2, r.top, 24); e.currentTarget.disabled = true; try{ await pegarChocolate(colC, chocs, eu); }catch(x){} });
-    { const pr = progressoMissoes(eu, {chocs, resp, bilh, saud, pensei}), sem = dsStr(inicioSemana());
-      const prontas = MISSOES.filter(m => (pr[m.id] || 0) >= m.meta && !chocs.some(c => c.id === `missao_${sem}_${m.id}_${eu}`)).length, aberto = $('csmis').querySelector('details')?.open || false;
-      $('csmis').innerHTML = `<details ${aberto ? 'open' : ''}><summary class="ms-head"><b>Missões da semana</b><small>${prontas ? `<em>${prontas} pra resgatar</em>` : 'renova toda segunda'} ${icon('plus')}</small></summary><div class="ms-list">` + MISSOES.map(m => { const v = Math.min(m.meta, pr[m.id] || 0), id = `missao_${sem}_${m.id}_${eu}`, pego = chocs.some(c => c.id === id);
-        return `<div class="ms-row ${pego ? 'done' : ''}"><div class="ms-tx"><span>${m.t}</span><div class="ms-bar"><i style="width:${v / m.meta * 100}%"></i></div></div><span class="ms-n">${v}/${m.meta}</span>${pego ? `<span class="ms-ok">${icon('heart')}</span>` : v >= m.meta ? `<button type="button" data-mis="${m.id}">+${m.premio}</button>` : `<span class="ms-pr">+${m.premio}</span>`}</div>`; }).join('') + `</div></details>`;
-      $('csmis').querySelectorAll('[data-mis]').forEach(b => b.onclick = async () => { const m = MISSOES.find(x => x.id === b.dataset.mis); b.disabled = true; const r = b.getBoundingClientRect(); burst(r.left + r.width / 2, r.top, 20); try{ await colC.set(`missao_${sem}_${m.id}_${eu}`, {qtd:m.premio, autor:eu}); }catch(x){ b.disabled = false; } }); }
     }
     if(seqAberta) $('csseq').innerHTML = sequenciaHTML(chocs, eu, outro);
     document.querySelectorAll('#cstabs button').forEach(b => { b.classList.toggle('on', b.dataset.c === aba); if(b.classList.contains('lug')) b.classList.toggle('lock', !tem(b.dataset.c)); });
@@ -4616,6 +4766,7 @@ VIEWS.casinha = () => {
   const offP = colP.on(l => { compras = l; draw(); });
   const offS = Sync.on('state', st => { cs = st.casinha || {}; pensei = st.pensei || {}; draw(); });
   const offR = Sync.col('respostas').on(l => { resp = l; draw(); }), offB = Sync.col('bilhetes').on(l => { bilh = l; draw(); }), offSd = Sync.col('saudade').on(l => { saud = l; draw(); });
+  missoesBox($('csmis'), true);
   const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { offC(); offP(); offS(); offR(); offB(); offSd(); px.dispose(); prev(); };
 };
 
@@ -4668,6 +4819,76 @@ function progressoMissoes(eu, d){
     pensei,
     saud: d.saud.filter(x => x.quem === eu && x.dia >= iniS).length
   };
+}
+
+
+/* ---------- missões do dia (2 por dia: a primeira vale 1 chocolate, a segunda 2) ---------- */
+const jogou = id => { const j = store.get('jogou', {}); j[hoje() + '_' + id] = 1; store.set('jogou', j); };
+const MIS_DIA = {
+  rit: [
+    {id:'resp',   t:() => 'Responder a pergunta do dia', go:'pergunta', ic:'chat'},
+    {id:'saud',   t:() => 'Marcar o termômetro de saudade', go:'saudade', ic:'heart'},
+    {id:'pensei', t:() => 'Apertar "pensei em você" 3 vezes', go:'#pbtn', ic:'heart', meta:3},
+    {id:'diario', t:() => 'Contar no diário como foi o seu dia', go:'diario', ic:'note'}],
+  esc: [
+    {id:'bilh',   t:o => `Mandar um bilhetinho ${o === 'Di' ? 'pro Di' : 'pra Mihzinha'}`, go:'bilhetes', ic:'note'},
+    {id:'cartad', t:o => `Escrever uma cartinha com data ${o === 'Di' ? 'pro Di' : 'pra Mihzinha'}`, go:'cartadata', ic:'mail'},
+    {id:'gostos', t:o => `Colocar uma coisa que ${o === 'Di' ? 'o Di' : 'a Mihzinha'} ama`, go:'gostos', ic:'star'},
+    {id:'musica', t:() => 'Colocar uma música na nossa playlist', go:'playlist', ic:'music'}],
+  brin: [
+    {id:'abraco',   t:o => `Dar um abraço ${o === 'Di' ? 'no Di' : 'na Mihzinha'} na casinha`, go:'casinha', ic:'hug'},
+    {id:'coracoes', t:() => 'Jogar uma partida de Pegue os corações', go:'coracoes', ic:'heartsfall'},
+    {id:'memoria',  t:() => 'Terminar um jogo da memória', go:'memoria', ic:'cards'}]
+};
+function missoesHoje(){
+  const n = Math.round(new Date(hoje() + 'T12:00:00').getTime() / 86400000);
+  const dois = [...MIS_DIA.esc, ...MIS_DIA.brin];
+  return [Object.assign({premio:1}, MIS_DIA.rit[n % 4]), Object.assign({premio:2}, dois[(n * 3 + 1) % dois.length])];
+}
+function progMissao(m, d, eu){
+  const hj = hoje(), ini = new Date(hj + 'T00:00:00').getTime(), meu = (l, k = 'autor') => (l || []).some(x => x[k] === eu && (x.dia ? x.dia === hj : x.criadoEm >= ini));
+  switch(m.id){
+    case 'resp': return +meu(d.respostas, 'quem');
+    case 'saud': return +meu(d.saudade, 'quem');
+    case 'pensei': return ((d.pensei[hj] || {})[eu] || 0);
+    case 'diario': return +meu(d.diario);
+    case 'bilh': return +meu(d.bilhetes);
+    case 'cartad': return +meu(d.cartasData, 'de');
+    case 'gostos': return +meu(d.gostos);
+    case 'musica': return +meu(d.musicas);
+    case 'abraco': return +meu(d.abracos, 'de');
+    default: return store.get('jogou', {})[hj + '_' + m.id] ? 1 : 0;
+  }
+}
+function missoesBox(el, compacto){
+  if(!el) return;
+  if(!jaComecou() && !PREVIA){ el.innerHTML = ''; return; }
+  const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'Mihzinha' : 'Di', d = {pensei:{}}, offs = [];
+  const cols = ['respostas','saudade','diario','bilhetes','cartasData','gostos','musicas','abracos','chocolates'];
+  let raf = 0;
+  const sair = () => { offs.forEach(f => f && f()); offs.length = 0; };
+  const draw = () => { raf = 0; if(!el.isConnected){ sair(); return; }
+    const hj = hoje(), ms = missoesHoje(), chocs = d.chocolates || [];
+    const info = ms.map(m => { const v = progMissao(m, d, eu), meta = m.meta || 1, pego = chocs.some(c => c.id === `missao_${hj}_${m.id}_${eu}`); return {m, v:Math.min(v, meta), meta, feito:v >= meta, pego}; });
+    const pegas = info.filter(x => x.pego).length, tot = info.length;
+    el.innerHTML = `<div class="mdia ${compacto ? 'mdia-c' : ''}">
+      <div class="mdia-h"><span class="mdia-ic">${icon('gift')}</span><div class="mdia-ht"><b>Missões de hoje</b><small>${pegas === tot ? 'as duas feitas, amanhã tem mais' : 'a primeira vale 1 chocolate, a segunda 2'}</small></div><span class="mdia-n">${pegas}/${tot}</span></div>
+      ${info.map(x => `<button type="button" class="mdia-row ${x.pego ? 'pego' : x.feito ? 'pronta' : ''}" data-mid="${x.m.id}">
+        <span class="mr-ic">${icon(x.m.ic)}</span>
+        <span class="mr-t">${esc(x.m.t(outro))}<small>${x.pego ? 'feita' : x.feito ? `toca pra pegar ${x.m.premio === 1 ? 'o chocolate' : `os ${x.m.premio} chocolates`}` : x.meta > 1 ? `${x.v} de ${x.meta} · toca pra ir` : 'toca pra ir'}</small></span>
+        <span class="mr-r">${x.pego ? '♥︎' : x.feito ? `+${x.m.premio}` : `+${x.m.premio} ›`}</span></button>`).join('')}</div>`;
+    el.querySelectorAll('[data-mid]').forEach(b => b.onclick = async () => {
+      const x = info.find(i => i.m.id === b.dataset.mid); if(!x || x.pego) return;
+      if(x.feito){ const r = b.getBoundingClientRect(); burst(r.left + r.width - 30, r.top + r.height / 2, 26); b.disabled = true;
+        try{ await Sync.col('chocolates').set(`missao_${hj}_${x.m.id}_${eu}`, {qtd:x.m.premio, autor:eu, dia:hj}); }catch(e){ b.disabled = false; } return; }
+      if(x.m.go.startsWith('#')){ const alvo = document.querySelector(x.m.go); if(alvo){ alvo.scrollIntoView({behavior:'smooth', block:'center'}); alvo.classList.remove('mpulse'); void alvo.offsetWidth; alvo.classList.add('mpulse'); } else { renderHome(0); setTimeout(() => { const a = document.querySelector(x.m.go); a && a.scrollIntoView({behavior:'smooth', block:'center'}); a && a.classList.add('mpulse'); }, 400); } return; }
+      openStop(x.m.go);
+    });
+  };
+  const pede = () => { if(!raf) raf = requestAnimationFrame(draw); };
+  cols.forEach(n => offs.push(Sync.col(n).on(l => { d[n] = l; pede(); })));
+  offs.push(Sync.on('state', st => { d.pensei = st.pensei || {}; pede(); }));
+  draw();
 }
 
 /* ---------- abraços na casinha ---------- */
@@ -4815,7 +5036,7 @@ VIEWS.lugares = () => {
   const col = Sync.col('lugares'), $ = id => document.getElementById(id);
   let list = [], img = '';
   $('lgpick').onclick = () => { $('lgfile').value = ''; $('lgfile').click(); };
-  $('lgfile').onchange = async () => { const f = $('lgfile').files[0]; if(!f) return; try{ img = await compressImage(f, 1000, .72); $('lgprev').innerHTML = `<img src="${img}" alt="">`; }catch(e){ $('lge').textContent = 'Não deu pra usar essa foto.'; } };
+  $('lgfile').onchange = async () => { const f = $('lgfile').files[0]; if(!f) return; try{ img = await compressImage(f, 1000, .72); $('lgprev').innerHTML = `<img src="${img}" alt="">`; }catch(e){ $('lge').textContent = e.code === 'cancel' ? '' : 'Não deu pra usar essa foto.'; } };
   const draw = () => { if(!$('lgl2')) return;
     const l = [...list].sort((a, b) => (b.data || '').localeCompare(a.data || ''));
     $('lgl2').innerHTML = l.length ? l.map((p, k) => `<article class="lg-card" style="--r:${[-1.4,1.2,-.8,1.6][k % 4]}deg">${p.img ? `<div class="lg-ph"><img src="${p.img}" alt="" loading="lazy"></div>` : ''}
@@ -5140,7 +5361,7 @@ VIEWS.editar = (foco, origem, abaIni) => {
   $('edfile').onchange = async () => { const f = $('edfile').files[0]; if(!f || !alvo) return; const card = $('edb').querySelector(`[data-slot="${alvo}"] .ed-ph`); if(card) card.innerHTML = '<span><small>preparando…</small></span>';
     if(Sync.mode === 'online' && !Sync.user){ if(card) card.innerHTML = `<span><small>${erroFoto({code:'unauthenticated'})}</small></span>`; return; }
     try{ const img = await compressImage(f, alvo.startsWith('memfoto') ? 520 : 900, .74); if(card) card.innerHTML = '<span><small>salvando…</small></span>'; await comTempo(col.set(alvo, {img})); csToast('Foto salva ♥'); setTimeout(() => draw(), 300); }
-    catch(e){ if(card) card.innerHTML = `<span class="ed-err"><small>${erroFoto(e)}</small></span>`; csToast(erroFoto(e)); } };
+    catch(e){ if(e.code === 'cancel'){ draw(); return; } if(card) card.innerHTML = `<span class="ed-err"><small>${erroFoto(e)}</small></span>`; csToast(erroFoto(e)); } };
   document.querySelectorAll('.ed-tabs button').forEach(b => b.onclick = () => { aba = b.dataset.a; store.set('edAba', aba); draw(); });
   ligarViagem($('edvgbox'));
   $('edzerar').onclick = async e => { const b = e.currentTarget, msg = $('rsmsg'), sel = [...document.querySelectorAll('[data-rs]:checked')].map(x => x.dataset.rs);
@@ -5208,7 +5429,7 @@ VIEWS.gostos = () => {
       b.disabled = true; try{ if(editando) await col.set(editando.id, {sobre:editando.sobre, autor:eu, img:foto, legenda:leg, cat:$('gscat').value}); else await col.add({sobre:outro, autor:eu, img:foto, legenda:leg, cat:$('gscat').value}); const eraEd = !!editando; editando = null; foto = ''; formAberto = !eraEd; sparkle(b); drawForm(); }catch(x){ b.disabled = false; $('gserr').textContent = erroFoto(x); } };
   };
   $('gsfile').onchange = async () => { const f = $('gsfile').files[0]; if(!f) return; $('gspick').innerHTML = '<span><small>preparando…</small></span>';
-    try{ foto = await compressImage(f, 700, .74); $('gspick').innerHTML = `<img src="${foto}" alt="">`; }catch(e){ $('gspick').innerHTML = '<span><small>não deu, tenta outra</small></span>'; } };
+    try{ foto = await compressImage(f, 700, .74); $('gspick').innerHTML = `<img src="${foto}" alt="">`; }catch(e){ $('gspick').innerHTML = e.code === 'cancel' ? (foto ? `<img src="${foto}" alt="">` : `<span>${icon('image')}<small>escolher foto</small></span>`) : '<span><small>não deu, tenta outra</small></span>'; } };
   document.querySelectorAll('.gs-tabs button').forEach(b => b.onclick = () => { aba = b.dataset.a; store.set('gsAba', aba); foto = ''; editando = null; drawForm(); draw(); });
   drawForm();
   /* categorias: os dois criam, renomeiam e apagam */
@@ -5414,14 +5635,24 @@ VIEWS.financas = () => {
   const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { offC(); offS(); prev(); };
 };
 
+
+/* cor do envelope combinando com o tema da carta */
+function evCor(t, k){
+  const x = String(t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const temas = [[/natal/, 'ev-natal'], [/dormir|noite|sono|insonia/, 'ev-noite'], [/rir|feliz \{ano\}|sorri|alegr|engracad/, 'ev-sol'], [/bravo|brig|raiva|chatead/, 'ev1'],
+    [/triste|chor|ruim|dificil/, 'ev2'], [/saudade|longe|falta/, 'ev0'], [/duvid|insegur|medo|ansios/, 'ev5'], [/casamento|casar/, 'ev-perola'], [/noivado|ano novo|\{ano\}|ouro/, 'ev-ouro'],
+    [/aniversario|niver/, 'ev4'], [/namorad|namoro|de nos|ano de|anos/, 'ev-amor'], [/cansad|estress|calma/, 'ev3']];
+  for(const [r, c] of temas) if(r.test(x)) return c;
+  return 'ev' + (k % 6);
+}
 /* ---------- envelopes (cartas pro futuro) ---------- */
 function envelopes(list, seal){
   const now = new Date(), fmt = d => d.toLocaleDateString('pt-BR');
   return `<div class="envlist">${list.map((c,k)=>{
     const locked = c.abre && c.abre > now;
     const sub = c.quando ? c.quando : locked ? `abre em ${fmt(c.abre)} · faltam ${Math.ceil((c.abre-now)/86400000)} dias` : c.abre ? 'já pode abrir' : 'abre quando você precisar';
-    return `<button class="envl st ${locked?'locked':''}" style="--i:${k}" data-k="${k}" aria-label="${esc(c.titulo)}">
-      <span class="eb"></span><span class="ep"></span><span class="ef"></span><span class="efl"></span>
+    return `<button class="envl st ${evCor(c.titulo, k)} ${locked?'locked':''}" style="--i:${k}" data-k="${k}" aria-label="${esc(c.titulo)}">
+      <span class="eb"></span><span class="ep"></span><span class="ef"></span><span class="efl"></span><span class="est">${icon('heart')}</span>
       <span class="seal">${locked ? icon('lock') : seal}</span>
       <span class="label">${esc(c.titulo)}<small>${esc(sub)}</small></span></button>
       <div class="slot" id="slot${k}"></div>`;
@@ -5832,8 +6063,8 @@ VIEWS.abra = () => {
     box.innerHTML = C.abraQuando.map(cat => {
       const minhas = list.filter(c => c.cat === cat.id && autorDe(c) === eu), pool = abraPool(list, cat, eu), novas = pool.filter(c => !lidas[c.id] && !c.vazio).length;
       const sub = escrevendo() ? `${minhas.length} ${minhas.length === 1 ? 'escrita' : 'escritas'} · ${minhas.filter(c => lidas[c.id]).length} ${ele === 'ele' ? 'lidas por ele' : 'lidas por ela'}` : (pool[0] && pool[0].vazio ? 'ainda sem carta' : novas ? `${novas} ${novas === 1 ? 'carta nova' : 'cartas novas'}` : 'você já leu todas');
-      return `<button class="envl ${!escrevendo() && openFor[cat.id] ? 'open' : ''}" data-c="${cat.id}" aria-label="${esc(cat.titulo)}">
-        <span class="eb"></span><span class="ep"></span><span class="ef"></span><span class="efl"></span>
+      return `<button class="envl ${evCor(cat.titulo, C.abraQuando.indexOf(cat))} ${!escrevendo() && openFor[cat.id] ? 'open' : ''}" data-c="${cat.id}" aria-label="${esc(cat.titulo)}">
+        <span class="eb"></span><span class="ep"></span><span class="ef"></span><span class="efl"></span><span class="est">${icon('heart')}</span>
         <span class="seal">${escrevendo() ? icon('plus') : (novas ? novas : '♥︎')}</span>
         <span class="label">${esc(cat.titulo)}<small>${sub}</small></span></button>
         <div class="slot" id="slot-${cat.id}">${openFor[cat.id] === 'EDIT' ? (escrevendo() ? editHtml(cat.id) : '') : (!escrevendo() && openFor[cat.id]) || ''}</div>`;
