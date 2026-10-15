@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=36">
-<link rel="apple-touch-icon" href="icon-180.png?v=36">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=36">
+<link rel="manifest" href="manifest.json?v=37">
+<link rel="apple-touch-icon" href="icon-180.png?v=37">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=37">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -1708,6 +1708,81 @@ html body .cr-rat button.on{background:var(--wine,#7a1424);color:#fff}
 .cr-acts{display:flex;gap:8px;width:100%}
 html body .cr-acts button{flex:1;min-height:42px;padding:0 8px;font-size:14px}
 body.cr-aberto{overflow:hidden}
+/* áudio */
+.aud{display:flex;align-items:center;gap:10px;margin:12px 0 6px;padding:8px 12px 8px 8px;border-radius:99px;background:linear-gradient(135deg,#fde7ec,#f6dbe8);box-shadow:0 6px 16px -10px rgba(155,22,48,.5), inset 0 0 0 1px rgba(200,24,44,.12);cursor:pointer;font-family:var(--f-body);user-select:none;-webkit-tap-highlight-color:transparent;max-width:320px}
+.aud-pl{width:38px;height:38px;border-radius:50%;flex:none;display:grid;place-items:center;background:linear-gradient(135deg,#e8506a,#9b1630);color:#fff;font-size:22px;box-shadow:0 4px 10px -4px rgba(155,22,48,.7)}
+.aud-pl svg{width:18px;height:18px;fill:#fff}.aud-pl .ap-pause,.aud.tocando .aud-pl .ap-play{display:none}.aud.tocando .aud-pl .ap-pause{display:block}
+.aud-mid{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.aud-tx{font-size:13px;font-weight:700;color:#7a1424;line-height:1.1;font-style:normal;text-align:left}
+.aud-bar{height:4px;border-radius:99px;background:rgba(155,22,48,.15);overflow:hidden;display:block}.aud-bar i{display:block;height:100%;width:0;background:#c8182c;border-radius:99px;transition:width .25s linear}
+.aud-wave{display:flex;gap:3px;align-items:center;height:18px;flex:none}.aud-wave i{width:3px;height:6px;border-radius:3px;background:#d0566c;opacity:.6}
+.aud.tocando .aud-wave i,.aud-wave.on i{animation:audw .9s ease-in-out infinite}
+.aud-wave i:nth-child(2){animation-delay:.15s!important}.aud-wave i:nth-child(3){animation-delay:.3s!important}.aud-wave i:nth-child(4){animation-delay:.45s!important}.aud-wave i:nth-child(5){animation-delay:.6s!important}
+@keyframes audw{50%{height:17px;opacity:1}}
+.postit .aud{margin:8px 0;transform:none;padding:6px 12px 6px 6px;gap:8px}.postit .aud-wave{display:none}.postit .aud-pl{width:32px;height:32px}.postit .aud-tx{font-size:12px;white-space:nowrap}
+.grav{margin:2px 0 4px;width:100%}
+html body .grav-b{display:flex;align-items:center;gap:8px;width:100%;min-height:0;padding:11px 14px;border-radius:16px;background:#fff;border:1.5px dashed rgba(200,24,44,.35);color:#9b1630;font-size:14px;font-weight:700;box-shadow:none;text-align:left}
+.grav-b .icn{font-size:19px;flex:none}.grav-b span{white-space:nowrap}.grav-b small{white-space:nowrap;margin-left:auto;font-size:11px;font-weight:600;color:var(--muted)}
+.grav-on{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:16px;background:#fff0f2;border:1.5px solid rgba(200,24,44,.3)}
+.grav-dot{width:11px;height:11px;border-radius:50%;background:#e0263f;animation:gpulse 1s ease-in-out infinite;flex:none}
+@keyframes gpulse{50%{opacity:.3;transform:scale(.8)}}
+.grav-t{font-size:13px;font-weight:700;color:#9b1630;flex:1}
+html body .grav-stop{width:auto;min-height:0;padding:7px 14px;font-size:13px;border-radius:99px}
+.grav-ok{display:flex;flex-direction:column;align-items:flex-start;gap:2px}.grav-ok .aud{margin:4px 0 0}
+.grav-ok .linkbtn{font-size:12px}
+.cd-env .icn{display:inline-block;vertical-align:-2px}
+/* tour do primeiro dia */
+.tour{position:fixed;inset:0;z-index:9000;display:grid;place-items:center;padding:20px;background:rgba(60,20,34,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity .35s}
+.tour.in{opacity:1}
+.tour-card{position:relative;width:100%;max-width:360px;background:linear-gradient(180deg,var(--tb) 0%,#fffaf6 46%);border-radius:30px;padding:40px 24px 24px;text-align:center;box-shadow:0 40px 80px -30px rgba(60,10,25,.6);display:flex;flex-direction:column;align-items:center;gap:12px;animation:tourin .45s cubic-bezier(.3,1.3,.5,1)}
+@keyframes tourin{from{transform:translateY(16px) scale(.96);opacity:0}}
+.tour-ic{width:84px;height:84px;border-radius:26px;display:grid;place-items:center;background:#fff;color:var(--tf);font-size:40px;box-shadow:0 14px 28px -14px rgba(60,10,25,.45);overflow:hidden}
+.tour-ic img{width:100%;height:100%;object-fit:cover}
+.tour-card h2{font-family:var(--f-display);font-style:italic;font-size:28px;line-height:1.1;color:var(--ink);margin:6px 0 0}
+.tour-card > p{font-size:15px;line-height:1.5;color:var(--ink2);margin:0}
+.tour-dots{display:flex;gap:6px;margin:6px 0 2px}.tour-dots i{width:7px;height:7px;border-radius:99px;background:rgba(122,20,36,.18);transition:width .3s}.tour-dots i.on{width:22px;background:var(--tf)}
+.tour-acts{display:flex;gap:8px;width:100%}html body .tour-acts button{flex:1;min-height:46px}
+html body .tour-pular{position:absolute;top:12px;right:14px;width:auto;min-height:0;padding:4px 8px;background:none;border:0;box-shadow:none;color:var(--muted);font-size:12.5px;font-weight:700}
+.tour-sign{font-family:var(--f-hand);font-size:20px;color:#9b1630;margin:0}
+/* folhinha de baixo (missões especiais) */
+.sheet2{position:relative;width:100%;max-width:400px;max-height:86vh;overflow:auto;background:#fffaf6;border-radius:26px;padding:26px 18px 18px;box-shadow:0 30px 70px -20px rgba(0,0,0,.45);text-align:left}
+.sheet2 h3{font-family:var(--f-display);font-style:italic;font-size:22px;margin:0 40px 6px 0;color:var(--ink)}
+.sheet2 .lead{font-size:13px;margin:0 0 12px;text-align:left}
+.mesp-l{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.mesp-it{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;background:#fdf1f3}.mesp-it > div{flex:1;min-width:0}.mesp-it b{display:block;font-size:14px;color:var(--ink)}.mesp-it small{font-size:11.5px;color:var(--muted);font-weight:600}
+.mesp-it.ok{background:#f1f6ee}
+html body .mdia-esp{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;min-height:0;margin:2px 0 0;padding:8px;background:none;border:0;box-shadow:none;color:#9b1630;font-size:12.5px;font-weight:700}
+.mdia-esp .icn{font-size:14px}
+.mr-esp{display:block;font-style:normal;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#c9822a;margin-bottom:2px}
+/* hoje com o outro */
+.hj-o{background:rgba(255,255,255,.72);border-radius:22px;padding:12px;box-shadow:0 0 0 1.5px rgba(200,24,44,.1);text-align:left}
+.hj-t{font-family:var(--f-display);font-style:italic;font-size:17px;color:var(--ink);margin:0 4px 8px}
+html body .hj-it{display:flex;align-items:center;gap:10px;width:100%;min-height:0;margin:0 0 6px;padding:8px 10px;border-radius:14px;background:#fff;border:0;box-shadow:none;color:var(--ink2);font-size:13.5px;font-weight:600;text-align:left;line-height:1.3}
+.hj-it b{color:#9b1630}
+html body .hj-it.forte{background:linear-gradient(135deg,#fff4d6,#ffe6b0);color:#6a4c10;animation:mglow 1.8s ease-in-out infinite}
+.hj-ic{width:28px;height:28px;border-radius:9px;display:grid;place-items:center;background:#fde3e8;color:#c8182c;font-size:15px;flex:none}
+.hj-it.forte .hj-ic{background:#fff;color:#c9822a}
+.hj-vazio{font-size:13px;color:var(--muted);margin:0 4px 4px;line-height:1.4}
+/* prêmios */
+.pz-saldo{display:flex;align-items:center;gap:10px;justify-content:center;background:#fff;border-radius:99px;padding:8px 20px 8px 10px;width:max-content;margin:0 auto 6px;box-shadow:0 10px 24px -14px rgba(122,20,36,.4)}
+.pz-saldo .cs-ic{width:38px;height:38px;display:grid;place-items:center}.pz-saldo .cs-ic svg{width:34px;height:34px}
+.pz-saldo b{font-size:22px;color:var(--ink);display:block;line-height:1}.pz-saldo small{font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#9b1630}
+.pz-list{display:flex;flex-direction:column;gap:9px}
+.pz-card{display:flex;align-items:center;gap:11px;padding:12px;border-radius:18px;background:#fff;box-shadow:0 10px 24px -18px rgba(122,20,36,.45), 0 0 0 1px rgba(200,24,44,.08)}
+.pz-card.esp{background:linear-gradient(135deg,#fff8e6,#ffefc8)}.pz-card.ok{background:#f1f6ee}
+.pz-ic{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,#f6c94c,#e3a118);color:#fff;font-size:19px;flex:none}
+.pz-card.ok .pz-ic{background:#cfe3c6;color:#4f8a4a}
+.pz-tx{flex:1;min-width:0}.pz-tx b{display:block;font-size:14.5px;color:var(--ink);line-height:1.25}.pz-tx small{font-size:11.5px;color:var(--muted);font-weight:600}
+html body .pz-buy{display:flex;align-items:center;gap:4px;width:auto;min-height:0;padding:7px 12px;border-radius:99px;font-size:14px;font-weight:800;flex:none}
+.pz-buy svg{width:20px;height:20px}
+html body .pz-buy.falta{background:#efe6e8;color:#9a7c82;box-shadow:none}
+html body .pz-ok{width:auto;min-height:0;padding:7px 12px;font-size:13px;border-radius:99px;flex:none}
+.pz-form{gap:10px}
+.pz-sug{display:flex;flex-wrap:wrap;gap:6px}
+html body .pz-sug button{width:auto;min-height:0;padding:6px 10px;font-size:12px;border-radius:99px;background:#fdf1f3;color:#9b1630;box-shadow:none;border:0;font-weight:700}
+html body .cs-premios{display:flex;align-items:center;gap:11px;width:100%;min-height:0;margin:2px 0 10px;padding:12px;border-radius:20px;background:linear-gradient(135deg,#fff8e6,#ffedc4);border:0;color:var(--ink);text-align:left;box-shadow:0 10px 24px -16px rgba(170,110,20,.55)}
+.cs-premios b{display:block;font-size:14.5px}.cs-premios small{font-size:11.5px;color:#8a6a2a;font-weight:600}.cs-premios > span:nth-child(2){flex:1}
+.cs-seta{font-size:22px;color:#c9822a;font-weight:700}
 </style>
 
 <canvas id="petals" aria-hidden="true"></canvas>
@@ -2646,6 +2721,7 @@ const ICONS = {
   pencil:'<path d="M4 20l1-4L16 5l3 3L8 19z"/><path d="M14 7l3 3"/>',
   image:'<rect x="3.5" y="4.5" width="17" height="15" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="M4 18l5-5 4 4 3-3 4 4"/>',
   trash:'<path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12"/>',
+  mic:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/>',
   play:'<circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/>',
   whats:'<path d="M4 20l1.3-4A8 8 0 1112 20a8 8 0 01-4-1z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 .8c-1-.4-1.9-1.3-2.3-2.3l.8-1-1-2z"/>'
 };
@@ -3041,7 +3117,8 @@ const LISTS = {
     {id:'retro',    ico:'star',     t:'Retrospectiva do ano', s:'Abre no fim de dezembro'},
     {id:'capsula',  ico:'hourglass',t:'Cápsula do tempo',    s:'Abre no Natal de 2027'},
     {id:'filhos',   ico:'baby',     t:'Ao nosso primeiro filho', s:'Cartas que nós dois escrevemos'},
-    {id:'vales',    ico:'ticket',   t:'Vales-presente',      s:'Pra resgatar juntos'}]
+    {id:'vales',    ico:'ticket',   t:'Vales-presente',      s:'Pra resgatar juntos'},
+    {id:'premios',  ico:'gift',     t:'Prêmios de verdade',  s:'Troca chocolates por mimos'}]
 };
 let homeTab = 'hoje';
 let timer;
@@ -3089,7 +3166,7 @@ const PAL_UI = {rosa:['#ffe1e8','#d6456b'], vinho:['#f8dde2','#9b1630'], lavanda
 const COR_UI = {saudade:'rosa', diario:'pessego', pergunta:'rosa', bilhetes:'azul', mes:'salvia', mensagem:'vinho',
   primeiras:'lavanda', playlist:'azul', planos:'salvia', datas:'mostarda', comemorativas:'vinho', contagem:'menta', lugares:'azul', gostos:'coral', filmes:'lavanda', financas:'salvia', fotos:'rosa', memoria2:'rosa',
   casinha:'pessego', roleta:'mostarda', coracoes:'rosa', memoria:'lavanda', raspa:'menta', quiz:'azul', provavel:'coral',
-  abra:'rosa', album:'lavanda', cartas:'vinho', cartadata:'pessego', retro:'mostarda', capsula:'menta', filhos:'azul', vales:'coral', carta:'vinho', editar:'lavanda'};
+  abra:'rosa', album:'lavanda', cartas:'vinho', cartadata:'pessego', retro:'mostarda', capsula:'menta', filhos:'azul', vales:'coral', premios:'mostarda', carta:'vinho', editar:'lavanda'};
 const corDe = id => PAL_UI[COR_UI[id] || 'rosa'];
 const pills = list => `<div class="pills2">${list.map(r => { const [bg, fg] = corDe(r.id); return `<button class="pill2" data-go="${r.id}" style="--bg:${bg};--fg:${fg}"><span class="p2i">${icon(r.ico)}</span><span class="p2t"><b>${r.t}</b><small>${r.s}</small></span></button>`; }).join('')}</div>`;
 function renderHome(y = 0){
@@ -3106,6 +3183,7 @@ function renderHome(y = 0){
       <p class="hdate">desde 12 de abril de 2026</p>
       <div id="nvbox" class="nvbox"></div>
       <div id="mdiabox" class="mdiabox"></div>
+      <div id="hjbox" class="mdiabox"></div>
       <div class="flower float">${FLOWER('fl1','nós dois', C.fotoInicio || f0.foto).replace('#fbe6ea','#f1e6dc').replace('#e9b3c0','#d2b8a9')}<span class="ribbon sway">${RIBBON}</span></div>
       <div class="hcounter" aria-label="Tempo juntos">
         <div><b id="cd">0</b><span>dias</span></div><div><b id="ch">0</b><span>horas</span></div>
@@ -3167,12 +3245,12 @@ function renderHome(y = 0){
       <p class="endtitle">${esc(C.textos.fimNome)}</p>
       <p class="endyear">2026</p>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
-      <p class="endver">versão de 15/10 · 15h25</p>
+      <p class="endver">versão de 15/10 · 16h40</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
   clearInterval(timer); tick(); timer = setInterval(tick, 1000);
-  missoesBox(document.getElementById('mdiabox'));
+  missoesBox(document.getElementById('mdiabox')); painelOutro(document.getElementById('hjbox')); setTimeout(tourInicio, 1800);
   setTimeout(chocoDoDia, 1200); setTimeout(avisoAbraco, 400); setTimeout(dedicatoria, 900); setTimeout(avisoRecado, 2600);
   document.getElementById('edprev2')?.addEventListener('click', () => entrarPrevia());
   document.getElementById('edviajar')?.addEventListener('click', abrirViagem);
@@ -4653,6 +4731,7 @@ VIEWS.casinha = () => {
      </div>
      ${modoEd() && !PREVIA ? `<div class="cs-teste"><span>${icon('pencil')} Quer montar e testar tudo sem gastar? Na viagem no tempo os chocolates são infinitos e nada vale de verdade.</span><button type="button" id="csteste">Testar com chocolates infinitos</button></div>` : ''}
      <div class="cs-mis" id="csmis"></div>
+     <button type="button" class="cs-premios" id="cspz"><span class="pz-ic">${icon('gift')}</span><span><b>Prêmios de verdade</b><small>troca seus chocolates por mimos de verdade</small></span><span class="cs-seta">›</span></button>
      <div class="cs-tabs" id="cstabs">${CASA.comodos.map((c, k) => `${c.lugar && !CASA.comodos[k - 1].lugar ? '<span class="cs-tsep">passeios</span>' : ''}<button type="button" data-c="${c.id}"${c.lugar ? ' class="lug"' : ''}>${c.t}</button>`).join('')}</div>
      <div class="cs-scene px" id="csscene"><canvas id="cscv"></canvas></div>
      <p class="cs-fx" id="csfx"></p>
@@ -4766,7 +4845,7 @@ VIEWS.casinha = () => {
   const offP = colP.on(l => { compras = l; draw(); });
   const offS = Sync.on('state', st => { cs = st.casinha || {}; pensei = st.pensei || {}; draw(); });
   const offR = Sync.col('respostas').on(l => { resp = l; draw(); }), offB = Sync.col('bilhetes').on(l => { bilh = l; draw(); }), offSd = Sync.col('saudade').on(l => { saud = l; draw(); });
-  missoesBox($('csmis'), true);
+  missoesBox($('csmis'), true); $('cspz').onclick = () => openStop('premios');
   const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { offC(); offP(); offS(); offR(); offB(); offSd(); px.dispose(); prev(); };
 };
 
@@ -4864,23 +4943,29 @@ function missoesBox(el, compacto){
   if(!el) return;
   if(!jaComecou() && !PREVIA){ el.innerHTML = ''; return; }
   const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'Mihzinha' : 'Di', d = {pensei:{}}, offs = [];
-  const cols = ['respostas','saudade','diario','bilhetes','cartasData','gostos','musicas','abracos','chocolates'];
+  const cols = ['respostas','saudade','diario','bilhetes','cartasData','gostos','musicas','abracos','chocolates','missoesEsp'];
   let raf = 0;
   const sair = () => { offs.forEach(f => f && f()); offs.length = 0; };
   const draw = () => { raf = 0; if(!el.isConnected){ sair(); return; }
-    const hj = hoje(), ms = missoesHoje(), chocs = d.chocolates || [];
-    const info = ms.map(m => { const v = progMissao(m, d, eu), meta = m.meta || 1, pego = chocs.some(c => c.id === `missao_${hj}_${m.id}_${eu}`); return {m, v:Math.min(v, meta), meta, feito:v >= meta, pego}; });
+    const hj = hoje(), ms = missoesHoje(), chocs = d.chocolates || [], esp = missaoEspHoje(d.missoesEsp, eu);
+    if(esp) ms[1] = {id:'esp_' + esp.id, t:() => esp.t, ic:'star', premio:2, esp, manual:1};
+    const info = ms.map(m => { const v = m.manual ? (m.esp.feita ? 1 : 0) : progMissao(m, d, eu), meta = m.meta || 1, pego = chocs.some(c => c.id === `missao_${hj}_${m.id}_${eu}`); return {m, v:Math.min(v, meta), meta, feito:v >= meta, pego}; });
     const pegas = info.filter(x => x.pego).length, tot = info.length;
     el.innerHTML = `<div class="mdia ${compacto ? 'mdia-c' : ''}">
       <div class="mdia-h"><span class="mdia-ic">${icon('gift')}</span><div class="mdia-ht"><b>Missões de hoje</b><small>${pegas === tot ? 'as duas feitas, amanhã tem mais' : 'a primeira vale 1 chocolate, a segunda 2'}</small></div><span class="mdia-n">${pegas}/${tot}</span></div>
       ${info.map(x => `<button type="button" class="mdia-row ${x.pego ? 'pego' : x.feito ? 'pronta' : ''}" data-mid="${x.m.id}">
         <span class="mr-ic">${icon(x.m.ic)}</span>
-        <span class="mr-t">${esc(x.m.t(outro))}<small>${x.pego ? 'feita' : x.feito ? `toca pra pegar ${x.m.premio === 1 ? 'o chocolate' : `os ${x.m.premio} chocolates`}` : x.meta > 1 ? `${x.v} de ${x.meta} · toca pra ir` : 'toca pra ir'}</small></span>
-        <span class="mr-r">${x.pego ? '♥︎' : x.feito ? `+${x.m.premio}` : `+${x.m.premio} ›`}</span></button>`).join('')}</div>`;
+        <span class="mr-t">${x.m.esp ? `<em class="mr-esp">missão especial ${x.m.esp.autor === 'Di' ? 'do Di' : 'da Mihzinha'}</em>` : ''}${esc(x.m.t(outro))}<small>${x.pego ? 'feita' : x.m.manual && !x.feito ? 'quando fizer, toca aqui' : x.feito ? `toca pra pegar ${x.m.premio === 1 ? 'o chocolate' : `os ${x.m.premio} chocolates`}` : x.meta > 1 ? `${x.v} de ${x.meta} · toca pra ir` : 'toca pra ir'}</small></span>
+        <span class="mr-r">${x.pego ? '♥︎' : x.feito ? `+${x.m.premio}` : `+${x.m.premio} ›`}</span></button>`).join('')}
+      <button type="button" class="mdia-esp" id="mdesp">${icon('star')} criar uma missão especial ${outro === 'Di' ? 'pro Di' : 'pra Mihzinha'}</button></div>`;
+    el.querySelector('#mdesp').onclick = abrirMissoesEsp;
     el.querySelectorAll('[data-mid]').forEach(b => b.onclick = async () => {
       const x = info.find(i => i.m.id === b.dataset.mid); if(!x || x.pego) return;
       if(x.feito){ const r = b.getBoundingClientRect(); burst(r.left + r.width - 30, r.top + r.height / 2, 26); b.disabled = true;
         try{ await Sync.col('chocolates').set(`missao_${hj}_${x.m.id}_${eu}`, {qtd:x.m.premio, autor:eu, dia:hj}); }catch(e){ b.disabled = false; } return; }
+      if(x.m.manual){ if(!b.dataset.sure){ b.dataset.sure = 1; b.querySelector('small').textContent = 'fez mesmo? toca de novo'; setTimeout(() => { if(b.isConnected){ delete b.dataset.sure; pede(); } }, 2500); return; }
+        const r = b.getBoundingClientRect(); burst(r.left + r.width - 30, r.top + r.height / 2, 30); b.disabled = true;
+        try{ await Sync.col('missoesEsp').set(x.m.esp.id, Object.assign({}, x.m.esp, {feita:true, feitaDia:hj})); await Sync.col('chocolates').set(`missao_${hj}_${x.m.id}_${eu}`, {qtd:x.m.premio, autor:eu, dia:hj}); }catch(e){ b.disabled = false; } return; }
       if(x.m.go.startsWith('#')){ const alvo = document.querySelector(x.m.go); if(alvo){ alvo.scrollIntoView({behavior:'smooth', block:'center'}); alvo.classList.remove('mpulse'); void alvo.offsetWidth; alvo.classList.add('mpulse'); } else { renderHome(0); setTimeout(() => { const a = document.querySelector(x.m.go); a && a.scrollIntoView({behavior:'smooth', block:'center'}); a && a.classList.add('mpulse'); }, 400); } return; }
       openStop(x.m.go);
     });
@@ -4890,6 +4975,127 @@ function missoesBox(el, compacto){
   offs.push(Sync.on('state', st => { d.pensei = st.pensei || {}; pede(); }));
   draw();
 }
+
+
+/* ---------- primeiro dia guiado ---------- */
+const TOUR_IC = ['heart','note','gift','mail','sparkle'], TOUR_COR = [['#fde3e8','#c8182c'],['#e6eefb','#3f74c4'],['#fff1d6','#c9822a'],['#efe7fb','#7b5cc4'],['#e3f0dc','#4f8a4a']];
+function tourInicio(forcar){
+  if(!forcar && (store.get('viuTour', false) || !(jaComecou() || PREVIA))) return;
+  if(!document.querySelector('.home') && !forcar) return;
+  if(!forcar && (document.getElementById('dedic') || document.querySelector('.tk-wrap') || document.getElementById('inst'))) return setTimeout(tourInicio, 1500);
+  if(document.getElementById('tour')) return;
+  store.set('viuTour', true);
+  const passos = (C.tour || []).filter(p => p && (p.t || p.s)), eu = Sync.quem || 'Di';
+  if(!passos.length) return;
+  let k = 0;
+  const w = document.createElement('div'); w.id = 'tour'; w.className = 'tour';
+  const draw = () => { const p = passos[k], [bg, fg] = TOUR_COR[k % TOUR_COR.length], ult = k === passos.length - 1;
+    w.innerHTML = `<div class="tour-card" style="--tb:${bg};--tf:${fg}">
+      <button type="button" class="tour-pular" id="tourx">pular</button>
+      <span class="tour-ic">${k === 0 ? `<img src="${APP_ICON}" alt="">` : icon(TOUR_IC[k % TOUR_IC.length])}</span>
+      <h2>${esc(p.t)}</h2><p>${esc(p.s)}</p>
+      <div class="tour-dots">${passos.map((_, i) => `<i class="${i === k ? 'on' : ''}"></i>`).join('')}</div>
+      <div class="tour-acts">${k ? `<button type="button" class="ghost" id="tourv">Voltar</button>` : ''}<button type="button" id="tourn">${ult ? 'Bora começar' : 'Próximo'}</button></div>
+      ${k === 0 ? `<p class="tour-sign">com amor, ${eu === 'Di' ? 'Mihzinha' : 'Di'}</p>` : ''}</div>`;
+    w.querySelector('#tourn').onclick = e => { if(ult){ const r = e.currentTarget.getBoundingClientRect(); burst(r.left + r.width / 2, r.top, 60); fecha(); } else { k++; draw(); } };
+    w.querySelector('#tourv')?.addEventListener('click', () => { k--; draw(); });
+    w.querySelector('#tourx').onclick = fecha; };
+  const fecha = () => { w.classList.remove('in'); setTimeout(() => w.remove(), 350); };
+  draw(); document.body.append(w); requestAnimationFrame(() => w.classList.add('in'));
+}
+
+/* ---------- missões especiais (um cria pro outro) ---------- */
+function abrirMissoesEsp(){
+  const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'Mihzinha' : 'Di', pro = outro === 'Di' ? 'pro Di' : 'pra Mihzinha', col = Sync.col('missoesEsp');
+  document.getElementById('mesp')?.remove();
+  const w = document.createElement('div'); w.className = 'tk-wrap'; w.id = 'mesp';
+  w.innerHTML = `<div class="sheet2"><button class="inst-x" id="mespx" aria-label="Fechar">${icon('plus')}</button>
+    <h3>Missões especiais ${pro}</h3><p class="lead">Coisas que só ${outro === 'Di' ? 'ele' : 'ela'} entenderia. Com data, ela aparece naquele dia. Sem data, aparece num domingo. Vale 2 chocolates.</p>
+    <form class="write" id="mespf"><textarea id="mespt" rows="2" maxlength="140" placeholder="ex: me manda uma foto do pôr do sol de hoje"></textarea>
+      <label class="fz-lab">Dia (opcional)<input type="date" id="mespd"></label><button type="submit">Criar missão</button><p class="werr" id="mespe"></p></form>
+    <div id="mespl" class="mesp-l"></div></div>`;
+  document.body.append(w);
+  w.onclick = e => { if(e.target === w) fecha(); };
+  const fecha = () => { off(); w.remove(); };
+  w.querySelector('#mespx').onclick = fecha;
+  const off = col.on(l => { const box = document.getElementById('mespl'); if(!box) return; const minhas = l.filter(m => m.autor === eu);
+    box.innerHTML = minhas.length ? minhas.map(m => `<div class="mesp-it ${m.feita ? 'ok' : ''}"><div><b>${esc(m.t)}</b><small>${m.feita ? 'já fez ♥︎' : m.dia ? `no dia ${new Date(m.dia + 'T12:00:00').toLocaleDateString('pt-BR')}` : 'num domingo'}</small></div><button class="ib" type="button" data-del="${m.id}" aria-label="Apagar">${icon('trash')}</button></div>`).join('') : `<p class="lead hq-empty">Nenhuma criada ainda.</p>`;
+    box.querySelectorAll('[data-del]').forEach(b => b.onclick = () => { if(!b.dataset.sure){ b.dataset.sure = 1; b.classList.add('sure'); setTimeout(() => { delete b.dataset.sure; b.classList.remove('sure'); }, 2500); return; } col.remove(b.dataset.del); }); });
+  w.querySelector('#mespf').onsubmit = async e => { e.preventDefault(); const t = document.getElementById('mespt').value.trim(), d = document.getElementById('mespd').value;
+    if(!t){ document.getElementById('mespe').textContent = 'Escreve a missão.'; return; }
+    const b = e.target.querySelector('button'); b.disabled = true; try{ await col.add({t, dia:d || '', para:outro, autor:eu}); e.target.reset(); sparkle(b); }catch(x){ document.getElementById('mespe').textContent = 'Não deu pra criar.'; } b.disabled = false; };
+}
+function missaoEspHoje(lista, eu){
+  const hj = hoje(), minhas = (lista || []).filter(m => m.para === eu);
+  const doDia = minhas.find(m => m.dia === hj); if(doDia) return doDia;
+  if(new Date().getDay() !== 0) return null;
+  return minhas.filter(m => !m.dia && (!m.feita || m.feitaDia === hj)).sort((a, b) => a.criadoEm - b.criadoEm)[0] || null;
+}
+
+/* ---------- hoje com o outro: o que ele(a) já fez ---------- */
+function painelOutro(el){
+  if(!el) return;
+  const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'Mihzinha' : 'Di', Ele = outro === 'Di' ? 'O Di' : 'A Mihzinha', ele = outro === 'Di' ? 'ele' : 'ela';
+  const d = {pensei:{}}, offs = [], cols = ['respostas','bilhetes','chocolates','saudade','premios','abracos'];
+  let raf = 0;
+  const draw = () => { raf = 0; if(!el.isConnected){ offs.forEach(f => f && f()); return; }
+    const hj = hoje(), ini = new Date(hj + 'T00:00:00').getTime(), its = [];
+    const pz = (d.premios || []).filter(p => p.autor === eu && p.comprado && !p.entregue);
+    pz.forEach(p => its.push({ic:'gift', t:`${Ele} trocou chocolates por <b>${esc(p.t)}</b>. Hora de cumprir ♥︎`, go:'premios', forte:1}));
+    if((d.chocolates || []).some(c => c.id === `${hj}_${outro}`)) its.push({ic:'heart', t:`${Ele} já passou por aqui hoje`});
+    const pn = ((d.pensei[hj] || {})[outro] || 0); if(pn) its.push({ic:'heart', t:`pensou em você <b>${pn}</b> ${pn === 1 ? 'vez' : 'vezes'} hoje`, go:'#pbtn'});
+    if((d.respostas || []).some(r => r.quem === outro && r.dia === hj)) its.push({ic:'chat', t:`respondeu a pergunta de hoje`, go:'pergunta'});
+    const bl = (d.bilhetes || []).filter(b => b.autor === outro && b.criadoEm >= ini).length; if(bl) its.push({ic:'note', t:`colou ${bl === 1 ? 'um bilhetinho' : bl + ' bilhetinhos'} no mural`, go:'bilhetes'});
+    const sd = (d.saudade || []).find(x => x.quem === outro && x.dia === hj); if(sd) its.push({ic:'heart', t:`tá com saudade (${sd.n || 1}x hoje)`, go:'saudade'});
+    const ab = (d.abracos || []).filter(a => a.de === outro && a.para === eu && a.criadoEm >= ini).length; if(ab) its.push({ic:'hug', t:`te deu ${ab === 1 ? 'um abraço' : ab + ' abraços'} na casinha`, go:'casinha'});
+    el.innerHTML = `<div class="hj-o"><p class="hj-t">Hoje com ${outro === 'Di' ? 'o Di' : 'a Mihzinha'}</p>${its.length ? its.map(i => `<button type="button" class="hj-it ${i.forte ? 'forte' : ''}" ${i.go ? `data-hgo="${i.go}"` : ''}><span class="hj-ic">${icon(i.ic)}</span><span>${i.t}</span></button>`).join('') : `<p class="hj-vazio">${Ele} ainda não passou por aqui hoje. Que tal deixar um bilhetinho pra ${ele} achar?</p>`}</div>`;
+    el.querySelectorAll('[data-hgo]').forEach(b => b.onclick = () => { const g = b.dataset.hgo; if(g.startsWith('#')){ const a = document.querySelector(g); a && a.scrollIntoView({behavior:'smooth', block:'center'}); a && (a.classList.remove('mpulse'), void a.offsetWidth, a.classList.add('mpulse')); } else openStop(g); });
+  };
+  const pede = () => { if(!raf) raf = requestAnimationFrame(draw); };
+  cols.forEach(n => offs.push(Sync.col(n).on(l => { d[n] = l; pede(); })));
+  offs.push(Sync.on('state', st => { d.pensei = st.pensei || {}; pede(); }));
+  draw();
+}
+
+/* ---------- prêmios de verdade: trocar chocolates por mimos ---------- */
+const PREMIO_SUG = [['Vale um jantar que você escolhe', 40], ['Vale uma massagem de 20 minutos', 25], ['Vale um dia sem lavar louça', 20], ['Vale o filme que você escolher', 15], ['Vale um passeio surpresa', 60], ['Vale café da manhã na cama', 35]];
+VIEWS.premios = () => {
+  const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'Mihzinha' : 'Di', pro = outro === 'Di' ? 'pro Di' : 'pra Mihzinha', Ele = outro === 'Di' ? 'O Di' : 'A Mihzinha';
+  shell('mimos de verdade','Prêmios de verdade','Os chocolates da casinha também viram coisas de verdade. Um escolhe os prêmios do outro',
+    `<div class="pz-saldo"><span class="cs-ic">${CHOCO_SVG}</span><div><b id="pzs">0</b><small>chocolates pra gastar</small></div></div>
+     <h3 class="ct-sep">Pra você trocar</h3><div class="pz-list" id="pzpra"></div>
+     <h3 class="ct-sep">Que você já ganhou</h3><div class="pz-list" id="pzgan"></div>
+     <h3 class="ct-sep">Prêmios que você oferece ${pro}</h3>
+     <form class="card-form pz-form" id="pzf"><input type="text" id="pzt" maxlength="80" placeholder="ex: Vale um jantar que você escolhe" aria-label="Prêmio">
+       <label class="fz-lab">Custa quantos chocolates<input type="number" id="pzp" min="1" max="999" value="30"></label>
+       <div class="pz-sug">${PREMIO_SUG.map(([t, n]) => `<button type="button" data-t="${esc(t)}" data-n="${n}">${esc(t.replace(/^Vale (um |uma |o |a )?/i, ''))}</button>`).join('')}</div>
+       <button type="submit" id="pzb">Oferecer prêmio</button><p class="werr" id="pze"></p></form>
+     <div class="pz-list" id="pzmeus"></div>`);
+  const $ = id => document.getElementById(id), col = Sync.col('premios'), colC = Sync.col('chocolates'), colP = Sync.col('compras');
+  let list = [], chocs = [], compras = [];
+  const saldo = () => chocoSaldo(chocs, compras);
+  const draw = () => { if(!$('pzpra')) return; const sl = saldo();
+    $('pzs').textContent = chocoInfinito() ? '∞' : sl;
+    const pra = list.filter(p => p.para === eu && !p.comprado).sort((a, b) => a.preco - b.preco), gan = list.filter(p => p.para === eu && p.comprado), meus = list.filter(p => p.autor === eu);
+    $('pzpra').innerHTML = pra.length ? pra.map(p => `<div class="pz-card"><span class="pz-ic">${icon('gift')}</span><div class="pz-tx"><b>${esc(p.t)}</b><small>${Ele.replace(/^O |^A /, m => m.toLowerCase())} ofereceu</small></div><button type="button" class="pz-buy ${sl >= p.preco ? '' : 'falta'}" data-buy="${p.id}">${p.preco} ${CHOCO_SVG}</button></div>`).join('')
+      : `<p class="lead hq-empty">${Ele} ainda não ofereceu nenhum prêmio. Pede um ♥︎</p>`;
+    $('pzgan').innerHTML = gan.length ? gan.map(p => `<div class="pz-card ${p.entregue ? 'ok' : 'esp'}"><span class="pz-ic">${icon(p.entregue ? 'heart' : 'ticket')}</span><div class="pz-tx"><b>${esc(p.t)}</b><small>${p.entregue ? 'já cumprido ♥︎' : `trocado, agora é com ${outro === 'Di' ? 'ele' : 'ela'}`}</small></div></div>`).join('') : `<p class="lead hq-empty">Nada ainda. Junta chocolates e troca!</p>`;
+    $('pzmeus').innerHTML = meus.length ? meus.map(p => `<div class="pz-card mine ${p.comprado && !p.entregue ? 'esp' : ''}"><span class="pz-ic">${icon('gift')}</span><div class="pz-tx"><b>${esc(p.t)}</b><small>${p.preco} chocolates · ${p.entregue ? 'cumprido ♥︎' : p.comprado ? `${Ele} trocou! Hora de cumprir` : 'esperando a troca'}</small></div>${p.comprado && !p.entregue ? `<button type="button" class="pz-ok" data-ent="${p.id}">Cumpri</button>` : ''}${p.comprado ? '' : `<button class="ib" type="button" data-del="${p.id}" aria-label="Apagar">${icon('trash')}</button>`}</div>`).join('') : '';
+    $('pzpra').querySelectorAll('[data-buy]').forEach(b => b.onclick = async () => { const p = list.find(x => x.id === b.dataset.buy); if(!p) return; const sl2 = saldo();
+      if(!jaComecou() && !PREVIA){ csToast('Os chocolates começam no dia 25'); return; }
+      if(sl2 < p.preco){ csToast(`Faltam ${p.preco - sl2} chocolates pra esse`); b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake'); return; }
+      if(!b.dataset.sure){ b.dataset.sure = 1; const o = b.innerHTML; b.textContent = `Trocar ${p.preco}?`; b.classList.add('sure'); setTimeout(() => { if(!b.isConnected) return; delete b.dataset.sure; b.innerHTML = o; b.classList.remove('sure'); }, 2600); return; }
+      b.disabled = true; try{ await colP.set('premio_' + p.id, {preco:p.preco, autor:eu}); await col.set(p.id, Object.assign({}, p, {comprado:true, compradoEm:Date.now(), por:eu})); const r = b.getBoundingClientRect(); burst(r.left + r.width / 2, r.top, 50); csToast(`É seu! Agora ${outro === 'Di' ? 'o Di' : 'a Mihzinha'} tem que cumprir ♥︎`); }catch(x){ b.disabled = false; } });
+    $('pzmeus').querySelectorAll('[data-ent]').forEach(b => b.onclick = async () => { const p = list.find(x => x.id === b.dataset.ent); if(!p) return; await col.set(p.id, Object.assign({}, p, {entregue:true, entregueEm:Date.now()})); sparkle(b); });
+    $('pzmeus').querySelectorAll('[data-del]').forEach(b => b.onclick = () => { if(!b.dataset.sure){ b.dataset.sure = 1; b.classList.add('sure'); setTimeout(() => { delete b.dataset.sure; b.classList.remove('sure'); }, 2500); return; } col.remove(b.dataset.del); });
+  };
+  document.querySelectorAll('.pz-sug [data-t]').forEach(b => b.onclick = () => { $('pzt').value = b.dataset.t; $('pzp').value = b.dataset.n; });
+  $('pzf').onsubmit = async e => { e.preventDefault(); const t = $('pzt').value.trim(), n = Math.max(1, Math.round(+$('pzp').value || 0));
+    if(!t){ $('pze').textContent = 'Escreve o prêmio.'; return; } const b = $('pzb'); b.disabled = true;
+    try{ await col.add({t, preco:n, para:outro, autor:eu}); $('pzt').value = ''; $('pze').textContent = ''; sparkle(b); }catch(x){ $('pze').textContent = 'Não deu pra guardar.'; } b.disabled = false; };
+  const o1 = col.on(l => { list = l; draw(); }), o2 = colC.on(l => { chocs = l; draw(); }), o3 = colP.on(l => { compras = l; draw(); });
+  const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { o1(); o2(); o3(); prev(); };
+};
 
 /* ---------- abraços na casinha ---------- */
 function csToast(m){ let t = document.getElementById('cstoast'); if(!t){ t = document.createElement('div'); t.id = 'cstoast'; t.className = 'cstoast'; document.body.append(t); } t.textContent = m; t.classList.add('in'); clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('in'), 2200); }
@@ -5060,7 +5266,7 @@ VIEWS.cartadata = () => {
   const amanha = (() => { const d = new Date(); d.setDate(d.getDate() + 1); return dsStr(d); })();
   shell('pra abrir depois','Cartinha com data',`Escreve hoje e escolhe o dia que ${outro === 'Di' ? 'o Di' : 'a Mihzinha'} vai poder abrir`,
     `<form class="card-form" id="cdf"><p class="wo-t">Escrever pra ${outro}</p>
-      <textarea id="cdt" rows="6" maxlength="3000" placeholder="Meu amor…"></textarea>
+      <textarea id="cdt" rows="6" maxlength="3000" placeholder="Meu amor…"></textarea>${gravadorBox('cdgrav')}
       <label class="fz-lab">Pode abrir em<input type="date" id="cdd" min="${amanha}"></label>
       <div class="pl-act"><button type="submit" id="cds">Lacrar cartinha</button></div><p class="werr" id="cde"></p></form>
      <h3 class="ct-sep">Pra você</h3><div class="cd-list" id="cdp"></div>
@@ -5071,13 +5277,14 @@ VIEWS.cartadata = () => {
     const pra = list.filter(c => c.para === eu).sort((a, b) => a.abreEm.localeCompare(b.abreEm)), minhas = list.filter(c => c.de === eu).sort((a, b) => a.abreEm.localeCompare(b.abreEm));
     $('cdp').innerHTML = pra.length ? pra.map(c => { const n = diasAte(c.abreEm); return n > 0
         ? `<article class="cd-env lock"><span class="cd-seal">${icon('heart')}</span><div><b>Cartinha de ${c.de === 'Di' ? 'Di' : 'Mihzinha'}</b><small>abre em ${new Date(c.abreEm + 'T12:00:00').toLocaleDateString('pt-BR')} · faltam ${n} ${n === 1 ? 'dia' : 'dias'}</small></div>${icon('lock')}</article>`
-        : `<details class="cd-env open"><summary><span class="cd-seal">${icon('heart')}</span><div><b>Cartinha de ${c.de === 'Di' ? 'Di' : 'Mihzinha'}</b><small>liberada em ${new Date(c.abreEm + 'T12:00:00').toLocaleDateString('pt-BR')} · toca pra ler</small></div></summary><div class="paper cd-paper"><p>${esc(c.texto)}</p><p class="sign">${c.de === 'Di' ? 'Di' : 'Mihzinha'}</p></div></details>`; }).join('')
+        : `<details class="cd-env open"><summary><span class="cd-seal">${icon('heart')}</span><div><b>Cartinha de ${c.de === 'Di' ? 'Di' : 'Mihzinha'}</b><small>liberada em ${new Date(c.abreEm + 'T12:00:00').toLocaleDateString('pt-BR')} · toca pra ler</small></div></summary><div class="paper cd-paper">${c.texto ? `<p>${esc(c.texto)}</p>` : ''}${audioHTML(c.audio, c.de)}<p class="sign">${c.de === 'Di' ? 'Di' : 'Mihzinha'}</p></div></details>`; }).join('')
       : `<p class="lead hq-empty">Nenhuma cartinha pra você ainda.</p>`;
-    $('cdm').innerHTML = minhas.length ? minhas.map(c => `<article class="cd-env mine"><span class="cd-seal">${icon('mail')}</span><div><b>Pra ${c.para}</b><small>${diasAte(c.abreEm) > 0 ? `abre em ${new Date(c.abreEm + 'T12:00:00').toLocaleDateString('pt-BR')}` : 'já liberada'}</small></div><button class="ib" type="button" data-del="${c.id}" aria-label="Apagar">${icon('trash')}</button></article>`).join('') : `<p class="lead hq-empty">Você ainda não lacrou nenhuma.</p>`;
+    $('cdm').innerHTML = minhas.length ? minhas.map(c => `<article class="cd-env mine"><span class="cd-seal">${icon('mail')}</span><div><b>Pra ${c.para}${c.audio ? ` ${icon('mic')}` : ''}</b><small>${diasAte(c.abreEm) > 0 ? `abre em ${new Date(c.abreEm + 'T12:00:00').toLocaleDateString('pt-BR')}` : 'já liberada'}</small></div><button class="ib" type="button" data-del="${c.id}" aria-label="Apagar">${icon('trash')}</button></article>`).join('') : `<p class="lead hq-empty">Você ainda não lacrou nenhuma.</p>`;
     $('cdm').querySelectorAll('[data-del]').forEach(b => b.onclick = () => { if(!b.dataset.sure){ b.dataset.sure = 1; b.classList.add('sure'); setTimeout(() => { delete b.dataset.sure; b.classList.remove('sure'); }, 2500); return; } col.remove(b.dataset.del); });
   };
-  $('cdf').onsubmit = async e => { e.preventDefault(); const t = $('cdt').value.trim(), d = $('cdd').value; if(!t || !d){ $('cde').textContent = 'Escreve a cartinha e escolhe a data.'; return; } if(d < amanha){ $('cde').textContent = 'A data precisa ser a partir de amanhã.'; return; }
-    const b = $('cds'); b.disabled = true; try{ await col.add({de:eu, para:outro, texto:t, abreEm:d}); e.target.reset(); sparkle(b); $('cde').classList.add('ok'); $('cde').textContent = 'Lacrada!'; setTimeout(() => { $('cde').textContent = ''; $('cde').classList.remove('ok'); }, 2500); }catch(x){ $('cde').textContent = 'Não deu pra guardar.'; } b.disabled = false; };
+  const cgv = novoGravador(); if($('cdgrav')) cgv.montar($('cdgrav'));
+  $('cdf').onsubmit = async e => { e.preventDefault(); const t = $('cdt').value.trim(), d = $('cdd').value, au = cgv.get(); if(cgv.gravando()){ $('cde').textContent = 'Para a gravação antes.'; return; } if((!t && !au) || !d){ $('cde').textContent = 'Escreve a cartinha (ou grava um áudio) e escolhe a data.'; return; } if(d < amanha){ $('cde').textContent = 'A data precisa ser a partir de amanhã.'; return; }
+    const b = $('cds'); b.disabled = true; try{ await col.add(Object.assign({de:eu, para:outro, texto:t, abreEm:d}, au ? {audio:au} : {})); e.target.reset(); cgv.limpa(); sparkle(b); $('cde').classList.add('ok'); $('cde').textContent = 'Lacrada!'; setTimeout(() => { $('cde').textContent = ''; $('cde').classList.remove('ok'); }, 2500); }catch(x){ $('cde').textContent = 'Não deu pra guardar.'; } b.disabled = false; };
   const off = col.on(l => { list = l; draw(); });
   const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { off(); prev(); };
 };
@@ -5124,7 +5331,7 @@ VIEWS.retro = () => {
 };
 
 /* ---------- prévia do Di ---------- */
-const COLS_PREVIA = ['gostos','gostosCats','recados','abraQuando','abracos','bilhetes','capsula','cartasData','cartasFilhos','chocolates','compras','contagens','datasMarcantes','diario','filmes','fotosMem','gastos','lugares','mesversario','musicas','planosLista','primeiras','respostas','roleta','saudade'];
+const COLS_PREVIA = ['missoesEsp','premios','gostos','gostosCats','recados','abraQuando','abracos','bilhetes','capsula','cartasData','cartasFilhos','chocolates','compras','contagens','datasMarcantes','diario','filmes','fotosMem','gastos','lugares','mesversario','musicas','planosLista','primeiras','respostas','roleta','saudade'];
 function entrarPrevia(quem, dia){
   if(typeof quem !== 'string') quem = ''; dia = dia || '';
   if(!quem){
@@ -5188,6 +5395,13 @@ const BASE = {
   cartaNatal: C.cartaNatal, cartaRetro: C.cartaRetro, segredo: C.segredo,
   mesversarios: C.mesversarios.slice()
 };
+C.tour = [
+  {t:'Oi, meu amor', s:'Esse é o nosso cantinho. Deixa eu te mostrar rapidinho como ele funciona.'},
+  {t:'Todo dia tem um bilhete novo', s:'Logo no começo da tela tem um bilhetinho meu pra você. São 364, um pra cada dia do nosso ano, e nenhum se repete.'},
+  {t:'Missões e chocolates', s:'Todo dia você ganha um chocolate só por entrar, e mais alguns fazendo as missões do dia. Com eles a gente monta a nossa casinha e troca por prêmios de verdade.'},
+  {t:'Cartas pra cada momento', s:'Tem envelopes pra quando bater saudade, pra um dia ruim, pra quando não conseguir dormir. Abre quando precisar. Algumas têm a minha voz.'},
+  {t:'Sem pressa', s:'Não precisa ver tudo hoje. Vai descobrindo aos pouquinhos. E toca no coração "pensei em você" sempre que lembrar de mim.'}
+];
 const ESCRITAS = [
   {grupo:'Do dia a dia'},
   {k:'mensagens', t:'Bilhetes do dia', d:'um por linha, na ordem dos dias: o 1º aparece em 25/12/2026 e o 364º em 23/12/2027. Nenhum se repete', tipo:'linhas', meta:364},
@@ -5220,6 +5434,7 @@ const ESCRITAS = [
   {k:'textos.natalLegenda', t:'Embaixo da contagem', tipo:'linha'},
   {k:'textos.natal25', t:'Mensagem que abre no dia 25', d:'aparece assim que ele entrar no app no dia de Natal. Linha em branco separa parágrafos', tipo:'texto', rows:6},
   {grupo:'Datas festivas'},
+  {k:'tour', t:'Boas-vindas do primeiro dia', d:'aparece uma vez, na primeira vez que ele entra a partir do dia 25. Dá pra ver antes pela viagem no tempo', tipo:'objs', fixo:1, campos:[['t','Título'],['s','Texto']]},
   {k:'textos.dedicatoria', t:'Recadinho da primeira vez', d:'aparece uma vez só, na primeira vez que o Di entra no app', tipo:'texto', rows:3},
   {k:'festas.fim.titulo', t:'Encerramento (25/12/2027): título', tipo:'linha'},
   {k:'festas.fim.sub', t:'Encerramento: embaixo do título', tipo:'linha'},
@@ -5645,6 +5860,45 @@ function evCor(t, k){
   for(const [r, c] of temas) if(r.test(x)) return c;
   return 'ev' + (k % 6);
 }
+
+/* ---------- áudio: gravar a própria voz nas cartas e bilhetes ---------- */
+const AUD_MAX_S = 60, AUD_MAX = 900000;
+const podeGravar = () => !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder);
+const quemVoz = q => q === 'curto' ? 'Ouvir o áudio' : q === 'você' ? 'Ouvir o seu áudio' : `Ouvir a voz ${q === 'Di' ? 'do Di' : 'da Mihzinha'}`;
+function audioHTML(src, quem){ if(!src) return '';
+  return `<div class="aud" role="button" tabindex="0" data-aud><span class="aud-pl"><svg class="ap-play" viewBox="0 0 24 24"><path d="M8.5 5.5v13l10.5-6.5z"/></svg><svg class="ap-pause" viewBox="0 0 24 24"><path d="M7 5h3.6v14H7zM13.4 5H17v14h-3.6z"/></svg></span><span class="aud-mid"><span class="aud-tx">${esc(quemVoz(quem))}</span><span class="aud-bar"><i></i></span></span><span class="aud-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><audio preload="none" src="${src}"></audio></div>`; }
+document.addEventListener('click', e => { const a = e.target.closest('[data-aud]'); if(!a) return; e.stopPropagation(); e.preventDefault();
+  const au = a.querySelector('audio'); document.querySelectorAll('[data-aud] audio').forEach(o => { if(o !== au && !o.paused){ o.pause(); } });
+  if(!au._lig){ au._lig = 1; au.addEventListener('timeupdate', () => { const i = a.querySelector('.aud-bar i'); if(i && au.duration && isFinite(au.duration)) i.style.width = (au.currentTime / au.duration * 100) + '%'; });
+    au.addEventListener('play', () => a.classList.add('tocando')); au.addEventListener('pause', () => a.classList.remove('tocando'));
+    au.addEventListener('ended', () => { a.classList.remove('tocando'); const i = a.querySelector('.aud-bar i'); if(i) i.style.width = '0'; }); }
+  au.paused ? au.play().catch(() => {}) : au.pause(); }, true);
+/* um gravador que sobrevive quando a tela redesenha */
+function novoGravador(){
+  const g = {dado:null, rec:null, stream:null, t0:0, tm:null, el:null, erro:''};
+  const tipo = () => ['audio/webm;codecs=opus','audio/mp4','audio/webm','audio/ogg;codecs=opus'].find(t => window.MediaRecorder && MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(t)) || '';
+  const ui = () => { const el = g.el; if(!el || !el.isConnected) return;
+    if(g.rec){ const s = Math.floor((Date.now() - g.t0) / 1000);
+      el.innerHTML = `<div class="grav-on"><span class="grav-dot"></span><span class="grav-t">gravando · ${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}</span><span class="aud-wave on"><i></i><i></i><i></i><i></i><i></i></span><button type="button" class="grav-stop">Parar</button></div>`;
+      el.querySelector('.grav-stop').onclick = () => g.parar(); return; }
+    if(g.dado){ el.innerHTML = `<div class="grav-ok">${audioHTML(g.dado, 'você')}<button type="button" class="linkbtn grav-del">apagar áudio</button></div>`; el.querySelector('.grav-del').onclick = () => { g.dado = null; ui(); }; return; }
+    el.innerHTML = `<button type="button" class="grav-b">${icon('mic')}<span>Gravar um áudio</span><small>até 1 min</small></button>${g.erro ? `<p class="werr">${g.erro}</p>` : ''}`;
+    el.querySelector('.grav-b').onclick = () => g.gravar(); };
+  g.montar = el => { g.el = el; ui(); };
+  g.gravar = async () => { g.erro = '';
+    try{ g.stream = await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true, noiseSuppression:true}}); }
+    catch(e){ g.erro = 'Não deu pra usar o microfone. Libera o microfone pro app nas configurações do celular e tenta de novo.'; ui(); return; }
+    const t = tipo(), partes = []; g.rec = new MediaRecorder(g.stream, Object.assign({audioBitsPerSecond:24000}, t ? {mimeType:t} : {}));
+    g.rec.ondataavailable = e => e.data && e.data.size && partes.push(e.data);
+    g.rec.onstop = () => { const bl = new Blob(partes, {type:g.rec.mimeType || t || 'audio/webm'}); g.stream.getTracks().forEach(x => x.stop()); g.rec = null; clearInterval(g.tm);
+      const fr = new FileReader(); fr.onload = () => { if(String(fr.result).length > AUD_MAX){ g.erro = 'O áudio ficou grande demais. Tenta um mais curtinho.'; g.dado = null; } else g.dado = fr.result; ui(); }; fr.readAsDataURL(bl); };
+    g.rec.start(); g.t0 = Date.now(); g.tm = setInterval(() => { if(Date.now() - g.t0 >= AUD_MAX_S * 1000) g.parar(); else ui(); }, 500); ui(); };
+  g.parar = () => { if(g.rec && g.rec.state !== 'inactive') g.rec.stop(); };
+  g.get = () => g.dado; g.limpa = () => { g.dado = null; g.erro = ''; ui(); };
+  g.gravando = () => !!g.rec;
+  return g;
+}
+const gravadorBox = id => podeGravar() ? `<div class="grav" id="${id}"></div>` : '';
 /* ---------- envelopes (cartas pro futuro) ---------- */
 function envelopes(list, seal){
   const now = new Date(), fmt = d => d.toLocaleDateString('pt-BR');
@@ -5849,22 +6103,24 @@ VIEWS.bilhetes = () => {
   store.set('seenBilhetes', Date.now());
   const eu = Sync.quem || 'Di';
   shell('recadinhos','Bilhetinhos','Deixa um recado pro outro achar',
-    `<form class="write" id="bf"><textarea id="bta" rows="3" maxlength="240" placeholder="Escreve um bilhetinho…" aria-label="Bilhetinho"></textarea><button type="submit">Colar no mural</button><p class="werr" id="berr"></p></form>
+    `<form class="write" id="bf"><textarea id="bta" rows="3" maxlength="240" placeholder="Escreve um bilhetinho…" aria-label="Bilhetinho"></textarea>${gravadorBox('bgrav')}<button type="submit">Colar no mural</button><p class="werr" id="berr"></p></form>
      <div class="mural" id="mural"></div>`);
   const col = Sync.col('bilhetes');
   const off = col.on(list => {
     const m = document.getElementById('mural'); if(!m) return;
     m.innerHTML = list.length ? [...list].reverse().map((b,k) => `<div class="postit c${k % 4}" style="--r:${(k % 5 - 2) * 1.3}deg">
-      <p>${esc(b.texto)}</p><small>${esc(b.autor)} · ${new Date(b.criadoEm).toLocaleDateString('pt-BR')}</small>
+      ${b.texto ? `<p>${esc(b.texto)}</p>` : ''}${audioHTML(b.audio, 'curto')}<small>${esc(b.autor)} · ${new Date(b.criadoEm).toLocaleDateString('pt-BR')}</small>
       ${b.autor === eu ? `<button class="del" data-del="${b.id}">apagar</button>` : ''}</div>`).join('')
       : `<p class="lead empty">O mural ainda está vazio. Cola o primeiro bilhetinho!</p>`;
     m.querySelectorAll('.del').forEach(d => d.onclick = () => { if(d.dataset.sure) col.remove(d.dataset.del); else { d.dataset.sure = 1; d.textContent = 'toca de novo'; } });
   });
+  const bgv = novoGravador(); if(document.getElementById('bgrav')) bgv.montar(document.getElementById('bgrav'));
   document.getElementById('bf').onsubmit = async e => {
-    e.preventDefault(); const ta = document.getElementById('bta'), t = ta.value.trim();
-    if(!t){ document.getElementById('berr').textContent = 'Escreve o recado antes.'; return; }
-    const b = e.target.querySelector('button'); b.disabled = true;
-    try{ await col.add({autor:eu, texto:t}); ta.value = ''; sparkle(b); store.set('seenBilhetes', Date.now()); }
+    e.preventDefault(); const ta = document.getElementById('bta'), t = ta.value.trim(), au = bgv.get();
+    if(bgv.gravando()){ document.getElementById('berr').textContent = 'Para a gravação antes.'; return; }
+    if(!t && !au){ document.getElementById('berr').textContent = 'Escreve o recado (ou grava um áudio) antes.'; return; }
+    const b = e.target.querySelector('button[type=submit]'); b.disabled = true;
+    try{ await col.add(Object.assign({autor:eu, texto:t}, au ? {audio:au} : {})); ta.value = ''; bgv.limpa(); document.getElementById('berr').textContent = ''; sparkle(b); store.set('seenBilhetes', Date.now()); }
     catch(err){ document.getElementById('berr').textContent = 'Não deu pra colar. Tenta de novo.'; }
     b.disabled = false;
   };
@@ -6054,7 +6310,7 @@ VIEWS.abra = () => {
   document.getElementById('toalbum').onclick = () => VIEWS.album();
   const col = Sync.col('abraQuando');
   let list = [], lidas = {};
-  const openFor = {};
+  const openFor = {}, gravs = {};
   const escrevendo = () => modo === 'escrever';
   function draw(){
     const box = document.getElementById('abl'); if(!box) return;
@@ -6070,22 +6326,24 @@ VIEWS.abra = () => {
         <div class="slot" id="slot-${cat.id}">${openFor[cat.id] === 'EDIT' ? (escrevendo() ? editHtml(cat.id) : '') : (!escrevendo() && openFor[cat.id]) || ''}</div>`;
     }).join('');
     box.querySelectorAll('.envl').forEach(b => b.onclick = () => escrevendo() ? editCat(b.dataset.c) : readCat(b, b.dataset.c));
+    box.querySelectorAll('.grav[data-g]').forEach(el => { const k = el.dataset.g; (gravs[k] = gravs[k] || novoGravador()).montar(el); });
     box.querySelectorAll('[data-del]').forEach(d => d.onclick = () => { if(d.dataset.sure) col.remove(d.dataset.del); else { d.dataset.sure = 1; d.textContent = 'toca de novo'; } });
     box.querySelectorAll('[data-abed]').forEach(d => d.onclick = () => { const it = d.closest('.abitem'); it.querySelector('p').hidden = true; it.querySelector('.abedf').hidden = false; });
     box.querySelectorAll('.abedf').forEach(f => f.onsubmit = async e => { e.preventDefault(); const t = f.querySelector('textarea').value.trim(); if(!t) return; const c = list.find(x => x.id === f.dataset.id); await col.set(f.dataset.id, Object.assign({}, c, {texto:t})); sparkle(f.querySelector('button')); });
     box.querySelectorAll('form[data-cat]').forEach(f => f.onsubmit = async e => {
-      e.preventDefault(); const ta = f.querySelector('textarea'), t = ta.value.trim(), err = f.querySelector('.werr');
-      if(!t){ err.textContent = 'Escreve a carta antes de guardar.'; return; }
-      const btn = f.querySelector('button'); btn.disabled = true;
-      try{ await col.add({cat:f.dataset.cat, texto:t, autor:eu}); sparkle(btn); }
+      e.preventDefault(); const ta = f.querySelector('textarea'), t = ta.value.trim(), err = f.querySelector('.werr'), gv = gravs[f.dataset.cat], au = gv && gv.get();
+      if(gv && gv.gravando()){ err.textContent = 'Para a gravação antes de guardar.'; return; }
+      if(!t && !au){ err.textContent = 'Escreve a carta (ou grava um áudio) antes de guardar.'; return; }
+      const btn = f.querySelector('button[type=submit]'); btn.disabled = true;
+      try{ await col.add(Object.assign({cat:f.dataset.cat, texto:t, autor:eu}, au ? {audio:au} : {})); gv && gv.limpa(); sparkle(btn); }
       catch(x){ err.textContent = 'Não deu pra guardar. Tenta de novo.'; btn.disabled = false; }
     });
   }
   function editHtml(id){
     const cat = C.abraQuando.find(c => c.id === id), mine = list.filter(c => c.cat === id && autorDe(c) === eu);
     return `<div class="abedit">
-      <form class="write" data-cat="${id}"><textarea rows="5" placeholder="Escreve uma carta pra quando ${ele} ${esc(cat.titulo.replace(/^Abra quando /i,''))}…" aria-label="Nova carta"></textarea><button type="submit">Guardar carta</button><p class="werr"></p></form>
-      ${mine.length ? mine.map((c,i) => `<div class="abitem"><span class="abn">${i+1}</span><p>${esc(c.texto)}</p><form class="abedf write" data-id="${c.id}" hidden><textarea rows="4">${esc(c.texto)}</textarea><button type="submit">Salvar</button></form><small>${lidas[c.id] ? `${ele} já leu` : 'ainda não lida'} · <button class="linkbtn" data-abed="${c.id}">editar</button> · <button class="linkbtn" data-del="${c.id}">apagar</button></small></div>`).join('') : `<p class="lead">Nenhuma carta sua nesse envelope ainda.</p>`}
+      <form class="write" data-cat="${id}"><textarea rows="5" placeholder="Escreve uma carta pra quando ${ele} ${esc(cat.titulo.replace(/^Abra quando /i,''))}…" aria-label="Nova carta"></textarea>${podeGravar() ? `<div class="grav" data-g="${id}"></div>` : ''}<button type="submit">Guardar carta</button><p class="werr"></p></form>
+      ${mine.length ? mine.map((c,i) => `<div class="abitem"><span class="abn">${i+1}</span><p>${esc(c.texto)}</p>${audioHTML(c.audio, 'você')}<form class="abedf write" data-id="${c.id}" hidden><textarea rows="4">${esc(c.texto)}</textarea><button type="submit">Salvar</button></form><small>${lidas[c.id] ? `${ele} já leu` : 'ainda não lida'} · <button class="linkbtn" data-abed="${c.id}">editar</button> · <button class="linkbtn" data-del="${c.id}">apagar</button></small></div>`).join('') : `<p class="lead">Nenhuma carta sua nesse envelope ainda.</p>`}
     </div>`;
   }
   function editCat(id){
@@ -6101,7 +6359,7 @@ VIEWS.abra = () => {
     btn.classList.add('open');
     setTimeout(() => { const r = btn.getBoundingClientRect(); burst(r.left + r.width/2, r.top + r.height/3, 18); }, 450);
     setTimeout(() => {
-      openFor[id] = `<div class="paper unfold">${carta.exemplo ? '' : quandoEscrita(carta.criadoEm)}${repetida ? '<p class="relida">você já leu todas desse envelope, então essa é uma de novo ♥︎</p>' : ''}<p class="to">${esc(cat.titulo)}</p>${esc(carta.texto).split(/\n+/).map(t => `<p>${t}</p>`).join('')}<p class="sign">${autorDe(carta)}</p></div>`;
+      openFor[id] = `<div class="paper unfold">${carta.exemplo ? '' : quandoEscrita(carta.criadoEm)}${repetida ? '<p class="relida">você já leu todas desse envelope, então essa é uma de novo ♥︎</p>' : ''}<p class="to">${esc(cat.titulo)}</p>${esc(carta.texto).split(/\n+/).map(t => `<p>${t}</p>`).join('')}${audioHTML(carta.audio, autorDe(carta))}<p class="sign">${autorDe(carta)}</p></div>`;
       if(!lidas[carta.id]) Sync.setFlag('lidas', carta.id, {em:Date.now(), cat:id, por:eu});
       draw(); document.getElementById('slot-' + id)?.scrollIntoView({behavior:'smooth', block:'nearest'});
     }, 1000);
@@ -6150,7 +6408,7 @@ VIEWS.album = () => {
     return `<div class="bk-paper">
         <div class="bk-head"><span class="albdate">${fmt(lidas[c.id].em)}</span></div>
         <p class="bk-cat">${esc(c.cat.titulo)}</p>
-        <div class="bk-lines">${esc(c.texto).split(/\n+/).map(t => `<p>${t}</p>`).join('')}</div>
+        <div class="bk-lines">${esc(c.texto).split(/\n+/).map(t => `<p>${t}</p>`).join('')}${c.audio ? audioHTML(c.audio, autorDe(c)) : ''}</div>
         <p class="sign">${autorDe(c)}</p>
         <p class="bk-num">${pg.i} de ${pg.total}</p></div>`;
   }
