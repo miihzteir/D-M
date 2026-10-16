@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=73">
-<link rel="apple-touch-icon" href="icon-180.png?v=73">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=73">
+<link rel="manifest" href="manifest.json?v=74">
+<link rel="apple-touch-icon" href="icon-180.png?v=74">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=74">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -1486,6 +1486,7 @@ details.cd-env{display:block}details.cd-env summary{display:flex;align-items:cen
 .endsync span{display:inline-flex;align-items:center;gap:6px}
 .endsync i{width:8px;height:8px;border-radius:50%;background:#c9b8b0;display:inline-block}
 .endsync.ok i{background:#4caf6e;box-shadow:0 0 0 3px rgba(76,175,110,.18)}.endsync.meio i{background:#e0a63a}.endsync.off i{background:#c8182c}
+.ja-entrei{display:block;margin:16px auto 0;font-size:13px;color:var(--muted)}
 .endver{margin:6px 0 0;font-size:10.5px;letter-spacing:.06em;color:var(--muted);opacity:.7}
 .n25{position:fixed!important;inset:0!important;z-index:9000!important;width:auto!important;max-width:none!important;margin:0!important;height:auto!important;overflow:auto;display:grid;place-items:center;padding:28px 18px;background:linear-gradient(180deg,#24463a,#16302a);position:relative;overflow:hidden}
 .n25-neve .fx-old{position:absolute;top:-10px;left:var(--x);width:var(--s);height:var(--s);border-radius:50%;background:#fff;opacity:.8;animation:n25cai var(--d) linear var(--a) infinite}
@@ -2984,7 +2985,8 @@ const Sync = (() => {
   const ts = () => firebase.firestore.FieldValue.serverTimestamp();
   const loadScript = src => new Promise((ok, no) => { const sc = document.createElement('script'); sc.src = src; sc.onload = ok; sc.onerror = no; document.head.append(sc); });
   state = {planos:store.get('planos', {}), vales:store.get('vales', {}), pensei:store.get('pensei', {}), lidas:store.get('lidas', {}), datesEdit:store.get('datesEdit', {}), planosEdit:store.get('planosEdit', {}), cats:store.get('cats', {}), casinha:store.get('casinha', {}), niver:store.get('niver', {})};
-  async function whoAmI(){ const local = store.get('quem', ''); try{ const d = await fdb.doc('pessoas/' + user.uid).get(); quem = (d.exists && d.data().quem) || local; if(local && !(d.exists && d.data().quem)) fdb.doc('pessoas/' + user.uid).set({quem:local, email:user.email || ''}, {merge:true}).catch(() => {}); }catch(e){ quem = local; } if(quem && !local) store.set('quem', quem); }
+  let verif = false;
+  async function whoAmI(){ const local = store.get('quem', ''); try{ const d = await fdb.doc('pessoas/' + user.uid).get(); verif = !!(d.exists && d.data().verificado); quem = (d.exists && d.data().quem) || local; if(local && !(d.exists && d.data().quem)) fdb.doc('pessoas/' + user.uid).set({quem:local, email:user.email || ''}, {merge:true}).catch(() => {}); }catch(e){ quem = local; } if(quem && !local) store.set('quem', quem); }
   function attachAll(){
     if(!online()) return;
     if(!stateUnsub) stateUnsub = fdb.doc('compartilhado/estado').onSnapshot(d => { const v = d.data() || {}; state = {planos:v.planos || {}, vales:v.vales || {}, pensei:v.pensei || {}, lidas:v.lidas || {}, datesEdit:v.datesEdit || {}, planosEdit:v.planosEdit || {}, cats:v.cats || {}, casinha:v.casinha || {}, niver:v.niver || {}}; emitState(); }, () => {});
@@ -3036,6 +3038,8 @@ const Sync = (() => {
       }
       await whoAmI(); attachAll(); return 'ok';
     },
+    get verificado(){ return verif; },
+    async marcaVerificado(){ if(!online()) return; await fdb.doc('pessoas/' + user.uid).set({quem:'Di', verificado:true, email:user.email || ''}, {merge:true}); verif = true; },
     async setQuem(q){
       quem = q; store.set('quem', q);
       if(online()) await fdb.doc('pessoas/' + user.uid).set({quem:q, email:user.email || ''}, {merge:true});
@@ -3107,7 +3111,9 @@ function renderStep(i){
         <button type="submit">Continuar</button>
         <p class="msg" id="msg" role="status"></p>
       </form>`}
+      ${i === 0 && !PREVIA && Sync.mode === 'online' && !Sync.user ? `<button type="button" class="linkbtn ja-entrei st" style="--i:6" id="jaentrei">já entrei em outro aparelho</button>` : ''}
     </div></div>`;
+  document.getElementById('jaentrei')?.addEventListener('click', renderLogin);
   const card = document.getElementById('card'), msg = document.getElementById('msg');
   const fail = () => { msg.textContent = s.wrong[wrong++ % s.wrong.length]; card.classList.remove('shake'); void card.offsetWidth; card.classList.add('shake'); };
   const pass = el => { sparkle(el); setTimeout(() => i+1 < steps.length ? renderStep(i+1) : renderSuccess(), 450); };
@@ -3141,7 +3147,7 @@ function maskDate(e){
   e.target.value = v;
 }
 function renderSuccess(){
-  store.set('entrou', true);
+  store.set('entrou', true); try{ sessionStorage.setItem('dm_quiz', '1'); }catch(e){}
   const H = 'M55 92 C 20 66, 6 46, 6 28 C 6 14, 18 4, 31 4 C 42 4, 51 11, 55 20 C 59 11, 68 4, 79 4 C 92 4, 104 14, 104 28 C 104 46, 90 66, 55 92 Z';
   app.innerHTML = `
     <div class="gate page"><div class="sheet">
@@ -3153,7 +3159,7 @@ function renderSuccess(){
     </div></div>`;
   setTimeout(()=>burst(innerWidth/2, innerHeight*.4), 1500);
   typeText(document.getElementById('typed'), 'Oi meu amor, vem ver o que fiz para você', 900);
-  document.getElementById('go').onclick = renderLogin;
+  document.getElementById('go').onclick = () => Sync.user ? nextStep() : renderLogin();
 }
 const GLOGO = `<svg viewBox="0 0 24 24" aria-hidden="true" class="g"><path d="M21.6 12.2c0-.7-.1-1.3-.2-1.9H12v3.6h5.4a4.6 4.6 0 01-2 3v2.5h3.2c1.9-1.7 3-4.3 3-7.2z" fill="#4285F4"/><path d="M12 22c2.7 0 5-.9 6.6-2.4l-3.2-2.5c-.9.6-2 1-3.4 1-2.6 0-4.8-1.8-5.6-4.1H3.1v2.6A10 10 0 0012 22z" fill="#34A853"/><path d="M6.4 14c-.2-.6-.3-1.3-.3-2s.1-1.4.3-2V7.4H3.1a10 10 0 000 9.2z" fill="#FBBC05"/><path d="M12 5.9c1.5 0 2.8.5 3.8 1.5l2.9-2.9A10 10 0 003.1 7.4L6.4 10c.8-2.3 3-4.1 5.6-4.1z" fill="#EA4335"/></svg>`;
 function renderLogin(){
@@ -3175,7 +3181,7 @@ function renderLogin(){
       if(r === 'redirect') return;
       if(r === 'offline'){ msg.textContent = 'O login ainda não está ligado, então por enquanto fica salvo só neste aparelho.'; await new Promise(ok => setTimeout(ok, 1800)); }
       if(!Sync.quem && store.get('quem','')) await Sync.setQuem(store.get('quem',''));
-      Sync.quem ? firstScreen() : renderWho();
+      Sync.quem ? nextStep() : renderWho();
     }catch(e){ msg.textContent = 'Não deu pra entrar agora. Tenta de novo.'; btn.disabled = false; }
   };
 }
@@ -3225,6 +3231,7 @@ function renderWho(){
   });
 }
 /* decide a próxima tela: perguntas (só pro Di, uma vez) → login → Natal ou mensagem do dia */
+const quizFeito = () => { try{ return sessionStorage.getItem('dm_quiz') === '1'; }catch(e){ return false; } };
 const pinSessao = () => { try{ return sessionStorage.getItem('dm_pin') === '1'; }catch(e){ return false; } };
 const marcaPin = () => { try{ sessionStorage.setItem('dm_pin', '1'); }catch(e){} };
 async function nextStep(){
@@ -3234,7 +3241,14 @@ async function nextStep(){
   }
   const q = Sync.quem || store.get('quem', '');
   if(!q) return renderWho();
-  if(q === 'Di' && !store.get('entrou', false)) return renderStep(0);
+  if(q === 'Di' && !PREVIA){
+    await Sync.ready;
+    if(Sync.mode === 'online' && Sync.user){
+      /* cada conta Google do Di responde as perguntas uma vez; conta nova, pergunta de novo */
+      if(!Sync.verificado){ if(quizFeito()){ try{ await Sync.marcaVerificado(); }catch(e){} } else { store.set('entrou', false); return renderStep(0); } }
+      store.set('entrou', true);
+    } else if(!store.get('entrou', false)) return renderStep(0);
+  } else if(q === 'Di' && !store.get('entrou', false)) return renderStep(0);
   await Sync.ready;
   if(PREVIA && !store.get('viuLogin', false)) return renderLogin();
   if(Sync.mode === 'online' && !Sync.user) return renderLogin();
@@ -3541,7 +3555,7 @@ function renderHome(y = 0){
       <div id="ncvbox" class="mdiabox ncv-fim"></div>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
       <p class="endsync" id="endsync"></p>
-      <p class="endver">versão de 16/10 · 11h50</p>
+      <p class="endver">versão de 16/10 · 12h05</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
