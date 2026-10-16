@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=72">
-<link rel="apple-touch-icon" href="icon-180.png?v=72">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=72">
+<link rel="manifest" href="manifest.json?v=73">
+<link rel="apple-touch-icon" href="icon-180.png?v=73">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=73">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -1481,6 +1481,11 @@ details.cd-env{display:block}details.cd-env summary{display:flex;align-items:cen
 .dlogo-pic{overflow:hidden;border-radius:24%!important;background:#fff!important;border:3px solid #fff!important}
 .ch-x{position:absolute;top:-10px;right:-6px;width:26px!important;height:26px;min-height:26px!important;padding:0!important;border-radius:50%;display:grid;place-items:center;background:#fffdf8!important;color:var(--muted)!important;border:1px solid var(--line2);box-shadow:0 4px 10px -4px rgba(0,0,0,.25)!important;font-size:13px}
 .ch-x .icn{transform:rotate(45deg)}
+.endsync{margin:14px auto 0;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:12px;color:var(--muted)}
+.endsync b{font-weight:700;color:var(--ink2);font-size:12.5px;word-break:break-all}
+.endsync span{display:inline-flex;align-items:center;gap:6px}
+.endsync i{width:8px;height:8px;border-radius:50%;background:#c9b8b0;display:inline-block}
+.endsync.ok i{background:#4caf6e;box-shadow:0 0 0 3px rgba(76,175,110,.18)}.endsync.meio i{background:#e0a63a}.endsync.off i{background:#c8182c}
 .endver{margin:6px 0 0;font-size:10.5px;letter-spacing:.06em;color:var(--muted);opacity:.7}
 .n25{position:fixed!important;inset:0!important;z-index:9000!important;width:auto!important;max-width:none!important;margin:0!important;height:auto!important;overflow:auto;display:grid;place-items:center;padding:28px 18px;background:linear-gradient(180deg,#24463a,#16302a);position:relative;overflow:hidden}
 .n25-neve .fx-old{position:absolute;top:-10px;left:var(--x);width:var(--s);height:var(--s);border-radius:50%;background:#fff;opacity:.8;animation:n25cai var(--d) linear var(--a) infinite}
@@ -3446,6 +3451,17 @@ let vistaAtual = null, voltandoPara = false, restaurou = false; const scrollMem 
 function salvaLugar(){ try{ sessionStorage.setItem('dm_ult', JSON.stringify({v:curView || '', y:window.scrollY, h:hubAtual || ''})); }catch(e){} }
 addEventListener('pagehide', salvaLugar); document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'hidden') salvaLugar(); });
 setInterval(() => { if(document.querySelector('.home, .view')) salvaLugar(); }, 2000);
+/* fim da tela: conta logada e se tá sincronizado */
+function statusSync(){
+  const el = document.getElementById('endsync'); if(!el) return;
+  const em = (Sync.user && Sync.user.email) || (window.firebase && firebase.auth && (() => { try{ const u = firebase.auth().currentUser; return u && u.email; }catch(e){ return ''; } })()) || '';
+  const pinta = (cls, tx) => { el.className = 'endsync ' + cls; el.innerHTML = `${em ? `<b>${esc(em)}</b>` : '<b>sem conta conectada</b>'}<span><i></i>${tx}</span>`; };
+  if(Sync.mode !== 'online' || !em) return pinta('off', 'não sincronizado · fica só neste aparelho');
+  if(!navigator.onLine) return pinta('meio', 'sem internet · sincroniza quando voltar');
+  pinta('meio', 'sincronizando…');
+  try{ firebase.firestore().waitForPendingWrites().then(() => { if(el.isConnected) pinta('ok', 'sincronizado'); }).catch(() => pinta('ok', 'sincronizado')); }catch(e){ pinta('ok', 'sincronizado'); }
+}
+addEventListener('online', statusSync); addEventListener('offline', statusSync);
 function renderHome(y = 0){
   saiHistorico(); if(vistaAtual) scrollMem[vistaAtual] = window.scrollY; vistaAtual = null;
   if(!restaurou){ restaurou = true; try{ const u = JSON.parse(sessionStorage.getItem('dm_ult') || 'null');
@@ -3524,12 +3540,13 @@ function renderHome(y = 0){
       <p class="endyear">${Math.max(2026, new Date().getFullYear())}</p>
       <div id="ncvbox" class="mdiabox ncv-fim"></div>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
-      <p class="endver">versão de 16/10 · 11h40</p>
+      <p class="endsync" id="endsync"></p>
+      <p class="endver">versão de 16/10 · 11h50</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
   clearInterval(timer); tick(); timer = setInterval(tick, 1000);
-  missoesBox(document.getElementById('mdiabox')); painelOutro(document.getElementById('hjbox')); caixaAvisos(document.getElementById('avbox')); convitePush(document.getElementById('ncvbox')); vigiar(); irDoLink(); setTimeout(tourInicio, 1800);
+  missoesBox(document.getElementById('mdiabox')); painelOutro(document.getElementById('hjbox')); caixaAvisos(document.getElementById('avbox')); statusSync(); convitePush(document.getElementById('ncvbox')); vigiar(); irDoLink(); setTimeout(tourInicio, 1800);
   setTimeout(chocoDoDia, 1200); setTimeout(avisoAbraco, 400); setTimeout(dedicatoria, 900); setTimeout(avisoRecado, 2600);
   document.getElementById('edprev2')?.addEventListener('click', () => entrarPrevia());
   document.getElementById('edviajar')?.addEventListener('click', abrirViagem);
