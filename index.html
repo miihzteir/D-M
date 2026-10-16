@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=70">
-<link rel="apple-touch-icon" href="icon-180.png?v=70">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=70">
+<link rel="manifest" href="manifest.json?v=71">
+<link rel="apple-touch-icon" href="icon-180.png?v=71">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=71">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -1754,6 +1754,17 @@ html body .tour-pular{position:absolute;top:12px;right:14px;width:auto;min-heigh
 html body .mdia-esp{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;min-height:0;margin:2px 0 0;padding:8px;background:none;border:0;box-shadow:none;color:#9b1630;font-size:12.5px;font-weight:700}
 .mdia-esp .icn{font-size:14px}
 .mr-esp{display:block;font-style:normal;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#c9822a;margin-bottom:2px}
+/* natal: editar e última surpresa */
+.xm-pre{white-space:pre-line}
+.xm-ed{margin:8px auto 0;max-width:320px;font-size:12px;color:#f3e7cf;background:rgba(255,255,255,.12);border-radius:12px;padding:6px 10px}
+.xfinal{margin:6px auto 30px;max-width:420px;padding:0 18px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.xf-eb{margin:0;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:#b5343c}
+.xf-t{margin:0 0 18px;font-family:var(--f-display);font-style:italic;font-size:30px;font-weight:500;color:#2f4b3c}
+.xfinal .gift .box{background:#b5343c}.xfinal .gift .lid{background:#d8505a}.xfinal .gift .rib{background:#f3dca4}
+.xf-tap{margin:10px 0 0;font-size:13px;color:#7a6d5a}
+.xf-slot{width:100%;margin-top:10px;text-align:left}
+.xf-carta{margin:0}
+.xf-lock{display:flex;align-items:center;gap:6px;font-size:14px;color:#7a6d5a;background:#fff;border-radius:99px;padding:8px 16px}
 /* parabéns missão */
 .pchoc{position:fixed;inset:0;z-index:9500;display:grid;place-items:center;background:rgba(74,18,36,.28);backdrop-filter:blur(3px);opacity:0;transition:opacity .25s}
 .pchoc.in{opacity:1}
@@ -1920,7 +1931,7 @@ html body .hb-tile:active{transform:scale(.98)}
 .hb-tx small{font-size:12px;color:var(--muted);font-weight:600;line-height:1.25}
 .hb-ics{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;align-items:center}.hb-ics i{width:24px;height:24px;border-radius:8px;display:grid;place-items:center;background:var(--bg);color:var(--fg);font-size:13px}
 html body .hb-badge{position:static!important;font-style:normal;font-size:10.5px!important;padding:3px 8px!important;border-radius:99px;background:#c8182c!important;color:#fff!important;font-weight:800;min-width:0!important;height:auto!important;line-height:1.2!important}
-#badge-pergunta::before{content:"pergunta\00a0"}#badge-bilhetes::after{content:"\00a0bilhete novo"}
+#badge-pergunta::before{content:"pergunta\00a0"}#badge-bilhetes::after{content:"\00a0 bilhete novo"}
 .hb-play{width:48px;height:48px;border-radius:50%;flex:none;display:grid;place-items:center;background:var(--hf);color:#fff;font-size:24px;box-shadow:0 10px 20px -8px var(--hs)}
 .hb-play .icn circle{display:none}.hb-play .icn path{fill:#fff;stroke:#fff}
 .jh-casa{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22'%3E%3Ccircle cx='3' cy='3' r='1.4' fill='%23bbb' opacity='.35'/%3E%3C/svg%3E"),linear-gradient(135deg,#fffdf9,var(--hb))!important;box-shadow:0 18px 36px -22px var(--hs), 0 0 0 1.5px color-mix(in srgb, var(--hf) 12%, transparent)!important}
@@ -2838,7 +2849,7 @@ const C = {
   textos: {
     natalEyebrow: 'nosso primeiro Natal', natalTitulo: 'Feliz Natal', natalSub: 'meu amor', natalContagem: 'Falta pouco pro dia 25', natalLegenda: 'pra gente abrir os presentes juntos',
     ultimaCarta: 'Quem diria que uma conversa no WhatsApp em fevereiro ia virar tudo isso. Desde o primeiro encontro eu soube que tinha alguma coisa diferente em você.\n\nObrigada por cada dia, cada risada e cada cuidado. Você deixa tudo mais leve.\n\nQue esse seja o primeiro de muitos Natais ao seu lado.',
-    natalTituloAntes: 'Nosso Natal', natalSubAntes: 'tá chegando',
+    natalTituloAntes: 'Nosso Natal', natalSubAntes: 'tá chegando', natalFestaTitulo: 'Chegou o nosso dia!', natalFestaSub: 'o nosso primeiro Natal juntos',
     dedicatoria: 'Amor, esse app é dedicado para você. Eu te amo.',
     vespera: 'Amanhã faz um ano que esse app é seu. Foram 364 bilhetes, um pra cada dia. Esse aqui é só pra dizer que eu escolheria você em todos eles de novo.',
     fimDiario: 'Um ano de bilhetes, um ano de perguntas, um ano de nós. Os bilhetes acabaram, mas eu continuo aqui te amando todos os dias.',
@@ -3229,9 +3240,9 @@ function typeText(el, text, delay){
 
 /* ---------- mini app de Natal ---------- */
 let xtimer;
-let xFromY = 0, xVolta = null;
+let xFromY = 0, xVolta = null, xEmpurrou = false;
 function renderXmas(){
-  document.getElementById('xgift')?.remove(); entradaHistorico();
+  document.getElementById('xgift')?.remove(); xEmpurrou = entradaHistorico();
   if(document.querySelector('.home')) xFromY = window.scrollY;
   stopGame(); clearInterval(timer); document.getElementById('tabbar')?.remove();
   const cols = ['#e05a5f','#f3dca4','#9bc28a','#fbf6ec'];
@@ -3255,38 +3266,48 @@ function renderXmas(){
         <circle class="orn" cx="136" cy="158" r="5" fill="#fbf6ec" style="animation-delay:.6s"/>
         <path class="star" d="M85 6 L90 18 L103 19 L93 27 L96 40 L85 33 L74 40 L77 27 L67 19 L80 18 Z" fill="#f3dca4"/>
       </svg>
-      <p class="xeb st" style="--i:3">${esc(C.textos.natalEyebrow)}</p>
-      <h1 class="xt1 st" style="--i:4">${esc(jaNatal() ? C.textos.natalTitulo : C.textos.natalTituloAntes)}</h1>
-      <p class="xt2 st" style="--i:5">${esc(jaNatal() ? C.textos.natalSub : C.textos.natalSubAntes)}</p>
+      <p class="xeb st" style="--i:3">${TE('xm_eb', esc(C.textos.natalEyebrow), 'Frase de cima da tela de Natal')}</p>
+      <h1 class="xt1 st" style="--i:4">${jaNatal() ? TE('xm_tit', esc(C.textos.natalTitulo), 'Título da tela de Natal (a partir do dia 25)') : TE('xm_titA', esc(C.textos.natalTituloAntes), 'Título da tela de Natal (antes do dia 25)')}</h1>
+      <p class="xt2 st" style="--i:5">${jaNatal() ? TE('xm_sub', esc(C.textos.natalSub), 'Embaixo do título (a partir do dia 25)') : TE('xm_subA', esc(C.textos.natalSubAntes), 'Embaixo do título (antes do dia 25)')}</p>
+      ${modoEd() && !jaNatal() ? `<p class="xm-ed">a partir do dia 25 fica: <b>${TE('xm_tit', esc(C.textos.natalTitulo), 'Título da tela de Natal (a partir do dia 25)')}</b> · ${TE('xm_sub', esc(C.textos.natalSub), 'Embaixo do título (a partir do dia 25)')}</p>` : ''}
     </section>
     <section class="xb xb2">
       <div class="xcard st" style="--i:6">
-        <h3 id="xl">${esc(C.textos.natalContagem)}</h3>
+        <h3 id="xl">${TE('xm_cont', esc(C.textos.natalContagem), 'Título da contagem')}</h3>
         <div class="xcount" id="xc">
           <div><b id="xd">0</b><span>dias</span></div><div><b id="xh">0</b><span>horas</span></div>
           <div><b id="xm">0</b><span>min</span></div><div><b id="xs">0</b><span>seg</span></div>
         </div>
-        <p class="xlabel">${esc(C.textos.natalLegenda)}</p>
+        <p class="xlabel">${TE('xm_leg', esc(C.textos.natalLegenda), 'Legenda da contagem')}</p>
       </div>
     </section>
     <section class="xb xb3">
       <div class="xnote">
-        <p class="to">Meu Di,</p>
-        <p>${esc(C.cartaNatal)}</p>
-        <p class="sign">Mihzinha</p>
+        <p class="to">${TE('xm_to', 'Meu Di,', 'Começo do bilhete de Natal')}</p>
+        <p class="xm-pre">${TE('xm_carta', esc(C.cartaNatal), 'Bilhete de Natal')}</p>
+        <p class="sign">${TE('xm_ass', 'Mihzinha', 'Assinatura do bilhete de Natal')}</p>
       </div>
       <div class="xflower">${FLOWER('xfl','nós no Natal', f0.foto).replace('#fbe6ea','#f7ece6').replace('#e9b3c0','#d9b3ab')}<span class="ribbon">${RED_RIBBON}</span></div>
     </section>
     <section class="xb xb4">
       <span class="xholly">${HOLLY}</span>
-      <button class="xgo" id="xgo">Voltar para a tela inicial</button>
+      <div class="xfinal">
+        <p class="xf-eb">${TE('xf_eb', 'por último', 'Frase de cima da última surpresa')}</p>
+        <h3 class="xf-t">${TE('xf_t', 'A última surpresa', 'Título da última surpresa')}</h3>
+        ${jaNatal() || Sync.quemReal === 'Mihzinha' ? `<button class="gift" id="xfgift" aria-label="Abrir o presente"><span class="lid"></span><span class="box"></span><span class="rib"></span><svg class="bow" viewBox="0 0 60 36" aria-hidden="true"><path d="M30 18C22 4 6 2 6 14s16 8 24 4zM30 18c8-14 24-16 24-4s-16 8-24 4z" fill="#bf9455"/><path d="M30 18l-8 16M30 18l8 16" stroke="#bf9455" stroke-width="5" stroke-linecap="round"/><circle cx="30" cy="18" r="5" fill="#a07a40"/></svg></button>
+        <p class="xf-tap" id="xftap">${TE('xf_tap', 'toca no presente', 'Dica embaixo do presente')}</p>
+        <div id="xfslot" class="xf-slot" ${modoEd() ? '' : 'hidden'}><article class="paper xf-carta"><p class="to">${TE('xf_to', 'Meu Di,', 'Começo da carta da última surpresa')}</p><p class="xm-pre">${TE('xf_carta', esc(C.textos.ultimaCarta), 'Carta da última surpresa')}</p><p class="sign">${TE('xf_ass', esc(C.textos.ultimaAssinatura), 'Assinatura da última surpresa')}</p></article></div>`
+        : `<p class="xf-lock">${icon('lock')} ${TE('xf_lock', 'abre no dia 25 de dezembro', 'Aviso antes do dia 25')}</p>`}
+      </div>
+      <button class="xgo" id="xgo">${TE('xm_volta', 'Voltar para a tela inicial', 'Botão de voltar do Natal')}</button>
     </section>`;
   document.body.append(x);
   app.innerHTML = '';
   clearInterval(xtimer); xtick(); xtimer = setInterval(xtick, 1000); heroSnow();
+  const xg = document.getElementById('xfgift'); if(xg){ if(modoEd()) xg.classList.add('open'); xg.onclick = e => { if(e.target.closest('.edk') || xg.classList.contains('open')) return; xg.classList.add('open'); const r = xg.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height / 2, 60); document.getElementById('xftap').hidden = true; setTimeout(() => { const sl = document.getElementById('xfslot'); if(sl){ sl.hidden = false; sl.firstElementChild.classList.add('unfold'); setTimeout(() => sl.scrollIntoView({behavior:'smooth', block:'center'}), 200); } }, 600); }; }
   document.getElementById('xgo').onclick = () => {
     burst(innerWidth/2, innerHeight*.7, 30);
-    x.classList.add('out'); clearInterval(xtimer); const pv = porVoltar; porVoltar = false; if(xVolta){ const f = xVolta; xVolta = null; f(); if(pv) entradaHistorico(); } else { if(!pv) saiHistorico(); renderHome(xFromY); } xFromY = 0;
+    x.classList.add('out'); clearInterval(xtimer); const pv = porVoltar; porVoltar = false; if(xVolta){ const f = xVolta; xVolta = null; f(); if(pv) entradaHistorico(); } else renderHome(xFromY); xEmpurrou = false; xFromY = 0;
     setTimeout(() => x.remove(), 700);
   };
 }
@@ -3500,7 +3521,7 @@ function renderHome(y = 0){
       <p class="endyear">${Math.max(2026, new Date().getFullYear())}</p>
       <div id="ncvbox" class="mdiabox ncv-fim"></div>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
-      <p class="endver">versão de 16/10 · 10h55</p>
+      <p class="endver">versão de 16/10 · 11h15</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
@@ -3592,7 +3613,7 @@ function renderFesta(f){
   store.set(`viuFesta_${f.id}_${f.ano}`, true);
   const eu = Sync.quem || 'Di', F = C.festas, T = C.textos;
   let cfg;
-  if(f.id === 'natal') cfg = {tema:'natal', eb:'25 de dezembro', titulo:T.natalTitulo || 'Feliz Natal!', sub:T.natalSub || 'meu amor', texto:T.natal25, btn:'Abrir o nosso Natal', acao:() => renderXmas(), fx:'neve'};
+  if(f.id === 'natal') cfg = {tema:'natal', eb:'25 de dezembro', titulo:T.natalFestaTitulo || 'Chegou o nosso dia!', sub:T.natalFestaSub || 'o nosso primeiro Natal juntos', texto:T.natal25, btn:'Abrir o nosso Natal', acao:() => renderXmas(), fx:'neve'};
   else if(f.id === 'fim') cfg = {tema:'natal', eb:'25 de dezembro de 2027', titulo:F.fim.titulo, sub:F.fim.sub, texto:F.fim.texto, fx:'neve'};
   else if(f.id === 'anoNovo') cfg = {tema:'anonovo', eb:`1º de janeiro de ${f.ano}`, titulo:F.anoNovo.titulo.replace('{ano}', f.ano), sub:F.anoNovo.sub, texto:F.anoNovo.texto, fx:'fogos'};
   else if(f.id === 'namorados') cfg = {tema:'namorados', eb:'12 de junho', titulo:F.namorados.titulo, sub:F.namorados.sub, texto:F.namorados.texto, fx:'coracoes'};
@@ -3761,7 +3782,7 @@ document.addEventListener('click', e => { const b = e.target.closest('.edk'); if
 /* botão voltar do celular: volta dentro do app em vez de sair */
 let ignoraPop = false, porVoltar = false;
 try{ if('scrollRestoration' in history) history.scrollRestoration = 'manual'; }catch(e){}
-function entradaHistorico(){ try{ if(!history.state || !history.state.dm) history.pushState({dm:1}, ''); }catch(e){} }
+function entradaHistorico(){ try{ if(!history.state || !history.state.dm){ history.pushState({dm:1}, ''); return true; } }catch(e){} return false; }
 function saiHistorico(){ try{ if(history.state && history.state.dm){ ignoraPop = true; history.back(); } }catch(e){} }
 addEventListener('popstate', () => {
   if(ignoraPop){ ignoraPop = false; return; }
@@ -3837,7 +3858,7 @@ const HUBS = {
   /* dia: */ diaX:{view:'hub_dia', t:'Todo dia', s:'pergunta, bilhetes, dia 12, saudade e diário', vt:'Todo dia', vs:'O que é de todo dia, um pro outro', itens:() => [...LISTS.hoje, ...LISTS.hoje2], dest:'pergunta', cor:['#fde3e8','#d6456b','rgba(214,69,107,.6)']},
   nos:   {view:'hub_nos', t:'Nossas coisas', s:'primeiras vezes, playlist, planos e mais', vt:'Nossas coisas', vs:'Tudo que é nosso, guardadinho', itens:() => LISTS.nos, dest:'primeiras', cor:['#e3f0dc','#4f8a4a','rgba(79,138,74,.6)']},
   jogos: {view:'jogos', t:'Nossos jogos', s:'casinha, corações, memória e mais', vt:'Nossos jogos', vs:'Escolhe um e bora', itens:() => LISTS.brincar, dest:'casinha', cor:['#e0ecfb','#3f74c4','rgba(63,116,196,.7)']},
-  cartas:{view:'hub_cartas', t:'Nossas cartas', s:'abra quando, cartas pro futuro, cartinhas e álbum', vt:'Nossas cartas', vs:'Pra abrir na hora certa', itens:() => LISTS.cartas, dest:'abra', cor:['#f8dde2','#9b1630','rgba(155,22,48,.6)'], extra:'carta'},
+  cartas:{view:'hub_cartas', t:'Nossas cartas', s:'abra quando, cartas pro futuro, cartinhas e álbum', vt:'Nossas cartas', vs:'Pra abrir na hora certa', itens:() => LISTS.cartas, dest:'abra', cor:['#f8dde2','#9b1630','rgba(155,22,48,.6)']},
   datas: {view:'hub_datas', t:'Datas e retrospectivas', s:'mesversário, retrospectivas, datas e cápsula', vt:'Datas e retrospectivas', vs:'Nossos dias importantes e tudo que a gente viveu', itens:() => LISTS.datas, dest:'mes', cor:['#ece4fb','#7b5cc4','rgba(123,92,196,.6)']},
   mimos: {view:'hub_mimos', t:'Prêmios e mimos', s:'prêmios de verdade e vales-presente', vt:'Prêmios e mimos', vs:'Coisas de verdade pra gente aproveitar junto', itens:() => LISTS.mimos, dest:'premios', cor:['#fbf0d0','#b0820f','rgba(176,130,15,.55)']}
 };
@@ -4543,8 +4564,8 @@ function chocoDoDia(){
       let n = of.seguidos + 1; try{ n = (await pegarChocolate(col, list, eu)).seguidos; }catch(x){}
       t.querySelector('.ch-ic').innerHTML = FLAME_SVG;
       t.querySelector('.ch-tx').innerHTML = `<b>${n} ${n === 1 ? 'dia' : 'dias'} seguidos!</b><small>${n % 7 === 0 ? `+1 chocolate e +${CASA.bonusOfensiva} de bônus pela semana` : '+1 chocolate na conta da casinha'}</small>`;
-      b.disabled = false; b.textContent = 'Ver'; b.onclick = () => { t.remove(); openStop('casinha'); };
-      setTimeout(fecha, 2600);
+      const nb = b.cloneNode(false); nb.textContent = 'Ver'; nb.disabled = false; b.replaceWith(nb); const f2 = setTimeout(fecha, 4500);
+      nb.addEventListener('click', ev => { ev.preventDefault(); ev.stopPropagation(); clearTimeout(f2); t.remove(); document.querySelectorAll('.tk-wrap:not(#inst),#ntoast,#pchoc').forEach(x => x.remove()); hubAtual = null; openStop('casinha'); window.scrollTo({top:0, behavior:'instant'}); });
     };
   }, 1500);
 }
@@ -6128,6 +6149,8 @@ const ESCRITAS = [
   {k:'textos.natalSub', t:'Embaixo do título a partir do dia 25', tipo:'linha'},
   {k:'textos.natalContagem', t:'Título da contagem', tipo:'linha'},
   {k:'textos.natalLegenda', t:'Embaixo da contagem', tipo:'linha'},
+  {k:'textos.natalFestaTitulo', t:'Título da mensagem do dia 25', d:'aparece quando ele entra no app no dia 25, antes da tela de Natal', tipo:'linha'},
+  {k:'textos.natalFestaSub', t:'Embaixo do título da mensagem do dia 25', tipo:'linha'},
   {k:'textos.natal25', t:'Mensagem que abre no dia 25', d:'aparece assim que ele entrar no app no dia de Natal. Linha em branco separa parágrafos', tipo:'texto', rows:6},
   {grupo:'Datas festivas'},
   {k:'tour', t:'Boas-vindas do primeiro dia', d:'aparece uma vez, na primeira vez que ele entra a partir do dia 25. Dá pra ver antes pela viagem no tempo', tipo:'objs', fixo:1, campos:[['t','Título'],['s','Texto']]},
