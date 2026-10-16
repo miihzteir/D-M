@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=59">
-<link rel="apple-touch-icon" href="icon-180.png?v=59">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=59">
+<link rel="manifest" href="manifest.json?v=63">
+<link rel="apple-touch-icon" href="icon-180.png?v=63">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=63">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -1886,7 +1886,7 @@ html body .hb-tile:active{transform:scale(.98)}
 .hb-tx small{font-size:12px;color:var(--muted);font-weight:600;line-height:1.25}
 .hb-ics{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;align-items:center}.hb-ics i{width:24px;height:24px;border-radius:8px;display:grid;place-items:center;background:var(--bg);color:var(--fg);font-size:13px}
 html body .hb-badge{position:static!important;font-style:normal;font-size:10.5px!important;padding:3px 8px!important;border-radius:99px;background:#c8182c!important;color:#fff!important;font-weight:800;min-width:0!important;height:auto!important;line-height:1.2!important}
-#badge-pergunta::before{content:"pergunta "}#badge-bilhetes::after{content:" bilhete novo"}
+#badge-pergunta::before{content:"pergunta\00a0"}#badge-bilhetes::after{content:"\00a0bilhete novo"}
 .hb-play{width:48px;height:48px;border-radius:50%;flex:none;display:grid;place-items:center;background:var(--hf);color:#fff;font-size:24px;box-shadow:0 10px 20px -8px var(--hs)}
 .hb-play .icn circle{display:none}.hb-play .icn path{fill:#fff;stroke:#fff}
 .jh-casa{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22'%3E%3Ccircle cx='3' cy='3' r='1.4' fill='%23bbb' opacity='.35'/%3E%3C/svg%3E"),linear-gradient(135deg,#fffdf9,var(--hb))!important;box-shadow:0 18px 36px -22px var(--hs), 0 0 0 1.5px color-mix(in srgb, var(--hf) 12%, transparent)!important}
@@ -1916,6 +1916,18 @@ html body .mes12{display:flex;align-items:center;gap:14px;width:100%;min-height:
 .rm-dest{display:flex;align-items:center;gap:12px;padding:12px 14px;margin-bottom:12px;border-radius:18px;background:#fff8e6;color:#6a4c10;font-size:13.5px}.rm-dest .icn{font-size:22px;color:#c9822a;flex:none}.rm-dest b{display:block;font-size:14px}
 .rm-paper{margin-top:14px}.rm-fim{text-align:center;font-family:var(--f-hand);font-size:24px;color:#9b1630;margin:18px 0 6px}
 .rm-vazio{text-align:center;padding:30px 16px;color:var(--muted)}.rm-vazio .icn{font-size:40px;color:#d9a3ad;margin:0 auto 10px}
+html body .hb-ic{width:30px;height:30px;min-height:0;padding:0;border-radius:9px;border:0;display:grid;place-items:center;background:var(--bg);color:var(--fg);font-size:15px;box-shadow:none;cursor:pointer;transition:transform .12s}
+html body .hb-ic:active{transform:scale(.9)}
+.hb-ics{gap:5px!important}
+.hb-tile{cursor:pointer}
+/* mover legendas */
+.mv-on{outline:1.5px dashed rgba(155,22,48,.45);outline-offset:3px;border-radius:6px}
+.mv-h{position:absolute;left:-12px;top:-12px;width:24px;height:24px;border-radius:50%;background:#9b1630;color:#fff;display:grid;place-items:center;z-index:20;box-shadow:0 3px 8px rgba(0,0,0,.25);cursor:grab;touch-action:none}
+.mv-h .icn{width:14px;height:14px;stroke:#fff;stroke-width:2}
+[data-mv]{will-change:transform}.mcap.mv-on{position:relative}
+.mv-arr{opacity:.85}
+html body .hb-badge{border-radius:9px!important;background:#fde3e8!important;color:#b0324f!important;font-size:11px!important;padding:6px 9px!important;font-weight:800;box-shadow:inset 0 0 0 1px rgba(214,69,107,.18)!important;white-space:nowrap;line-height:1!important;height:30px!important;display:inline-flex!important;align-items:center}
+html body .hb-badge[hidden]{display:none!important}
 </style>
 
 <canvas id="petals" aria-hidden="true"></canvas>
@@ -3342,8 +3354,15 @@ const COR_UI = {saudade:'rosa', diario:'pessego', pergunta:'rosa', bilhetes:'azu
   abra:'rosa', album:'lavanda', cartas:'vinho', cartadata:'pessego', retro:'mostarda', capsula:'menta', filhos:'azul', vales:'coral', numeros:'rosa', retromes:'lavanda', jogos:'azul', hub_dia:'rosa', hub_nos:'salvia', hub_cartas:'vinho', premios:'mostarda', notificacoes:'lavanda', carta:'vinho', editar:'lavanda'};
 const corDe = id => PAL_UI[COR_UI[id] || 'rosa'];
 const pills = list => `<div class="pills2">${list.map(r => { const [bg, fg] = corDe(r.id); return `<button class="pill2" data-go="${r.id}" style="--bg:${bg};--fg:${fg}"><span class="p2i">${icon(r.ico)}</span><span class="p2t"><b>${TE('pt_' + r.id, r.t, 'Nome no botão')}</b><small>${TE('ps_' + r.id, r.s, 'Texto pequeno do botão')}</small></span></button>`; }).join('')}</div>`;
+let vistaAtual = null, voltandoPara = false, restaurou = false; const scrollMem = {};
+function salvaLugar(){ try{ sessionStorage.setItem('dm_ult', JSON.stringify({v:curView || '', y:window.scrollY, h:hubAtual || ''})); }catch(e){} }
+addEventListener('pagehide', salvaLugar); document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'hidden') salvaLugar(); });
+setInterval(() => { if(document.querySelector('.home, .view')) salvaLugar(); }, 2000);
 function renderHome(y = 0){
-  saiHistorico();
+  saiHistorico(); if(vistaAtual) scrollMem[vistaAtual] = window.scrollY; vistaAtual = null;
+  if(!restaurou){ restaurou = true; try{ const u = JSON.parse(sessionStorage.getItem('dm_ult') || 'null');
+    if(u && u.v && VIEWS[u.v] && !['editar','memoria2','fotos'].includes(u.v)){ setTimeout(() => { homeY = 0; if(u.h && u.h !== u.v && VIEWS[u.h]){ hubAtual = u.h; } curView = u.v; VIEWS[u.v](); [80, 300, 700].forEach(t => setTimeout(() => window.scrollTo(0, u.y), t)); }, 60); }
+    else if(u && !u.v && u.y) y = u.y; }catch(e){} }
   curView = ''; document.getElementById('edfab')?.remove();
   const eu = Sync.quem || 'Di', outro = eu === 'Mihzinha' ? 'Di' : 'Mihzinha';
   const f0 = C.polaroids[0] || {}, f1 = C.polaroids[1] || {};
@@ -3360,7 +3379,7 @@ function renderHome(y = 0){
       <div id="nvbox" class="nvbox"></div>
       <div id="mdiabox" class="mdiabox"></div>
       <div id="hjbox" class="mdiabox"></div>
-      <div class="flower float">${FLOWER('fl1','nós dois', C.fotoInicio || f0.foto).replace('#fbe6ea','#f1e6dc').replace('#e9b3c0','#d2b8a9')}<span class="ribbon sway">${RIBBON}</span></div>
+      <div class="flower float">${FLOWER('fl1','nós dois', C.fotoInicio || f0.foto).replace('#fbe6ea','#f1e6dc').replace('#e9b3c0','#d2b8a9')}</div>
       <div class="hcounter" aria-label="Tempo juntos">
         <div><b id="cd">0</b><span>dias</span></div><div><b id="ch">0</b><span>horas</span></div>
         <div><b id="cm">0</b><span>min</span></div><div><b id="cs">0</b><span>seg</span></div>
@@ -3392,7 +3411,7 @@ function renderHome(y = 0){
 
     <section class="band b-sage">
       <h2 class="btitle rv">${TE('b_Nossas_memórias', 'Nossas memórias', 'Título da parte')}</h2>
-      <div class="polrow rv">${C.memorias.map((m,k) => `<button class="mini" data-mem="${m.id}"><span class="mini-ph" id="mp-${m.id}"><span class="ph ${['','b','c'][k % 3]}">♥︎</span></span><span>${T('v_memoria2_' + hk(m.titulo), esc(m.titulo))}</span></button>`).join('')}</div>
+      <div class="polrow rv">${C.memorias.map((m,k) => `<button class="mini" data-mem="${m.id}"><span class="mini-ph" id="mp-${m.id}"><span class="ph ${['','b','c'][k % 3]}">♥︎</span></span><span data-mv="mini_${m.id}">${T('v_memoria2_' + hk(m.titulo), esc(m.titulo))}</span></button>`).join('')}</div>
       ${hubTile('nos')}
     </section>
 
@@ -3414,7 +3433,7 @@ function renderHome(y = 0){
       <p class="endyear">2026</p>
       <div id="ncvbox" class="mdiabox ncv-fim"></div>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
-      <p class="endver">versão de 16/10 · 10h20</p>
+      <p class="endver">versão de 16/10 · 11h15</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
@@ -3439,8 +3458,10 @@ function renderHome(y = 0){
   if(natalAberto()){ const g = document.createElement('button'); g.id = 'xgift'; g.className = 'xgift'; g.setAttribute('aria-label','Abrir o presente de Natal');
     g.innerHTML = `<span class="xg-box"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="9" y="26" width="46" height="32" rx="3" fill="#7a1424"/><rect x="6" y="18" width="52" height="11" rx="3" fill="#b3122c"/><rect x="28" y="18" width="8" height="40" fill="#f3dca4"/><path d="M32 18c-4-9-15-12-16-5-1 5 9 6 16 5zm0 0c4-9 15-12 16-5 1 5-9 6-16 5z" fill="#f3dca4" stroke="#c9a65c" stroke-width="1.5"/></svg></span><small>abre aqui</small>`;
     g.onclick = () => { g.remove(); renderXmas(); }; document.body.append(g); }
-  requestAnimationFrame(() => window.scrollTo({top:y, behavior:'instant'}));
+  requestAnimationFrame(() => window.scrollTo({top:y, behavior:'instant'})); if(y) [150, 450].forEach(t => setTimeout(() => { if(document.querySelector('.home') && Math.abs(window.scrollY - y) > 30) window.scrollTo(0, y); }, t));
   app.querySelectorAll('[data-go]').forEach(b => b.onclick = () => openStop(b.dataset.go));
+  app.querySelectorAll('[data-hgo]').forEach(b => b.onclick = e => { e.stopPropagation(); hubAtual = null; openStop(b.dataset.hgo); });
+  app.querySelectorAll('.hb-tile').forEach(t => t.onkeydown = e => { if(e.key === 'Enter') t.click(); });
   app.querySelectorAll('[data-mem]').forEach(b => b.onclick = () => { homeY = window.scrollY; curView = 'fotos'; VIEWS.fotos(b.dataset.mem); });
   const offM = Sync.col('fotosMem').on(list => {
     if(!document.getElementById('mp-' + C.memorias[0].id)){ setTimeout(() => offM && offM()); return; }
@@ -3681,6 +3702,36 @@ addEventListener('popstate', () => {
   const b = document.getElementById('back'); if(b) b.click();
 });
 
+
+/* ---------- mover legendas e textos com o dedo (só a Mih, no modo editar) ---------- */
+let POS = {};
+function aplicaPos(raiz = document){
+  raiz.querySelectorAll('[data-mv]').forEach(el => {
+    const k = el.dataset.mv, p = POS[k], pai = el.offsetParent || el.parentElement;
+    if(p && pai){ const r = pai.getBoundingClientRect(); el.style.transform = `translate(${(p.x * r.width).toFixed(1)}px, ${(p.y * r.height).toFixed(1)}px)`; } else el.style.transform = '';
+    const pode = modoEd();
+    el.classList.toggle('mv-on', pode);
+    let h = el.querySelector(':scope > .mv-h');
+    if(pode && !h){ h = document.createElement('span'); h.className = 'mv-h'; h.title = 'arrasta pra mudar de lugar'; h.innerHTML = '<svg viewBox="0 0 24 24" class="icn"><path d="M12 3v18M3 12h18M12 3l-3 3M12 3l3 3M12 21l-3-3M12 21l3-3M3 12l3-3M3 12l3 3M21 12l-3-3M21 12l-3 3"/></svg>'; el.append(h); ligaArrasto(el, h); }
+    if(!pode && h) h.remove();
+  });
+}
+function ligaArrasto(el, h){
+  h.addEventListener('click', e => { e.stopPropagation(); e.preventDefault(); });
+  h.addEventListener('pointerdown', e => {
+    e.stopPropagation(); e.preventDefault(); h.setPointerCapture(e.pointerId);
+    const k = el.dataset.mv, pai = el.offsetParent || el.parentElement, r = pai.getBoundingClientRect(), p0 = POS[k] || {x:0, y:0}, x0 = e.clientX, y0 = e.clientY;
+    el.classList.add('mv-arr');
+    const mv = ev => { const nx = p0.x + (ev.clientX - x0) / r.width, ny = p0.y + (ev.clientY - y0) / r.height; POS[k] = {x:+nx.toFixed(4), y:+ny.toFixed(4)}; el.style.transform = `translate(${(nx * r.width).toFixed(1)}px, ${(ny * r.height).toFixed(1)}px)`; };
+    const up = async () => { h.removeEventListener('pointermove', mv); h.removeEventListener('pointerup', up); h.removeEventListener('pointercancel', up); el.classList.remove('mv-arr');
+      try{ await Sync.col('conteudo').set('posicoes', {m:POS}); csToast('Lugar salvo ♥'); }catch(x){} };
+    h.addEventListener('pointermove', mv); h.addEventListener('pointerup', up); h.addEventListener('pointercancel', up);
+  });
+  h.addEventListener('dblclick', async e => { e.stopPropagation(); delete POS[el.dataset.mv]; el.style.transform = ''; try{ await Sync.col('conteudo').set('posicoes', {m:POS}); csToast('Voltou pro lugar de antes'); }catch(x){} });
+}
+new MutationObserver(() => { clearTimeout(aplicaPos._t); aplicaPos._t = setTimeout(() => aplicaPos(), 60); }).observe(document.documentElement, {childList:true, subtree:true});
+addEventListener('resize', () => aplicaPos());
+
 function shell(eb, title, sub, body){
   document.documentElement.classList.toggle('di-ver', !modoEd());
   document.getElementById('edfab')?.remove();
@@ -3688,14 +3739,17 @@ function shell(eb, title, sub, body){
     const f = document.createElement('button'); f.id = 'edfab'; f.className = 'edfab'; f.type = 'button'; f.innerHTML = `${icon('pencil')} Editar esta parte`;
     f.onclick = () => { f.remove(); store.set('edAba', alvo[0]); curView = 'editar'; VIEWS.editar(alvo[1], origem, alvo[0]); }; document.body.append(f); }, 0);
   document.getElementById('xgift')?.remove(); document.getElementById('chtoast')?.remove(); document.getElementById('abtoast')?.remove();
+  if(vistaAtual && vistaAtual !== curView) scrollMem[vistaAtual] = window.scrollY;
+  const yVolta = voltandoPara ? (scrollMem[curView] || 0) : 0; voltandoPara = false; vistaAtual = curView;
   window.scrollTo(0,0); document.getElementById('tabbar')?.remove();
+  if(yVolta) [0, 120, 400].forEach(t => setTimeout(() => window.scrollTo(0, yVolta), t));
   const [pcb, pc] = corDe(curView);
   app.innerHTML = `<div class="view page" style="--pc:${pc};--pcb:${pcb}">
     <div class="vbar"><button class="vback" id="back" aria-label="Voltar"><svg viewBox="0 0 24 24" class="icn"><path d="M15 5l-7 7 7 7"/></svg><span>Voltar</span></button></div>
     <header class="vhead">${(it => it ? (([bg, fg]) => `<span class="vh-ic" style="--bg:${bg};--fg:${fg}">${icon(it.ico)}</span>`)(corDe(it.id)) : '')(Object.values(LISTS).flat().find(x => x.id === curView))}<h2>${TE('v_' + curView + '_' + hk(title), title, 'Título desta tela')}</h2>${sub || modoEd() ? `<p>${TE('s_' + curView + '_' + hk(title), sub || '', 'Texto embaixo do título')}</p>` : ''}</header>
     ${body}</div>`;
   entradaHistorico();
-  document.getElementById('back').onclick = () => { stopGame(); const hk = hubDe(hubAtual); if(hk && curView !== hubAtual && (HUBS[hk].itens().some(r => r.id === curView) || HUBS[hk].extra === curView)){ curView = hubAtual; VIEWS[hubAtual](); return; } hubAtual = null; renderHome(homeY); };
+  document.getElementById('back').onclick = () => { stopGame(); const hk = hubDe(hubAtual); if(hk && curView !== hubAtual && (HUBS[hk].itens().some(r => r.id === curView) || HUBS[hk].extra === curView)){ curView = hubAtual; voltandoPara = true; VIEWS[hubAtual](); return; } hubAtual = null; renderHome(homeY); };
 }
 const VIEWS = {};
 let curView = '';
@@ -3720,11 +3774,11 @@ const hubDe = view => Object.keys(HUBS).find(k => HUBS[k].view === view);
 const hubPic = (k, grande) => k === 'jogos' ? `<img src="${APP_ICON}" alt="" class="px">` : k === 'nos' && (C.fotoInicio || (C.polaroids[0] || {}).foto) ? `<img src="${esc(C.fotoInicio || C.polaroids[0].foto)}" alt="">` : k === 'dia' ? `<span class="hb-daisy">${DAISY('#f0bac6', '#fff')}</span>` : `<span class="hb-env"><span></span><i>${icon('heart')}</i></span>`;
 function hubTile(k){
   const h = HUBS[k], [bg, fg, sh] = h.cor;
-  return `<button type="button" class="hb-tile rv" data-go="${h.view}" style="--hb:${bg};--hf:${fg};--hs:${sh}">
+  return `<div role="button" tabindex="0" class="hb-tile rv" data-go="${h.view}" style="--hb:${bg};--hf:${fg};--hs:${sh}">
     <span class="hb-pic">${hubPic(k)}</span>
     <span class="hb-tx"><b>${TE('hb_t_' + k, h.t, 'Nome do botão')}</b><small>${TE('hb_s_' + k, h.s, 'Texto do botão')}</small>
-      <span class="hb-ics">${h.itens().slice(0, 6).map(r => { const [b2, f2] = corDe(r.id); return `<i style="--bg:${b2};--fg:${f2}">${icon(r.ico)}</i>`; }).join('')}${k === 'dia' ? `<em class="badge hb-badge" id="badge-pergunta" hidden></em><em class="badge hb-badge" id="badge-bilhetes" hidden></em>` : ''}</span></span>
-    <span class="hb-play">${icon('play')}</span></button>`;
+      <span class="hb-ics">${h.itens().map(r => { const [b2, f2] = corDe(r.id); return `<button type="button" class="hb-ic" data-hgo="${r.id}" data-hv="${h.view}" style="--bg:${b2};--fg:${f2}" title="${esc(r.t)}" aria-label="${esc(r.t)}">${icon(r.ico)}</button>`; }).join('')}${k === 'dia' ? `<em class="badge hb-badge" id="badge-pergunta" hidden></em><em class="badge hb-badge" id="badge-bilhetes" hidden></em>` : ''}</span></span>
+    <span class="hb-play">${icon('play')}</span></div>`;
 }
 let hubAtual = null;
 function abrirHub(k){
@@ -3756,7 +3810,7 @@ VIEWS.fotos = (foco) => {
      <section class="fm-sec"><div class="fm-head"><div><h3>Polaroids</h3><p>toca em cada uma pra ler o que tem atrás</p></div></div>
      <div class="polas">${C.polaroids.map((p,k)=>`
       <button class="pola" style="--i:${k}"><span class="tape"></span><div class="in">
-        <div class="face">${photo(p.foto,p.cls)}<span>${esc(p.legenda)}</span></div>
+        <div class="face">${photo(p.foto,p.cls)}<span data-mv="pol_${k}">${esc(p.legenda)}</span></div>
         <div class="face backf">${esc(p.verso)}</div></div></button>`).join('')}</div></section>`);
   app.querySelectorAll('.pola').forEach(b => b.onclick = () => b.classList.toggle('flip'));
   app.querySelectorAll('.fm-ed').forEach(b => b.onclick = () => { VIEWS.memoria2(b.dataset.mem); const bk = document.getElementById('back'), pv = bk.onclick; bk.onclick = () => { pv(); setTimeout(() => { curView = 'fotos'; VIEWS.fotos(b.dataset.mem); }, 30); }; });
@@ -3774,7 +3828,7 @@ VIEWS.fotos = (foco) => {
 /* ---------- raspadinha ---------- */
 VIEWS.raspa = () => {
   shell('surpresa','Raspadinha','Passa o dedo pra descobrir',
-    `<div class="scratch">${photo(C.raspadinha.foto,'c','surpresa!')}<canvas id="sc"></canvas><p>${esc(C.raspadinha.legenda)}</p></div>`);
+    `<div class="scratch">${photo(C.raspadinha.foto,'c','surpresa!')}<canvas id="sc"></canvas><p data-mv="raspa">${esc(C.raspadinha.legenda)}</p></div>`);
   const cv = document.getElementById('sc'), r = cv.getBoundingClientRect(), dpr = devicePixelRatio;
   cv.width = r.width*dpr; cv.height = r.height*dpr;
   const x = cv.getContext('2d'); x.scale(dpr,dpr);
@@ -4144,7 +4198,7 @@ VIEWS.memoria2 = (id) => {
   shell('nossas memórias', m.titulo, m.sub,
     `<div class="mgrid" id="mg">${[0,1,2,3].map(i => `<div class="mslot" style="--r:${[-2.5,2,1.5,-2][i]}deg" data-s="${i}">
         <button class="mpic" type="button" aria-label="Foto ${i+1}"><span class="ph ${tones[i]}">${icon('image')}<small>${rotulo(i)}</small></span></button>
-        <div class="mcap"><input type="text" maxlength="40" placeholder="${m.id === 'encontro' ? 'onde e quando?' : 'legenda'}" aria-label="Legenda da foto ${i+1}"></div>
+        <div class="mcap" data-mv="mcap_${m.id}_${i}"><input type="text" maxlength="40" placeholder="${m.id === 'encontro' ? 'onde e quando?' : 'legenda'}" aria-label="Legenda da foto ${i+1}"></div>
         <div class="mact" hidden><button class="ib m-chg" type="button" aria-label="Trocar foto">${icon('image')}</button><button class="ib m-del" type="button" aria-label="Remover foto">${icon('trash')}</button></div>
       </div>`).join('')}</div>
      <input type="file" id="mfile" accept="image/*" hidden>
@@ -6001,6 +6055,7 @@ function aplicarConteudo(list){
   const cs = doc('cartas');
   C.cartas = cs && Array.isArray(cs.lista) ? cs.lista.map(c => ({titulo:c.titulo || '', abre:c.abre ? new Date(c.abre + 'T00:00:00') : null, quando:c.quando || '', texto:c.texto || ''})) : BASE.cartas.map(c => Object.assign({}, c));
   TELAS = (doc('telas') || {}).m || {};
+  if(!document.querySelector('.mv-arr')){ POS = (doc('posicoes') || {}).m || {}; setTimeout(() => aplicaPos(), 30); }
   const tx = doc('textos') || {};
   C.cartaNatal = tx.natal ?? BASE.cartaNatal; C.cartaRetro = tx.retro ?? BASE.cartaRetro; C.segredo = tx.segredo ?? BASE.segredo;
   C.mesversarios = BASE.mesversarios.map((m, k) => (tx.mes && tx.mes[k]) || m);
