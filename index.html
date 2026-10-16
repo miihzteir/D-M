@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=68">
-<link rel="apple-touch-icon" href="icon-180.png?v=68">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=68">
+<link rel="manifest" href="manifest.json?v=70">
+<link rel="apple-touch-icon" href="icon-180.png?v=70">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=70">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -1754,6 +1754,24 @@ html body .tour-pular{position:absolute;top:12px;right:14px;width:auto;min-heigh
 html body .mdia-esp{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;min-height:0;margin:2px 0 0;padding:8px;background:none;border:0;box-shadow:none;color:#9b1630;font-size:12.5px;font-weight:700}
 .mdia-esp .icn{font-size:14px}
 .mr-esp{display:block;font-style:normal;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#c9822a;margin-bottom:2px}
+/* parabéns missão */
+.pchoc{position:fixed;inset:0;z-index:9500;display:grid;place-items:center;background:rgba(74,18,36,.28);backdrop-filter:blur(3px);opacity:0;transition:opacity .25s}
+.pchoc.in{opacity:1}
+.pchoc-c{background:#fffaf2;border-radius:28px;padding:26px 34px 22px;text-align:center;box-shadow:0 30px 60px -20px rgba(74,18,36,.55);transform:scale(.8);transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.pchoc.in .pchoc-c{transform:scale(1)}
+.pchoc-ic{display:block;width:74px;height:74px;margin:0 auto 8px}.pchoc-ic svg{width:100%;height:100%}
+.pchoc-c b{display:block;font-family:var(--f-display);font-style:italic;font-size:28px;color:#7a1424}
+.pchoc-c p{margin:4px 0 2px;font-size:15px;font-weight:700;color:var(--ink2)}
+.pchoc-c small{font-size:12.5px;color:var(--muted)}
+/* filtros */
+.flt{display:flex;flex-direction:column;gap:8px;margin:4px 0 14px;padding:10px 12px;border-radius:18px;background:rgba(255,255,255,.7);box-shadow:0 0 0 1px var(--line2)}
+.flt-r{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.flt label{flex:1 1 130px;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;min-width:0}
+html body .flt input[type=date]{flex:1;min-width:0;height:36px;padding:0 8px;border-radius:10px;font-size:13px;box-sizing:border-box;margin:0;border:1px solid var(--line2);background:#fff;color:var(--ink2);box-shadow:none;outline:0;font-family:inherit}
+html body .flt-b,html body .flt-x{width:auto;min-height:0;height:32px;margin:0;padding:0 12px;border-radius:99px;display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;background:#fff;color:var(--ink2);border:1px solid var(--line2);box-shadow:none}
+html body .flt-b.on{background:#fde3e8;color:#9b1630;border-color:#f3b8c4}
+html body .flt-x{border:0;background:transparent;color:#b3122c;text-decoration:underline;margin-left:auto}
+.flt-b .icn,.flt-b svg{width:15px;height:15px}
 /* novidades na tela inicial */
 .av-box{background:rgba(255,255,255,.8);border-radius:22px;padding:12px;box-shadow:0 0 0 1.5px rgba(200,24,44,.14),0 14px 28px -20px rgba(122,20,36,.45);text-align:left}
 .av-top{display:flex;align-items:center;gap:8px;margin:0 4px 8px}
@@ -1956,7 +1974,7 @@ html body .rp-badge{position:absolute!important;top:8px;right:8px;z-index:2;heig
 #badge-pergunta.rp-badge::before{content:none}
 html body .mural-link{display:inline-flex;align-items:center;gap:6px;width:auto;min-height:0;margin:12px auto 0;padding:7px 14px;border-radius:99px;background:rgba(255,255,255,.85);border:0;color:#9b1630;font-size:12.5px;font-weight:700;box-shadow:0 6px 14px -10px rgba(155,22,48,.5)}
 .mural-link .icn{font-size:14px}
-.hb-big{width:100%;height:100%;display:grid;place-items:center;color:var(--fg);font-size:44px}
+.hb-bigic{width:100%;height:100%;display:grid;place-items:center;color:var(--fg);font-size:44px}
 .hb-tile + .hb-tile{margin-top:12px!important}
 </style>
 
@@ -3327,7 +3345,7 @@ const LISTS = {
   datas: [
     {id:'mes',      ico:'cal12',    t:'Mesversário',         s:'Todo dia 12 a gente se escreve'},
     {id:'retromes', ico:'rebobina', t:'Retrospectiva do mês', s:'Um resuminho de cada dia 12'},
-    {id:'retro',    ico:'cometa',   t:'Retrospectiva do ano', s:'Abre no fim de dezembro'},
+    {id:'retro',    ico:'cometa',   t:'Retrospectiva do ano', s:'O nosso 1º ano, abre em 20/12/2027'},
     {id:'datas',    ico:'star',     t:'Datas marcantes',     s:'Nossos dias com foto e legenda'},
     {id:'comemorativas', ico:'gift', t:'Datas comemorativas', s:'Natal e as nossas festas'},
     {id:'contagem', ico:'hourglass', t:'Contagem regressiva', s:'Faltam quantos dias?'},
@@ -3479,10 +3497,10 @@ function renderHome(y = 0){
       ${LIPS('kiss-end')}
       <p class="endsub">${esc(C.textos.fimAssinatura)}</p>
       <p class="endtitle">${esc(C.textos.fimNome)}</p>
-      <p class="endyear">2026</p>
+      <p class="endyear">${Math.max(2026, new Date().getFullYear())}</p>
       <div id="ncvbox" class="mdiabox ncv-fim"></div>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
-      <p class="endver">versão de 16/10 · 10h15</p>
+      <p class="endver">versão de 16/10 · 10h55</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
@@ -3824,7 +3842,7 @@ const HUBS = {
   mimos: {view:'hub_mimos', t:'Prêmios e mimos', s:'prêmios de verdade e vales-presente', vt:'Prêmios e mimos', vs:'Coisas de verdade pra gente aproveitar junto', itens:() => LISTS.mimos, dest:'premios', cor:['#fbf0d0','#b0820f','rgba(176,130,15,.55)']}
 };
 const hubDe = view => Object.keys(HUBS).find(k => HUBS[k].view === view);
-const hubPic = (k, grande) => k === 'datas' ? `<span class="hb-big" style="--fg:#7b5cc4">${icon('cal12')}</span>` : k === 'mimos' ? `<span class="hb-big" style="--fg:#b0820f">${icon('gift')}</span>` : k === 'jogos' ? `<img src="${APP_ICON}" alt="" class="px">` : k === 'nos' && (C.fotoInicio || (C.polaroids[0] || {}).foto) ? `<img src="${esc(C.fotoInicio || C.polaroids[0].foto)}" alt="">` : k === 'dia' ? `<span class="hb-daisy">${DAISY('#f0bac6', '#fff')}</span>` : `<span class="hb-env"><span></span><i>${icon('heart')}</i></span>`;
+const hubPic = (k, grande) => k === 'datas' ? `<span class="hb-bigic" style="--fg:#7b5cc4">${icon('cal12')}</span>` : k === 'mimos' ? `<span class="hb-bigic" style="--fg:#b0820f">${icon('gift')}</span>` : k === 'jogos' ? `<img src="${APP_ICON}" alt="" class="px">` : k === 'nos' && (C.fotoInicio || (C.polaroids[0] || {}).foto) ? `<img src="${esc(C.fotoInicio || C.polaroids[0].foto)}" alt="">` : k === 'dia' ? `<span class="hb-daisy">${DAISY('#f0bac6', '#fff')}</span>` : `<span class="hb-env"><span></span><i>${icon('heart')}</i></span>`;
 function hubTile(k){
   const h = HUBS[k], [bg, fg, sh] = h.cor;
   return `<div role="button" tabindex="0" class="hb-tile rv" data-go="${h.view}" style="--hb:${bg};--hf:${fg};--hs:${sh}">
@@ -5332,10 +5350,10 @@ function missoesBox(el, compacto){
     el.querySelectorAll('[data-mid]').forEach(b => b.onclick = async () => {
       const x = info.find(i => i.m.id === b.dataset.mid); if(!x || x.pego) return;
       if(x.feito){ const r = b.getBoundingClientRect(); burst(r.left + r.width - 30, r.top + r.height / 2, 26); b.disabled = true;
-        try{ await Sync.col('chocolates').set(`missao_${hj}_${x.m.id}_${eu}`, {qtd:x.m.premio, autor:eu, dia:hj}); }catch(e){ b.disabled = false; } return; }
+        try{ await Sync.col('chocolates').set(`missao_${hj}_${x.m.id}_${eu}`, {qtd:x.m.premio, autor:eu, dia:hj}); parabensChoco(x.m.premio); }catch(e){ b.disabled = false; } return; }
       if(x.m.manual){ if(!b.dataset.sure){ b.dataset.sure = 1; b.querySelector('small').textContent = 'fez mesmo? toca de novo'; setTimeout(() => { if(b.isConnected){ delete b.dataset.sure; pede(); } }, 2500); return; }
         const r = b.getBoundingClientRect(); burst(r.left + r.width - 30, r.top + r.height / 2, 30); b.disabled = true;
-        try{ await Sync.col('missoesEsp').set(x.m.esp.id, Object.assign({}, x.m.esp, {feita:true, feitaDia:hj})); await Sync.col('chocolates').set(`missao_${hj}_${x.m.id}_${eu}`, {qtd:x.m.premio, autor:eu, dia:hj}); }catch(e){ b.disabled = false; } return; }
+        try{ await Sync.col('missoesEsp').set(x.m.esp.id, Object.assign({}, x.m.esp, {feita:true, feitaDia:hj})); await Sync.col('chocolates').set(`missao_${hj}_${x.m.id}_${eu}`, {qtd:x.m.premio, autor:eu, dia:hj}); parabensChoco(x.m.premio); }catch(e){ b.disabled = false; } return; }
       if(x.m.go.startsWith('#')){ const alvo = document.querySelector(x.m.go); if(alvo){ alvo.scrollIntoView({behavior:'smooth', block:'center'}); alvo.classList.remove('mpulse'); void alvo.offsetWidth; alvo.classList.add('mpulse'); } else { renderHome(0); setTimeout(() => { const a = document.querySelector(x.m.go); a && a.scrollIntoView({behavior:'smooth', block:'center'}); a && a.classList.add('mpulse'); }, 400); } return; }
       openStop(x.m.go);
     });
@@ -5615,7 +5633,7 @@ VIEWS.numeros = () => {
 VIEWS.retromes = () => {
   const hj = agoraMT(), mAtual = mesesJuntos(hj);
   const fim = new Date(hj.getFullYear(), hj.getMonth(), 12); if(hj.getDate() < 12) fim.setMonth(fim.getMonth() - 1);
-  const ini = new Date(fim); ini.setMonth(ini.getMonth() - 1); if(ini < C.inicioNamoro) ini.setTime(C.inicioNamoro.getTime());
+  const ini = new Date(fim); ini.setMonth(ini.getMonth() - 1); if(ini < C.inicioNamoro) ini.setTime(C.inicioNamoro.getTime()); if(ini < new Date(2026, 11, 25)) ini.setTime(new Date(2026, 11, 25).getTime());
   const nMes = mesesJuntos(fim);
   const ds = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`, iS = ds(ini), fS = ds(fim);
   const noMes = x => { const dia = x.dia || (/^\d{4}-\d\d-\d\d/.test(String(x.id)) ? String(x.id).slice(0, 10) : x.criadoEm ? ds(new Date(x.criadoEm)) : ''); return dia >= iS && dia < fS; };
@@ -5823,21 +5841,22 @@ VIEWS.diario = () => {
     `<form class="card-form" id="dif"><p class="wo-t">Como foi o seu dia hoje?</p><p class="dia-data">${fmtLongo(hoje())}</p>
       <textarea id="dit" rows="5" maxlength="1500" placeholder="Me conta tudo…" aria-label="Seu dia"></textarea>
       <div class="pl-act"><button type="submit" id="dis">Guardar</button></div><p class="werr" id="die"></p></form>
-     <div id="dil" class="dia-lista"></div>`);
+     ${filtroHTML('diflt')}<div id="dil" class="dia-lista"></div>`);
   const col = Sync.col('diario'), $ = id => document.getElementById(id);
   let list = [], carregou = false;
   const draw = () => { if(!$('dil')) return;
     const meu = list.find(x => x.id === `${hoje()}_${eu}`);
     if(meu && !carregou){ $('dit').value = meu.texto; carregou = true; } $('dis').textContent = meu ? 'Salvar' : 'Guardar';
-    const dias = [...new Set(list.map(x => x.dia))].sort().reverse();
+    const dias = F.ap([...new Set(list.map(x => x.dia))], d => d);
     $('dil').innerHTML = dias.length ? dias.map(d => { const m = list.find(x => x.id === `${d}_${eu}`), o = list.find(x => x.id === `${d}_${outro}`);
       return `<article class="dia-card"><p class="dia-d">${fmtLongo(d)}</p>
         ${m ? `<div class="dia-e me"><small>você</small><p>${esc(m.texto)}</p></div>` : ''}
         ${o ? (m ? `<div class="dia-e"><small>${outro}</small><p>${esc(o.texto)}</p></div>` : `<div class="dia-e lock">${icon('lock')} ${nomeO} escreveu nesse dia. ${d === hoje() ? 'Escreve o seu pra ler!' : 'Só dava pra ler escrevendo o seu.'}</div>`) : `<div class="dia-e vazio">${nomeO} não escreveu ${d === hoje() ? 'ainda' : 'nesse dia'}</div>`}</article>`; }).join('')
-      : `<p class="lead hq-empty">O primeiro dia do diário de vocês começa hoje.</p>`;
+      : F.ativo() ? F.vazio : `<p class="lead hq-empty">O primeiro dia do diário de vocês começa hoje.</p>`;
   };
   $('dif').onsubmit = async e => { e.preventDefault(); const t = $('dit').value.trim(); if(!t){ $('die').textContent = 'Escreve alguma coisinha.'; return; }
     const b = $('dis'); b.disabled = true; try{ await col.set(`${hoje()}_${eu}`, {dia:hoje(), autor:eu, texto:t}); sparkle(b); $('die').classList.add('ok'); $('die').textContent = 'Guardado'; setTimeout(() => { $('die').textContent = ''; $('die').classList.remove('ok'); }, 2000); }catch(x){ $('die').textContent = 'Não deu pra guardar. Tenta de novo.'; } b.disabled = false; };
+  const F = filtro('diflt', draw);
   const off = col.on(l => { list = l; draw(); });
   const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { off(); prev(); };
 };
@@ -5909,13 +5928,13 @@ VIEWS.lugares = () => {
       <label class="fz-lab">Quando<input type="date" id="lgd"></label>
       <label class="fz-lab">Uma lembrança<textarea id="lgl" rows="2" maxlength="200" placeholder="O que aconteceu lá…"></textarea></label>
       <div class="pl-act"><button type="submit" id="lgs">Guardar lugar</button></div><p class="werr" id="lge"></p></form></details>
-     <div class="lg-list" id="lgl2"></div>`);
+     ${filtroHTML('lgflt')}<div class="lg-list" id="lgl2"></div>`);
   const col = Sync.col('lugares'), $ = id => document.getElementById(id);
   let list = [], img = '';
   $('lgpick').onclick = () => { $('lgfile').value = ''; $('lgfile').click(); };
   $('lgfile').onchange = async () => { const f = $('lgfile').files[0]; if(!f) return; try{ img = await compressImage(f, 1000, .72, {r:4/3}); $('lgprev').innerHTML = `<img src="${img}" alt="">`; }catch(e){ $('lge').textContent = e.code === 'cancel' ? '' : 'Não deu pra usar essa foto.'; } };
   const draw = () => { if(!$('lgl2')) return;
-    const l = [...list].sort((a, b) => (b.data || '').localeCompare(a.data || ''));
+    const l = F.ap(list, p => p.data || hoje(new Date(p.criadoEm || 0)));
     $('lgl2').innerHTML = l.length ? l.map((p, k) => `<article class="lg-card" style="--r:${[-1.4,1.2,-.8,1.6][k % 4]}deg">${p.img ? `<div class="lg-ph"><img src="${p.img}" alt="" loading="lazy"></div>` : ''}
       <div class="lg-tx"><h3>${esc(p.nome)}</h3><p class="lg-meta">${icon('compass')} ${esc(p.cidade || '')}${p.data ? ` · ${new Date(p.data + 'T12:00:00').toLocaleDateString('pt-BR')}` : ''}</p>${p.legenda ? `<p class="lg-leg">${esc(p.legenda)}</p>` : ''}
       <div class="lg-act"><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.nome + ' ' + (p.cidade || ''))}" target="_blank" rel="noopener">ver no mapa</a><button class="ib" type="button" data-led="${p.id}" aria-label="Editar">${icon('pencil')}</button><button class="ib" type="button" data-del="${p.id}" aria-label="Apagar">${icon('trash')}</button></div></div></article>`).join('')
@@ -5927,6 +5946,7 @@ VIEWS.lugares = () => {
   $('lgf').onsubmit = async e => { e.preventDefault(); const n = $('lgn').value.trim(); if(!n){ $('lge').textContent = 'Coloca o nome do lugar.'; return; } $('lge').textContent = '';
     const b = $('lgs'); b.disabled = true; try{ const dados = {nome:n, cidade:$('lgc').value.trim(), data:$('lgd').value, legenda:$('lgl').value.trim(), img}; if(led.id){ const p = list.find(x => x.id === led.id) || {}; await col.set(led.id, Object.assign({autor:p.autor || eu}, dados)); led.fechar(); } else await col.add(Object.assign({autor:eu}, dados)); e.target.reset(); img = ''; $('lgprev').innerHTML = `${icon('image')}<small>escolher foto</small>`; sparkle(b); }catch(x){ $('lge').textContent = erroFoto(x); } b.disabled = false; };
   let prim = true;
+  const F = filtro('lgflt', draw);
   const off = col.on(l => { list = l; if(prim){ prim = false; if(!l.length) $('lgdet').open = true; } draw(); });
   const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { off(); prev(); };
 };
@@ -5940,12 +5960,12 @@ VIEWS.cartadata = () => {
       <textarea id="cdt" rows="6" maxlength="3000" placeholder="Meu amor…"></textarea>${gravadorBox('cdgrav')}
       <label class="fz-lab">Pode abrir em<input type="date" id="cdd" min="${amanha}"></label>
       <div class="pl-act"><button type="submit" id="cds">Lacrar cartinha</button></div><p class="werr" id="cde"></p></form>
-     <h3 class="ct-sep">Pra você</h3><div class="cd-list" id="cdp"></div>
+     ${filtroHTML('cdflt', {audio:1, asc:1})}<h3 class="ct-sep">Pra você</h3><div class="cd-list" id="cdp"></div>
      <h3 class="ct-sep">Que você escreveu</h3><div class="cd-list" id="cdm"></div>`);
   const col = Sync.col('cartasData'), $ = id => document.getElementById(id);
   let list = [];
   const draw = () => { if(!$('cdp')) return;
-    const pra = list.filter(c => c.para === eu).sort((a, b) => a.abreEm.localeCompare(b.abreEm)), minhas = list.filter(c => c.de === eu).sort((a, b) => a.abreEm.localeCompare(b.abreEm));
+    const pra = F.ap(list.filter(c => c.para === eu), c => c.abreEm), minhas = F.ap(list.filter(c => c.de === eu), c => c.abreEm);
     $('cdp').innerHTML = pra.length ? pra.map(c => { const n = diasAte(c.abreEm); return n > 0
         ? `<article class="cd-env lock"><span class="cd-seal">${icon('heart')}</span><div><b>Cartinha de ${c.de === 'Di' ? 'Di' : 'Mihzinha'}</b><small>abre em ${new Date(c.abreEm + 'T12:00:00').toLocaleDateString('pt-BR')} · faltam ${n} ${n === 1 ? 'dia' : 'dias'}</small></div>${icon('lock')}</article>`
         : `<details class="cd-env open"><summary><span class="cd-seal">${icon('heart')}</span><div><b>Cartinha de ${c.de === 'Di' ? 'Di' : 'Mihzinha'}</b><small>liberada em ${new Date(c.abreEm + 'T12:00:00').toLocaleDateString('pt-BR')} · toca pra ler</small></div></summary><div class="paper cd-paper">${c.texto ? `<p>${esc(c.texto)}</p>` : ''}${audioHTML(c.audio, c.de)}<p class="sign">${c.de === 'Di' ? 'Di' : 'Mihzinha'}</p></div></details>`; }).join('')
@@ -5956,18 +5976,22 @@ VIEWS.cartadata = () => {
   const cgv = novoGravador(); if($('cdgrav')) cgv.montar($('cdgrav'));
   $('cdf').onsubmit = async e => { e.preventDefault(); const t = $('cdt').value.trim(), d = $('cdd').value, au = cgv.get(); if(cgv.gravando()){ $('cde').textContent = 'Para a gravação antes.'; return; } if((!t && !au) || !d){ $('cde').textContent = 'Escreve a cartinha (ou grava um áudio) e escolhe a data.'; return; } if(d < amanha){ $('cde').textContent = 'A data precisa ser a partir de amanhã.'; return; }
     const b = $('cds'); b.disabled = true; try{ await col.add(Object.assign({de:eu, para:outro, texto:t, abreEm:d}, au ? {audio:au} : {})); e.target.reset(); cgv.limpa(); sparkle(b); $('cde').classList.add('ok'); $('cde').textContent = 'Lacrada!'; setTimeout(() => { $('cde').textContent = ''; $('cde').classList.remove('ok'); }, 2500); }catch(x){ $('cde').textContent = 'Não deu pra guardar.'; } b.disabled = false; };
+  const F = filtro('cdflt', draw, {asc:1});
   const off = col.on(l => { list = l; draw(); });
   const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { off(); prev(); };
 };
 
 /* ---------- retrospectiva ---------- */
-const retroLiberada = () => location.hash === '#retro' || (d => d.getMonth() === 11 && d.getDate() >= 20 || d.getMonth() === 0)(new Date());
+/* a primeira retrospectiva é a de 2027 (o app chega no Natal de 2026), contando desde 25/12/2026 */
+const anoRetro = (d = new Date()) => Math.max(2027, d.getMonth() === 0 ? d.getFullYear() - 1 : d.getFullYear());
+const janelaRetro = ano => [ano === 2027 ? new Date(2026, 11, 25).getTime() : new Date(ano, 0, 1).getTime(), new Date(ano + 1, 0, 1).getTime()];
+const retroLiberada = () => location.hash === '#retro' || (d => { const a = anoRetro(d); return d >= new Date(a, 11, 20) && d < new Date(a + 1, 1, 1); })(new Date());
 VIEWS.retro = () => {
-  const ano = new Date().getMonth() === 0 ? new Date().getFullYear() - 1 : new Date().getFullYear();
+  const ano = anoRetro();
   if(!retroLiberada()){
-    const alvo = new Date(new Date().getFullYear(), 11, 20), n = Math.ceil((alvo - new Date()) / 86400000);
+    const alvo = new Date(ano, 11, 20), n = Math.ceil((alvo - new Date()) / 86400000);
     shell('o nosso ano',`Retrospectiva ${ano}`,'Um resumo de tudo que a gente viveu esse ano',
-      `<div class="rt-lock"><span class="rt-big">${icon('lock')}</span><h3>Ainda tá sendo escrita</h3><p>Ela abre no dia 20 de dezembro. Faltam ${n} ${n === 1 ? 'dia' : 'dias'}.</p><p class="rt-sub">Até lá, continua respondendo as perguntas, mandando bilhetes e montando a casinha. Tudo entra na conta.</p></div>`);
+      `<div class="rt-lock"><span class="rt-big">${icon('lock')}</span><h3>Ainda tá sendo escrita</h3><p>Ela abre no dia 20 de dezembro de ${ano}. Faltam ${n} ${n === 1 ? 'dia' : 'dias'}.</p><p class="rt-sub">Até lá, continua respondendo as perguntas, mandando bilhetes e montando a casinha. Tudo entra na conta.</p></div>`);
     return;
   }
   shell('o nosso ano',`Retrospectiva ${ano}`,'Um resumo de tudo que a gente viveu',`<div class="rt-wrap" id="rtw"><p class="lead">Contando tudinho…</p></div>`);
@@ -5976,11 +6000,12 @@ VIEWS.retro = () => {
   nomes.forEach(nm => offs.push(Sync.col(nm).on(l => { dados[nm] = l; })));
   setTimeout(() => {
     offs.forEach(o => o()); const $w = document.getElementById('rtw'); if(!$w) return;
-    const d = k => dados[k] || [], st = Sync;
+    const [jIni, jFim] = janelaRetro(ano), naJanela = x => { const t = x.criadoEm || (x.data ? new Date(x.data + 'T12:00:00').getTime() : 0) || (/^\d{4}-\d\d-\d\d/.test(String(x.id)) ? new Date(String(x.id).slice(0, 10) + 'T12:00:00').getTime() : 0); return location.hash === '#retro' || (t >= jIni && t < jFim); };
+    const d = k => (dados[k] || []).filter(naJanela), st = Sync;
     const juntos = Math.floor((Math.min(Date.now(), new Date(ano, 11, 31, 23, 59).getTime()) - C.inicioNamoro.getTime()) / 86400000);
     const maior = q => { const dias = [...new Set(d('chocolates').filter(c => /^\d{4}-\d\d-\d\d_/.test(c.id) && c.id.endsWith('_' + q)).map(c => c.id.slice(0,10)))].sort(); let best = 0, cur = 0, prevD = null; dias.forEach(x => { const t = new Date(x + 'T12:00:00'); cur = prevD && (t - prevD) / 86400000 === 1 ? cur + 1 : 1; best = Math.max(best, cur); prevD = t; }); return best; };
     const chocs = d('chocolates').reduce((t, c) => t + (+c.qtd || 1), 0);
-    const gastos = d('gastos').filter(g => (g.data || '').startsWith(String(ano))).reduce((t, g) => t + (+g.valor || 0), 0);
+    const gastos = d('gastos').reduce((t, g) => t + (+g.valor || 0), 0);
     const vistos = d('filmes').filter(f => f.visto);
     const saud = d('saudade').reduce((t, s) => t + (+s.n || 0), 0);
     const itens = [
@@ -6304,7 +6329,7 @@ VIEWS.gostos = () => {
     if(filtro !== 'tudo' && !cats.some(([v]) => v === filtro)) filtro = 'tudo';
     $('gscats').innerHTML = meus.length ? [['tudo','Tudo'], ...cats].map(([v, t]) => `<button type="button" class="${filtro === v ? 'on' : ''}" data-f="${v}">${t}</button>`).join('') : '';
     const vis = meus.filter(x => filtro === 'tudo' || x.cat === filtro).slice().reverse();
-    $('gsgrid').innerHTML = vis.length ? vis.map(x => `<article class="gs-card">${x.img ? `<img src="${x.img}" alt="">` : `<span class="gs-sem">${icon('star')}</span>`}<div><small>${esc(nomeCat(x.cat))}</small><p>${esc(x.legenda || '')}</p>${x.sobre === outro || x.autor === eu ? `<span class="gs-acts"><button type="button" class="linkbtn" data-ed="${x.id}">editar</button><button type="button" class="linkbtn" data-del="${x.id}">apagar</button></span>` : ''}</div></article>`).join('')
+    $('gsgrid').innerHTML = vis.length ? vis.map(x => `<article class="gs-card">${x.img ? `<img src="${x.img}" alt="">` : `<span class="gs-sem">${icon('star')}</span>`}<div><small>${esc(nomeCat(x.cat))}</small><p>${esc(x.legenda || '')}</p>${(x.autor === eu && x.sobre !== eu) || modoEd() ? `<span class="gs-acts"><button type="button" class="linkbtn" data-ed="${x.id}">editar</button><button type="button" class="linkbtn" data-del="${x.id}">apagar</button></span>` : ''}</div></article>`).join('')
       : `<p class="lead hq-empty">${aba === outro ? `Ainda não tem nada aqui. Coloca a primeira coisa que ${nome(outro)} ama!` : `${eu === 'Di' ? 'A ' + apelido('Mihzinha', 39) : 'O ' + apelido('Di', 39)} ainda não colocou nada. Logo aparece!`}</p>`;
     $('gscats').querySelectorAll('[data-f]').forEach(b => b.onclick = () => { filtro = b.dataset.f; draw(); });
     $('gsgrid').querySelectorAll('[data-del]').forEach(d => d.onclick = () => { if(d.dataset.sure) col.remove(d.dataset.del); else { d.dataset.sure = 1; d.textContent = 'toca de novo'; } });
@@ -6314,7 +6339,7 @@ VIEWS.gostos = () => {
     $('gspick').onclick = () => { $('gsfile').value = ''; $('gsfile').click(); };
     f.onsubmit = async e => { e.preventDefault(); const leg = $('gsleg').value.trim(), b = $('gssave');
       if(!foto && !leg){ $('gserr').textContent = 'Coloca uma foto ou escreve a legenda.'; return; }
-      b.disabled = true; try{ if(editando) await col.set(editando.id, {sobre:editando.sobre, autor:eu, img:foto, legenda:leg, cat:$('gscat').value}); else await col.add({sobre:outro, autor:eu, img:foto, legenda:leg, cat:$('gscat').value}); const eraEd = !!editando; editando = null; foto = ''; formAberto = !eraEd; sparkle(b); drawForm(); }catch(x){ b.disabled = false; $('gserr').textContent = erroFoto(x); } };
+      b.disabled = true; try{ if(editando) await col.set(editando.id, {sobre:editando.sobre, autor:editando.autor || eu, img:foto, legenda:leg, cat:$('gscat').value}); else await col.add({sobre:outro, autor:eu, img:foto, legenda:leg, cat:$('gscat').value}); const eraEd = !!editando; editando = null; foto = ''; formAberto = !eraEd; sparkle(b); drawForm(); }catch(x){ b.disabled = false; $('gserr').textContent = erroFoto(x); } };
   };
   $('gsfile').onchange = async () => { const f = $('gsfile').files[0]; if(!f) return; $('gspick').innerHTML = '<span><small>preparando…</small></span>';
     try{ foto = await compressImage(f, 700, .74, {r:1}); $('gspick').innerHTML = `<img src="${foto}" alt="">`; }catch(e){ $('gspick').innerHTML = e.code === 'cancel' ? (foto ? `<img src="${foto}" alt="">` : `<span>${icon('image')}<small>escolher foto</small></span>`) : '<span><small>não deu, tenta outra</small></span>'; } };
@@ -6375,7 +6400,7 @@ VIEWS.datas = () => {
        <div class="pl-act"><button class="ghost" type="button" id="dmcancel" hidden>Cancelar</button><button type="submit" id="dmsave">Guardar</button></div>
        <p class="werr" id="dmerr"></p>
      </form>
-     <ol class="dm-list" id="dml2"></ol>`);
+     ${filtroHTML('dmflt')}<ol class="dm-list" id="dml2"></ol>`);
   const $ = id => document.getElementById(id), col = Sync.col('datasMarcantes');
   let list = [], img = '', editId = null;
   const fmt = d => new Date(d + 'T12:00:00').toLocaleDateString('pt-BR', {day:'numeric', month:'long', year:'numeric'});
@@ -6397,7 +6422,7 @@ VIEWS.datas = () => {
   };
   function draw(){
     const ol = $('dml2'); if(!ol) return;
-    const ord = [...list].sort((a,b) => (b.data || '').localeCompare(a.data || ''));
+    const ord = F.ap(list, d => d.data || '');
     ol.innerHTML = ord.length ? ord.map((d,k) => `<li class="dm-item" data-id="${d.id}" style="--r:${[-1.6,1.4,-1,1.8][k % 4]}deg">
         <p class="dm-date">${fmt(d.data)}</p>
         <div class="dm-card">
@@ -6413,6 +6438,7 @@ VIEWS.datas = () => {
       li.querySelector('.d-del').onclick = e => { const b = e.currentTarget; if(!b.dataset.sure){ b.dataset.sure = 1; b.classList.add('sure'); setTimeout(() => { delete b.dataset.sure; b.classList.remove('sure'); }, 2500); return; } col.remove(d.id); };
     });
   }
+  const F = filtro('dmflt', draw);
   const off = col.on(l => { list = l; draw(); });
   const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { off(); prev(); };
 };
@@ -6538,6 +6564,31 @@ function evCor(t, k){
 const AUD_MAX_S = 60, AUD_MAX = 900000;
 const podeGravar = () => !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder);
 const quemVoz = q => q === 'curto' ? 'Ouvir o áudio' : q === 'você' ? 'Ouvir o seu áudio' : `Ouvir a voz ${q === 'Di' ? 'do ' + apelido('Di', 30) : 'da ' + apelido('Mihzinha', 30)}`;
+/* filtro por data (de/até), ordem e só áudios */
+function filtroHTML(id, o = {}){
+  return `<div class="flt" id="${id}"><div class="flt-r"><label>de<input type="date" data-f="de"></label><label>até<input type="date" data-f="ate"></label></div>
+    <div class="flt-r"><button type="button" class="flt-b" data-f="ord">${icon('barras')}<span>${o.asc ? 'mais antigos primeiro' : 'mais novos primeiro'}</span></button>${o.audio ? `<button type="button" class="flt-b" data-f="au">${icon('mic')}<span>só áudios</span></button>` : ''}<button type="button" class="flt-x" data-f="x" hidden>limpar filtros</button></div></div>`;
+}
+function filtro(id, redraw, o = {}){
+  const st = {de:'', ate:'', asc:!!o.asc, au:false}, ini = !!o.asc, el = () => document.getElementById(id);
+  const ativo = () => !!(st.de || st.ate || st.au || st.asc !== ini);
+  const pinta = () => { const w = el(); if(!w) return; const q = k => w.querySelector(`[data-f="${k}"]`);
+    q('ord').querySelector('span').textContent = st.asc ? 'mais antigos primeiro' : 'mais novos primeiro'; q('ord').classList.toggle('on', st.asc !== ini);
+    if(q('au')) q('au').classList.toggle('on', st.au); q('x').hidden = !ativo(); q('de').value = st.de; q('ate').value = st.ate; };
+  const w = el();
+  if(w){ const q = k => w.querySelector(`[data-f="${k}"]`);
+    q('de').onchange = e => { st.de = e.target.value; pinta(); redraw(); };
+    q('ate').onchange = e => { st.ate = e.target.value; pinta(); redraw(); };
+    q('ord').onclick = () => { st.asc = !st.asc; pinta(); redraw(); };
+    if(q('au')) q('au').onclick = () => { st.au = !st.au; pinta(); redraw(); };
+    q('x').onclick = () => { st.de = st.ate = ''; st.au = false; st.asc = ini; pinta(); redraw(); }; }
+  return {
+    ativo, vazio:'<p class="lead empty">Nada com esses filtros.</p>',
+    ap(list, dt){ const r = (list || []).filter(x => { const d = dt(x) || ''; if(st.de && d < st.de) return false; if(st.ate && d > st.ate) return false; if(st.au && !(x && x.audio)) return false; return true; });
+      const ix = new Map(r.map((x, i) => [x, i]));
+      return r.sort((a, b) => { const c = (dt(a) || '').localeCompare(dt(b) || '') || ((a && a.criadoEm) || ix.get(a)) - ((b && b.criadoEm) || ix.get(b)); return st.asc ? c : -c; }); }
+  };
+}
 function audioHTML(src, quem){ if(!src) return '';
   return `<div class="aud" role="button" tabindex="0" data-aud><span class="aud-pl"><svg class="ap-play" viewBox="0 0 24 24"><path d="M8.5 5.5v13l10.5-6.5z"/></svg><svg class="ap-pause" viewBox="0 0 24 24"><path d="M7 5h3.6v14H7zM13.4 5H17v14h-3.6z"/></svg></span><span class="aud-mid"><span class="aud-tx">${esc(quemVoz(quem))}</span><span class="aud-bar"><i></i></span></span><span class="aud-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><audio preload="none" src="${src}"></audio></div>`; }
 document.addEventListener('click', e => { const a = e.target.closest('[data-aud]'); if(!a) return; e.stopPropagation(); e.preventDefault();
@@ -6744,23 +6795,23 @@ VIEWS.pergunta = () => {
     `<div class="qcard"><p class="eyebrow">${new Date().toLocaleDateString('pt-BR',{day:'numeric',month:'long'})}${dj >= 1 && dj <= 364 ? ` · pergunta ${dj} de 364` : ''}</p>${ANTESQ ? `<h3>As perguntas começam no Natal</h3><p class="lead">A primeira chega no dia 25 de dezembro. Faltam ${1 - dj} ${1 - dj === 1 ? 'dia' : 'dias'}. São 364, uma por dia, e nenhuma se repete.</p>` : FIMQ ? `<h3>Fim das perguntas</h3><p class="lead">${esc(C.textos.perguntasFim)}</p>` : `<h3>${esc(pq)}</h3>`}
       <form class="write" id="qf"><textarea id="qta" rows="4" placeholder="Sua resposta…" aria-label="Sua resposta"></textarea><button type="submit">Responder</button><p class="werr" id="qerr" role="status"></p></form>
       <div id="qans"></div></div>
-     <section class="hqwrap" id="qold"></section>`);
+     ${filtroHTML('qflt')}<section class="hqwrap" id="qold"></section>`);
   const col = Sync.col('respostas');
-  const off = col.on(list => {
+  let ult = []; const F = filtro('qflt', () => rend(ult)); const rend = list => { ult = list;
     const box = document.getElementById('qans'); if(!box) return;
     const minha = list.find(r => r.dia === hoje() && r.quem === eu), dele = list.find(r => r.dia === hoje() && r.quem === outro);
     document.getElementById('qf').hidden = !!minha || FIMQ;
     box.innerHTML = (minha ? `<div class="ans mine"><small>você respondeu</small><p>${esc(minha.texto)}</p></div>` : '') +
       (dele ? (minha ? `<div class="ans unfold"><small>${outro} respondeu</small><p>${esc(dele.texto)}</p></div>` : `<p class="lead locked-ans">${icon('lock')} ${outro} já respondeu. Responde pra ver!</p>`)
             : (minha ? `<p class="lead">${outro} ainda não respondeu. Volta mais tarde!</p>` : ''));
-    const dias = [...new Set(list.filter(r => r.dia < hoje()).map(r => r.dia))].sort().reverse();
+    const dias = F.ap([...new Set(list.filter(r => r.dia < hoje()).map(r => r.dia))], d => d);
     const fmtD = d => new Date(d + 'T12:00:00').toLocaleDateString('pt-BR', {day:'numeric', month:'long', year:'numeric'});
     const resp = (rs, nome) => { const r = rs.find(x => x.quem === nome); return `<div class="hq-a ${nome === 'Di' ? 'di' : 'mi'}"><span class="hq-who">${nome}</span>${r ? `<p>${esc(r.texto)}</p>` : `<p class="hq-none">não respondeu</p>`}</div>`; };
     document.getElementById('qold').innerHTML = `<div class="hq-head"><h3>Nosso histórico</h3><span>${dias.length} ${dias.length === 1 ? 'dia' : 'dias'}</span></div>` + (dias.length ? dias.map(d => {
       const rs = list.filter(r => r.dia === d);
       return `<article class="hq"><p class="hq-date">${fmtD(d)}</p><h4>${esc((rs[0] && rs[0].pergunta) || '')}</h4>${resp(rs,'Di')}${resp(rs,'Mihzinha')}</article>`;
-    }).join('') : `<p class="lead hq-empty">A partir de amanhã, as perguntas e as respostas de vocês dois ficam guardadas aqui pra sempre.</p>`);
-  });
+    }).join('') : F.ativo() ? F.vazio : `<p class="lead hq-empty">A partir de amanhã, as perguntas e as respostas de vocês dois ficam guardadas aqui pra sempre.</p>`);
+  }; const off = col.on(rend);
   document.getElementById('qf').onsubmit = async e => {
     e.preventDefault(); const t = document.getElementById('qta').value.trim();
     if(!t){ document.getElementById('qerr').textContent = 'Escreve alguma coisa antes.'; return; }
@@ -6777,16 +6828,16 @@ VIEWS.bilhetes = () => {
   const eu = Sync.quem || 'Di';
   shell('recadinhos','Bilhetinhos','Deixa um recado pro outro achar',
     `<form class="write" id="bf"><textarea id="bta" rows="3" maxlength="240" placeholder="Escreve um bilhetinho…" aria-label="Bilhetinho"></textarea>${gravadorBox('bgrav')}<button type="submit">Colar no mural</button><p class="werr" id="berr"></p></form>
-     <div class="mural" id="mural"></div>`);
+     ${filtroHTML('bflt', {audio:1})}<div class="mural" id="mural"></div>`);
   const col = Sync.col('bilhetes');
-  const off = col.on(list => {
+  let ult = []; const F = filtro('bflt', () => rend(ult)); const rend = list => { ult = list;
     const m = document.getElementById('mural'); if(!m) return;
-    m.innerHTML = list.length ? [...list].reverse().map((b,k) => `<div class="postit c${k % 4}" style="--r:${(k % 5 - 2) * 1.3}deg">
+    const fl = F.ap(list, x => hoje(new Date(x.criadoEm || 0))); m.innerHTML = fl.length ? fl.map((b,k) => `<div class="postit c${k % 4}" style="--r:${(k % 5 - 2) * 1.3}deg">
       ${b.texto ? `<p>${esc(b.texto)}</p>` : ''}${audioHTML(b.audio, 'curto')}<small>${esc(b.autor)} · ${new Date(b.criadoEm).toLocaleDateString('pt-BR')}</small>
       ${b.autor === eu ? `<button class="del" data-del="${b.id}">apagar</button>` : ''}</div>`).join('')
-      : `<p class="lead empty">O mural ainda está vazio. Cola o primeiro bilhetinho!</p>`;
+      : F.ativo() ? F.vazio : `<p class="lead empty">O mural ainda está vazio. Cola o primeiro bilhetinho!</p>`;
     m.querySelectorAll('.del').forEach(d => d.onclick = () => { if(d.dataset.sure) col.remove(d.dataset.del); else { d.dataset.sure = 1; d.textContent = 'toca de novo'; } });
-  });
+  }; const off = col.on(rend);
   const bgv = novoGravador(); if(document.getElementById('bgrav')) bgv.montar(document.getElementById('bgrav'));
   document.getElementById('bf').onsubmit = async e => {
     e.preventDefault(); const ta = document.getElementById('bta'), t = ta.value.trim(), au = bgv.get();
@@ -6865,18 +6916,18 @@ VIEWS.primeiras = () => {
   shell('nós dois','Nossas primeiras vezes','Primeiro filme, primeira viagem, primeira briga… vai adicionando',
     `<form class="write card-form" id="pf"><input type="text" id="pt" placeholder="Nossa primeira vez que…" aria-label="O quê"><input type="date" id="pd" aria-label="Quando">
       <textarea id="px" rows="3" placeholder="Conta como foi (opcional)" aria-label="Como foi"></textarea><button type="submit">Adicionar</button><p class="werr" id="perr"></p></form>
-     <ol class="timeline" id="pl"></ol>`);
+     ${filtroHTML('pflt')}<ol class="timeline" id="pl"></ol>`);
   const col = Sync.col('primeiras');
   let lista = [];
-  const off = col.on(list => {
+  let ult = []; const F = filtro('pflt', () => rend(ult)); const rend = list => { ult = list;
     const ol = document.getElementById('pl'); if(!ol) return;
-    const ord = [...list].sort((a,b) => (b.data || '').localeCompare(a.data || ''));
+    const ord = F.ap(list, p => p.data || '');
     ol.innerHTML = ord.length ? ord.map(p => `<li><time>${p.data ? p.data.split('-').reverse().join(' · ') : ''}</time><h3>${esc(p.titulo)}</h3>${p.texto ? `<p>${esc(p.texto)}</p>` : ''}<p class="by">por ${esc(p.autor)} · <button class="linkbtn" data-ed="${p.id}">editar</button> · <button class="linkbtn" data-del="${p.id}">apagar</button></p></li>`).join('')
       : `<li class="emptyli"><p class="lead">Nenhuma ainda. Que tal começar pelo primeiro encontro no shopping?</p></li>`;
     ol.querySelectorAll('[data-del]').forEach(d => d.onclick = () => { if(d.dataset.sure) col.remove(d.dataset.del); else { d.dataset.sure = 1; d.textContent = 'toca de novo'; } });
     ol.querySelectorAll('[data-ed]').forEach(d => d.onclick = () => { const p = list.find(x => x.id === d.dataset.ed); if(p) ed.abrir(p.id, {pt:p.titulo, pd:p.data, px:p.texto}); });
     lista = list;
-  });
+  }; const off = col.on(rend);
   const ed = editavel(document.getElementById('pf'), document.querySelector('#pf button[type=submit]'), 'Adicionar');
   document.getElementById('pf').onsubmit = async e => {
     e.preventDefault(); const t = document.getElementById('pt').value.trim();
@@ -6906,12 +6957,12 @@ VIEWS.playlist = () => {
     `<form class="write card-form" id="mf"><input type="text" id="mt" placeholder="Nome da música" aria-label="Música"><input type="text" id="ma" placeholder="Cantor ou banda" aria-label="Artista">
       <input type="text" id="ml" inputmode="url" placeholder="Link do Spotify ou YouTube (opcional)" aria-label="Link"><textarea id="mp" rows="2" placeholder="Por que ela lembra a gente?" aria-label="Por quê"></textarea>
       <button type="submit">Adicionar música</button><p class="werr" id="merr"></p></form>
-     <div class="songs" id="songs"></div>`);
+     ${filtroHTML('mflt')}<div class="songs" id="songs"></div>`);
   const col = Sync.col('musicas');
   let lista = [];
-  const off = col.on(list => {
+  let ult = []; const F = filtro('mflt', () => rend(ult)); const rend = list => { ult = list;
     const box = document.getElementById('songs'); if(!box) return;
-    box.innerHTML = list.length ? [...list].reverse().map((m,k) => {
+    const fl = F.ap(list, x => hoje(new Date(x.criadoEm || 0))); box.innerHTML = fl.length ? fl.map((m,k) => {
       const raw = (m.link || '').trim(), link = !raw ? '' : /^https?:\/\//i.test(raw) ? raw : 'https://' + raw.replace(/^\/+/, '');
       const fonte = /spotify/i.test(link) ? 'Ouvir no Spotify' : /youtu/i.test(link) ? 'Ver no YouTube' : /deezer/i.test(link) ? 'Ouvir no Deezer' : 'Abrir link';
       return `<div class="song st" style="--i:${k}">
@@ -6921,7 +6972,7 @@ VIEWS.playlist = () => {
     box.querySelectorAll('[data-del]').forEach(d => d.onclick = () => { if(d.dataset.sure) col.remove(d.dataset.del); else { d.dataset.sure = 1; d.textContent = 'toca de novo'; } });
     box.querySelectorAll('[data-ed]').forEach(d => d.onclick = () => { const m = list.find(x => x.id === d.dataset.ed); if(m) ed.abrir(m.id, {mt:m.titulo, ma:m.artista, ml:m.link, mp:m.porque}); });
     lista = list;
-  });
+  }; const off = col.on(rend);
   const ed = editavel(document.getElementById('mf'), document.querySelector('#mf button[type=submit]'), 'Adicionar música');
   document.getElementById('mf').onsubmit = async e => {
     e.preventDefault(); const t = document.getElementById('mt').value.trim();
@@ -7241,6 +7292,16 @@ function heart(c, r){
   c.bezierCurveTo(0,r*1.05,r,r*.75,r,r*.25); c.bezierCurveTo(r,-r*.3,0,-r*.3,0,r*.3); c.fill();
 }
 let parts = [];
+/* parabéns quando completa uma missão */
+function parabensChoco(n = 1){
+  document.getElementById('pchoc')?.remove();
+  const w = document.createElement('div'); w.id = 'pchoc'; w.className = 'pchoc';
+  w.innerHTML = `<div class="pchoc-c"><span class="pchoc-ic">${CHOCO_SVG}</span><b>Parabéns!</b><p>${n === 1 ? '1 chocolate recebido' : n + ' chocolates recebidos'}</p><small>missão cumprida ♥</small></div>`;
+  document.body.append(w); requestAnimationFrame(() => w.classList.add('in'));
+  setTimeout(() => burst(innerWidth / 2, innerHeight / 2 - 40, 50), 150);
+  const sai = () => { w.classList.remove('in'); setTimeout(() => w.remove(), 300); };
+  w.onclick = sai; setTimeout(sai, 2800);
+}
 function burst(x, y, n=40){
   if(reduce) return;
   for(let i=0;i<n;i++){ const a = Math.random()*Math.PI*2, v = Math.random()*6+2;
