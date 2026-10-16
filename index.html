@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=58">
-<link rel="apple-touch-icon" href="icon-180.png?v=58">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=58">
+<link rel="manifest" href="manifest.json?v=59">
+<link rel="apple-touch-icon" href="icon-180.png?v=59">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=59">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -3414,7 +3414,7 @@ function renderHome(y = 0){
       <p class="endyear">2026</p>
       <div id="ncvbox" class="mdiabox ncv-fim"></div>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
-      <p class="endver">versão de 16/10 · 10h00</p>
+      <p class="endver">versão de 16/10 · 10h20</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
@@ -3425,8 +3425,8 @@ function renderHome(y = 0){
   document.getElementById('edviajar')?.addEventListener('click', abrirViagem);
   document.getElementById('edzero')?.addEventListener('click', zeroKm);
   document.getElementById('endinst')?.addEventListener('click', () => maybeInstallPrompt(true));
-  app.querySelectorAll('[data-persp]').forEach(b => b.onclick = () => { store.set('persp', b.dataset.persp); renderHome(window.scrollY); });
-  app.querySelectorAll('[data-modo]').forEach(b => b.onclick = () => { modoEdMem = b.dataset.modo === 'editar'; store.set('modoEdicao', modoEdMem); renderHome(window.scrollY); });
+  app.querySelectorAll('[data-persp]').forEach(b => b.onclick = () => { persp = b.dataset.persp; renderHome(window.scrollY); });
+  app.querySelectorAll('[data-modo]').forEach(b => b.onclick = () => { modoEdMem = b.dataset.modo === 'editar'; if(modoEdMem) persp = 'Mihzinha'; renderHome(window.scrollY); });
   { let festejou = false; const offN = Sync.on('state', () => { const box = document.getElementById('nvbox'); if(!box){ setTimeout(() => offN && offN()); return; }
       const hj = niverHoje(); let html = '';
       if(hj.length){ html = hj.map(q => q === eu ? `<button class="nv-card hoje" data-go="comemorativas"><span class="nv-ic">${icon('cake')}</span><span><b>Feliz aniversário, meu amor!</b><small>hoje o dia é todo seu</small></span></button>` : `<button class="nv-card hoje" data-go="comemorativas"><span class="nv-ic">${icon('cake')}</span><span><b>Hoje é aniversário ${doDa(q)}!</b><small>não esquece de dar parabéns</small></span></button>`).join('');
@@ -3587,7 +3587,7 @@ function fechaRecado(){ const w = document.getElementById('rcwrap'); if(!w) retu
 /* recadinho da primeira vez que ele entra */
 const tourPendente = () => !store.get('viuTour', false) && (jaComecou() || PREVIA) && (C.tour || []).some(p => p && (p.t || p.s));
 function dedicatoria(){
-  if(Sync.quem !== 'Di' || store.get('viuDedicatoria', false) || document.getElementById('dedic')) return;
+  if(Sync.quemReal !== 'Di' || store.get('viuDedicatoria', false) || document.getElementById('dedic')) return;
   if(tourPendente() || document.getElementById('tour')) return;
   store.set('viuDedicatoria', true);
   const w = document.createElement('div'); w.id = 'dedic'; w.className = 'dedic';
@@ -3700,9 +3700,10 @@ function shell(eb, title, sub, body){
 const VIEWS = {};
 let curView = '';
 let modoEdMem = null;
-const modoEd = () => Sync.quemReal === 'Mihzinha' && (modoEdMem ?? store.get('modoEdicao', false)) === true;
+const modoEd = () => Sync.quemReal === 'Mihzinha' && modoEdMem === true;
+let persp = 'Mihzinha';
 /* no modo editar, a Mih vê o app do jeito que o Di vê (ou do jeito dela, se escolher) */
-const perspDi = () => !PREVIA && modoEd() && store.get('persp', 'Di') === 'Di';
+const perspDi = () => !PREVIA && modoEd() && persp === 'Di';
 window.__perspDi = perspDi;
 const COLS_EDITOR = ['conteudo', 'fotosMem'], GRUPOS_EDITOR = ['datesEdit', 'planosEdit', 'cats'];
 function bloqueiaPersp(onde){ if(!perspDi() || onde === true) return false; csToast('Vendo como o Di: isso não dá pra mexer aqui. Toca em "p/ Mih" lá em cima.'); return true; }
@@ -5401,7 +5402,7 @@ function zeroKm(){
   w.querySelector('#zkok').onclick = async e => { const b = e.currentTarget, m = w.querySelector('#zkm');
     if(!b.dataset.sure){ b.dataset.sure = 1; b.textContent = 'Tem certeza? Toca de novo'; setTimeout(() => { if(b.isConnected && b.dataset.sure){ delete b.dataset.sure; b.textContent = 'Zerar tudo'; } }, 3500); return; }
     delete b.dataset.sure; b.disabled = true; b.textContent = 'Zerando…';
-    const persp = store.get('persp', 'Di'); store.set('persp', 'Mihzinha');
+    const perspAntes = persp; persp = 'Mihzinha';
     try{
       for(const c of ZERO_COLS) await Sync.clearCol(c);
       for(const g of ZERO_GRUPOS) await Sync.clearGroup(g);
@@ -5409,11 +5410,11 @@ function zeroKm(){
       for(const p of await pega('premios')) if(p.comprado || p.entregue){ const c = Object.assign({}, p); delete c.id; c.comprado = false; c.entregue = false; delete c.por; delete c.compradoEm; delete c.entregueEm; await Sync.col('premios').set(p.id, c); }
       for(const x of await pega('missoesEsp')) if(x.feita){ const c = Object.assign({}, x); delete c.id; c.feita = false; delete c.feitaDia; await Sync.col('missoesEsp').set(x.id, c); }
       ['seenBilhetes','abracosVistos'].forEach(k => store.set(k, 0)); store.set('jogou', {}); store.set('viuTour', false);
-      store.set('persp', persp);
+      persp = perspAntes;
       b.textContent = 'Prontinho!'; sparkle(b); burst(innerWidth / 2, innerHeight / 2, 50);
       m.textContent = 'Tudo zerado. No dia 25 vocês começam juntos ♥';
       setTimeout(() => { fecha(); renderHome(0); }, 2200);
-    }catch(err){ store.set('persp', persp); b.disabled = false; b.textContent = 'Zerar tudo'; m.style.color = '#c8182c'; m.textContent = 'Não deu pra zerar agora. Confere a internet e tenta de novo.'; }
+    }catch(err){ persp = perspAntes; b.disabled = false; b.textContent = 'Zerar tudo'; m.style.color = '#c8182c'; m.textContent = 'Não deu pra zerar agora. Confere a internet e tenta de novo.'; }
   };
 }
 
@@ -5503,7 +5504,7 @@ VIEWS.retromes = () => {
 /* ---------- primeiro dia guiado ---------- */
 const TOUR_IC = ['heart','note','gift','mail','sparkle'], TOUR_COR = [['#fde3e8','#c8182c'],['#e6eefb','#3f74c4'],['#fff1d6','#c9822a'],['#efe7fb','#7b5cc4'],['#e3f0dc','#4f8a4a']];
 function tourInicio(forcar){
-  if(!forcar && (store.get('viuTour', false) || !(jaComecou() || PREVIA))) return;
+  if(!forcar && (store.get('viuTour', false) || !(jaComecou() || PREVIA) || perspDi())) return;
   if(!document.querySelector('.home') && !forcar) return;
   if(!forcar && (document.querySelector('.tk-wrap') || document.getElementById('inst'))) return setTimeout(tourInicio, 1500);
   if(document.getElementById('tour')) return;
