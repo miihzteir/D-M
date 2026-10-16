@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=71">
-<link rel="apple-touch-icon" href="icon-180.png?v=71">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=71">
+<link rel="manifest" href="manifest.json?v=72">
+<link rel="apple-touch-icon" href="icon-180.png?v=72">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=72">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -1765,6 +1765,7 @@ html body .mdia-esp{display:flex;align-items:center;justify-content:center;gap:6
 .xf-slot{width:100%;margin-top:10px;text-align:left}
 .xf-carta{margin:0}
 .xf-lock{display:flex;align-items:center;gap:6px;font-size:14px;color:#7a6d5a;background:#fff;border-radius:99px;padding:8px 16px}
+.aud.carregando .aud-pl{animation:mglow 1s ease-in-out infinite;opacity:.6}.aud.aud-erro .aud-tx::after{content:' · não carregou';color:#b3122c}
 /* parabéns missão */
 .pchoc{position:fixed;inset:0;z-index:9500;display:grid;place-items:center;background:rgba(74,18,36,.28);backdrop-filter:blur(3px);opacity:0;transition:opacity .25s}
 .pchoc.in{opacity:1}
@@ -1968,6 +1969,8 @@ html body .hb-ic:active{transform:scale(.9)}
 /* mover legendas */
 .mv-on{outline:1.5px dashed rgba(155,22,48,.45);outline-offset:3px;border-radius:6px}
 .mv-h{position:absolute;left:-12px;top:-12px;width:24px;height:24px;border-radius:50%;background:#9b1630;color:#fff;display:grid;place-items:center;z-index:20;box-shadow:0 3px 8px rgba(0,0,0,.25);cursor:grab;touch-action:none}
+.mv-sz{position:absolute;left:16px;top:-26px;display:flex;gap:3px;z-index:21}
+.mv-sz i{height:22px;box-sizing:border-box;display:grid;place-items:center;font-style:normal;font-family:var(--f-body,inherit);font-size:11px;font-weight:800;line-height:1;padding:5px 6px;border-radius:8px;background:#fff;color:#9b1630;box-shadow:0 3px 8px rgba(0,0,0,.22);cursor:pointer;letter-spacing:0;text-transform:none}
 .mv-h .icn{width:14px;height:14px;stroke:#fff;stroke-width:2}
 [data-mv]{will-change:transform}.mcap.mv-on{position:relative}
 .mv-arr{opacity:.85}
@@ -3307,7 +3310,7 @@ function renderXmas(){
   const xg = document.getElementById('xfgift'); if(xg){ if(modoEd()) xg.classList.add('open'); xg.onclick = e => { if(e.target.closest('.edk') || xg.classList.contains('open')) return; xg.classList.add('open'); const r = xg.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height / 2, 60); document.getElementById('xftap').hidden = true; setTimeout(() => { const sl = document.getElementById('xfslot'); if(sl){ sl.hidden = false; sl.firstElementChild.classList.add('unfold'); setTimeout(() => sl.scrollIntoView({behavior:'smooth', block:'center'}), 200); } }, 600); }; }
   document.getElementById('xgo').onclick = () => {
     burst(innerWidth/2, innerHeight*.7, 30);
-    x.classList.add('out'); clearInterval(xtimer); const pv = porVoltar; porVoltar = false; if(xVolta){ const f = xVolta; xVolta = null; f(); if(pv) entradaHistorico(); } else renderHome(xFromY); xEmpurrou = false; xFromY = 0;
+    x.classList.add('out'); clearInterval(xtimer); const pv = porVoltar; porVoltar = false; if(xVolta){ const f = xVolta; xVolta = null; f(); } else renderHome(xFromY); xEmpurrou = false; xFromY = 0;
     setTimeout(() => x.remove(), 700);
   };
 }
@@ -3521,7 +3524,7 @@ function renderHome(y = 0){
       <p class="endyear">${Math.max(2026, new Date().getFullYear())}</p>
       <div id="ncvbox" class="mdiabox ncv-fim"></div>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
-      <p class="endver">versão de 16/10 · 11h15</p>
+      <p class="endver">versão de 16/10 · 11h40</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
@@ -3780,12 +3783,18 @@ document.addEventListener('click', e => { const b = e.target.closest('.edk'); if
 
 
 /* botão voltar do celular: volta dentro do app em vez de sair */
-let ignoraPop = false, porVoltar = false;
+let ignoraPop = 0, porVoltar = false;
 try{ if('scrollRestoration' in history) history.scrollRestoration = 'manual'; }catch(e){}
-function entradaHistorico(){ try{ if(!history.state || !history.state.dm){ history.pushState({dm:1}, ''); return true; } }catch(e){} return false; }
-function saiHistorico(){ try{ if(history.state && history.state.dm){ ignoraPop = true; history.back(); } }catch(e){} }
+/* cada nível (tela inicial 0, quadro 1, tela dentro do quadro 2) é uma entrada no histórico, criada no toque (o Chrome ignora entradas criadas sem toque) */
+const nivelHist = () => { const s = history.state; return s && s.dm ? (s.n || 1) : 0; };
+let nivelNav = nivelHist();
+function entradaHistorico(quero){ try{ const cur = nivelNav; if(quero == null) quero = cur + 1;
+  if(cur < quero){ history.pushState({dm:1, n:cur + 1}, ''); nivelNav = cur + 1; return true; }
+  if(cur > quero){ ignoraPop++; nivelNav = quero; history.go(quero - cur); } }catch(e){} return false; }
+function saiHistorico(){ entradaHistorico(0); }
 addEventListener('popstate', () => {
-  if(ignoraPop){ ignoraPop = false; return; }
+  if(ignoraPop > 0){ ignoraPop--; return; }
+  nivelNav = nivelHist();
   const modal = document.querySelector('.cr-wrap,#edtx,#mesp,#zerokm,#tour,.tk-wrap:not(#inst)');
   if(modal && !modal.classList.contains('pin-wrap')){ const x = modal.querySelector('#crcan,.inst-x,#tourx,.tk-close,#tkclose'); x ? x.click() : modal.remove(); if(document.getElementById('back')) entradaHistorico(); return; }
   const xg = document.getElementById('xgo'); if(xg){ porVoltar = true; xg.click(); return; }
@@ -3798,26 +3807,35 @@ let POS = {};
 function aplicaPos(raiz = document){
   raiz.querySelectorAll('[data-mv]').forEach(el => {
     const k = el.dataset.mv, p = POS[k], pai = el.offsetParent || el.parentElement;
-    if(p && pai){ const r = pai.getBoundingClientRect(); el.style.transform = `translate(${(p.x * r.width).toFixed(1)}px, ${(p.y * r.height).toFixed(1)}px)`; } else el.style.transform = '';
+    if(p && pai){ const r = pai.getBoundingClientRect(); el.style.transform = mvTf(p, r); } else el.style.transform = ''; mvFs(el, p);
     const pode = modoEd();
     el.classList.toggle('mv-on', pode);
     let h = el.querySelector(':scope > .mv-h');
     if(pode && !h){ h = document.createElement('span'); h.className = 'mv-h'; h.title = 'arrasta pra mudar de lugar'; h.innerHTML = '<svg viewBox="0 0 24 24" class="icn"><path d="M12 3v18M3 12h18M12 3l-3 3M12 3l3 3M12 21l-3-3M12 21l3-3M3 12l3-3M3 12l3 3M21 12l-3-3M21 12l-3 3"/></svg>'; el.append(h); ligaArrasto(el, h); }
     if(!pode && h) h.remove();
+    let z = el.querySelector(':scope > .mv-sz');
+    if(pode && !z){ z = document.createElement('span'); z.className = 'mv-sz'; z.innerHTML = '<i data-z="-1" title="letra menor">A−</i><i data-z="1" title="letra maior">A+</i>'; el.append(z);
+      z.querySelectorAll('i').forEach(b => { b.addEventListener('pointerdown', e => e.stopPropagation()); b.addEventListener('click', async e => { e.stopPropagation(); e.preventDefault();
+        const k = el.dataset.mv, q = Object.assign({x:0, y:0, s:1}, POS[k]); q.s = Math.min(2.6, Math.max(.5, +((q.s || 1) + .1 * b.dataset.z).toFixed(2))); POS[k] = q;
+        mvFs(el, q);
+        clearTimeout(z._t); z._t = setTimeout(async () => { try{ await Sync.col('conteudo').set('posicoes', {m:POS}); csToast('Tamanho salvo ♥'); }catch(x){} }, 500); }); }); }
+    if(!pode && z) z.remove();
   });
 }
+const mvTf = (p, r) => `translate(${((p.x || 0) * r.width).toFixed(1)}px, ${((p.y || 0) * r.height).toFixed(1)}px)`;
+function mvFs(el, p){ if(!el.dataset.fs0){ el.style.fontSize = ''; el.dataset.fs0 = parseFloat(getComputedStyle(el).fontSize) || 16; } el.style.fontSize = p && p.s && p.s !== 1 ? (el.dataset.fs0 * p.s).toFixed(1) + 'px' : ''; }
 function ligaArrasto(el, h){
   h.addEventListener('click', e => { e.stopPropagation(); e.preventDefault(); });
   h.addEventListener('pointerdown', e => {
     e.stopPropagation(); e.preventDefault(); h.setPointerCapture(e.pointerId);
     const k = el.dataset.mv, pai = el.offsetParent || el.parentElement, r = pai.getBoundingClientRect(), p0 = POS[k] || {x:0, y:0}, x0 = e.clientX, y0 = e.clientY;
     el.classList.add('mv-arr');
-    const mv = ev => { const nx = p0.x + (ev.clientX - x0) / r.width, ny = p0.y + (ev.clientY - y0) / r.height; POS[k] = {x:+nx.toFixed(4), y:+ny.toFixed(4)}; el.style.transform = `translate(${(nx * r.width).toFixed(1)}px, ${(ny * r.height).toFixed(1)}px)`; };
+    const mv = ev => { const nx = (p0.x || 0) + (ev.clientX - x0) / r.width, ny = (p0.y || 0) + (ev.clientY - y0) / r.height; POS[k] = Object.assign({}, p0, {x:+nx.toFixed(4), y:+ny.toFixed(4)}); el.style.transform = mvTf(POS[k], r); };
     const up = async () => { h.removeEventListener('pointermove', mv); h.removeEventListener('pointerup', up); h.removeEventListener('pointercancel', up); el.classList.remove('mv-arr');
       try{ await Sync.col('conteudo').set('posicoes', {m:POS}); csToast('Lugar salvo ♥'); }catch(x){} };
     h.addEventListener('pointermove', mv); h.addEventListener('pointerup', up); h.addEventListener('pointercancel', up);
   });
-  h.addEventListener('dblclick', async e => { e.stopPropagation(); delete POS[el.dataset.mv]; el.style.transform = ''; try{ await Sync.col('conteudo').set('posicoes', {m:POS}); csToast('Voltou pro lugar de antes'); }catch(x){} });
+  h.addEventListener('dblclick', async e => { e.stopPropagation(); delete POS[el.dataset.mv]; el.style.transform = ''; mvFs(el, null); try{ await Sync.col('conteudo').set('posicoes', {m:POS}); csToast('Voltou pro lugar de antes'); }catch(x){} });
 }
 new MutationObserver(() => { clearTimeout(aplicaPos._t); aplicaPos._t = setTimeout(() => aplicaPos(), 60); }).observe(document.documentElement, {childList:true, subtree:true});
 addEventListener('resize', () => aplicaPos());
@@ -3838,7 +3856,7 @@ function shell(eb, title, sub, body){
     <header class="vhead">${(it => it ? (([bg, fg]) => `<span class="vh-ic" style="--bg:${bg};--fg:${fg}">${icon(it.ico)}</span>`)(corDe(it.id)) : '')(Object.values(LISTS).flat().find(x => x.id === curView))}<h2>${TE('v_' + curView + '_' + hk(title), title, 'Título desta tela')}</h2>${sub || modoEd() ? `<p>${TE('s_' + curView + '_' + hk(title), sub || '', 'Texto embaixo do título')}</p>` : ''}</header>
     ${body}</div>`;
   if(yVolta){ window.scrollTo({top:yVolta, behavior:'instant'}); requestAnimationFrame(() => window.scrollTo({top:yVolta, behavior:'instant'})); }
-  entradaHistorico();
+  entradaHistorico(hubDe(curView) ? 1 : (hk => hk && curView !== hubAtual && (HUBS[hk].itens().some(r => r.id === curView) || HUBS[hk].extra === curView) ? 2 : 1)(hubDe(hubAtual)));
   document.getElementById('back').onclick = () => { stopGame(); const hk = hubDe(hubAtual); if(hk && curView !== hubAtual && (HUBS[hk].itens().some(r => r.id === curView) || HUBS[hk].extra === curView)){ curView = hubAtual; voltandoPara = true; VIEWS[hubAtual](); return; } hubAtual = null; renderHome(homeY); };
 }
 const VIEWS = {};
@@ -5571,7 +5589,7 @@ function irDoLink(){ const m = location.hash.match(/^#ir-([a-z0-9]+)$/i); if(!m)
 
 
 /* ---------- zerar tudo pra começar no dia 25 (só a Mih vê) ---------- */
-const ZERO_COLS = ['chocolates','compras','abracos','respostas','bilhetes','saudade','diario','roleta','gastos','avisosTeste'];
+const ZERO_COLS = ['audios','chocolates','compras','abracos','respostas','bilhetes','saudade','diario','roleta','gastos','avisosTeste'];
 const ZERO_GRUPOS = ['casinha','vales','planos','lidas','pensei'];
 function zeroKm(){
   const w = document.createElement('div'); w.className = 'tk-wrap'; w.id = 'zerokm';
@@ -6407,7 +6425,7 @@ VIEWS.comemorativas = () => {
   ['Di','Mihzinha'].forEach(q => document.getElementById('nv' + q).addEventListener('input', e => e.target.dataset.mexeu = 1));
   document.getElementById('nvsave').onclick = async e => { const b = e.currentTarget; for(const q of ['Di','Mihzinha']){ const v = document.getElementById('nv' + q).value; if(v) await Sync.setFlag('niver', q, v); } sparkle(b); b.textContent = 'Salvo!'; setTimeout(() => { b.textContent = 'Salvar aniversários'; }, 1800); };
   { const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { offNv(); prev(); }; }
-  document.getElementById('cmnatal')?.addEventListener('click', () => { xVolta = () => { renderHome(homeY); setTimeout(() => openStop('comemorativas'), 50); }; renderXmas(); });
+  document.getElementById('cmnatal')?.addEventListener('click', () => { xVolta = () => { curView = 'comemorativas'; voltandoPara = true; VIEWS.comemorativas(); }; renderXmas(); });
 };
 
 /* ---------- datas marcantes ---------- */
@@ -6584,7 +6602,22 @@ function evCor(t, k){
 }
 
 /* ---------- áudio: gravar a própria voz nas cartas e bilhetes ---------- */
-const AUD_MAX_S = 60, AUD_MAX = 900000;
+const AUD_MAX_S = Infinity, AUD_MAX = 750000;
+/* áudio longo: vai em pedacinhos na coleção "audios" e o item guarda só a referência aud:id:n */
+const AUD_CACHE = {};
+async function guardaAudioGrande(dataUrl){
+  const id = 'a' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7), T = 700000, n = Math.ceil(dataUrl.length / T);
+  for(let i = 0; i < n; i++) await Sync.col('audios').set(`${id}_${i}`, {aid:id, i, n, p:dataUrl.slice(i * T, (i + 1) * T)});
+  const ref = `aud:${id}:${n}`; AUD_CACHE[ref] = dataUrl; return ref;
+}
+async function carregaAudio(ref){
+  if(AUD_CACHE[ref]) return AUD_CACHE[ref];
+  const [, id, n] = ref.split(':'); let partes = [];
+  if(Sync.mode === 'online' && window.firebase){ const q = await firebase.firestore().collection('audios').where('aid', '==', id).get(); q.forEach(d => partes.push(d.data())); }
+  else partes = await new Promise(r => { let off = null; off = Sync.col('audios').on(l => { r(l.filter(x => x.aid === id)); setTimeout(() => off && off()); }); });
+  partes.sort((a, b) => a.i - b.i); if(partes.length < +n) throw new Error('faltam partes');
+  return AUD_CACHE[ref] = partes.map(x => x.p).join('');
+}
 const podeGravar = () => !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder);
 const quemVoz = q => q === 'curto' ? 'Ouvir o áudio' : q === 'você' ? 'Ouvir o seu áudio' : `Ouvir a voz ${q === 'Di' ? 'do ' + apelido('Di', 30) : 'da ' + apelido('Mihzinha', 30)}`;
 /* filtro por data (de/até), ordem e só áudios */
@@ -6613,12 +6646,14 @@ function filtro(id, redraw, o = {}){
   };
 }
 function audioHTML(src, quem){ if(!src) return '';
-  return `<div class="aud" role="button" tabindex="0" data-aud><span class="aud-pl"><svg class="ap-play" viewBox="0 0 24 24"><path d="M8.5 5.5v13l10.5-6.5z"/></svg><svg class="ap-pause" viewBox="0 0 24 24"><path d="M7 5h3.6v14H7zM13.4 5H17v14h-3.6z"/></svg></span><span class="aud-mid"><span class="aud-tx">${esc(quemVoz(quem))}</span><span class="aud-bar"><i></i></span></span><span class="aud-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><audio preload="none" src="${src}"></audio></div>`; }
+  return `<div class="aud" role="button" tabindex="0" data-aud><span class="aud-pl"><svg class="ap-play" viewBox="0 0 24 24"><path d="M8.5 5.5v13l10.5-6.5z"/></svg><svg class="ap-pause" viewBox="0 0 24 24"><path d="M7 5h3.6v14H7zM13.4 5H17v14h-3.6z"/></svg></span><span class="aud-mid"><span class="aud-tx">${esc(quemVoz(quem))}</span><span class="aud-bar"><i></i></span></span><span class="aud-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>${String(src).startsWith('aud:') ? `<audio preload="none" data-aref="${esc(src)}"${AUD_CACHE[src] ? ` src="${AUD_CACHE[src]}"` : ''}></audio>` : `<audio preload="none" src="${src}"></audio>`}</div>`; }
 document.addEventListener('click', e => { const a = e.target.closest('[data-aud]'); if(!a) return; e.stopPropagation(); e.preventDefault();
   const au = a.querySelector('audio'); document.querySelectorAll('[data-aud] audio').forEach(o => { if(o !== au && !o.paused){ o.pause(); } });
   if(!au._lig){ au._lig = 1; au.addEventListener('timeupdate', () => { const i = a.querySelector('.aud-bar i'); if(i && au.duration && isFinite(au.duration)) i.style.width = (au.currentTime / au.duration * 100) + '%'; });
     au.addEventListener('play', () => a.classList.add('tocando')); au.addEventListener('pause', () => a.classList.remove('tocando'));
     au.addEventListener('ended', () => { a.classList.remove('tocando'); const i = a.querySelector('.aud-bar i'); if(i) i.style.width = '0'; }); }
+  if(au.dataset.aref && !au.getAttribute('src')){ if(a.classList.contains('carregando')) return; a.classList.add('carregando');
+    carregaAudio(au.dataset.aref).then(src => { au.src = src; a.classList.remove('carregando'); au.play().catch(() => {}); }).catch(() => { a.classList.remove('carregando'); a.classList.add('aud-erro'); }); return; }
   au.paused ? au.play().catch(() => {}) : au.pause(); }, true);
 /* um gravador que sobrevive quando a tela redesenha */
 function novoGravador(){
@@ -6628,21 +6663,22 @@ function novoGravador(){
     if(g.rec){ const s = Math.floor((Date.now() - g.t0) / 1000);
       el.innerHTML = `<div class="grav-on"><span class="grav-dot"></span><span class="grav-t">gravando · ${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}</span><span class="aud-wave on"><i></i><i></i><i></i><i></i><i></i></span><button type="button" class="grav-stop">Parar</button></div>`;
       el.querySelector('.grav-stop').onclick = () => g.parar(); return; }
+    if(g.salvando){ el.innerHTML = `<div class="grav-on"><span class="grav-t">guardando o áudio…</span></div>`; return; }
     if(g.dado){ el.innerHTML = `<div class="grav-ok">${audioHTML(g.dado, 'você')}<button type="button" class="linkbtn grav-del">apagar áudio</button></div>`; el.querySelector('.grav-del').onclick = () => { g.dado = null; ui(); }; return; }
-    el.innerHTML = `<button type="button" class="grav-b">${icon('mic')}<span>Gravar um áudio</span><small>até 1 min</small></button>${g.erro ? `<p class="werr">${g.erro}</p>` : ''}`;
+    el.innerHTML = `<button type="button" class="grav-b">${icon('mic')}<span>Gravar um áudio</span><small>sem limite de tempo</small></button>${g.erro ? `<p class="werr">${g.erro}</p>` : ''}`;
     el.querySelector('.grav-b').onclick = () => g.gravar(); };
   g.montar = el => { g.el = el; ui(); };
   g.gravar = async () => { g.erro = '';
     try{ g.stream = await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true, noiseSuppression:true}}); }
     catch(e){ g.erro = 'Não deu pra usar o microfone. Libera o microfone pro app nas configurações do celular e tenta de novo.'; ui(); return; }
-    const t = tipo(), partes = []; g.rec = new MediaRecorder(g.stream, Object.assign({audioBitsPerSecond:24000}, t ? {mimeType:t} : {}));
+    const t = tipo(), partes = []; g.rec = new MediaRecorder(g.stream, Object.assign({audioBitsPerSecond:16000}, t ? {mimeType:t} : {}));
     g.rec.ondataavailable = e => e.data && e.data.size && partes.push(e.data);
     g.rec.onstop = () => { const bl = new Blob(partes, {type:g.rec.mimeType || t || 'audio/webm'}); g.stream.getTracks().forEach(x => x.stop()); g.rec = null; clearInterval(g.tm);
-      const fr = new FileReader(); fr.onload = () => { if(String(fr.result).length > AUD_MAX){ g.erro = 'O áudio ficou grande demais. Tenta um mais curtinho.'; g.dado = null; } else g.dado = fr.result; ui(); }; fr.readAsDataURL(bl); };
+      const fr = new FileReader(); fr.onload = async () => { const du = String(fr.result); if(du.length <= AUD_MAX){ g.dado = du; ui(); return; } g.salvando = true; ui(); try{ g.dado = await guardaAudioGrande(du); }catch(x){ g.erro = 'Não deu pra guardar o áudio. Confere a internet e tenta de novo.'; g.dado = null; } g.salvando = false; ui(); }; fr.readAsDataURL(bl); };
     g.rec.start(); g.t0 = Date.now(); g.tm = setInterval(() => { if(Date.now() - g.t0 >= AUD_MAX_S * 1000) g.parar(); else ui(); }, 500); ui(); };
   g.parar = () => { if(g.rec && g.rec.state !== 'inactive') g.rec.stop(); };
   g.get = () => g.dado; g.limpa = () => { g.dado = null; g.erro = ''; ui(); };
-  g.gravando = () => !!g.rec;
+  g.gravando = () => !!g.rec || !!g.salvando;
   return g;
 }
 const gravadorBox = id => podeGravar() ? `<div class="grav" id="${id}"></div>` : '';
