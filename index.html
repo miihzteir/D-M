@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=50">
-<link rel="apple-touch-icon" href="icon-180.png?v=50">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=50">
+<link rel="manifest" href="manifest.json?v=51">
+<link rel="apple-touch-icon" href="icon-180.png?v=51">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=51">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -1824,6 +1824,13 @@ html body .pin-x{position:absolute;top:12px;right:12px;width:34px;height:34px;mi
 html body .ncv{width:100%;min-height:0;border:0;color:inherit;font:inherit;cursor:pointer}
 .ncv-b{flex:none;padding:7px 13px;font-size:13px;font-weight:700;border-radius:99px;background:#7b5cc4;color:#fff}
 .ncv.on .ncv-b{background:#fff;color:#7b5cc4}
+/* editar textos na tela */
+.edk{display:inline-grid;place-items:center;width:22px;height:22px;margin-left:6px;vertical-align:middle;border-radius:50%;background:#fff;color:#9b1630;font-size:12px;font-style:normal;box-shadow:0 2px 6px -2px rgba(122,20,36,.45);cursor:pointer;flex:none}
+.edk .icn{width:12px;height:12px}
+.pill2 .edk{width:18px;height:18px;margin-left:4px}
+.edtx-acts{display:flex;gap:8px;margin-top:12px}html body .edtx-acts button{flex:1;min-height:44px}
+#edtx input,#edtx textarea{width:100%;font:inherit;font-size:16px;padding:12px;border-radius:14px;border:1.5px solid #e7c3cb;background:#fff;color:var(--ink)}
+template{display:none}
 </style>
 
 <canvas id="petals" aria-hidden="true"></canvas>
@@ -3240,7 +3247,7 @@ const COR_UI = {saudade:'rosa', diario:'pessego', pergunta:'rosa', bilhetes:'azu
   casinha:'pessego', roleta:'mostarda', coracoes:'rosa', memoria:'lavanda', raspa:'menta', quiz:'azul', provavel:'coral',
   abra:'rosa', album:'lavanda', cartas:'vinho', cartadata:'pessego', retro:'mostarda', capsula:'menta', filhos:'azul', vales:'coral', premios:'mostarda', notificacoes:'lavanda', carta:'vinho', editar:'lavanda'};
 const corDe = id => PAL_UI[COR_UI[id] || 'rosa'];
-const pills = list => `<div class="pills2">${list.map(r => { const [bg, fg] = corDe(r.id); return `<button class="pill2" data-go="${r.id}" style="--bg:${bg};--fg:${fg}"><span class="p2i">${icon(r.ico)}</span><span class="p2t"><b>${r.t}</b><small>${r.s}</small></span></button>`; }).join('')}</div>`;
+const pills = list => `<div class="pills2">${list.map(r => { const [bg, fg] = corDe(r.id); return `<button class="pill2" data-go="${r.id}" style="--bg:${bg};--fg:${fg}"><span class="p2i">${icon(r.ico)}</span><span class="p2t"><b>${TE('pt_' + r.id, r.t, 'Nome no botão')}</b><small>${TE('ps_' + r.id, r.s, 'Texto pequeno do botão')}</small></span></button>`; }).join('')}</div>`;
 function renderHome(y = 0){
   curView = ''; document.getElementById('edfab')?.remove();
   const eu = Sync.quem || 'Di', outro = eu === 'Mihzinha' ? 'Di' : 'Mihzinha';
@@ -3252,7 +3259,7 @@ function renderHome(y = 0){
       ${eu === 'Mihzinha' ? `<div class="ed-modo"><div class="ed-sw"><button type="button" data-modo="ver" class="${modoEd() ? '' : 'on'}">Ver</button><button type="button" data-modo="editar" class="${modoEd() ? 'on' : ''}">Editar</button></div>${modoEd() ? `<div class="ed-btrow"><button type="button" class="ed-abrir" data-go="editar">${icon('pencil')} editor</button><button type="button" class="ed-abrir" id="edviajar">${icon('calendar')} viajar no tempo</button></div>` : `<button type="button" class="ed-abrir" id="edprev2">${icon('play')} ver do começo</button>`}</div>` : ''}
       <p class="hhello">${saud}, <b>${eu}</b></p>
       <h1 class="names" aria-label="Diogo e Milena"><span class="n1">Diogo</span><button class="n2" id="logo" aria-label="coração">${RHEART()}</button><span class="n3">Milena</span></h1>
-      <p class="hdate">desde 12 de abril de 2026</p>
+      <p class="hdate">${TE('hdate', 'desde 12 de abril de 2026', 'Data embaixo dos nomes')}</p>
       <div id="nvbox" class="nvbox"></div>
       <div id="mdiabox" class="mdiabox"></div>
       <div id="hjbox" class="mdiabox"></div>
@@ -3265,13 +3272,13 @@ function renderHome(y = 0){
 
     <section class="band b-stripes-blue">
       <button class="note-btn rv" data-go="mensagem"><div class="note">
-        <h3>Um bilhete pra hoje</h3>
+        <h3>${TE('h_bilhete', 'Um bilhete pra hoje', 'Título do bilhete')}</h3>
         <p class="to">${eu === 'Mihzinha' ? 'Meu amor,' : 'Meu Di,'}</p><p>${esc(mensagemDoDia())}</p><p class="sign">${eu === 'Mihzinha' ? 'D&amp;M' : 'Mihzinha'}</p>${LIPS('kiss')}
       </div></button>
     </section>
 
     <section class="band b-pink">
-      <h2 class="btitle rv">A nossa história</h2>
+      <h2 class="btitle rv">${TE('b_A_nossa_história', 'A nossa história', 'Título da parte')}</h2>
       <div class="miles rv">
         ${C.marcos.map(m => `<div class="mile"><span class="md">${esc(m.d)}</span><b>${esc(m.t)}</b><small>${esc(m.s)}</small></div>`).join('')}
       </div>
@@ -3279,7 +3286,7 @@ function renderHome(y = 0){
     </section>
 
     <section class="band b-blue">
-      <h2 class="btitle rv">Todo dia</h2>
+      <h2 class="btitle rv">${TE('b_Todo_dia', 'Todo dia', 'Título da parte')}</h2>
       <div class="wcards rv">
         <button class="wcard" data-go="pergunta"><span class="fl-ic">${DAISY('#f0bac6','#fff')}</span><b>Pergunta</b><small>do dia</small><i class="badge" id="badge-pergunta" hidden></i></button>
         <button class="wcard" data-go="bilhetes"><span class="fl-ic">${DAISY('#a9c4e0','#fff')}</span><b>Bilhetes</b><small>um pro outro</small><i class="badge" id="badge-bilhetes" hidden></i></button>
@@ -3293,20 +3300,20 @@ function renderHome(y = 0){
     </section>
 
     <section class="band b-sage">
-      <h2 class="btitle rv">Nossas memórias</h2>
-      <div class="polrow rv">${C.memorias.map((m,k) => `<button class="mini" data-mem="${m.id}"><span class="mini-ph" id="mp-${m.id}"><span class="ph ${['','b','c'][k % 3]}">♥︎</span></span><span>${esc(m.titulo)}</span></button>`).join('')}</div>
+      <h2 class="btitle rv">${TE('b_Nossas_memórias', 'Nossas memórias', 'Título da parte')}</h2>
+      <div class="polrow rv">${C.memorias.map((m,k) => `<button class="mini" data-mem="${m.id}"><span class="mini-ph" id="mp-${m.id}"><span class="ph ${['','b','c'][k % 3]}">♥︎</span></span><span>${T('v_memoria2_' + hk(m.titulo), esc(m.titulo))}</span></button>`).join('')}</div>
       <div class="rv">${pills(LISTS.nos)}</div>
     </section>
 
     <section class="band b-blue b-jogos">
       <span class="jg-toy jt1"><svg viewBox="0 0 64 40" aria-hidden="true"><rect x="2" y="6" width="60" height="30" rx="15" fill="#fff" stroke="#3f74c4" stroke-width="2.5"/><path d="M14 21h12M20 15v12" stroke="#3f74c4" stroke-width="3" stroke-linecap="round"/><circle cx="44" cy="17" r="3" fill="#e35d6a"/><circle cx="51" cy="23" r="3" fill="#f6b13b"/><circle cx="44" cy="27" r="2.4" fill="#8fbf6a"/></svg></span><span class="jg-toy jt2"><svg viewBox="0 0 40 48" aria-hidden="true"><rect x="4" y="30" width="32" height="14" rx="5" fill="#fff" stroke="#3f74c4" stroke-width="2.5"/><path d="M20 30V14" stroke="#3f74c4" stroke-width="3" stroke-linecap="round"/><circle cx="20" cy="10" r="7" fill="#e35d6a" stroke="#3f74c4" stroke-width="2.5"/><circle cx="30" cy="37" r="2.5" fill="#f6b13b"/></svg></span><span class="jg-toy jt3"><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="3" y="3" width="34" height="34" rx="8" fill="#fff" stroke="#3f74c4" stroke-width="2.5"/><circle cx="12" cy="12" r="3" fill="#3f74c4"/><circle cx="20" cy="20" r="3" fill="#e35d6a"/><circle cx="28" cy="28" r="3" fill="#3f74c4"/></svg></span><span class="jg-toy jt4"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 35s-15-9.3-15-20a8.3 8.3 0 0115-5 8.3 8.3 0 0115 5c0 10.7-15 20-15 20z" fill="#f4b8c6" stroke="#3f74c4" stroke-width="2.5"/></svg></span><span class="jg-toy jt5"><svg viewBox="0 0 64 40" aria-hidden="true"><rect x="2" y="6" width="60" height="30" rx="15" fill="#fff" stroke="#3f74c4" stroke-width="2.5"/><path d="M14 21h12M20 15v12" stroke="#3f74c4" stroke-width="3" stroke-linecap="round"/><circle cx="44" cy="17" r="3" fill="#e35d6a"/><circle cx="51" cy="23" r="3" fill="#f6b13b"/><circle cx="44" cy="27" r="2.4" fill="#8fbf6a"/></svg></span>
       <p class="jg-start rv">${icon('play')} press start</p>
-      <h2 class="btitle rv">Pra gente brincar</h2>
+      <h2 class="btitle rv">${TE('b_Pra_gente_brincar', 'Pra gente brincar', 'Título da parte')}</h2>
       <div class="rv">${pills(LISTS.brincar)}</div>
     </section>
 
     <section class="band b-pink">
-      <h2 class="btitle rv">Cartas e surpresas</h2>
+      <h2 class="btitle rv">${TE('b_Cartas_e_surpresas', 'Cartas e surpresas', 'Título da parte')}</h2>
       <div class="rv">${pills(LISTS.cartas)}</div>
       <button class="lastbtn rv" data-go="carta">${icon('gift')}A última surpresa</button>
     </section>
@@ -3318,7 +3325,7 @@ function renderHome(y = 0){
       <p class="endyear">2026</p>
       <div id="ncvbox" class="mdiabox ncv-fim"></div>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
-      <p class="endver">versão de 15/10 · 22h30</p>
+      <p class="endver">versão de 15/10 · 22h50</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
@@ -3544,6 +3551,33 @@ function tick(){
   });
 }
 function markDone(id){ const d = store.get('done', {}); d[id] = true; store.set('done', d); }
+
+/* ---------- editar qualquer título e texto direto na tela (modo editar) ---------- */
+let TELAS = {};
+const hk = t => { let h = 5381; for(const c of String(t)) h = ((h << 5) + h + c.charCodeAt(0)) | 0; return (h >>> 0).toString(36); };
+const temTx = k => TELAS[k] != null && TELAS[k] !== '';
+const T = (k, def) => `<span data-edt="${k}">${temTx(k) ? esc(TELAS[k]) : def}</span>`;
+const EK = (k, def, lab = '') => modoEd() ? `<i class="edk" data-edk="${k}" data-lab="${esc(lab)}" role="button" aria-label="editar texto">${icon('pencil')}</i><template data-def="${k}">${def}</template>` : '';
+const TE = (k, def, lab) => T(k, def) + EK(k, def, lab);
+document.addEventListener('click', e => { const b = e.target.closest('.edk'); if(!b) return; e.preventDefault(); e.stopPropagation();
+  const k = b.dataset.edk, tpl = document.querySelector(`template[data-def="${k}"]`), def = tpl ? tpl.innerHTML.replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'") : '';
+  const atual = temTx(k) ? TELAS[k] : def, longo = atual.length > 60;
+  const w = document.createElement('div'); w.className = 'tk-wrap'; w.id = 'edtx';
+  w.innerHTML = `<div class="sheet2"><button class="inst-x" id="edtxx" aria-label="Fechar">${icon('plus')}</button><h3>Editar texto</h3>${b.dataset.lab ? `<p class="lead">${esc(b.dataset.lab)}</p>` : ''}
+    ${longo ? `<textarea id="edtxv" rows="4">${esc(atual)}</textarea>` : `<input type="text" id="edtxv" value="${esc(atual)}">`}
+    <div class="edtx-acts">${temTx(k) ? `<button type="button" class="ghost" id="edtxr">Voltar ao original</button>` : ''}<button type="button" id="edtxs">Salvar</button></div></div>`;
+  document.body.append(w); const inp = w.querySelector('#edtxv'); inp.focus(); inp.select && inp.select();
+  const fecha = () => w.remove();
+  const aplica = v => { document.querySelectorAll(`[data-edt="${k}"]`).forEach(el => { if(v) el.textContent = v; else el.innerHTML = def ? esc(def) : ''; }); };
+  const salva = async v => { const novo = Object.assign({}, TELAS); if(v) novo[k] = v; else delete novo[k]; TELAS = novo; aplica(v);
+    try{ await Sync.col('conteudo').set('telas', {m:novo}); }catch(x){} fecha(); };
+  w.onclick = ev => { if(ev.target === w) fecha(); };
+  w.querySelector('#edtxx').onclick = fecha;
+  w.querySelector('#edtxs').onclick = () => salva(inp.value.trim());
+  w.querySelector('#edtxr')?.addEventListener('click', () => salva(''));
+  inp.addEventListener('keydown', ev => { if(ev.key === 'Enter' && !longo){ ev.preventDefault(); salva(inp.value.trim()); } });
+}, true);
+
 function shell(eb, title, sub, body){
   document.documentElement.classList.toggle('di-ver', !modoEd());
   document.getElementById('edfab')?.remove();
@@ -3555,7 +3589,7 @@ function shell(eb, title, sub, body){
   const [pcb, pc] = corDe(curView);
   app.innerHTML = `<div class="view page" style="--pc:${pc};--pcb:${pcb}">
     <div class="vbar"><button class="vback" id="back" aria-label="Voltar"><svg viewBox="0 0 24 24" class="icn"><path d="M15 5l-7 7 7 7"/></svg><span>Voltar</span></button></div>
-    <header class="vhead">${(it => it ? (([bg, fg]) => `<span class="vh-ic" style="--bg:${bg};--fg:${fg}">${icon(it.ico)}</span>`)(corDe(it.id)) : '')(Object.values(LISTS).flat().find(x => x.id === curView))}<h2>${title}</h2>${sub ? `<p>${sub}</p>` : ''}</header>
+    <header class="vhead">${(it => it ? (([bg, fg]) => `<span class="vh-ic" style="--bg:${bg};--fg:${fg}">${icon(it.ico)}</span>`)(corDe(it.id)) : '')(Object.values(LISTS).flat().find(x => x.id === curView))}<h2>${TE('v_' + curView + '_' + hk(title), title, 'Título desta tela')}</h2>${sub || modoEd() ? `<p>${TE('s_' + curView + '_' + hk(title), sub || '', 'Texto embaixo do título')}</p>` : ''}</header>
     ${body}</div>`;
   document.getElementById('back').onclick = () => { stopGame(); renderHome(homeY); };
 }
@@ -3572,7 +3606,7 @@ function openStop(id){ document.getElementById('xgift')?.remove(); homeY = windo
 VIEWS.fotos = (foco) => {
   const souEla = Sync.quem === 'Mihzinha';
   shell('nós dois','Nossas fotos','Todas as nossas fotos num lugar só. Toca numa foto pra ver grandona',
-    `${C.memorias.map((m, k) => `<section class="fm-sec" id="fm-${m.id}"><div class="fm-head"><div><h3>${esc(m.titulo)}</h3><p>${esc(m.sub || '')}</p></div>${souEla ? `<button type="button" class="ghost fm-ed" data-mem="${m.id}">${icon('pencil')} fotos</button>` : ''}</div>
+    `${C.memorias.map((m, k) => `<section class="fm-sec" id="fm-${m.id}"><div class="fm-head"><div><h3>${T('v_memoria2_' + hk(m.titulo), esc(m.titulo))}</h3><p>${T('s_memoria2_' + hk(m.titulo), esc(m.sub || ''))}</p></div>${souEla ? `<button type="button" class="ghost fm-ed" data-mem="${m.id}">${icon('pencil')} fotos</button>` : ''}</div>
         <div class="fm-grid" id="fmg-${m.id}">${[0,1,2,3].map(i => `<div class="fm-ph ph ${['','b','c','d'][i]}" style="--r:${[-2,1.5,-1,2][i]}deg"><span>${icon('image')}</span></div>`).join('')}</div></section>`).join('')}
      <section class="fm-sec"><div class="fm-head"><div><h3>Polaroids</h3><p>toca em cada uma pra ler o que tem atrás</p></div></div>
      <div class="polas">${C.polaroids.map((p,k)=>`
@@ -5703,6 +5737,7 @@ function aplicarConteudo(list){
   C.polaroids = BASE.polaroids.map((p, k) => Object.assign({}, p, {foto:f('foto_pol' + k, 'img', p.foto), legenda:f('foto_pol' + k, 'legenda', p.legenda), verso:f('foto_pol' + k, 'verso', p.verso)}));
   const cs = doc('cartas');
   C.cartas = cs && Array.isArray(cs.lista) ? cs.lista.map(c => ({titulo:c.titulo || '', abre:c.abre ? new Date(c.abre + 'T00:00:00') : null, quando:c.quando || '', texto:c.texto || ''})) : BASE.cartas.map(c => Object.assign({}, c));
+  TELAS = (doc('telas') || {}).m || {};
   const tx = doc('textos') || {};
   C.cartaNatal = tx.natal ?? BASE.cartaNatal; C.cartaRetro = tx.retro ?? BASE.cartaRetro; C.segredo = tx.segredo ?? BASE.segredo;
   C.mesversarios = BASE.mesversarios.map((m, k) => (tx.mes && tx.mes[k]) || m);
