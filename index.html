@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=47">
-<link rel="apple-touch-icon" href="icon-180.png?v=47">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=47">
+<link rel="manifest" href="manifest.json?v=49">
+<link rel="apple-touch-icon" href="icon-180.png?v=49">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=49">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -1821,6 +1821,9 @@ html body .pin-pad button:active{background:#fde3e8;transform:scale(.95)}
 html body .pin-pad button[data-n="x"]{background:none;box-shadow:none;font-size:22px;color:var(--muted)}
 html body .pin-x{position:absolute;top:12px;right:12px;width:34px;height:34px;min-height:0;padding:0;border-radius:50%;background:none;border:0;box-shadow:none;color:var(--muted);display:grid;place-items:center;font-size:18px}.pin-x .icn{transform:rotate(45deg)}
 .ncv-fim{margin:22px auto 4px;max-width:360px}
+html body .ncv{width:100%;min-height:0;border:0;color:inherit;font:inherit;cursor:pointer}
+.ncv-b{flex:none;padding:7px 13px;font-size:13px;font-weight:700;border-radius:99px;background:#7b5cc4;color:#fff}
+.ncv.on .ncv-b{background:#fff;color:#7b5cc4}
 </style>
 
 <canvas id="petals" aria-hidden="true"></canvas>
@@ -2797,7 +2800,7 @@ const Sync = (() => {
   const ts = () => firebase.firestore.FieldValue.serverTimestamp();
   const loadScript = src => new Promise((ok, no) => { const sc = document.createElement('script'); sc.src = src; sc.onload = ok; sc.onerror = no; document.head.append(sc); });
   state = {planos:store.get('planos', {}), vales:store.get('vales', {}), pensei:store.get('pensei', {}), lidas:store.get('lidas', {}), datesEdit:store.get('datesEdit', {}), planosEdit:store.get('planosEdit', {}), cats:store.get('cats', {}), casinha:store.get('casinha', {}), niver:store.get('niver', {})};
-  async function whoAmI(){ const local = store.get('quem', ''); try{ const d = await fdb.doc('pessoas/' + user.uid).get(); quem = (d.exists && d.data().quem) || local; }catch(e){ quem = local; } if(quem && !local) store.set('quem', quem); }
+  async function whoAmI(){ const local = store.get('quem', ''); try{ const d = await fdb.doc('pessoas/' + user.uid).get(); quem = (d.exists && d.data().quem) || local; if(local && !(d.exists && d.data().quem)) fdb.doc('pessoas/' + user.uid).set({quem:local, email:user.email || ''}, {merge:true}).catch(() => {}); }catch(e){ quem = local; } if(quem && !local) store.set('quem', quem); }
   function attachAll(){
     if(!online()) return;
     if(!stateUnsub) stateUnsub = fdb.doc('compartilhado/estado').onSnapshot(d => { const v = d.data() || {}; state = {planos:v.planos || {}, vales:v.vales || {}, pensei:v.pensei || {}, lidas:v.lidas || {}, datesEdit:v.datesEdit || {}, planosEdit:v.planosEdit || {}, cats:v.cats || {}, casinha:v.casinha || {}, niver:v.niver || {}}; emitState(); }, () => {});
@@ -3154,8 +3157,7 @@ const TABS = [
 const LISTS = {
   hoje2: [
     {id:'saudade',  ico:'heart',    t:'Termômetro de saudade', s:'Aperta quando bater'},
-    {id:'diario',   ico:'note',     t:'Diário do casal',     s:'Como foi o seu dia?'},
-    {id:'notificacoes', ico:'bell', t:'Notificações',        s:'Avisos e sons'}],
+    {id:'diario',   ico:'note',     t:'Diário do casal',     s:'Como foi o seu dia?'}],
   hoje: [
     {id:'pergunta', ico:'chat',     t:'Pergunta do dia',     s:'Os dois respondem'},
     {id:'bilhetes', ico:'note',     t:'Bilhetinhos',         s:'Recados de um pro outro'},
@@ -3316,7 +3318,7 @@ function renderHome(y = 0){
       <p class="endyear">2026</p>
       <div id="ncvbox" class="mdiabox ncv-fim"></div>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
-      <p class="endver">versão de 15/10 · 20h00</p>
+      <p class="endver">versão de 15/10 · 20h30</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
@@ -5159,10 +5161,9 @@ async function ativarPush(){
 function renovaPush(){ if(notifSuportada() && Notification.permission === 'granted' && store.get('notifOn', false)) setTimeout(() => ativarPush().catch(() => {}), 4000); }
 /* cartãozinho na tela inicial convidando a ligar */
 function convitePush(el){
-  if(!el || PREVIA || !notifSuportada() || Notification.permission !== 'default' || store.get('notifConviteFechado', false)) return;
-  const outro = (Sync.quem || 'Di') === 'Di' ? 'a ' + apelido('Mihzinha', 36) : 'o ' + apelido('Di', 36);
-  el.innerHTML = `<div class="ncv"><span class="ncv-ic">${icon('bell')}</span><span class="ncv-t"><b>Ligar as notificações?</b><small>pra saber na hora quando ${outro} fizer algo pra você</small></span><button type="button" id="ncvok">Ligar</button><button type="button" class="ncv-x" id="ncvx" aria-label="Agora não">${icon('plus')}</button></div>`;
-  el.querySelector('#ncvx').onclick = () => { store.set('notifConviteFechado', true); el.innerHTML = ''; };
+  if(!el || PREVIA) return;
+  const outro = (Sync.quem || 'Di') === 'Di' ? 'a Mih' : 'o Di', on = notifSuportada() && Notification.permission === 'granted';
+  el.innerHTML = `<button type="button" class="ncv ${on ? 'on' : ''}" id="ncvok"><span class="ncv-ic">${icon('bell')}</span><span class="ncv-t"><b>${on ? 'Notificações ligadas' : 'Ligar as notificações?'}</b><small>${on ? 'toca pra mudar o som ou testar' : `pra saber na hora quando ${outro} fizer algo pra você`}</small></span><span class="ncv-b">${on ? 'Ajustar' : 'Ligar'}</span></button>`;
   el.querySelector('#ncvok').onclick = () => openStop('notificacoes');
 }
 VIEWS.notificacoes = () => {
@@ -5186,7 +5187,7 @@ VIEWS.notificacoes = () => {
     $('ntligar')?.addEventListener('click', async e => { e.currentTarget.disabled = true; const r = await ativarPush();
       draw(r === 'push' ? 'Prontinho! Agora chega aviso até com o app fechado.' : r === 'local' ? 'Ligadas! Avisam enquanto o app estiver aberto.' : r === 'denied' ? 'Você não permitiu. Dá pra liberar nas configurações.' : String(r).startsWith('erro') ? 'Não deu pra ligar com o app fechado (' + esc(String(r).slice(5, 60)) + ')' : ''); });
     $('nttest')?.addEventListener('click', async () => { if(store.get('notifSom', 'sistema') !== 'sistema') tocaSom(); try{ const reg = 'serviceWorker' in navigator && await navigator.serviceWorker.getRegistration(); const op = {body:'É assim que vai chegar ♥', icon:'icon-coracao.png', badge:'icon-badge.png', tag:'teste'}; reg ? reg.showNotification('D&M', op) : new Notification('D&M', op); }catch(e){ notiToast({titulo:'D&M', corpo:'É assim que vai chegar ♥'}); }
-      if(pushAtivo()) try{ const r = await pushEvento('teste', {}, null); if(r && r.erro) draw('O servidor respondeu: ' + esc(r.erro)); else if(r && r.enviados === 0) draw('O servidor não achou o seu celular. Toca em "Ligar com o app fechado" de novo.'); }catch(e){ draw('Não consegui falar com o servidor.'); } });
+      if(pushAtivo()) try{ if(Sync.user && Sync.quem) await firebase.firestore().doc('pessoas/' + Sync.user.uid).set({quem:Sync.quem}, {merge:true}); await pushEvento('teste', {}, null); }catch(e){} });
     $('ntvsalva')?.addEventListener('click', async () => { const v = $('ntvapid').value.trim(), wk = $('ntworker').value.trim(); try{ await Sync.col('conteudo').set('config', {vapid:v, worker:wk}); $('ntvm').textContent = 'Salvo! Agora toca em "Ligar com o app fechado".'; setTimeout(() => draw(), 1500); }catch(e){ $('ntvm').textContent = 'Não deu pra salvar.'; } });
   };
   draw();
