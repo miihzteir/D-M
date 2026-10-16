@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=63">
-<link rel="apple-touch-icon" href="icon-180.png?v=63">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=63">
+<link rel="manifest" href="manifest.json?v=66">
+<link rel="apple-touch-icon" href="icon-180.png?v=66">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=66">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -1928,6 +1928,20 @@ html body .hb-ic:active{transform:scale(.9)}
 .mv-arr{opacity:.85}
 html body .hb-badge{border-radius:9px!important;background:#fde3e8!important;color:#b0324f!important;font-size:11px!important;padding:6px 9px!important;font-weight:800;box-shadow:inset 0 0 0 1px rgba(214,69,107,.18)!important;white-space:nowrap;line-height:1!important;height:30px!important;display:inline-flex!important;align-items:center}
 html body .hb-badge[hidden]{display:none!important}
+/* atalhos rápidos do dia */
+.pensei-top{margin-top:14px}
+.rapidos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;max-width:420px;margin:10px auto 0}
+html body .rp{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:2px;width:100%;min-height:0;padding:12px 10px;border-radius:20px;border:0;text-align:left;background:#fffdf9;color:var(--ink);box-shadow:0 12px 24px -18px rgba(74,18,36,.5), 0 0 0 1px rgba(0,0,0,.03);overflow:hidden}
+html body .rp::after{content:"";position:absolute;right:-18px;top:-18px;width:56px;height:56px;border-radius:50%;background:var(--bg);opacity:.8}
+.rp-ic{position:relative;z-index:1;width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:var(--fg);color:#fff;font-size:17px;margin-bottom:6px}
+.rp b{position:relative;z-index:1;font-size:13px;line-height:1.2}
+.rp small{position:relative;z-index:1;font-size:11px;color:var(--muted);font-weight:600;line-height:1.25}
+html body .rp-badge{position:absolute!important;top:8px;right:8px;z-index:2;height:22px!important;padding:3px 7px!important;font-size:10px!important}
+#badge-pergunta.rp-badge::before{content:none}
+html body .mural-link{display:inline-flex;align-items:center;gap:6px;width:auto;min-height:0;margin:12px auto 0;padding:7px 14px;border-radius:99px;background:rgba(255,255,255,.85);border:0;color:#9b1630;font-size:12.5px;font-weight:700;box-shadow:0 6px 14px -10px rgba(155,22,48,.5)}
+.mural-link .icn{font-size:14px}
+.hb-big{width:100%;height:100%;display:grid;place-items:center;color:var(--fg);font-size:44px}
+.hb-tile + .hb-tile{margin-top:12px!important}
 </style>
 
 <canvas id="petals" aria-hidden="true"></canvas>
@@ -2826,6 +2840,19 @@ const C = {
 
 /* ícones desenhados em traço (sem emoji) */
 const ICONS = {
+  termo:'<path d="M10 4.5a2 2 0 014 0v8.8a4.2 4.2 0 11-4 0z"/><path d="M12 9.5v5.3"/><circle cx="12" cy="17" r="1.5"/><path d="M17 5h2M17 8h1.5M17 11h2"/>',
+  livro:'<path d="M4 5.5A2.5 2.5 0 016.5 3H20v15H6.5A2.5 2.5 0 004 20.5z"/><path d="M4 20.5A2.5 2.5 0 016.5 18H20v3H6.5"/><path d="M12 8.6c-.8-1.3-3-.9-3 .7 0 1.6 3 3.3 3 3.3s3-1.7 3-3.3c0-1.6-2.2-2-3-.7z"/>',
+  cal12:'<rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M12 13.6c-.6-1-2.3-.7-2.3.6 0 1.2 2.3 2.6 2.3 2.6s2.3-1.4 2.3-2.6c0-1.3-1.7-1.6-2.3-.6z"/>',
+  mapa:'<path d="M3 6.5l6-2.5 6 2.5 6-2.5v13.5l-6 2.5-6-2.5-6 2.5z"/><path d="M9 4v13.5M15 6.5V20"/>',
+  pin:'<path d="M12 21s-6.5-6-6.5-11a6.5 6.5 0 0113 0c0 5-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/>',
+  marcador:'<path d="M6.5 3h11v18l-5.5-3.8L6.5 21z"/><path d="M12 8.4c-.7-1.1-2.6-.8-2.6.6 0 1.3 2.6 2.9 2.6 2.9s2.6-1.6 2.6-2.9c0-1.4-1.9-1.7-2.6-.6z"/>',
+  barras:'<path d="M5.5 19v-6M10 19V7M14.5 19v-9M19 19V5"/><path d="M3 21h18"/>',
+  rebobina:'<path d="M4 12a8 8 0 102.4-5.7"/><path d="M4 4v4h4"/><path d="M12 8.5V12l2.6 1.6"/>',
+  albumfoto:'<rect x="4.5" y="3" width="15" height="18" rx="2.5"/><path d="M8 3v18"/><rect x="10.5" y="7" width="6" height="5.5" rx="1"/><path d="M10.5 16h6"/>',
+  envrelogio:'<rect x="2.5" y="5.5" width="14" height="11" rx="2"/><path d="M2.5 7l7 5 7-5"/><circle cx="18" cy="16.5" r="3.8"/><path d="M18 14.8v1.9l1.2.8"/>',
+  cometa:'<path d="M14.5 3.5l1.4 2.9 3.2.5-2.3 2.2.5 3.2-2.8-1.5-2.9 1.5.6-3.2-2.3-2.2 3.2-.5z"/><path d="M9 13l-5.5 5.5M11.5 15.5l-3.5 3.5M7 10.5l-3 3"/>',
+  capsula:'<rect x="2.8" y="8.2" width="18.4" height="7.6" rx="3.8" transform="rotate(-38 12 12)"/><path d="M9.6 8.9l4.8 6.2"/><path d="M15.5 6.5l1 1"/>',
+  medalha:'<circle cx="12" cy="15.5" r="5"/><path d="M8.5 3h7l-2 7h-3z"/><path d="M12 13.2l.75 1.5 1.65.25-1.2 1.15.3 1.65-1.5-.8-1.5.8.3-1.65-1.2-1.15 1.65-.25z"/>',
   camera:'<rect x="3" y="7" width="18" height="13" rx="3"/><circle cx="12" cy="13.5" r="3.5"/><path d="M8.5 7l1.5-3h4l1.5 3"/>',
   sparkle:'<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/>',
   cards:'<rect x="3.5" y="5" width="10" height="14" rx="2" transform="rotate(-8 8.5 12)"/><rect x="10.5" y="5" width="10" height="14" rx="2" transform="rotate(8 15.5 12)"/>',
@@ -3267,25 +3294,29 @@ const TABS = [
 ];
 const LISTS = {
   hoje2: [
-    {id:'saudade',  ico:'heart',    t:'Termômetro de saudade', s:'Aperta quando bater'},
-    {id:'diario',   ico:'note',     t:'Diário do casal',     s:'Como foi o seu dia?'}],
+    {id:'saudade',  ico:'termo',    t:'Termômetro de saudade', s:'Aperta quando bater'},
+    {id:'diario',   ico:'livro',     t:'Diário do casal',     s:'Como foi o seu dia?'}],
   hoje: [
     {id:'pergunta', ico:'chat',     t:'Pergunta do dia',     s:'Os dois respondem'},
     {id:'bilhetes', ico:'note',     t:'Bilhetinhos',         s:'Recados de um pro outro'},
-    {id:'mes',      ico:'calendar', t:'Mesversário',         s:'Todo dia 12 a gente se escreve'}],
+    {id:'mes',      ico:'cal12', t:'Mesversário',         s:'Todo dia 12 a gente se escreve'}],
   nos: [
     {id:'primeiras',ico:'flag',     t:'Nossas primeiras vezes', s:'A gente vai adicionando'},
     {id:'playlist', ico:'music',    t:'Nossa playlist',      s:'As músicas da gente'},
-    {id:'planos',   ico:'compass',  t:'Nossos planos',       s:'O que vem por aí'},
+    {id:'planos',   ico:'mapa',     t:'Nossos planos',       s:'O que vem por aí'},
+    {id:'lugares',  ico:'pin',      t:'Nossos lugares',      s:'Por onde a gente passou'},
+    {id:'gostos',   ico:'marcador', t:'O que cada um ama',   s:'Jogos, filmes, comidas, com foto'},
+    {id:'filmes',   ico:'film',     t:'Filmes e séries',     s:'Pra ver e já vistos'},
+    {id:'financas', ico:'wallet',   t:'Nossas finanças',     s:'O que a gente gasta junto'}],
+  datas: [
+    {id:'mes',      ico:'cal12',    t:'Mesversário',         s:'Todo dia 12 a gente se escreve'},
+    {id:'retromes', ico:'rebobina', t:'Retrospectiva do mês', s:'Um resuminho de cada dia 12'},
+    {id:'retro',    ico:'cometa',   t:'Retrospectiva do ano', s:'Abre no fim de dezembro'},
     {id:'datas',    ico:'star',     t:'Datas marcantes',     s:'Nossos dias com foto e legenda'},
     {id:'comemorativas', ico:'gift', t:'Datas comemorativas', s:'Natal e as nossas festas'},
     {id:'contagem', ico:'hourglass', t:'Contagem regressiva', s:'Faltam quantos dias?'},
-    {id:'lugares',  ico:'compass',  t:'Nossos lugares',      s:'Por onde a gente passou'},
-    {id:'gostos',   ico:'star',     t:'O que cada um ama',   s:'Jogos, filmes, comidas, com foto'},
-    {id:'filmes',   ico:'film',     t:'Filmes e séries',     s:'Pra ver e já vistos'},
-    {id:'financas', ico:'wallet',   t:'Nossas finanças',     s:'O que a gente gasta junto'},
-    {id:'numeros',  ico:'heart',    t:'Nossos números',      s:'Tudo que a gente já viveu, contado'},
-    {id:'retromes', ico:'calendar', t:'Retrospectiva do mês', s:'Um resuminho de cada dia 12'}],
+    {id:'capsula',  ico:'capsula',  t:'Cápsula do tempo',    s:'Abre no Natal de 2027'},
+    {id:'numeros',  ico:'barras',   t:'Nossos números',      s:'Tudo que a gente já viveu, contado'}],
   brincar: [
     {id:'casinha',  ico:'house',    t:'Nossa casinha',       s:'Um chocolate por dia pra montar a casa'},
     {id:'roleta',   ico:'wheel',    t:'Roleta do date',      s:'Sorteia o próximo encontro'},
@@ -3296,14 +3327,13 @@ const LISTS = {
     {id:'provavel', ico:'duo',      t:'Quem é mais provável', s:'Você ou eu?'}],
   cartas: [
     {id:'abra',     ico:'open',     t:'Abra quando…',        s:'Uma carta nova a cada vez'},
-    {id:'album',    ico:'cards',    t:'Álbum de cartas',     s:'As cartas que já foram abertas'},
     {id:'cartas',   ico:'mail',     t:'Cartas pro futuro',   s:'Abrem em datas especiais'},
-    {id:'cartadata', ico:'mail',    t:'Cartinha com data',   s:'Escreve hoje, abre depois'},
-    {id:'retro',    ico:'star',     t:'Retrospectiva do ano', s:'Abre no fim de dezembro'},
-    {id:'capsula',  ico:'hourglass',t:'Cápsula do tempo',    s:'Abre no Natal de 2027'},
+    {id:'cartadata', ico:'envrelogio', t:'Cartinha com data', s:'Escreve hoje, abre depois'},
     {id:'filhos',   ico:'baby',     t:'Ao nosso primeiro filho', s:'Cartas que nós dois escrevemos'},
-    {id:'vales',    ico:'ticket',   t:'Vales-presente',      s:'Pra resgatar juntos'},
-    {id:'premios',  ico:'gift',     t:'Prêmios de verdade',  s:'Troca chocolates por mimos'}]
+    {id:'album',    ico:'albumfoto', t:'Álbum de cartas',    s:'As cartas que já foram abertas'}],
+  mimos: [
+    {id:'premios',  ico:'medalha',  t:'Prêmios de verdade',  s:'Troca chocolates por mimos'},
+    {id:'vales',    ico:'ticket',   t:'Vales-presente',      s:'Pra resgatar juntos'}]
 };
 let homeTab = 'hoje';
 let timer;
@@ -3351,7 +3381,7 @@ const PAL_UI = {rosa:['#ffe1e8','#d6456b'], vinho:['#f8dde2','#9b1630'], lavanda
 const COR_UI = {saudade:'rosa', diario:'pessego', pergunta:'rosa', bilhetes:'azul', mes:'salvia', mensagem:'vinho',
   primeiras:'lavanda', playlist:'azul', planos:'salvia', datas:'mostarda', comemorativas:'vinho', contagem:'menta', lugares:'azul', gostos:'coral', filmes:'lavanda', financas:'salvia', fotos:'rosa', memoria2:'rosa',
   casinha:'pessego', roleta:'mostarda', coracoes:'rosa', memoria:'lavanda', raspa:'menta', quiz:'azul', provavel:'coral',
-  abra:'rosa', album:'lavanda', cartas:'vinho', cartadata:'pessego', retro:'mostarda', capsula:'menta', filhos:'azul', vales:'coral', numeros:'rosa', retromes:'lavanda', jogos:'azul', hub_dia:'rosa', hub_nos:'salvia', hub_cartas:'vinho', premios:'mostarda', notificacoes:'lavanda', carta:'vinho', editar:'lavanda'};
+  abra:'rosa', album:'lavanda', cartas:'vinho', cartadata:'pessego', retro:'mostarda', capsula:'menta', filhos:'azul', vales:'coral', numeros:'rosa', retromes:'lavanda', jogos:'azul', hub_dia:'rosa', hub_nos:'salvia', hub_cartas:'vinho', hub_datas:'lavanda', hub_mimos:'mostarda', premios:'mostarda', notificacoes:'lavanda', carta:'vinho', editar:'lavanda'};
 const corDe = id => PAL_UI[COR_UI[id] || 'rosa'];
 const pills = list => `<div class="pills2">${list.map(r => { const [bg, fg] = corDe(r.id); return `<button class="pill2" data-go="${r.id}" style="--bg:${bg};--fg:${fg}"><span class="p2i">${icon(r.ico)}</span><span class="p2t"><b>${TE('pt_' + r.id, r.t, 'Nome no botão')}</b><small>${TE('ps_' + r.id, r.s, 'Texto pequeno do botão')}</small></span></button>`; }).join('')}</div>`;
 let vistaAtual = null, voltandoPara = false, restaurou = false; const scrollMem = {};
@@ -3379,6 +3409,11 @@ function renderHome(y = 0){
       <div id="nvbox" class="nvbox"></div>
       <div id="mdiabox" class="mdiabox"></div>
       <div id="hjbox" class="mdiabox"></div>
+      <div class="pensei rv pensei-top">
+        <button class="pbtn" id="pbtn" aria-label="Pensei em você">${icon('heart')}</button>
+        <div class="ptxt"><b>${TE('pensei_t', 'Pensei em você', 'Título do pensei em você')}</b><span id="pinfo">toca no coração quando lembrar de ${outro === 'Di' ? 'mim' : 'mim'}</span></div>
+      </div>
+      <div class="rapidos rv">${[['pergunta','Pergunta do dia','os dois respondem'],['saudade','Termômetro de saudade','aperta quando bater'],['diario','Diário do casal','como foi o seu dia?']].map(([id, t, s2]) => { const [b2, f2] = corDe(id), r = [...LISTS.hoje, ...LISTS.hoje2].find(x => x.id === id) || {ico:'heart'}; return `<button type="button" class="rp" data-go="${id}" style="--bg:${b2};--fg:${f2}"><span class="rp-ic">${icon(r.ico)}</span><b>${TE('rp_t_' + id, t, 'Nome do atalho')}</b><small>${TE('rp_s_' + id, s2, 'Textinho do atalho')}</small>${id === 'pergunta' ? '<em class="badge hb-badge rp-badge" id="badge-pergunta" hidden></em>' : ''}</button>`; }).join('')}</div>
       <div class="flower float">${FLOWER('fl1','nós dois', C.fotoInicio || f0.foto).replace('#fbe6ea','#f1e6dc').replace('#e9b3c0','#d2b8a9')}</div>
       <div class="hcounter" aria-label="Tempo juntos">
         <div><b id="cd">0</b><span>dias</span></div><div><b id="ch">0</b><span>horas</span></div>
@@ -3391,6 +3426,7 @@ function renderHome(y = 0){
         <h3>${TE('h_bilhete', 'Um bilhete pra hoje', 'Título do bilhete')}</h3>
         <p class="to">${eu === 'Mihzinha' ? 'Meu amor,' : 'Meu Di,'}</p><p>${esc(mensagemDoDia())}</p><p class="sign">${eu === 'Mihzinha' ? 'D&amp;M' : 'Mihzinha'}</p>${LIPS('kiss')}
       </div></button>
+      <button type="button" class="mural-link rv" data-go="bilhetes">${icon('note')} ${TE('mural_t', 'mural de recadinhos', 'Botão do mural')}<em class="badge hb-badge" id="badge-bilhetes" hidden></em></button>
     </section>
 
     <section class="band b-pink">
@@ -3401,13 +3437,6 @@ function renderHome(y = 0){
       <div class="flower small float rv">${FLOWER('fl2','o primeiro encontro', C.fotoEncontro || f1.foto).replace('#fbe6ea','#f1e6dc').replace('#e9b3c0','#d2b8a9')}</div>
     </section>
 
-    <section class="band b-blue">
-      <div class="pensei rv">
-        <button class="pbtn" id="pbtn" aria-label="Pensei em você">${icon('heart')}</button>
-        <div class="ptxt"><b>${TE('pensei_t', 'Pensei em você', 'Título do pensei em você')}</b><span id="pinfo">toca no coração quando lembrar de ${outro === 'Di' ? 'mim' : 'mim'}</span></div>
-      </div>
-      ${hubTile('dia')}
-    </section>
 
     <section class="band b-sage">
       <h2 class="btitle rv">${TE('b_Nossas_memórias', 'Nossas memórias', 'Título da parte')}</h2>
@@ -3423,7 +3452,10 @@ function renderHome(y = 0){
     </section>
 
     <section class="band b-pink">
+      <h2 class="btitle rv">${TE('b_guardar', 'Pra guardar com carinho', 'Título da parte')}</h2>
       ${hubTile('cartas')}
+      ${hubTile('datas')}
+      ${hubTile('mimos')}
     </section>
 
     <section class="band b-light endband">
@@ -3433,7 +3465,7 @@ function renderHome(y = 0){
       <p class="endyear">2026</p>
       <div id="ncvbox" class="mdiabox ncv-fim"></div>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
-      <p class="endver">versão de 16/10 · 11h15</p>
+      <p class="endver">versão de 16/10 · 12h00</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
@@ -3458,7 +3490,7 @@ function renderHome(y = 0){
   if(natalAberto()){ const g = document.createElement('button'); g.id = 'xgift'; g.className = 'xgift'; g.setAttribute('aria-label','Abrir o presente de Natal');
     g.innerHTML = `<span class="xg-box"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="9" y="26" width="46" height="32" rx="3" fill="#7a1424"/><rect x="6" y="18" width="52" height="11" rx="3" fill="#b3122c"/><rect x="28" y="18" width="8" height="40" fill="#f3dca4"/><path d="M32 18c-4-9-15-12-16-5-1 5 9 6 16 5zm0 0c4-9 15-12 16-5 1 5-9 6-16 5z" fill="#f3dca4" stroke="#c9a65c" stroke-width="1.5"/></svg></span><small>abre aqui</small>`;
     g.onclick = () => { g.remove(); renderXmas(); }; document.body.append(g); }
-  requestAnimationFrame(() => window.scrollTo({top:y, behavior:'instant'})); if(y) [150, 450].forEach(t => setTimeout(() => { if(document.querySelector('.home') && Math.abs(window.scrollY - y) > 30) window.scrollTo(0, y); }, t));
+  window.scrollTo({top:y, behavior:'instant'}); requestAnimationFrame(() => window.scrollTo({top:y, behavior:'instant'})); if(y) [200, 500].forEach(t => setTimeout(() => { if(document.querySelector('.home') && Math.abs(window.scrollY - y) > 30) window.scrollTo({top:y, behavior:'instant'}); }, t));
   app.querySelectorAll('[data-go]').forEach(b => b.onclick = () => openStop(b.dataset.go));
   app.querySelectorAll('[data-hgo]').forEach(b => b.onclick = e => { e.stopPropagation(); hubAtual = null; openStop(b.dataset.hgo); });
   app.querySelectorAll('.hb-tile').forEach(t => t.onkeydown = e => { if(e.key === 'Enter') t.click(); });
@@ -3693,6 +3725,7 @@ document.addEventListener('click', e => { const b = e.target.closest('.edk'); if
 
 /* botão voltar do celular: volta dentro do app em vez de sair */
 let ignoraPop = false;
+try{ if('scrollRestoration' in history) history.scrollRestoration = 'manual'; }catch(e){}
 function entradaHistorico(){ try{ if(!history.state || !history.state.dm) history.pushState({dm:1}, ''); }catch(e){} }
 function saiHistorico(){ try{ if(history.state && history.state.dm){ ignoraPop = true; history.back(); } }catch(e){} }
 addEventListener('popstate', () => {
@@ -3741,13 +3774,13 @@ function shell(eb, title, sub, body){
   document.getElementById('xgift')?.remove(); document.getElementById('chtoast')?.remove(); document.getElementById('abtoast')?.remove();
   if(vistaAtual && vistaAtual !== curView) scrollMem[vistaAtual] = window.scrollY;
   const yVolta = voltandoPara ? (scrollMem[curView] || 0) : 0; voltandoPara = false; vistaAtual = curView;
-  window.scrollTo(0,0); document.getElementById('tabbar')?.remove();
-  if(yVolta) [0, 120, 400].forEach(t => setTimeout(() => window.scrollTo(0, yVolta), t));
+  if(!yVolta) window.scrollTo({top:0, behavior:'instant'}); document.getElementById('tabbar')?.remove();
   const [pcb, pc] = corDe(curView);
   app.innerHTML = `<div class="view page" style="--pc:${pc};--pcb:${pcb}">
     <div class="vbar"><button class="vback" id="back" aria-label="Voltar"><svg viewBox="0 0 24 24" class="icn"><path d="M15 5l-7 7 7 7"/></svg><span>Voltar</span></button></div>
     <header class="vhead">${(it => it ? (([bg, fg]) => `<span class="vh-ic" style="--bg:${bg};--fg:${fg}">${icon(it.ico)}</span>`)(corDe(it.id)) : '')(Object.values(LISTS).flat().find(x => x.id === curView))}<h2>${TE('v_' + curView + '_' + hk(title), title, 'Título desta tela')}</h2>${sub || modoEd() ? `<p>${TE('s_' + curView + '_' + hk(title), sub || '', 'Texto embaixo do título')}</p>` : ''}</header>
     ${body}</div>`;
+  if(yVolta){ window.scrollTo({top:yVolta, behavior:'instant'}); requestAnimationFrame(() => window.scrollTo({top:yVolta, behavior:'instant'})); }
   entradaHistorico();
   document.getElementById('back').onclick = () => { stopGame(); const hk = hubDe(hubAtual); if(hk && curView !== hubAtual && (HUBS[hk].itens().some(r => r.id === curView) || HUBS[hk].extra === curView)){ curView = hubAtual; voltandoPara = true; VIEWS[hubAtual](); return; } hubAtual = null; renderHome(homeY); };
 }
@@ -3765,19 +3798,21 @@ const MAPA_ED = {quiz:['textos','quiz'], pergunta:['textos','perguntas'], provav
   carta:['textos','textos.ultimaCarta'], cartas:['cartas',''], fotos:['fotos',''], raspa:['fotos',''], vales:['textos','vales'], memoria:['fotos','memjogo'], filhos:['textos','momentos'], mensagem:['textos','mensagens'], roleta:['textos','dates']};
 /* cada parte da tela inicial vira um botão que abre a sua tela, bem arrumadinha */
 const HUBS = {
-  dia:   {view:'hub_dia', t:'Todo dia', s:'pergunta, bilhetes, dia 12, saudade e diário', vt:'Todo dia', vs:'O que é de todo dia, um pro outro', itens:() => [...LISTS.hoje, ...LISTS.hoje2], dest:'pergunta', cor:['#fde3e8','#d6456b','rgba(214,69,107,.6)']},
+  /* dia: */ diaX:{view:'hub_dia', t:'Todo dia', s:'pergunta, bilhetes, dia 12, saudade e diário', vt:'Todo dia', vs:'O que é de todo dia, um pro outro', itens:() => [...LISTS.hoje, ...LISTS.hoje2], dest:'pergunta', cor:['#fde3e8','#d6456b','rgba(214,69,107,.6)']},
   nos:   {view:'hub_nos', t:'Nossas coisas', s:'primeiras vezes, playlist, planos e mais', vt:'Nossas coisas', vs:'Tudo que é nosso, guardadinho', itens:() => LISTS.nos, dest:'primeiras', cor:['#e3f0dc','#4f8a4a','rgba(79,138,74,.6)']},
   jogos: {view:'jogos', t:'Nossos jogos', s:'casinha, corações, memória e mais', vt:'Nossos jogos', vs:'Escolhe um e bora', itens:() => LISTS.brincar, dest:'casinha', cor:['#e0ecfb','#3f74c4','rgba(63,116,196,.7)']},
-  cartas:{view:'hub_cartas', t:'Cartas e surpresas', s:'abra quando, cartas pro futuro, vales e mais', vt:'Cartas e surpresas', vs:'Pra abrir na hora certa', itens:() => LISTS.cartas, dest:'abra', cor:['#f8dde2','#9b1630','rgba(155,22,48,.6)'], extra:'carta'}
+  cartas:{view:'hub_cartas', t:'Nossas cartas', s:'abra quando, cartas pro futuro, cartinhas e álbum', vt:'Nossas cartas', vs:'Pra abrir na hora certa', itens:() => LISTS.cartas, dest:'abra', cor:['#f8dde2','#9b1630','rgba(155,22,48,.6)'], extra:'carta'},
+  datas: {view:'hub_datas', t:'Datas e retrospectivas', s:'mesversário, retrospectivas, datas e cápsula', vt:'Datas e retrospectivas', vs:'Nossos dias importantes e tudo que a gente viveu', itens:() => LISTS.datas, dest:'mes', cor:['#ece4fb','#7b5cc4','rgba(123,92,196,.6)']},
+  mimos: {view:'hub_mimos', t:'Prêmios e mimos', s:'prêmios de verdade e vales-presente', vt:'Prêmios e mimos', vs:'Coisas de verdade pra gente aproveitar junto', itens:() => LISTS.mimos, dest:'premios', cor:['#fbf0d0','#b0820f','rgba(176,130,15,.55)']}
 };
 const hubDe = view => Object.keys(HUBS).find(k => HUBS[k].view === view);
-const hubPic = (k, grande) => k === 'jogos' ? `<img src="${APP_ICON}" alt="" class="px">` : k === 'nos' && (C.fotoInicio || (C.polaroids[0] || {}).foto) ? `<img src="${esc(C.fotoInicio || C.polaroids[0].foto)}" alt="">` : k === 'dia' ? `<span class="hb-daisy">${DAISY('#f0bac6', '#fff')}</span>` : `<span class="hb-env"><span></span><i>${icon('heart')}</i></span>`;
+const hubPic = (k, grande) => k === 'datas' ? `<span class="hb-big" style="--fg:#7b5cc4">${icon('cal12')}</span>` : k === 'mimos' ? `<span class="hb-big" style="--fg:#b0820f">${icon('gift')}</span>` : k === 'jogos' ? `<img src="${APP_ICON}" alt="" class="px">` : k === 'nos' && (C.fotoInicio || (C.polaroids[0] || {}).foto) ? `<img src="${esc(C.fotoInicio || C.polaroids[0].foto)}" alt="">` : k === 'dia' ? `<span class="hb-daisy">${DAISY('#f0bac6', '#fff')}</span>` : `<span class="hb-env"><span></span><i>${icon('heart')}</i></span>`;
 function hubTile(k){
   const h = HUBS[k], [bg, fg, sh] = h.cor;
   return `<div role="button" tabindex="0" class="hb-tile rv" data-go="${h.view}" style="--hb:${bg};--hf:${fg};--hs:${sh}">
     <span class="hb-pic">${hubPic(k)}</span>
     <span class="hb-tx"><b>${TE('hb_t_' + k, h.t, 'Nome do botão')}</b><small>${TE('hb_s_' + k, h.s, 'Texto do botão')}</small>
-      <span class="hb-ics">${h.itens().map(r => { const [b2, f2] = corDe(r.id); return `<button type="button" class="hb-ic" data-hgo="${r.id}" data-hv="${h.view}" style="--bg:${b2};--fg:${f2}" title="${esc(r.t)}" aria-label="${esc(r.t)}">${icon(r.ico)}</button>`; }).join('')}${k === 'dia' ? `<em class="badge hb-badge" id="badge-pergunta" hidden></em><em class="badge hb-badge" id="badge-bilhetes" hidden></em>` : ''}</span></span>
+      <span class="hb-ics">${h.itens().map(r => { const [b2, f2] = corDe(r.id); return `<button type="button" class="hb-ic" data-hgo="${r.id}" data-hv="${h.view}" style="--bg:${b2};--fg:${f2}" title="${esc(r.t)}" aria-label="${esc(r.t)}">${icon(r.ico)}</button>`; }).join('')}</span></span>
     <span class="hb-play">${icon('play')}</span></div>`;
 }
 let hubAtual = null;
