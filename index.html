@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=83">
-<link rel="apple-touch-icon" href="icon-180.png?v=83">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=83">
+<link rel="manifest" href="manifest.json?v=84">
+<link rel="apple-touch-icon" href="icon-180.png?v=84">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=84">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -536,7 +536,7 @@ button.cs-saldo{background:var(--paper,#fffaf6);color:inherit;box-shadow:0 10px 
 .gtitle{font-family:var(--f-display);font-weight:700;color:var(--plum);font-size:18px;margin:6px 0 10px;text-align:center}
 .mural{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .postit{position:relative;padding:16px 14px 12px;min-height:120px;display:flex;flex-direction:column;justify-content:space-between;gap:8px;transform:rotate(var(--r));box-shadow:0 12px 20px -14px rgba(74,18,36,.5);animation:rise .5s both}
-.postit p{margin:0;font-family:var(--f-hand);font-size:21px;line-height:1.2;word-break:break-word;color:var(--ink)}
+.postit p{margin:0;font-family:var(--f-hand);font-size:21px;line-height:1.2;overflow-wrap:break-word;color:var(--ink)}
 .postit small{font-size:11px;color:rgba(74,18,36,.55)}
 .postit.c0{background:#ffe1e8}.postit.c1{background:#fff2d9}.postit.c2{background:#f3e3f2}.postit.c3{background:#e7f0de}
 .postit .del{top:6px;right:6px;font-size:10px;padding:3px 7px;background:rgba(255,255,255,.6)}
@@ -2024,6 +2024,9 @@ main#app > .view{width:100%;box-sizing:border-box}
 html body .ed-modo{max-width:calc(100% - 118px)}
 html body .ed-btrow{max-width:100%!important}
 .view img,.view video,.view canvas,.view input,.view textarea,.view select{max-width:100%}
+/* quebra de palavra só com hífen e no lugar certo (português) */
+html body{overflow-wrap:break-word;-webkit-hyphens:manual;hyphens:manual}
+html body :is(input,textarea,select,.endsync b,a[href^="http"]){-webkit-hyphens:manual;hyphens:manual}
 </style>
 
 <canvas id="petals" aria-hidden="true"></canvas>
@@ -2991,6 +2994,7 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':
 /* apelidos: varia o nome pra não ficar repetitivo (cada lugar mantém o mesmo no dia) */
 const APELIDOS = {Mihzinha:['Mihzinha', 'Mih', 'Milena'], Di:['Di', 'Diogo']};
 function apelido(q, k = 0){ const l = APELIDOS[q] || [q]; const d = new Date(); const n = d.getFullYear() * 400 + d.getMonth() * 32 + d.getDate(); return l[((n * 7 + k * 13) % l.length + l.length) % l.length]; }
+try{ document.documentElement.lang = 'pt-BR'; }catch(e){}
 const PREVIA = /^#previa/.test(location.hash);
 /* link direto pra uma tela: #/tela ou #/quadro/tela */
 const BASE_URL = location.pathname + location.search;
@@ -3591,7 +3595,7 @@ function renderHome(y = 0){
       <div id="ncvbox" class="mdiabox ncv-fim"></div>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
       <p class="endsync" id="endsync"></p>
-      <p class="endver">versão de 19/10 · 12h50</p>
+      <p class="endver">versão de 19/10 · 14h10</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
@@ -3918,6 +3922,26 @@ function ligaArrastoEl(el){
   });
 }
 
+/* hífen certo: põe pontos de quebra (hífen invisível) nas sílabas das palavras longas, assim "Agen-damentos" e nunca "Agend-amentos" */
+const HV = 'aeiouáéíóúâêôãõàüAEIOUÁÉÍÓÚÂÊÔÃÕÀÜ', HL = /^[A-Za-zÀ-ÿ]$/;
+const hVog = c => HV.includes(c), hCon = c => !!c && HL.test(c) && !hVog(c);
+const hJunto = (a, b) => { const d = (a + b).toLowerCase(); return ['ch','lh','nh','qu','gu'].includes(d) || ('bcdfgkptv'.includes(a.toLowerCase()) && 'lr'.includes(b.toLowerCase())); };
+function silabas(w){
+  const pos = []; for(let j = 3; j <= w.length - 3; j++){
+    const a = w[j - 1], c = w[j], d = w[j + 1], e = w[j + 2];
+    const inicio = hCon(c) && (hVog(d) || (hCon(d) && hJunto(c, d) && hVog(e)));
+    if(!inicio) continue;
+    if(!(hVog(a) || (hCon(a) && !hJunto(a, c)))) continue;
+    if(!/[aeiouáéíóúâêôãõàü]/i.test(w.slice(0, j)) || !/[aeiouáéíóúâêôãõàü]/i.test(w.slice(j))) continue;
+    if(pos.length && j - pos[pos.length - 1] < 2) continue;
+    pos.push(j); }
+  if(!pos.length) return w; let o = '', k = 0; pos.forEach(p => { o += w.slice(k, p) + '­'; k = p; }); return o + w.slice(k);
+}
+function hifeniza(raiz = document.body){
+  const w = document.createTreeWalker(raiz, NodeFilter.SHOW_TEXT, {acceptNode: n => n.__hif === n.data || !/[A-Za-zÀ-ÿ]{11,}/.test(n.data) || (n.parentElement && n.parentElement.closest('script,style,textarea,input,select,template,.endsync,[contenteditable]')) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT});
+  const ns = []; for(let n = w.nextNode(); n; n = w.nextNode()) ns.push(n);
+  ns.forEach(n => { const nv = n.data.replace(/[A-Za-zÀ-ÿ­]{11,}/g, m => m.includes('­') ? m : silabas(m)); if(nv !== n.data) n.data = nv; n.__hif = n.data; });
+}
 /* editar QUALQUER texto: no modo editar, liga "Aa" e toca no texto */
 let edLivre = false;
 const LIVRE_FORA = 'script,style,textarea,input,select,[data-edt],#edlv,#edlvbar,#edtx,.pin-wrap,.mv-sz,.edk,template';
@@ -3926,8 +3950,8 @@ function aplicaLivres(raiz = document.body){
   if(!tem && !aplicaLivres._tinha) return; aplicaLivres._tinha = tem;
   const w = document.createTreeWalker(raiz, NodeFilter.SHOW_TEXT, {acceptNode: n => !n.data.trim() && !n.__orig ? NodeFilter.FILTER_REJECT : (n.parentElement && n.parentElement.closest(LIVRE_FORA)) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT});
   for(let n = w.nextNode(); n; n = w.nextNode()){
-    const orig = n.__orig != null ? n.__orig : n.data, t = orig.trim(), v = TELAS['g_' + hk(t)];
-    if(v != null && v !== ''){ const nv = orig.replace(t, v); if(n.data !== nv){ n.__orig = orig; n.data = nv; } }
+    const orig = n.__orig != null ? n.__orig : n.data, t = orig.trim().replace(/\u00AD/g, ''), v = TELAS['g_' + hk(t)];
+    if(v != null && v !== ''){ const nv = orig.replace(orig.trim(), v); if(n.data !== nv){ n.__orig = orig; n.data = nv; } }
     else if(n.__orig != null){ n.data = n.__orig; delete n.__orig; }
   }
 }
@@ -3945,7 +3969,7 @@ function ligaLivre(on){
   const f = document.getElementById('edlvfab'); if(f) f.classList.toggle('on', edLivre);
 }
 function abrirLivre(n){
-  const orig = n.__orig != null ? n.__orig : n.data, t = orig.trim(), k = 'g_' + hk(t), atual = TELAS[k] || t, longo = atual.length > 60;
+  const orig = n.__orig != null ? n.__orig : n.data, t = orig.trim().replace(/\u00AD/g, ''), k = 'g_' + hk(t), atual = TELAS[k] || t, longo = atual.length > 60;
   const w = document.createElement('div'); w.className = 'tk-wrap'; w.id = 'edlv';
   w.innerHTML = `<div class="sheet2"><button class="inst-x" aria-label="Fechar">${icon('plus')}</button><h3>Editar texto</h3><p class="lead">Muda em todo lugar que aparece esse mesmo texto</p>
     ${longo ? `<textarea id="edlvv" rows="4">${esc(atual)}</textarea>` : `<input type="text" id="edlvv" value="${esc(atual)}">`}
@@ -3976,7 +4000,7 @@ function editarNoPonto(e){
   const ft = e.target.closest && e.target.closest('[data-foto]');
   if(ft && !e.target.closest('[data-mv],[data-edt],p,b,small,h1,h2,h3,label')){ trocaFoto(ft.dataset.foto); return; }
   const ed = e.target.closest && e.target.closest('[data-edt]');
-  if(ed){ const k = ed.dataset.edt, pen = document.querySelector(`.edk[data-edk="${k}"]`); if(pen){ pen.click(); return; } abreTexto(k, DEF_T[k] != null ? DEF_T[k] : ed.textContent.trim(), ''); return; }
+  if(ed){ const k = ed.dataset.edt, pen = document.querySelector(`.edk[data-edk="${k}"]`); if(pen){ pen.click(); return; } abreTexto(k, DEF_T[k] != null ? DEF_T[k] : ed.textContent.replace(/\u00AD/g, '').trim(), ''); return; }
   const n = textoNoToque(e); if(n) abrirLivre(n); else csToast('Esse pedaço não tem texto pra editar');
 }
 document.addEventListener('click', e => {
@@ -4039,7 +4063,7 @@ function ligaArrasto(el, h){
   });
   h.addEventListener('dblclick', async e => { e.stopPropagation(); delete POS[el.dataset.mv]; el.style.transform = ''; mvFs(el, null); try{ await Sync.col('conteudo').set('posicoes', {m:POS}); csToast('Voltou pro lugar de antes'); }catch(x){} });
 }
-new MutationObserver(() => { clearTimeout(aplicaPos._t); aplicaPos._t = setTimeout(() => { aplicaPos(); aplicaFotos(); aplicaLivres(); botaoLivre(); }, 60); }).observe(document.documentElement, {childList:true, subtree:true});
+new MutationObserver(() => { clearTimeout(aplicaPos._t); aplicaPos._t = setTimeout(() => { aplicaPos(); aplicaFotos(); aplicaLivres(); hifeniza(); botaoLivre(); }, 60); }).observe(document.documentElement, {childList:true, subtree:true});
 addEventListener('resize', () => aplicaPos());
 
 function shell(eb, title, sub, body){
