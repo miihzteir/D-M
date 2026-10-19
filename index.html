@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=81">
-<link rel="apple-touch-icon" href="icon-180.png?v=81">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=81">
+<link rel="manifest" href="manifest.json?v=82">
+<link rel="apple-touch-icon" href="icon-180.png?v=82">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=82">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -1783,6 +1783,7 @@ html body .mdia-esp{display:flex;align-items:center;justify-content:center;gap:6
 .pchoc-c small{font-size:12.5px;color:var(--muted)}
 html body .fz-hoje{display:flex;align-items:center;gap:6px;width:auto;min-height:0;height:32px;margin:6px auto 0;padding:0 14px;border-radius:99px;background:#fff;color:#9b1630;border:1px solid var(--line2);box-shadow:none;font-size:12.5px;font-weight:800}
 html body .fz-hoje[hidden]{display:none}
+html.modo-ed [data-foto]{outline:2px dashed rgba(155,22,48,.4);outline-offset:3px;border-radius:12px}
 /* filtros */
 .flt{display:flex;flex-direction:column;gap:8px;margin:4px 0 14px;padding:10px 12px;border-radius:18px;background:rgba(255,255,255,.7);box-shadow:0 0 0 1px var(--line2)}
 .flt-r{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
@@ -3337,7 +3338,7 @@ function renderXmas(){
         <p class="xm-pre">${TE('xm_carta', esc(C.cartaNatal), 'Bilhete de Natal')}</p>
         <p class="sign">${TE('xm_ass', 'Mihzinha', 'Assinatura do bilhete de Natal')}</p>
       </div>
-      <div class="xflower">${FLOWER('xfl','nós no Natal', f0.foto).replace('#fbe6ea','#f7ece6').replace('#e9b3c0','#d9b3ab')}<span class="ribbon">${RED_RIBBON}</span></div>
+      <div class="xflower">${FLOWER('xfl','nós no Natal', f0.foto, 'foto_pol0').replace('#fbe6ea','#f7ece6').replace('#e9b3c0','#d9b3ab')}<span class="ribbon">${RED_RIBBON}</span></div>
     </section>
     <section class="xb xb4">
       <span class="xholly">${HOLLY}</span>
@@ -3472,7 +3473,7 @@ const LIPS = (cls = '') => `<svg class="lips ${cls}" viewBox="0 0 100 60" aria-h
   <ellipse cx="38" cy="44" rx="9" ry="3.5" fill="#fff" opacity=".28" transform="rotate(-8 38 44)"/>
   <ellipse cx="64" cy="45" rx="6" ry="2.5" fill="#fff" opacity=".2" transform="rotate(6 64 45)"/></svg>`;
 const RHEART = (cls = '') => `<svg class="rheart ${cls}" viewBox="0 0 24 22" aria-hidden="true"><path d="M12 21s-9-5.6-9-12a5 5 0 019-3 5 5 0 019 3c0 6.4-9 12-9 12z" fill="#d6283b"/><ellipse cx="8" cy="7.5" rx="2.2" ry="1.4" fill="#fff" opacity=".35" transform="rotate(-30 8 7.5)"/></svg>`;
-const FLOWER = (id, label, src) => `<svg class="fl" viewBox="0 0 200 200" aria-hidden="true"><defs><clipPath id="${id}">
+const FLOWER = (id, label, src, alvo) => `<svg class="fl" viewBox="0 0 200 200" aria-hidden="true"${alvo ? ` data-foto="${alvo}"` : ''}><defs><clipPath id="${id}">
   ${[0,1,2,3,4,5,6,7].map(k => { const a = k*Math.PI/4; return `<circle cx="${100+58*Math.cos(a)}" cy="${100+58*Math.sin(a)}" r="44"/>`; }).join('')}<circle cx="100" cy="100" r="62"/></clipPath>
   <linearGradient id="${id}g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fbe6ea"/><stop offset="1" stop-color="#e9b3c0"/></linearGradient></defs>
   <g clip-path="url(#${id})">${src ? `<image href="${esc(src)}" x="0" y="0" width="200" height="200" preserveAspectRatio="xMidYMid slice"/>` : `<rect width="200" height="200" fill="url(#${id}g)"/><text x="100" y="106" text-anchor="middle" font-family="Dancing Script, TeX Gyre Chorus, cursive" font-size="20" fill="rgba(74,18,36,.45)">${label}</text>`}</g></svg>`;
@@ -3532,7 +3533,7 @@ function renderHome(y = 0){
         <div class="ptxt"><b>${TE('pensei_t', 'Pensei em você', 'Título do pensei em você')}</b><span id="pinfo">toca no coração quando lembrar de ${outro === 'Di' ? 'mim' : 'mim'}</span></div>
       </div>
       <div class="rapidos rv">${[['pergunta','Pergunta do dia','os dois respondem'],['saudade','Termômetro de saudade','aperta quando bater'],['diario','Diário do casal','como foi o seu dia?']].map(([id, t, s2]) => { const [b2, f2] = corDe(id), r = [...LISTS.hoje, ...LISTS.hoje2].find(x => x.id === id) || {ico:'heart'}; return `<button type="button" class="rp" data-go="${id}" style="--bg:${b2};--fg:${f2}"><span class="rp-ic">${icon(r.ico)}</span><b>${TE('rp_t_' + id, t, 'Nome do atalho')}</b><small>${TE('rp_s_' + id, s2, 'Textinho do atalho')}</small>${id === 'pergunta' ? '<em class="badge hb-badge rp-badge" id="badge-pergunta" hidden></em>' : ''}</button>`; }).join('')}</div>
-      <div class="flower float">${FLOWER('fl1','nós dois', C.fotoInicio || f0.foto).replace('#fbe6ea','#f1e6dc').replace('#e9b3c0','#d2b8a9')}</div>
+      <div class="flower float">${FLOWER('fl1','nós dois', C.fotoInicio || f0.foto, 'foto_inicio').replace('#fbe6ea','#f1e6dc').replace('#e9b3c0','#d2b8a9')}</div>
       <div class="hcounter" aria-label="Tempo juntos">
         <div><b id="cd">0</b><span>dias</span></div><div><b id="ch">0</b><span>horas</span></div>
         <div><b id="cm">0</b><span>min</span></div><div><b id="cs">0</b><span>seg</span></div>
@@ -3552,7 +3553,7 @@ function renderHome(y = 0){
       <div class="miles rv">
         ${C.marcos.map(m => `<div class="mile"><span class="md">${esc(m.d)}</span><b>${esc(m.t)}</b><small>${esc(m.s)}</small></div>`).join('')}
       </div>
-      <div class="flower small float rv">${FLOWER('fl2','o primeiro encontro', C.fotoEncontro || f1.foto).replace('#fbe6ea','#f1e6dc').replace('#e9b3c0','#d2b8a9')}</div>
+      <div class="flower small float rv">${FLOWER('fl2','o primeiro encontro', C.fotoEncontro || f1.foto, 'foto_encontro').replace('#fbe6ea','#f1e6dc').replace('#e9b3c0','#d2b8a9')}</div>
     </section>
 
 
@@ -3584,7 +3585,7 @@ function renderHome(y = 0){
       <div id="ncvbox" class="mdiabox ncv-fim"></div>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
       <p class="endsync" id="endsync"></p>
-      <p class="endver">versão de 19/10 · 10h05</p>
+      <p class="endver">versão de 19/10 · 12h25</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
@@ -3953,7 +3954,21 @@ function abrirLivre(n){
   w.querySelector('#edlvr')?.addEventListener('click', () => salva(''));
   inp.addEventListener('keydown', ev => { if(ev.key === 'Enter' && !longo){ ev.preventDefault(); salva(inp.value.trim()); } });
 }
+/* trocar a foto direto de onde ela aparece (modo editar) */
+function trocaFoto(alvo){
+  const inp = document.createElement('input'); inp.type = 'file'; inp.accept = 'image/*'; inp.style.display = 'none'; document.body.append(inp);
+  inp.onchange = async () => { const f = inp.files[0]; inp.remove(); if(!f) return;
+    if(Sync.mode === 'online' && !Sync.user){ csToast(erroFoto({code:'unauthenticated'})); return; }
+    try{ const img = await compressImage(f, alvo.startsWith('memfoto') ? 520 : 900, .74, alvo.startsWith('memfoto') ? {r:.75, m:'redondo'} : /^foto_(inicio|encontro)$/.test(alvo) || alvo === 'foto_pol0' && document.getElementById('xapp') ? {r:1, m:'flor'} : {r:1});
+      csToast('Salvando a foto…'); await comTempo(Sync.col('conteudo').set(alvo, {img})); csToast('Foto salva ♥');
+      setTimeout(() => { const y = window.scrollY; if(document.getElementById('xapp')){ const xa = document.getElementById('xapp'), sy = xa.scrollTop; xa.remove(); renderXmas(); const nx = document.getElementById('xapp'); if(nx) nx.scrollTop = sy; }
+        else if(curView && VIEWS[curView]){ voltandoPara = true; scrollMem[curView] = y; VIEWS[curView](); } else renderHome(y); }, 400); }
+    catch(e){ if(e.code !== 'cancel') csToast(erroFoto(e)); } };
+  inp.click();
+}
 function editarNoPonto(e){
+  const ft = e.target.closest && e.target.closest('[data-foto]');
+  if(ft && !e.target.closest('[data-mv],[data-edt],p,b,small,h1,h2,h3,label')){ trocaFoto(ft.dataset.foto); return; }
   const ed = e.target.closest && e.target.closest('[data-edt]');
   if(ed){ const k = ed.dataset.edt, pen = document.querySelector(`.edk[data-edk="${k}"]`); if(pen){ pen.click(); return; } abreTexto(k, DEF_T[k] != null ? DEF_T[k] : ed.textContent.trim(), ''); return; }
   const n = textoNoToque(e); if(n) abrirLivre(n); else csToast('Esse pedaço não tem texto pra editar');
@@ -3963,14 +3978,16 @@ document.addEventListener('click', e => {
   const n = textoNoToque(e); e.preventDefault(); e.stopPropagation(); if(n) abrirLivre(n);
 }, true);
 /* modo editar: segura em qualquer texto e solta pra editar */
-(() => { let tm = null, x0 = 0, y0 = 0, alvo = null, disparou = false;
+(() => { let tm = null, x0 = 0, y0 = 0, alvo = null, disparou = false, pronto = false;
   document.addEventListener('pointerdown', e => { if(!modoEd() || e.button > 0) return; if(e.target.closest('input,textarea,select,#edlv,#edtx,.pin-wrap,.mv-sz,.edk,#edlvfab,#edlvbar,.tk-wrap,.edfab')) return;
     x0 = e.clientX; y0 = e.clientY; alvo = e; disparou = false; clearTimeout(tm);
-    tm = setTimeout(() => { tm = null; disparou = true; if(navigator.vibrate) try{ navigator.vibrate(25); }catch(x){} editarNoPonto(alvo); }, 520); }, true);
-  const cancela = e => { if(tm && (e.type !== 'pointermove' || Math.hypot(e.clientX - x0, e.clientY - y0) > 8)){ clearTimeout(tm); tm = null; } };
+    tm = setTimeout(() => { tm = null; disparou = true; pronto = true; if(navigator.vibrate) try{ navigator.vibrate(25); }catch(x){} }, 480); }, true);
+  /* abre ao soltar o dedo (o celular só deixa abrir a galeria depois de soltar) */
+  document.addEventListener('pointerup', e => { if(pronto){ pronto = false; editarNoPonto(alvo); } }, true);
+  const cancela = e => { if(e.type === 'pointercancel' || (e.type === 'pointermove' && Math.hypot(e.clientX - x0, e.clientY - y0) > 8)) pronto = false; if(tm && (e.type !== 'pointermove' || Math.hypot(e.clientX - x0, e.clientY - y0) > 8)){ clearTimeout(tm); tm = null; } };
   ['pointermove','pointerup','pointercancel'].forEach(t => document.addEventListener(t, cancela, true));
   addEventListener('scroll', () => { if(tm){ clearTimeout(tm); tm = null; } }, {passive:true, capture:true});
-  document.addEventListener('click', e => { if(disparou){ disparou = false; e.preventDefault(); e.stopPropagation(); } }, true);
+  document.addEventListener('click', e => { if(e.target && e.target.matches && e.target.matches('input[type=file]')) return; if(disparou){ disparou = false; e.preventDefault(); e.stopPropagation(); } }, true);
   document.addEventListener('contextmenu', e => { if(modoEd() && !e.target.closest('input,textarea')) e.preventDefault(); }, true);
 })();
 function botaoLivre(){
@@ -3978,7 +3995,7 @@ function botaoLivre(){
   let f = document.getElementById('edlvfab');
   if(!modoEd()){ if(f) f.remove(); if(edLivre) ligaLivre(false); botaoLivre._mostrou = false; return; }
   if(botaoLivre._mostrou) return;
-  if(!f){ f = document.createElement('div'); f.id = 'edlvfab'; f.className = 'edlvdica'; f.innerHTML = `${icon('pencil')}<span><b>Modo editar</b>segura num texto pra mudar · arrasta as legendas</span>`; document.body.append(f); botaoLivre._mostrou = true; setTimeout(() => { f.style.opacity = '0'; setTimeout(() => f.remove(), 400); }, 5000); }
+  if(!f){ f = document.createElement('div'); f.id = 'edlvfab'; f.className = 'edlvdica'; f.innerHTML = `${icon('pencil')}<span><b>Modo editar</b>segura num texto ou foto pra mudar · arrasta as legendas</span>`; document.body.append(f); botaoLivre._mostrou = true; setTimeout(() => { f.style.opacity = '0'; setTimeout(() => f.remove(), 400); }, 5000); }
 }
 function ligaArrasto(el, h){
   h.addEventListener('click', e => { e.stopPropagation(); e.preventDefault(); });
@@ -4076,7 +4093,7 @@ VIEWS.fotos = (foco) => {
      <section class="fm-sec"><div class="fm-head"><div><h3>Polaroids</h3><p>toca em cada uma pra ler o que tem atrás</p></div></div>
      <div class="polas">${C.polaroids.map((p,k)=>`
       <button class="pola" style="--i:${k}"><span class="tape"></span><div class="in">
-        <div class="face">${photo(p.foto,p.cls)}<span data-mv="pol_${k}">${esc(p.legenda)}</span></div>
+        <div class="face" data-foto="foto_pol${k}">${photo(p.foto,p.cls)}<span data-mv="pol_${k}">${esc(p.legenda)}</span></div>
         <div class="face backf">${esc(p.verso)}</div></div></button>`).join('')}</div></section>`);
   app.querySelectorAll('.pola').forEach(b => b.onclick = () => b.classList.toggle('flip'));
   app.querySelectorAll('.fm-ed').forEach(b => b.onclick = () => { VIEWS.memoria2(b.dataset.mem); const bk = document.getElementById('back'), pv = bk.onclick; bk.onclick = () => { pv(); setTimeout(() => { curView = 'fotos'; VIEWS.fotos(b.dataset.mem); }, 30); }; });
@@ -4094,7 +4111,7 @@ VIEWS.fotos = (foco) => {
 /* ---------- raspadinha ---------- */
 VIEWS.raspa = () => {
   shell('surpresa','Raspadinha','Passa o dedo pra descobrir',
-    `<div class="scratch">${photo(C.raspadinha.foto,'c','surpresa!')}<canvas id="sc"></canvas><p data-mv="raspa">${esc(C.raspadinha.legenda)}</p></div>`);
+    `<div class="scratch" data-foto="foto_raspa">${photo(C.raspadinha.foto,'c','surpresa!')}<canvas id="sc"></canvas><p data-mv="raspa">${esc(C.raspadinha.legenda)}</p></div>`);
   const cv = document.getElementById('sc'), r = cv.getBoundingClientRect(), dpr = devicePixelRatio;
   cv.width = r.width*dpr; cv.height = r.height*dpr;
   const x = cv.getContext('2d'); x.scale(dpr,dpr);
