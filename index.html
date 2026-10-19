@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=77">
-<link rel="apple-touch-icon" href="icon-180.png?v=77">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=77">
+<link rel="manifest" href="manifest.json?v=79">
+<link rel="apple-touch-icon" href="icon-180.png?v=79">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=79">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -1976,7 +1976,7 @@ html body .hb-ic:active{transform:scale(.9)}
 .mv-on{outline:1.5px dashed rgba(155,22,48,.45);outline-offset:3px;border-radius:6px}
 .mv-h{position:absolute;left:-12px;top:-12px;width:24px;height:24px;border-radius:50%;background:#9b1630;color:#fff;display:grid;place-items:center;z-index:20;box-shadow:0 3px 8px rgba(0,0,0,.25);cursor:grab;touch-action:none}
 .mv-on{touch-action:none;cursor:grab}.mv-arr{cursor:grabbing;opacity:.85}
-.edlvdica{position:fixed;left:12px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:8990;pointer-events:none;display:flex;align-items:center;gap:8px;max-width:min(62vw,300px);padding:8px 12px;border-radius:16px;background:rgba(42,26,31,.88);color:#fff;font-size:11.5px;line-height:1.3;box-shadow:0 10px 24px -12px rgba(0,0,0,.5)}
+html body .edlvdica{transition:opacity .4s;background:rgba(42,26,31,.88)!important;position:fixed;left:12px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:8990;pointer-events:none;display:flex;align-items:center;gap:8px;max-width:min(62vw,300px);padding:8px 12px;border-radius:16px;background:rgba(42,26,31,.88);color:#fff;font-size:11.5px;line-height:1.3;box-shadow:0 10px 24px -12px rgba(0,0,0,.5)}
 .edlvdica.mini{padding:9px;border-radius:50%;opacity:.75}.edlvdica.mini span{display:none}
 .edlvdica b{display:block;font-size:12.5px}.edlvdica .icn{flex:none;font-size:16px}
 html.modo-ed #app *:not(input):not(textarea):not(select),html.modo-ed #xapp *:not(input):not(textarea){-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
@@ -3577,7 +3577,7 @@ function renderHome(y = 0){
       <div id="ncvbox" class="mdiabox ncv-fim"></div>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
       <p class="endsync" id="endsync"></p>
-      <p class="endver">versão de 18/10 · 19h50</p>
+      <p class="endver">versão de 19/10 · 00h10</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
@@ -3606,7 +3606,7 @@ function renderHome(y = 0){
   app.querySelectorAll('[data-go]').forEach(b => b.onclick = () => openStop(b.dataset.go));
   app.querySelectorAll('[data-hgo]').forEach(b => b.onclick = e => { e.stopPropagation(); hubAtual = null; openStop(b.dataset.hgo); });
   app.querySelectorAll('.hb-tile').forEach(t => t.onkeydown = e => { if(e.key === 'Enter') t.click(); });
-  app.querySelectorAll('[data-mem]').forEach(b => b.onclick = () => { homeY = window.scrollY; curView = 'fotos'; VIEWS.fotos(b.dataset.mem); });
+  app.querySelectorAll('[data-mem]').forEach(b => b.onclick = () => { homeY = window.scrollY; if(modoEd()){ hubAtual = null; curView = 'memoria2'; VIEWS.memoria2(b.dataset.mem); return; } curView = 'fotos'; VIEWS.fotos(b.dataset.mem); });
   const offM = Sync.col('fotosMem').on(list => {
     if(!document.getElementById('mp-' + C.memorias[0].id)){ setTimeout(() => offM && offM()); return; }
     C.memorias.forEach(m => { const f = list.filter(x => x.mem === m.id).sort((a,b) => a.slot - b.slot)[0]; const el = document.getElementById('mp-' + m.id); if(el && f) el.innerHTML = `<img src="${f.img}" alt="">`; });
@@ -3812,14 +3812,18 @@ function markDone(id){ const d = store.get('done', {}); d[id] = true; store.set(
 let TELAS = {};
 const hk = t => { let h = 5381; for(const c of String(t)) h = ((h << 5) + h + c.charCodeAt(0)) | 0; return (h >>> 0).toString(36); };
 const temTx = k => TELAS[k] != null && TELAS[k] !== '';
-const T = (k, def) => `<span data-edt="${k}">${temTx(k) ? esc(TELAS[k]) : def}</span>`;
+const DEF_T = {}; /* original de cada texto com chave */
+const T = (k, def) => { if(def != null && !(k in DEF_T)) DEF_T[k] = String(def).replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'"); return `<span data-edt="${k}">${temTx(k) ? esc(TELAS[k]) : def}</span>`; };
 const EK = (k, def, lab = '') => modoEd() ? `<i class="edk" data-edk="${k}" data-lab="${esc(lab)}" role="button" aria-label="editar texto">${icon('pencil')}</i><template data-def="${k}">${def}</template>` : '';
 const TE = (k, def, lab) => T(k, def) + EK(k, def, lab);
 document.addEventListener('click', e => { const b = e.target.closest('.edk'); if(!b) return; e.preventDefault(); e.stopPropagation();
   const k = b.dataset.edk, tpl = document.querySelector(`template[data-def="${k}"]`), def = tpl ? tpl.innerHTML.replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'") : '';
+  abreTexto(k, def, b.dataset.lab || '');
+}, true);
+function abreTexto(k, def, lab){
   const atual = temTx(k) ? TELAS[k] : def, longo = atual.length > 60;
   const w = document.createElement('div'); w.className = 'tk-wrap'; w.id = 'edtx';
-  w.innerHTML = `<div class="sheet2"><button class="inst-x" id="edtxx" aria-label="Fechar">${icon('plus')}</button><h3>Editar texto</h3>${b.dataset.lab ? `<p class="lead">${esc(b.dataset.lab)}</p>` : ''}
+  w.innerHTML = `<div class="sheet2"><button class="inst-x" id="edtxx" aria-label="Fechar">${icon('plus')}</button><h3>Editar texto</h3>${lab ? `<p class="lead">${esc(lab)}</p>` : ''}
     ${longo ? `<textarea id="edtxv" rows="4">${esc(atual)}</textarea>` : `<input type="text" id="edtxv" value="${esc(atual)}">`}
     <div class="edtx-acts">${temTx(k) ? `<button type="button" class="ghost" id="edtxr">Voltar ao original</button>` : ''}<button type="button" id="edtxs">Salvar</button></div></div>`;
   document.body.append(w); const inp = w.querySelector('#edtxv'); inp.focus(); inp.select && inp.select();
@@ -3832,7 +3836,7 @@ document.addEventListener('click', e => { const b = e.target.closest('.edk'); if
   w.querySelector('#edtxs').onclick = () => salva(inp.value.trim());
   w.querySelector('#edtxr')?.addEventListener('click', () => salva(''));
   inp.addEventListener('keydown', ev => { if(ev.key === 'Enter' && !longo){ ev.preventDefault(); salva(inp.value.trim()); } });
-}, true);
+}
 
 
 /* botão voltar do celular: volta dentro do app em vez de sair */
@@ -3936,7 +3940,7 @@ function abrirLivre(n){
 }
 function editarNoPonto(e){
   const ed = e.target.closest && e.target.closest('[data-edt]');
-  if(ed){ const pen = document.querySelector(`.edk[data-edk="${ed.dataset.edt}"]`); if(pen){ pen.click(); return; } }
+  if(ed){ const k = ed.dataset.edt, pen = document.querySelector(`.edk[data-edk="${k}"]`); if(pen){ pen.click(); return; } abreTexto(k, DEF_T[k] != null ? DEF_T[k] : ed.textContent.trim(), ''); return; }
   const n = textoNoToque(e); if(n) abrirLivre(n); else csToast('Esse pedaço não tem texto pra editar');
 }
 document.addEventListener('click', e => {
@@ -3957,8 +3961,9 @@ document.addEventListener('click', e => {
 function botaoLivre(){
   document.documentElement.classList.toggle('modo-ed', modoEd());
   let f = document.getElementById('edlvfab');
-  if(!modoEd()){ if(f) f.remove(); if(edLivre) ligaLivre(false); return; }
-  if(!f){ f = document.createElement('div'); f.id = 'edlvfab'; f.className = 'edlvdica'; f.innerHTML = `${icon('pencil')}<span><b>Modo editar</b>segura num texto pra mudar · arrasta as legendas</span>`; document.body.append(f); setTimeout(() => f.classList.add('mini'), 5000); }
+  if(!modoEd()){ if(f) f.remove(); if(edLivre) ligaLivre(false); botaoLivre._mostrou = false; return; }
+  if(botaoLivre._mostrou) return;
+  if(!f){ f = document.createElement('div'); f.id = 'edlvfab'; f.className = 'edlvdica'; f.innerHTML = `${icon('pencil')}<span><b>Modo editar</b>segura num texto pra mudar · arrasta as legendas</span>`; document.body.append(f); botaoLivre._mostrou = true; setTimeout(() => { f.style.opacity = '0'; setTimeout(() => f.remove(), 400); }, 5000); }
 }
 function ligaArrasto(el, h){
   h.addEventListener('click', e => { e.stopPropagation(); e.preventDefault(); });
@@ -4449,7 +4454,7 @@ VIEWS.memoria2 = (id) => {
       </div>`).join('')}</div>
      <input type="file" id="mfile" accept="image/*" hidden>
      <p class="savenote" id="mnote">${Sync.quemReal === 'Mihzinha' ? 'Toca num quadrinho pra escolher uma foto da galeria' : 'As fotos quem coloca é a Mihzinha'}</p>`);
-  if(Sync.quem !== 'Mihzinha') document.querySelectorAll('.mcap input').forEach(i => i.readOnly = true);
+  if(Sync.quemReal !== 'Mihzinha') document.querySelectorAll('.mcap input').forEach(i => i.readOnly = true);
   const col = Sync.col('fotosMem'), file = document.getElementById('mfile'); let cur = null, list = [];
   const docId = i => id + '_' + i;
   function draw(){
@@ -4464,13 +4469,14 @@ VIEWS.memoria2 = (id) => {
   }
   document.querySelectorAll('.mslot').forEach(sl => {
     const i = +sl.dataset.s;
-    const pick = () => { if(Sync.quem !== 'Mihzinha') return; cur = i; file.value = ''; file.click(); };
+    const pick = () => { if(Sync.quemReal !== 'Mihzinha') return; cur = i; file.value = ''; file.click(); };
     sl.querySelector('.mpic').onclick = () => { const f = list.find(x => x.id === docId(i)); if(!(f && f.img)) pick(); else sl.classList.toggle('zoom'); };
     sl.querySelector('.m-chg').onclick = pick;
     sl.querySelector('.m-del').onclick = e => { const b = e.currentTarget; if(!b.dataset.sure){ b.dataset.sure = 1; b.classList.add('sure'); setTimeout(() => { delete b.dataset.sure; b.classList.remove('sure'); }, 2500); return; }
       const f = list.find(x => x.id === docId(i)); col.set(docId(i), {mem:id, slot:i, img:'', legenda:(f && f.legenda) || '', autor:eu}); };
     const cap = sl.querySelector('input');
-    cap.addEventListener('change', () => { const f = list.find(x => x.id === docId(i)); col.set(docId(i), {mem:id, slot:i, img:(f && f.img) || '', legenda:cap.value.trim(), autor:eu}); });
+    let tCap = null; const salvaCap = () => { clearTimeout(tCap); const f = list.find(x => x.id === docId(i)); if(((f && f.legenda) || '') === cap.value.trim()) return; col.set(docId(i), {mem:id, slot:i, img:(f && f.img) || '', legenda:cap.value.trim(), autor:eu}).then(() => csToast('Legenda salva ♥')).catch(() => {}); };
+    cap.addEventListener('input', () => { clearTimeout(tCap); tCap = setTimeout(salvaCap, 900); }); cap.addEventListener('change', salvaCap); cap.addEventListener('blur', salvaCap);
   });
   file.onchange = async () => {
     const fl = file.files[0]; if(!fl || cur === null) return;
