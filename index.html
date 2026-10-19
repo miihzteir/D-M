@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=82">
-<link rel="apple-touch-icon" href="icon-180.png?v=82">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=82">
+<link rel="manifest" href="manifest.json?v=83">
+<link rel="apple-touch-icon" href="icon-180.png?v=83">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=83">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -1990,6 +1990,12 @@ html.modo-ed #app *:not(input):not(textarea):not(select),html.modo-ed #xapp *:no
 .edlvbar button{width:auto!important;min-height:0!important;height:32px;padding:0 14px!important;border-radius:99px!important;background:#fff!important;color:#2a1a1f!important;font-size:12.5px;font-weight:800;box-shadow:none!important}
 html.ed-livre body *:not(#edlvbar):not(#edlvbar *):not(#edlvfab):not(#edlvfab *){cursor:text}
 html.ed-livre #app :is(p,h1,h2,h3,h4,b,small,span,em,strong,label,a,button,li,time):hover{outline:1.5px dashed rgba(155,22,48,.5);outline-offset:2px}
+.ft-bar{font-family:var(--f-body);position:absolute;left:50%;bottom:6px;transform:translateX(-50%);z-index:30;display:flex;gap:4px;padding:4px;border-radius:99px;background:rgba(42,26,31,.82);box-shadow:0 8px 18px -8px rgba(0,0,0,.5);white-space:nowrap}
+.ft-bar i{font-style:normal;display:inline-flex;align-items:center;gap:5px;height:30px;min-width:30px;justify-content:center;padding:0 9px;border-radius:99px;background:#fff;color:#9b1630;font-size:15px;font-weight:800;cursor:pointer;line-height:1}
+.ft-bar.mini{bottom:auto;top:14px;padding:3px}.ft-bar.mini i{height:28px;padding:0 10px;font-size:13px}.ft-bar.mini i em{font-size:11px}
+html body .ft-bar{position:absolute!important;display:flex!important;left:0!important;right:0!important;transform:none!important;margin-left:auto!important;margin-right:auto!important;width:max-content!important;height:auto!important;min-height:0!important;aspect-ratio:auto!important;background:rgba(42,26,31,.82)!important;border-radius:99px!important;overflow:visible!important;box-shadow:0 8px 18px -8px rgba(0,0,0,.5)!important;backface-visibility:visible!important;opacity:1!important;rotate:none!important}
+html body .ft-bar i{position:static!important;width:auto!important;height:28px!important;background:#fff!important;color:#9b1630!important;font-family:var(--f-body)!important;transform:none!important;border-radius:99px!important}
+.ft-bar i em{font-style:normal;font-size:12px}.ft-bar i .icn{font-size:15px}
 .mv-sz{pointer-events:none;position:absolute;left:16px;top:-26px;display:flex;gap:3px;z-index:21}
 .mv-sz i{pointer-events:auto;height:22px;box-sizing:border-box;display:grid;place-items:center;font-style:normal;font-family:var(--f-body,inherit);font-size:11px;font-weight:800;line-height:1;padding:5px 6px;border-radius:8px;background:#fff;color:#9b1630;box-shadow:0 3px 8px rgba(0,0,0,.22);cursor:pointer;letter-spacing:0;text-transform:none}
 .mv-h .icn{width:14px;height:14px;stroke:#fff;stroke-width:2}
@@ -3473,7 +3479,7 @@ const LIPS = (cls = '') => `<svg class="lips ${cls}" viewBox="0 0 100 60" aria-h
   <ellipse cx="38" cy="44" rx="9" ry="3.5" fill="#fff" opacity=".28" transform="rotate(-8 38 44)"/>
   <ellipse cx="64" cy="45" rx="6" ry="2.5" fill="#fff" opacity=".2" transform="rotate(6 64 45)"/></svg>`;
 const RHEART = (cls = '') => `<svg class="rheart ${cls}" viewBox="0 0 24 22" aria-hidden="true"><path d="M12 21s-9-5.6-9-12a5 5 0 019-3 5 5 0 019 3c0 6.4-9 12-9 12z" fill="#d6283b"/><ellipse cx="8" cy="7.5" rx="2.2" ry="1.4" fill="#fff" opacity=".35" transform="rotate(-30 8 7.5)"/></svg>`;
-const FLOWER = (id, label, src, alvo) => `<svg class="fl" viewBox="0 0 200 200" aria-hidden="true"${alvo ? ` data-foto="${alvo}"` : ''}><defs><clipPath id="${id}">
+const FLOWER = (id, label, src, alvo) => `<svg class="fl" viewBox="0 0 200 200" aria-hidden="true"${alvo ? ` data-foto="${alvo}" data-fk="${id}"` : ''}><defs><clipPath id="${id}">
   ${[0,1,2,3,4,5,6,7].map(k => { const a = k*Math.PI/4; return `<circle cx="${100+58*Math.cos(a)}" cy="${100+58*Math.sin(a)}" r="44"/>`; }).join('')}<circle cx="100" cy="100" r="62"/></clipPath>
   <linearGradient id="${id}g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fbe6ea"/><stop offset="1" stop-color="#e9b3c0"/></linearGradient></defs>
   <g clip-path="url(#${id})">${src ? `<image href="${esc(src)}" x="0" y="0" width="200" height="200" preserveAspectRatio="xMidYMid slice"/>` : `<rect width="200" height="200" fill="url(#${id}g)"/><text x="100" y="106" text-anchor="middle" font-family="Dancing Script, TeX Gyre Chorus, cursive" font-size="20" fill="rgba(74,18,36,.45)">${label}</text>`}</g></svg>`;
@@ -3585,7 +3591,7 @@ function renderHome(y = 0){
       <div id="ncvbox" class="mdiabox ncv-fim"></div>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
       <p class="endsync" id="endsync"></p>
-      <p class="endver">versão de 19/10 · 12h25</p>
+      <p class="endver">versão de 19/10 · 12h50</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
@@ -3997,6 +4003,29 @@ function botaoLivre(){
   if(botaoLivre._mostrou) return;
   if(!f){ f = document.createElement('div'); f.id = 'edlvfab'; f.className = 'edlvdica'; f.innerHTML = `${icon('pencil')}<span><b>Modo editar</b>segura num texto ou foto pra mudar · arrasta as legendas</span>`; document.body.append(f); botaoLivre._mostrou = true; setTimeout(() => { f.style.opacity = '0'; setTimeout(() => f.remove(), 400); }, 5000); }
 }
+/* fotos no modo editar: barrinha com trocar e tamanho, igual às legendas */
+function aplicaFotos(){
+  const ed = modoEd();
+  document.querySelectorAll('[data-foto]').forEach(el => {
+    const k = 'f_' + (el.dataset.fk || el.dataset.foto), p = el instanceof SVGElement ? POS[k] : null, sc = p && p.s && p.s !== 1 ? String(p.s) : '';
+    const casa = el instanceof SVGElement ? el.parentElement : el; if(!casa) return;
+    if(el instanceof SVGElement && casa.style.scale !== sc) casa.style.scale = sc;
+    let bar = casa.querySelector(`:scope > .ft-bar[data-alvo="${el.dataset.foto}"]`);
+    if(!ed){ if(bar) bar.remove(); return; }
+    if(bar) return;
+    if(getComputedStyle(casa).position === 'static') casa.style.position = 'relative';
+    bar = document.createElement('div'); bar.className = 'ft-bar'; bar.dataset.alvo = el.dataset.foto;
+    const svg = el instanceof SVGElement; if(!svg) bar.classList.add('mini');
+    bar.innerHTML = `<i data-ft="troca">${icon('image')}<em>Trocar foto</em></i>${svg ? `<i data-ft="-1">−</i><i data-ft="1">+</i><i data-ft="0">↺</i>` : ''}`;
+    casa.append(bar);
+    bar.addEventListener('pointerdown', e => e.stopPropagation(), true);
+    bar.querySelectorAll('i').forEach(b => b.addEventListener('click', async e => { e.preventDefault(); e.stopPropagation();
+      const a = b.dataset.ft; if(a === 'troca'){ trocaFoto(el.dataset.foto); return; }
+      const q = Object.assign({}, POS[k] || {}); q.s = a === '0' ? 1 : Math.min(1.6, Math.max(.6, +((q.s || 1) + .1 * a).toFixed(2)));
+      if(q.s === 1) delete POS[k]; else POS[k] = q; aplicaFotos();
+      clearTimeout(bar._t); bar._t = setTimeout(async () => { try{ await Sync.col('conteudo').set('posicoes', {m:POS}); csToast('Tamanho salvo ♥'); }catch(x){} }, 500); }));
+  });
+}
 function ligaArrasto(el, h){
   h.addEventListener('click', e => { e.stopPropagation(); e.preventDefault(); });
   h.addEventListener('pointerdown', e => {
@@ -4010,7 +4039,7 @@ function ligaArrasto(el, h){
   });
   h.addEventListener('dblclick', async e => { e.stopPropagation(); delete POS[el.dataset.mv]; el.style.transform = ''; mvFs(el, null); try{ await Sync.col('conteudo').set('posicoes', {m:POS}); csToast('Voltou pro lugar de antes'); }catch(x){} });
 }
-new MutationObserver(() => { clearTimeout(aplicaPos._t); aplicaPos._t = setTimeout(() => { aplicaPos(); aplicaLivres(); botaoLivre(); }, 60); }).observe(document.documentElement, {childList:true, subtree:true});
+new MutationObserver(() => { clearTimeout(aplicaPos._t); aplicaPos._t = setTimeout(() => { aplicaPos(); aplicaFotos(); aplicaLivres(); botaoLivre(); }, 60); }).observe(document.documentElement, {childList:true, subtree:true});
 addEventListener('resize', () => aplicaPos());
 
 function shell(eb, title, sub, body){
