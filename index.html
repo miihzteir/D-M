@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=79">
-<link rel="apple-touch-icon" href="icon-180.png?v=79">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=79">
+<link rel="manifest" href="manifest.json?v=81">
+<link rel="apple-touch-icon" href="icon-180.png?v=81">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=81">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -1781,6 +1781,8 @@ html body .mdia-esp{display:flex;align-items:center;justify-content:center;gap:6
 .pchoc-c b{display:block;font-family:var(--f-display);font-style:italic;font-size:28px;color:#7a1424}
 .pchoc-c p{margin:4px 0 2px;font-size:15px;font-weight:700;color:var(--ink2)}
 .pchoc-c small{font-size:12.5px;color:var(--muted)}
+html body .fz-hoje{display:flex;align-items:center;gap:6px;width:auto;min-height:0;height:32px;margin:6px auto 0;padding:0 14px;border-radius:99px;background:#fff;color:#9b1630;border:1px solid var(--line2);box-shadow:none;font-size:12.5px;font-weight:800}
+html body .fz-hoje[hidden]{display:none}
 /* filtros */
 .flt{display:flex;flex-direction:column;gap:8px;margin:4px 0 14px;padding:10px 12px;border-radius:18px;background:rgba(255,255,255,.7);box-shadow:0 0 0 1px var(--line2)}
 .flt-r{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
@@ -2983,6 +2985,10 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':
 const APELIDOS = {Mihzinha:['Mihzinha', 'Mih', 'Milena'], Di:['Di', 'Diogo']};
 function apelido(q, k = 0){ const l = APELIDOS[q] || [q]; const d = new Date(); const n = d.getFullYear() * 400 + d.getMonth() * 32 + d.getDate(); return l[((n * 7 + k * 13) % l.length + l.length) % l.length]; }
 const PREVIA = /^#previa/.test(location.hash);
+/* link direto pra uma tela: #/tela ou #/quadro/tela */
+const BASE_URL = location.pathname + location.search;
+const LINK_INI = PREVIA ? '' : ((location.hash.match(/^#\/(.+)$/) || [])[1] || '');
+try{ history.replaceState(null, '', LINK_INI ? BASE_URL : location.href); }catch(e){}
 const PFX = PREVIA ? 'previa_' : 'diogo_';
 const store = {
   get(k, d){ try{ return JSON.parse(localStorage.getItem(PFX+k)) ?? d }catch(e){ return d } },
@@ -3286,7 +3292,7 @@ function typeText(el, text, delay){
 let xtimer;
 let xFromY = 0, xVolta = null, xEmpurrou = false;
 function renderXmas(){
-  document.getElementById('xgift')?.remove(); xEmpurrou = entradaHistorico();
+  document.getElementById('xgift')?.remove(); xEmpurrou = entradaHistorico(null, '#/natal');
   if(document.querySelector('.home')) xFromY = window.scrollY;
   stopGame(); clearInterval(timer); document.getElementById('tabbar')?.remove();
   const cols = ['#e05a5f','#f3dca4','#9bc28a','#fbf6ec'];
@@ -3500,6 +3506,7 @@ function statusSync(){
 addEventListener('online', statusSync); addEventListener('offline', statusSync);
 function renderHome(y = 0){
   saiHistorico(); if(vistaAtual) scrollMem[vistaAtual] = window.scrollY; vistaAtual = null;
+  if(!restaurou && LINK_INI){ restaurou = true; setTimeout(() => abreLink(LINK_INI), 60); }
   if(!restaurou){ restaurou = true; try{ const u = JSON.parse(sessionStorage.getItem('dm_ult') || 'null');
     if(u && u.v && VIEWS[u.v] && !['editar','memoria2','fotos'].includes(u.v)){ setTimeout(() => { homeY = 0; if(u.h && u.h !== u.v && VIEWS[u.h]){ hubAtual = u.h; } curView = u.v; VIEWS[u.v](); [80, 300, 700].forEach(t => setTimeout(() => window.scrollTo(0, u.y), t)); }, 60); }
     else if(u && !u.v && u.y) y = u.y; }catch(e){} }
@@ -3577,7 +3584,7 @@ function renderHome(y = 0){
       <div id="ncvbox" class="mdiabox ncv-fim"></div>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
       <p class="endsync" id="endsync"></p>
-      <p class="endver">versão de 19/10 · 00h10</p>
+      <p class="endver">versão de 19/10 · 10h05</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
@@ -3845,13 +3852,21 @@ try{ if('scrollRestoration' in history) history.scrollRestoration = 'manual'; }c
 /* cada nível (tela inicial 0, quadro 1, tela dentro do quadro 2) é uma entrada no histórico, criada no toque (o Chrome ignora entradas criadas sem toque) */
 const nivelHist = () => { const s = history.state; return s && s.dm ? (s.n || 1) : 0; };
 let nivelNav = nivelHist();
-function entradaHistorico(quero){ try{ const cur = nivelNav; if(quero == null) quero = cur + 1;
-  if(cur < quero){ history.pushState({dm:1, n:cur + 1}, ''); nivelNav = cur + 1; return true; }
-  if(cur > quero){ ignoraPop++; nivelNav = quero; history.go(quero - cur); } }catch(e){} return false; }
-function saiHistorico(){ entradaHistorico(0); }
+function entradaHistorico(quero, url, url1){ try{ const cur = nivelNav; if(quero == null) quero = cur + 1; if(PREVIA){ url = url1 = undefined; }
+  if(cur < quero){ for(let n = cur + 1; n <= quero; n++) history.pushState({dm:1, n}, '', n === quero ? url : (url1 || url)); nivelNav = quero; return true; }
+  if(cur > quero){ ignoraPop++; nivelNav = quero; history.go(quero - cur); return false; }
+  if(url && location.hash + '' !== url && (url !== BASE_URL || location.hash.startsWith('#/'))) history.replaceState(history.state, '', url); }catch(e){} return false; }
+const urlDe = v => { if(!v) return BASE_URL; const hk = hubDe(hubAtual); return hk && v !== hubAtual && (HUBS[hk].itens().some(r => r.id === v) || HUBS[hk].extra === v) ? `#/${hubAtual}/${v}` : `#/${v}`; };
+/* abre a tela do endereço (#/quadro/tela) */
+function abreLink(link){ const p = String(link || '').replace(/^#?\/?/, '').split('/').filter(Boolean); if(!p.length){ renderHome(0); return; }
+  if(p[0] === 'natal'){ renderXmas(); return; }
+  const v = p[p.length - 1], h = p.length > 1 ? p[0] : null; if(!VIEWS[v]) return;
+  hubAtual = h && VIEWS[h] ? h : (hubDe(v) ? v : null); curView = v; VIEWS[v](); }
+function saiHistorico(){ entradaHistorico(0, BASE_URL); }
 addEventListener('popstate', () => {
   if(ignoraPop > 0){ ignoraPop--; return; }
-  nivelNav = nivelHist();
+  const antes = nivelNav; nivelNav = nivelHist();
+  if(nivelNav > antes && location.hash.startsWith('#/')){ document.querySelectorAll('.tk-wrap:not(#inst)').forEach(x => x.remove()); abreLink(location.hash); return; }
   const modal = document.querySelector('.cr-wrap,#edtx,#mesp,#zerokm,#tour,.tk-wrap:not(#inst)');
   if(modal && !modal.classList.contains('pin-wrap')){ const x = modal.querySelector('#crcan,.inst-x,#tourx,.tk-close,#tkclose'); x ? x.click() : modal.remove(); if(document.getElementById('back')) entradaHistorico(); return; }
   const xg = document.getElementById('xgo'); if(xg){ porVoltar = true; xg.click(); return; }
@@ -3997,7 +4012,7 @@ function shell(eb, title, sub, body){
     <header class="vhead">${(it => it ? (([bg, fg]) => `<span class="vh-ic" style="--bg:${bg};--fg:${fg}">${icon(it.ico)}</span>`)(corDe(it.id)) : '')(Object.values(LISTS).flat().find(x => x.id === curView))}<h2>${TE('v_' + curView + '_' + hk(title), title, 'Título desta tela')}</h2>${sub || modoEd() ? `<p>${TE('s_' + curView + '_' + hk(title), sub || '', 'Texto embaixo do título')}</p>` : ''}</header>
     ${body}</div>`;
   if(yVolta){ window.scrollTo({top:yVolta, behavior:'instant'}); requestAnimationFrame(() => window.scrollTo({top:yVolta, behavior:'instant'})); }
-  entradaHistorico(hubDe(curView) ? 1 : (hk => hk && curView !== hubAtual && (HUBS[hk].itens().some(r => r.id === curView) || HUBS[hk].extra === curView) ? 2 : 1)(hubDe(hubAtual)));
+  { const nv = hubDe(curView) ? 1 : (hk => hk && curView !== hubAtual && (HUBS[hk].itens().some(r => r.id === curView) || HUBS[hk].extra === curView) ? 2 : 1)(hubDe(hubAtual)); entradaHistorico(nv, urlDe(curView), nv === 2 ? `#/${hubAtual}` : undefined); }
   document.getElementById('back').onclick = () => { stopGame(); const hk = hubDe(hubAtual); if(hk && curView !== hubAtual && (HUBS[hk].itens().some(r => r.id === curView) || HUBS[hk].extra === curView)){ curView = hubAtual; voltandoPara = true; VIEWS[hubAtual](); return; } hubAtual = null; renderHome(homeY); };
 }
 const VIEWS = {};
@@ -5714,7 +5729,7 @@ VIEWS.notificacoes = () => {
         ${msg ? `<p class="nt-msg">${msg}</p>` : ''}</div>
       <p class="ct-sep">Som</p>
       <div class="nt-sons">${SONS.map(x => `<button type="button" class="${x.id === som ? 'on' : ''}" data-som="${x.id}"><span class="nt-r"></span>${x.t}</button>`).join('')}</div>
-      <p class="nt-nota">"Som do celular" usa o som e o volume de notificação do celular. Os outros tocam pelo volume de mídia, só com o app aberto.</p>
+      <p class="nt-nota">Os outros sons só tocam com o app aberto.</p>
       ${eu === 'Mihzinha' ? `<details class="nt-cfg" ${vapidChave() && workerURL() ? '' : 'open'}><summary>Configuração (só você vê)</summary><label class="fz-lab">Chave de push do Firebase<input type="text" id="ntvapid" value="${esc(vapidChave())}" placeholder="cola a chave aqui"></label><label class="fz-lab">Endereço do Cloudflare<input type="url" id="ntworker" value="${esc(workerURL())}" placeholder="https://dm-avisos….workers.dev"></label><button type="button" class="ghost" id="ntvsalva">Salvar</button><p class="nt-msg" id="ntvm"></p></details>` : ''}`;
     $('ntrec')?.addEventListener('click', () => location.reload());
     $('ntbox').querySelectorAll('[data-som]').forEach(b => b.onclick = () => { store.set('notifSom', b.dataset.som); tocaSom(b.dataset.som); draw(); });
@@ -6103,7 +6118,7 @@ VIEWS.lugares = () => {
   const eu = Sync.quem || 'Di';
   shell('por onde a gente passou','Nossos lugares','Cada lugar que a gente foi junto, com foto. Qualquer um dos dois pode colocar',
     `<details class="lg-det" id="lgdet"><summary>${icon('plus')} Colocar um lugar novo</summary>
-     <p class="lg-como">Escolhe uma foto de lá, escreve o nome do lugar, a cidade, o dia que vocês foram e uma lembrança. Depois é só tocar em "Guardar lugar". Ele aparece aqui embaixo com o link pro mapa.</p>
+     <p class="lg-como">Foto, nome, cidade, dia e uma lembrança.</p>
      <form class="card-form dm-form" id="lgf"><p class="wo-t">Novo lugar</p>
       <button type="button" class="dm-pick" id="lgpick"><span id="lgprev">${icon('image')}<small>escolher foto</small></span></button><input type="file" id="lgfile" accept="image/*" hidden>
       <div class="fz-row"><label class="fz-lab">Lugar<input type="text" id="lgn" maxlength="50" placeholder="ex: Sorveteria da praça"></label><label class="fz-lab">Cidade<input type="text" id="lgc" maxlength="40" placeholder="ex: Sinop"></label></div>
@@ -6173,7 +6188,7 @@ VIEWS.retro = () => {
   if(!retroLiberada()){
     const alvo = new Date(ano, 11, 20), n = Math.ceil((alvo - new Date()) / 86400000);
     shell('o nosso ano',`Retrospectiva ${ano}`,'Um resumo de tudo que a gente viveu esse ano',
-      `<div class="rt-lock"><span class="rt-big">${icon('lock')}</span><h3>Ainda tá sendo escrita</h3><p>Ela abre no dia 20 de dezembro de ${ano}. Faltam ${n} ${n === 1 ? 'dia' : 'dias'}.</p><p class="rt-sub">Até lá, continua respondendo as perguntas, mandando bilhetes e montando a casinha. Tudo entra na conta.</p></div>`);
+      `<div class="rt-lock"><span class="rt-big">${icon('lock')}</span><h3>Ainda tá sendo escrita</h3><p>Ela abre no dia 20 de dezembro de ${ano}. Faltam ${n} ${n === 1 ? 'dia' : 'dias'}.</p><p class="rt-sub">Tudo que vocês fizerem até lá entra na conta.</p></div>`);
     return;
   }
   shell('o nosso ano',`Retrospectiva ${ano}`,'Um resumo de tudo que a gente viveu',`<div class="rt-wrap" id="rtw"><p class="lead">Contando tudinho…</p></div>`);
@@ -6559,11 +6574,11 @@ VIEWS.comemorativas = () => {
     `<div class="cm-list">
        <article class="cm-card ${lib ? 'on' : 'lock'}">
          <div class="cm-top"><span class="cm-ico">${icon(lib ? 'gift' : 'lock')}</span><div><p class="cm-eb">25 de dezembro de 2026</p><h3>Nosso primeiro Natal</h3></div></div>
-         <p class="cm-txt">${lib ? (natalAberto() ? 'O presentinho tá balançando lá em cima da tela até o dia 25. Mas pode abrir por aqui também.' : 'Foi o nosso primeiro Natal juntos. Toca pra abrir de novo sempre que quiser.') : `Ainda tá embrulhado. Libera no dia ${fmt(NATAL_INI)}, quando um presentinho aparecer balançando no topo da tela.`}</p>
+         <p class="cm-txt">${lib ? (natalAberto() ? 'O presentinho tá balançando lá em cima da tela até o dia 25. Ou abre por aqui.' : 'Foi o nosso primeiro Natal juntos. Toca pra abrir de novo sempre que quiser.') : `Ainda tá embrulhado. Libera no dia ${fmt(NATAL_INI)}, quando um presentinho aparecer balançando no topo da tela.`}</p>
          ${lib ? `<button type="button" id="cmnatal">Abrir o Natal</button>` : ''}
        </article>
        <article class="cm-card nv-cfg"><div class="cm-top"><span class="cm-ico">${icon('cake')}</span><div><p class="cm-eb">todo ano</p><h3>Nossos aniversários</h3></div></div>
-         <p class="cm-txt">No dia de cada um, a casinha enche de balões, vocês ganham chapéu de festa e aparece um bolo na sala. O app avisa quando estiver chegando.</p>
+         <p class="cm-txt">No dia de cada um, a casinha enche de balões, vocês ganham chapéu de festa e aparece um bolo na sala.</p>
          <div class="nv-row"><label class="fz-lab">Di<input type="date" id="nvDi"></label><label class="fz-lab">Mihzinha<input type="date" id="nvMihzinha"></label></div>
          <p class="nv-info" id="nvinfo"></p>
          <button type="button" id="nvsave">Salvar aniversários</button></article>
@@ -6642,7 +6657,7 @@ VIEWS.financas = () => {
     `<div class="fz-tabs" role="tablist"><button class="on" data-m="mes" role="tab">Mês</button><button data-m="ano" role="tab">Ano</button></div>
      <div class="fz-nav"><button class="bkbtn" id="fzp" aria-label="Anterior"><svg viewBox="0 0 24 24" class="icn"><path d="M15 5l-7 7 7 7"/></svg></button><button type="button" class="fz-lbtn" id="fzlb"><b id="fzl"></b>${icon('calendar')}</button><button class="bkbtn" id="fzn" aria-label="Próximo"><svg viewBox="0 0 24 24" class="icn"><path d="M9 5l7 7-7 7"/></svg></button></div>
      <div class="fz-ir" id="fzir" hidden><select id="fzm" aria-label="Mês">${MESES.map((m, k) => `<option value="${k}">${m[0].toUpperCase() + m.slice(1)}</option>`).join('')}</select><input type="number" id="fzy" inputmode="numeric" min="2000" max="2100" aria-label="Ano" placeholder="ano"><button type="button" id="fzgo">Ver</button></div>
-     <button type="button" class="fz-hoje" id="fzhoje" hidden>${icon('calendar')} voltar pra hoje</button>
+     <button type="button" class="fz-hoje" id="fzhoje" hidden>${icon('calendar')} Hoje</button>
      <section class="fz-hero"><p id="fzh1"></p><b id="fzh2"></b><span id="fzh3"></span></section>
      <section class="fz-card" id="fzchart"></section>
      <form class="card-form fz-form" id="fzf">
@@ -6670,6 +6685,7 @@ VIEWS.financas = () => {
   $('fzlb').onclick = () => { const b = $('fzir'); b.hidden = !b.hidden; $('fzm').hidden = modo !== 'mes'; $('fzm').value = mo; $('fzy').value = y; if(!b.hidden) $('fzy').focus(); };
   const irPara = () => { const ny = parseInt($('fzy').value); if(!(ny >= 2000 && ny <= 2100)) return; y = ny; if(modo === 'mes') mo = +$('fzm').value; $('fzir').hidden = true; draw(); };
   $('fzgo').onclick = irPara;
+
   $('fzhoje').onclick = () => { y = now.getFullYear(); mo = now.getMonth(); $('fzir').hidden = true; draw(); }; $('fzy').addEventListener('keydown', e => { if(e.key === 'Enter'){ e.preventDefault(); irPara(); } });
   $('fzp').onclick = () => { if(modo === 'mes'){ mo--; if(mo < 0){ mo = 11; y--; } } else y--; draw(); };
   $('fzn').onclick = () => { if(modo === 'mes'){ mo++; if(mo > 11){ mo = 0; y++; } } else y++; draw(); };
@@ -7000,7 +7016,7 @@ VIEWS.pergunta = () => {
   const dj = diaJornada(), ANTESQ = dj < 1, FIMQ = dj >= 365 || ANTESQ, pq = FIMQ ? '' : itemDoDia(C.perguntas, 3);
   const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'Mihzinha' : 'Di';
   shell('hoje','Pergunta do dia','Responde, e aí você vê o que o outro respondeu',
-    `<div class="qcard"><p class="eyebrow">${new Date().toLocaleDateString('pt-BR',{day:'numeric',month:'long'})}${dj >= 1 && dj <= 364 ? ` · pergunta ${dj} de 364` : ''}</p>${ANTESQ ? `<h3>As perguntas começam no Natal</h3><p class="lead">A primeira chega no dia 25 de dezembro. Faltam ${1 - dj} ${1 - dj === 1 ? 'dia' : 'dias'}. São 364, uma por dia, e nenhuma se repete.</p>` : FIMQ ? `<h3>Fim das perguntas</h3><p class="lead">${esc(C.textos.perguntasFim)}</p>` : `<h3>${esc(pq)}</h3>`}
+    `<div class="qcard"><p class="eyebrow">${new Date().toLocaleDateString('pt-BR',{day:'numeric',month:'long'})}${dj >= 1 && dj <= 364 ? ` · pergunta ${dj} de 364` : ''}</p>${ANTESQ ? `<h3>As perguntas começam no Natal</h3><p class="lead">A primeira chega no dia 25 de dezembro. Faltam ${1 - dj} ${1 - dj === 1 ? 'dia' : 'dias'}.</p>` : FIMQ ? `<h3>Fim das perguntas</h3><p class="lead">${esc(C.textos.perguntasFim)}</p>` : `<h3>${esc(pq)}</h3>`}
       <form class="write" id="qf"><textarea id="qta" rows="4" placeholder="Sua resposta…" aria-label="Sua resposta"></textarea><button type="submit">Responder</button><p class="werr" id="qerr" role="status"></p></form>
       <div id="qans"></div></div>
      ${filtroHTML('qflt')}<section class="hqwrap" id="qold"></section>`);
