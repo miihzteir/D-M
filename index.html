@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=85">
-<link rel="apple-touch-icon" href="icon-180.png?v=85">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=85">
+<link rel="manifest" href="manifest.json?v=86">
+<link rel="apple-touch-icon" href="icon-180.png?v=86">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=86">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -1792,6 +1792,15 @@ html.modo-ed [data-foto]{outline:2px dashed rgba(155,22,48,.4);outline-offset:3p
 html body .dm-pol{flex:none;width:112px;min-height:0;margin:0;padding:7px 7px 6px;background:#fff;border:0;border-radius:4px;box-shadow:0 10px 20px -14px rgba(74,18,36,.55);transform:rotate(var(--r));display:flex;flex-direction:column;gap:5px;color:var(--ink)}
 .dm-pol img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:2px;display:block}.dm-pol small{font-family:var(--f-hand);font-size:14px;line-height:1.15;text-align:center;white-space:pre-line}
 html body .dm-tag{display:inline-flex;align-items:center;gap:5px;width:auto;min-height:0;margin:6px 0 0;padding:4px 10px;border-radius:99px;background:#efe7fb;color:#6b4bb0;border:0;box-shadow:none;font-size:12px;font-weight:700}
+.fl-card.tem-capa{flex-direction:row;align-items:flex-start;gap:12px}
+.fl-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:10px}
+.fl-capa{flex:none;width:calc(72px * var(--s,1));max-width:42%;position:relative}
+html body .fl-cp{width:100%;aspect-ratio:2/3;min-height:0;margin:0;padding:0;border-radius:10px;overflow:hidden;background:#f3ece4;border:1.5px dashed #d9c8bd;box-shadow:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#a08f84;font-size:20px}
+.fl-cp small{font-size:11px;font-weight:700}
+.fl-cp img{width:100%;height:100%;object-fit:cover;display:block}
+html body .fl-cp:has(img){border:0;box-shadow:0 8px 16px -10px rgba(74,18,36,.5)}
+.fl-sz{display:flex;justify-content:center;gap:4px;margin-top:5px}
+.fl-sz i{font-style:normal;width:26px;height:24px;display:grid;place-items:center;border-radius:8px;background:#fff;border:1px solid var(--line2);color:#9b1630;font-weight:800;cursor:pointer}
 /* filtros */
 .flt{display:flex;flex-direction:column;gap:8px;margin:4px 0 14px;padding:10px 12px;border-radius:18px;background:rgba(255,255,255,.7);box-shadow:0 0 0 1px var(--line2)}
 .flt-r{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
@@ -3603,7 +3612,7 @@ function renderHome(y = 0){
       <div id="ncvbox" class="mdiabox ncv-fim"></div>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
       <p class="endsync" id="endsync"></p>
-      <p class="endver">versão de 19/10 · 17h40</p>
+      <p class="endver">versão de 20/10 · 08h55</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
@@ -6169,25 +6178,30 @@ VIEWS.filmes = () => {
       <label class="fz-lab">É um<select id="flk"><option>Filme</option><option>Série</option><option>Anime</option><option>Documentário</option></select></label></div>
       <div class="pl-act"><button type="submit">Adicionar à lista</button></div></form>
      <div class="fz-tabs fl-tabs"><button type="button" data-a="ver" class="on">Pra ver</button><button type="button" data-a="visto">Já vimos</button></div>
-     <div id="fll" class="fl-list"></div>`);
+     <div id="fll" class="fl-list"></div><input type="file" id="flcap" accept="image/*" hidden>`);
   const col = Sync.col('filmes'), $ = id => document.getElementById(id);
   let list = [];
   const notas = (f, q, edit) => `<span class="fl-n ${edit ? 'edit' : ''}" data-id="${f.id}">${[1,2,3,4,5].map(k => `<i data-k="${k}" class="${((f.notas || {})[q] || 0) >= k ? 'on' : ''}">${icon('heart')}</i>`).join('')}</span>`;
   const draw = () => { if(!$('fll')) return;
     const l = list.filter(f => aba === 'visto' ? f.visto : !f.visto);
-    $('fll').innerHTML = l.length ? l.map(f => `<article class="fl-card"><div class="fl-top"><span class="fl-k">${esc(f.tipo || 'Filme')}</span><h3>${esc(f.titulo)}</h3>
+    $('fll').innerHTML = l.length ? l.map(f => `<article class="fl-card tem-capa"><div class="fl-capa" style="--s:${f.capaS || 1}"><button type="button" class="fl-cp" data-capa="${f.id}" aria-label="Capa">${f.capa ? `<img src="${f.capa}" alt="">` : `${icon('image')}<small>capa</small>`}</button>${f.capa ? `<span class="fl-sz"><i data-cs="-1" data-id="${f.id}">−</i><i data-cs="1" data-id="${f.id}">+</i></span>` : ''}</div><div class="fl-body"><div class="fl-top"><span class="fl-k">${esc(f.tipo || 'Filme')}</span><h3>${esc(f.titulo)}</h3>
         ${f.visto ? `<div class="fl-notas"><div><small>sua nota</small>${notas(f, eu, true)}</div><div><small>${outro}</small>${notas(f, outro, false)}</div></div>` : ''}</div>
-        <div class="fl-act">${f.visto ? `<button type="button" class="ghost" data-volta="${f.id}">Voltar pra lista</button>` : `<button type="button" data-vi="${f.id}">Vimos!</button>`}<button class="ib" type="button" data-fed="${f.id}" aria-label="Editar">${icon('pencil')}</button><button class="ib" type="button" data-del="${f.id}" aria-label="Apagar">${icon('trash')}</button></div></article>`).join('')
+        <div class="fl-act">${f.visto ? `<button type="button" class="ghost" data-volta="${f.id}">Voltar pra lista</button>` : `<button type="button" data-vi="${f.id}">Vimos!</button>`}<button class="ib" type="button" data-fed="${f.id}" aria-label="Editar">${icon('pencil')}</button><button class="ib" type="button" data-del="${f.id}" aria-label="Apagar">${icon('trash')}</button></div></div></article>`).join('')
       : `<p class="lead hq-empty">${aba === 'ver' ? 'Lista vazia. Bora escolher o próximo?' : 'Quando vocês assistirem, toca em "Vimos!" e dão nota.'}</p>`;
     $('fll').querySelectorAll('[data-vi]').forEach(b => b.onclick = () => { col.set(b.dataset.vi, Object.assign({}, list.find(x => x.id === b.dataset.vi), {visto:true, vistoEm:hoje()})); sparkle(b); });
     $('fll').querySelectorAll('[data-volta]').forEach(b => b.onclick = () => col.set(b.dataset.volta, Object.assign({}, list.find(x => x.id === b.dataset.volta), {visto:false})));
     $('fll').querySelectorAll('.fl-n.edit i').forEach(i => i.onclick = () => { const id = i.parentElement.dataset.id, f = list.find(x => x.id === id); col.set(id, Object.assign({}, f, {notas:Object.assign({}, f.notas || {}, {[eu]:+i.dataset.k})})); });
     $('fll').querySelectorAll('[data-del]').forEach(b => b.onclick = () => { if(!b.dataset.sure){ b.dataset.sure = 1; b.classList.add('sure'); setTimeout(() => { delete b.dataset.sure; b.classList.remove('sure'); }, 2500); return; } col.remove(b.dataset.del); });
+    $('fll').querySelectorAll('[data-capa]').forEach(b => b.onclick = () => { capaDe = b.dataset.capa; $('flcap').value = ''; $('flcap').click(); });
+    $('fll').querySelectorAll('[data-cs]').forEach(i => i.onclick = () => { const f = list.find(x => x.id === i.dataset.id); if(!f) return; const s2 = Math.min(1.8, Math.max(.7, +(((f.capaS || 1) + .15 * i.dataset.cs)).toFixed(2))); f.capaS = s2; draw(); clearTimeout(tCap); tCap = setTimeout(() => col.set(f.id, Object.assign({}, f, {capaS:s2})).catch(() => {}), 500); });
     $('fll').querySelectorAll('[data-fed]').forEach(b => b.onclick = () => { const f = list.find(x => x.id === b.dataset.fed); if(f) fed.abrir(f.id, {flt:f.titulo, flk:f.tipo || 'Filme'}); });
   };
   const fed = editavel($('flf'), document.querySelector('#flf button[type=submit]'), 'Adicionar à lista');
   document.querySelectorAll('.fl-tabs button').forEach(b => b.onclick = () => { aba = b.dataset.a; document.querySelectorAll('.fl-tabs button').forEach(x => x.classList.toggle('on', x === b)); draw(); });
   $('flf').onsubmit = async e => { e.preventDefault(); const t = $('flt').value.trim(); if(!t) return; try{ if(fed.id){ const f = list.find(x => x.id === fed.id) || {}; await col.set(fed.id, Object.assign({}, f, {titulo:t, tipo:$('flk').value})); fed.fechar(); } else await col.add({titulo:t, tipo:$('flk').value, visto:false, autor:eu, notas:{}}); $('flt').value = ''; sparkle(e.target.querySelector('button[type=submit]')); }catch(x){} };
+  let capaDe = null, tCap = null;
+  $('flcap').onchange = async () => { const fl = $('flcap').files[0], f = list.find(x => x.id === capaDe); if(!fl || !f) return;
+    try{ const img = await compressImage(fl, 600, .76, {r:2/3}); csToast('Salvando a capa…'); await comTempo(col.set(f.id, Object.assign({}, f, {capa:img}))); csToast('Capa salva ♥'); }catch(e){ if(e.code !== 'cancel') csToast(erroFoto(e)); } };
   const off = col.on(l => { list = l.slice().reverse(); draw(); });
   const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { off(); prev(); };
 };
