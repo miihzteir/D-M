@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=107">
-<link rel="apple-touch-icon" href="icon-180.png?v=107">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=107">
+<link rel="manifest" href="manifest.json?v=108">
+<link rel="apple-touch-icon" href="icon-180.png?v=108">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=108">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -467,7 +467,7 @@ button.cs-saldo{background:var(--paper,#fffaf6);color:inherit;box-shadow:0 10px 
 .mc .k img{width:100%;height:100%;object-fit:cover;border-radius:11px;display:block}
 .mc .k:has(img){padding:0;overflow:hidden}
 .ed-mem{flex-direction:column;align-items:stretch!important}
-.ed-memgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:10px}
+.ed-memgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:10px;height:auto!important;max-height:none!important;flex:none!important;overflow:visible!important}
 .ed-memslot{display:flex;flex-direction:column;gap:4px}
 .ed-memph{aspect-ratio:3/4;width:100%!important;height:auto!important;padding:0!important;border-radius:12px!important;overflow:hidden;background:#fbeef0!important;border:2px dashed #e7a9b8!important;box-shadow:none!important;color:#b3122c!important;display:grid;place-items:center}
 .ed-memph img{width:100%;height:100%;object-fit:cover;display:block}
@@ -1836,6 +1836,10 @@ html body .busca-it:hover,html body .busca-it:focus-visible{background:#fbf3f4}
 .busca-tx mark{background:#ffe6a8;color:inherit;border-radius:3px;padding:0 1px}
 .busca-nada{margin:10px;font-size:13px;color:var(--muted)}
 html body .recolhido{display:none!important}
+.mem-ed{margin-top:18px;background:#fffdf8;border:1px solid var(--line2);border-radius:18px;padding:14px}.mem-ed-t{margin:0 0 10px;font-weight:700;color:var(--wine);text-align:left}
+.mem-ed-g{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.mem-ed-s{position:relative;aspect-ratio:3/4;border-radius:12px;overflow:visible;background:#fbeef0;border:2px dashed #e7a9b8;display:grid;place-items:center;color:#b3122c;font-weight:700}
+.mem-ed-s img{width:100%;height:100%;object-fit:cover;border-radius:10px;display:block}.mem-ed-s:has(img){border-style:solid}
+#memde{margin-top:12px;display:inline-flex;align-items:center;gap:8px;width:auto}
 .minhafoto{display:flex;justify-content:center;margin:18px 0 6px}html body .mf-b{display:flex;align-items:center;gap:12px;width:auto!important;max-width:100%;min-height:0!important;padding:8px 16px 8px 8px!important;border-radius:99px!important;background:#fff!important;color:var(--wine)!important;border:1px solid #ecd4d6!important;box-shadow:none!important;text-align:left}
 .mf-av{width:44px;height:44px;border-radius:50%;flex:none;overflow:hidden;display:grid;place-items:center;background:#f3e6e8;font-family:var(--f-script);font-size:24px;color:var(--wine)}.mf-av img{width:100%;height:100%;object-fit:cover;display:block}
 .mf-tx{display:flex;flex-direction:column;min-width:0}.mf-tx b{font-size:13.5px}.mf-tx small{font-size:11.5px;color:var(--muted);font-weight:500}.mf-b > svg{width:18px;height:18px;flex:none;opacity:.7}
@@ -3704,7 +3708,7 @@ function renderHome(y = 0){
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
       <div class="minhafoto" id="minhafoto"></div>
       <p class="endsync" id="endsync"></p>
-      <p class="endver">versão de 21/10 · 12h40</p>
+      <p class="endver">versão de 21/10 · 13h10</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
@@ -4421,11 +4425,15 @@ VIEWS.memoria = () => {
   const cartas = memFotos().map(x => ({img:x.img})), sym = C.memoria.slice();
   while(cartas.length < 6 && sym.length) cartas.push({s:sym.shift()});
   const N = cartas.length;
-  const deck = [...cartas.keys(), ...cartas.keys()].sort(()=>Math.random()-.5);
+  /* embaralha de verdade e nunca repete a ordem da última partida */
+  const mistura = () => { const d = [...cartas.keys(), ...cartas.keys()]; for(let i = d.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [d[i], d[j]] = [d[j], d[i]]; } return d; };
+  let deck = mistura(); const ult = store.get('memUlt', ''); for(let t = 0; t < 5 && deck.join() === ult; t++) deck = mistura(); store.set('memUlt', deck.join());
+  const edFotos = modoEd() ? `<div class="mem-ed"><p class="mem-ed-t">Fotos dos pares</p><div class="mem-ed-g">${[0,1,2,3,4,5,6,7].map(k => { const d = conteudoAtual.find(x => x.id === 'memfoto_' + k); return `<span class="mem-ed-s" data-foto="memfoto_${k}">${d && d.img ? `<img src="${d.img}" alt="">` : `<i>${k + 1}</i>`}</span>`; }).join('')}</div></div>` : '';
   shell('jogo','Jogo da memória','Encontra todos os pares',
     `<div class="stats"><span id="mv">0 jogadas</span><span id="pr">0 de ${N} pares</span></div>
      <div class="mem">${deck.map((v,k)=>`<button class="mc st" style="--i:${k}" data-v="${v}" aria-label="carta"><div class="in"><div class="f">♥︎</div><div class="k">${cartas[v].img ? `<img src="${cartas[v].img}" alt="">` : cartas[v].s}</div></div></button>`).join('')}</div>
-     <div id="memEnd"></div>`);
+     <div id="memEnd"></div>${edFotos}`);
+  if(edFotos) setTimeout(aplicaFotos, 50);
   let first = null, lock = false, moves = 0, pairs = 0;
   app.querySelectorAll('.mc').forEach(b => b.onclick = () => {
     if(lock || b.classList.contains('up')) return;
@@ -4435,7 +4443,8 @@ VIEWS.memoria = () => {
       first.classList.add('got'); b.classList.add('got'); first = null; pairs++;
       document.getElementById('pr').textContent = `${pairs} de ${N} pares`;
       if(pairs === N){ burst(innerWidth/2, innerHeight/2); jogou('memoria');
-        document.getElementById('memEnd').innerHTML = `<div class="paper unfold"><p>Achou todos em ${moves} jogadas!</p>${C.textos.memoriaFim ? `<p>${esc(C.textos.memoriaFim)}</p>` : ''}</div>`; }
+        document.getElementById('memEnd').innerHTML = `<div class="paper unfold"><p>Achou todos em ${moves} jogadas!</p>${C.textos.memoriaFim ? `<p>${esc(C.textos.memoriaFim)}</p>` : ''}<button type="button" id="memde">${icon('wheel')} Jogar de novo</button></div>`;
+        document.getElementById('memde').onclick = () => { const y = window.scrollY; voltandoPara = true; scrollMem.memoria = 0; VIEWS.memoria(); }; }
     } else { lock = true; setTimeout(()=>{ first.classList.remove('up'); b.classList.remove('up'); first = null; lock = false; }, 800); }
   });
 };
