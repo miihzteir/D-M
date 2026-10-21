@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=90">
-<link rel="apple-touch-icon" href="icon-180.png?v=90">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=90">
+<link rel="manifest" href="manifest.json?v=95">
+<link rel="apple-touch-icon" href="icon-180.png?v=95">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=95">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -1820,6 +1820,8 @@ html body .addfab:active{transform:scale(.92)}
 html.modo-ed body .addfab{bottom:calc(84px + env(safe-area-inset-bottom,0px))}
 @media (min-width:700px){html body .addfab{right:calc(50% - 240px + 18px)}}
 html body .nm{font-weight:800}html body .nm-di{color:#2f6db3!important}html body .nm-mi{color:#c2185b!important}
+@keyframes alvopisca{0%,100%{box-shadow:0 0 0 0 rgba(200,24,44,0)}30%{box-shadow:0 0 0 4px rgba(200,24,44,.45)}}
+.alvo-pisca{animation:alvopisca 1.1s ease-in-out 2;border-radius:14px}
 /* filtros */
 .flt{display:flex;flex-direction:column;gap:8px;margin:4px 0 14px;padding:10px 12px;border-radius:18px;background:rgba(255,255,255,.7);box-shadow:0 0 0 1px var(--line2)}
 .flt-r{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
@@ -3094,9 +3096,9 @@ const Sync = (() => {
     };
     c.api = {
       on(f){ c.L.push(f); f(c.items); ready.then(c.attach); return () => { c.L = c.L.filter(x => x !== f); }; },
-      async add(o){ await ready; if(window.bloqueiaPersp && !['conteudo','fotosMem'].includes(name) && bloqueiaPersp()) throw new Error('persp'); if(online()){ o = semUndef(o); let r; try{ r = await fdb.collection(name).add({...o, uid:user.uid, criadoEm:ts()}); }catch(e){ erroSalvar(e); throw e; } try{ window.pushEvento && pushEvento(name, o, null); }catch(e){} return r; }
+      async add(o){ await ready; if(window.bloqueiaPersp && !['conteudo','fotosMem'].includes(name) && bloqueiaPersp()) throw new Error('persp'); if(online()){ o = semUndef(o); let r; try{ r = await fdb.collection(name).add({...o, uid:user.uid, criadoEm:ts()}); }catch(e){ erroSalvar(e); throw e; } try{ window.pushEvento && pushEvento(name, Object.assign({}, o, {id:r.id}), null); }catch(e){} return r; }
         c.items = [...c.items, {...o, id:'l' + Date.now() + Math.random().toString(36).slice(2,6), criadoEm:Date.now()}]; saveLocal(); },
-      async set(id, o){ await ready; if(window.bloqueiaPersp && !['conteudo','fotosMem'].includes(name) && bloqueiaPersp()) throw new Error('persp'); if(online()){ const antes = c.items.find(x => x.id === id) || null; const troca = name === 'conteudo' && /^(telas|posicoes|tx_|cartas$|textos$)/.test(id); o = semUndef(o); let r; try{ r = await fdb.collection(name).doc(id).set({...o, uid:user.uid, criadoEm:ts()}, {merge:!troca}); }catch(e){ erroSalvar(e); throw e; } try{ window.pushEvento && pushEvento(name, Object.assign({}, antes || {}, o), antes); }catch(e){} return r; }
+      async set(id, o){ await ready; if(window.bloqueiaPersp && !['conteudo','fotosMem'].includes(name) && bloqueiaPersp()) throw new Error('persp'); if(online()){ const antes = c.items.find(x => x.id === id) || null; const troca = name === 'conteudo' && /^(telas|posicoes|tx_|cartas$|textos$)/.test(id); o = semUndef(o); let r; try{ r = await fdb.collection(name).doc(id).set({...o, uid:user.uid, criadoEm:ts()}, {merge:!troca}); }catch(e){ erroSalvar(e); throw e; } try{ window.pushEvento && pushEvento(name, Object.assign({}, antes || {}, o, {id}), antes); }catch(e){} return r; }
         c.items = [...c.items.filter(x => x.id !== id), {...o, id, criadoEm:Date.now()}]; saveLocal(); },
       async remove(id){ await ready; if(window.bloqueiaPersp && !['conteudo','fotosMem'].includes(name) && bloqueiaPersp()) throw new Error('persp'); if(online()) return fdb.collection(name).doc(id).delete();
         c.items = c.items.filter(x => x.id !== id); saveLocal(); }
@@ -3394,7 +3396,7 @@ function renderXmas(){
       <div class="xfinal">
         <p class="xf-eb">${TE('xf_eb', 'por último', 'Frase de cima da última surpresa')}</p>
         <h3 class="xf-t">${TE('xf_t', 'A última surpresa', 'Título da última surpresa')}</h3>
-        ${jaNatal() || Sync.quemReal === 'Mihzinha' ? `<button class="gift" id="xfgift" aria-label="Abrir o presente"><span class="lid"></span><span class="box"></span><span class="rib"></span><svg class="bow" viewBox="0 0 60 36" aria-hidden="true"><path d="M30 18C22 4 6 2 6 14s16 8 24 4zM30 18c8-14 24-16 24-4s-16 8-24 4z" fill="#bf9455"/><path d="M30 18l-8 16M30 18l8 16" stroke="#bf9455" stroke-width="5" stroke-linecap="round"/><circle cx="30" cy="18" r="5" fill="#a07a40"/></svg></button>
+        ${jaNatal() || modoEd() ? `<button class="gift" id="xfgift" aria-label="Abrir o presente"><span class="lid"></span><span class="box"></span><span class="rib"></span><svg class="bow" viewBox="0 0 60 36" aria-hidden="true"><path d="M30 18C22 4 6 2 6 14s16 8 24 4zM30 18c8-14 24-16 24-4s-16 8-24 4z" fill="#bf9455"/><path d="M30 18l-8 16M30 18l8 16" stroke="#bf9455" stroke-width="5" stroke-linecap="round"/><circle cx="30" cy="18" r="5" fill="#a07a40"/></svg></button>
         <p class="xf-tap" id="xftap">${TE('xf_tap', 'toca no presente', 'Dica embaixo do presente')}</p>
         <div id="xfslot" class="xf-slot" ${modoEd() ? '' : 'hidden'}><article class="paper xf-carta"><p class="to">${TE('xf_to', 'Meu Di,', 'Começo da carta da última surpresa')}</p><p class="xm-pre">${TE('xf_carta', esc(C.textos.ultimaCarta), 'Carta da última surpresa')}</p><p class="sign">${TE('xf_ass', esc(C.textos.ultimaAssinatura), 'Assinatura da última surpresa')}</p></article></div>`
         : `<p class="xf-lock">${icon('lock')} ${TE('xf_lock', 'abre no dia 25 de dezembro', 'Aviso antes do dia 25')}</p>`}
@@ -3634,7 +3636,7 @@ function renderHome(y = 0){
       <div id="ncvbox" class="mdiabox ncv-fim"></div>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
       <p class="endsync" id="endsync"></p>
-      <p class="endver">versão de 21/10 · 10h20</p>
+      <p class="endver">versão de 21/10 · 11h05</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
@@ -4138,14 +4140,17 @@ document.addEventListener('click', async e => {
     b.disabled = true; try{ await Sync.col('comentarios').add({alvo, texto:t, autor:Sync.quem || 'Di', para:el.dataset.autor || ''}); cmtAberto.delete(alvo); sparkle(b); }catch(x){ b.disabled = false; } }
 }, true);
 /* lista primeiro, numa caixinha com rolagem; o formulário de escrever fica embaixo */
-const ROLA = {primeiras:'#pf', bilhetes:'#bf', diario:'#dif', playlist:'#mf', lugares:'#lgdet', datas:'#dmf', filmes:'#flf', contagem:'#ctf', cartadata:'#cdf', gostos:'#gsform'};
+const ROLA = {primeiras:'#pf', bilhetes:'#bf', diario:'#dif', playlist:'#mf', lugares:'#lgdet', datas:'#dmf', filmes:'#flf', contagem:'#ctf', cartadata:'#cdf', gostos:'#gsform', mes:'#msf', planos:{f:'#plf', box:['#pll']}, premios:{f:'#pzf', box:['h3.ct-sep','#pzpra','#pzgan','#pzmeus']}, roleta:{f:'#of', box:['#ol']}};
 function listaPrimeiro(){
-  const sel = ROLA[curView]; if(!sel) return; const form = app.querySelector('.view ' + sel); if(!form || form.dataset.rola) return; form.dataset.rola = 1;
+  const cfg = ROLA[curView]; if(!cfg) return; const sel = typeof cfg === 'string' ? cfg : cfg.f; const form = app.querySelector('.view ' + sel); if(!form || form.dataset.rola) return; form.dataset.rola = 1;
   const box = document.createElement('div'); box.className = 'rolabox';
+  if(cfg.box){ const els = []; cfg.box.forEach(q => app.querySelectorAll('.view ' + q).forEach(e => { if(!els.includes(e)) els.push(e); }));
+    els.sort((a, b) => a.compareDocumentPosition(b) & 4 ? -1 : 1).forEach(e => box.append(e)); form.before(box); }
+  else {
   const depois = []; for(let n = form.nextElementSibling; n; n = n.nextElementSibling) depois.push(n);
   const fica = n => n.matches('input[type=file],.savenote,.gs-catsed');
   const antes = []; depois.forEach(n => { if(fica(n)) return; if(n.matches('.flt,.fz-tabs,.fl-tabs,.dm-pols,.gs-cats') && !box.children.length) antes.push(n); else box.append(n); });
-  antes.forEach(n => form.before(n)); form.before(box);
+  antes.forEach(n => form.before(n)); form.before(box); }
   /* botão + que desce até o lugar de escrever */
   document.getElementById('addfab')?.remove();
   const f = document.createElement('button'); f.type = 'button'; f.id = 'addfab'; f.className = 'addfab'; f.setAttribute('aria-label', 'Escrever'); f.innerHTML = icon('plus');
@@ -5749,7 +5754,7 @@ const vapidChave = () => ((conteudoAtual || []).find(x => x.id === 'config') || 
 /* toca pelo canal de notificação do celular (som e volume de notificação) */
 async function somSistema(n = {titulo:'D&M', corpo:'É assim que vai chegar ♥'}){
   if(!notifSuportada() || Notification.permission !== 'granted') return;
-  try{ const reg = 'serviceWorker' in navigator && await navigator.serviceWorker.getRegistration(); const op = {body:n.corpo || '', icon:'icon-coracao.png', badge:'icon-badge.png', tag:n.tag || 'dm-' + Date.now(), renotify:true, silent:false, vibrate:[120, 60, 120], data:{url:APP_URL + (n.go ? '#ir-' + n.go : '')}};
+  try{ const reg = 'serviceWorker' in navigator && await navigator.serviceWorker.getRegistration(); const op = {body:n.corpo || '', icon:'icon-coracao.png', badge:'icon-badge.png', tag:n.tag || 'dm-' + Date.now(), renotify:true, silent:false, vibrate:[120, 60, 120], data:{url:APP_URL + (n.go ? '#ir-' + encodeURIComponent(n.go) : '')}};
     reg ? await reg.showNotification(n.titulo, op) : new Notification(n.titulo, op); }catch(e){}
 }
 function notiToast(n){
@@ -5762,12 +5767,20 @@ function notiToast(n){
   if(store.get('notifSom', 'sistema') === 'sistema'){ somSistema(n); return; }
   tocaSom(); if(navigator.vibrate) try{ navigator.vibrate([90, 50, 90]); }catch(e){}
 }
-function irPara(go){ if(!go) return renderHome(0); if(VIEWS[go]) openStop(go); }
+/* abre a tela e vai direto no item (go = "tela@colecao:id") */
+function irPara(go){ if(!go) return renderHome(0); const [v, alvo] = String(go).split('@'); if(!VIEWS[v]) return;
+  document.querySelectorAll('.tk-wrap:not(#inst),#ntoast').forEach(x => x.remove()); hubAtual = null; openStop(v);
+  if(!alvo) return; let n = 0;
+  const id = alvo.split(':').slice(1).join(':'), q = CSS.escape(id);
+  const acha = () => { const c = document.querySelector(`.cmts[data-alvo="${CSS.escape(alvo)}"]`) || (id && document.querySelector(`[data-id="${q}"],[data-del="${q}"],[data-ed="${q}"],[data-k="${q}"],[data-led="${q}"],[data-fed="${q}"],[data-pz="${q}"],[data-cid="${q}"],[data-buy="${q}"],[data-ent="${q}"],[data-rid="${q}"]`)); if(!c){ if(++n < 30) setTimeout(acha, 150); return; }
+    const it = c.closest('li,article,.postit,.song,.dm-item,.gs-card,.fl-card,.lg-card,.dia-card,.pz-card,.ct-card,.cd-env,details') || c;
+    it.scrollIntoView({behavior:'smooth', block:'center'}); it.classList.remove('alvo-pisca'); void it.offsetWidth; it.classList.add('alvo-pisca'); };
+  setTimeout(acha, 250); }
 async function avisar(n){
   if(document.visibilityState === 'visible') return notiToast(n);
   if(pushAtivo() || !notifSuportada() || Notification.permission !== 'granted') return;
   try{ const reg = 'serviceWorker' in navigator && await navigator.serviceWorker.getRegistration();
-    const op = {body:n.corpo || '', icon:'icon-coracao.png', badge:'icon-badge.png', tag:n.tag || n.go || 'dm', renotify:true, data:{url:APP_URL + (n.go ? '#ir-' + n.go : '')}};
+    const op = {body:n.corpo || '', icon:'icon-coracao.png', badge:'icon-badge.png', tag:n.tag || n.go || 'dm', renotify:true, data:{url:APP_URL + (n.go ? '#ir-' + encodeURIComponent(n.go) : '')}};
     if(reg) reg.showNotification(n.titulo, op); else new Notification(n.titulo, op); }catch(e){}
 }
 
@@ -5788,28 +5801,28 @@ function regrasAviso(eu){
   const outro = eu === 'Di' ? 'Mihzinha' : 'Di', Ele = outro === 'Di' ? 'O ' + apelido('Di', 15) : 'A ' + apelido('Mihzinha', 15), ele = outro === 'Di' ? 'ele' : 'ela';
   const corta = (t, n = 90) => !t ? '' : t.length > n ? t.slice(0, n - 1) + '…' : t;
   return {
-    bilhetes: b => b.autor === outro && {titulo:`${Ele} colou um bilhetinho pra você`, corpo:b.texto ? corta(b.texto) : 'Tem um áudio novo', go:'bilhetes', ic:'note'},
+    bilhetes: b => b.autor === outro && {titulo:`${Ele} colou um bilhetinho pra você`, corpo:b.texto ? corta(b.texto) : 'Tem um áudio novo', go:'bilhetes@bilhetes:' + b.id, ic:'note'},
     respostas: r => r.quem === outro && {titulo:`${Ele} respondeu a pergunta de hoje`, corpo:`Vem ver o que ${ele} disse`, go:'pergunta', ic:'chat'},
     abraQuando: c => (c.autor || '') === outro && {titulo:`${Ele} escreveu uma carta nova pra você`, corpo:'Tem envelope novo no Abra quando…', go:'abra', ic:'mail'},
-    cartasData: c => c.de === outro && c.para === eu && {titulo:`${Ele} lacrou uma cartinha pra você`, corpo:`Ela abre em ${new Date(c.abreEm + 'T12:00:00').toLocaleDateString('pt-BR')}`, go:'cartadata', ic:'envrelogio'},
+    cartasData: c => c.de === outro && c.para === eu && {titulo:`${Ele} lacrou uma cartinha pra você`, corpo:`Ela abre em ${new Date(c.abreEm + 'T12:00:00').toLocaleDateString('pt-BR')}`, go:'cartadata@cartasData:' + c.id, ic:'envrelogio'},
     abracos: a => a.de === outro && a.para === eu && {titulo:`${Ele} te deu um abraço`, corpo:'Lá na nossa casinha ♥', go:'casinha', tag:'abraco', ic:'hug'},
     missoesEsp: m => m.autor === outro && m.para === eu && !m.feita && {titulo:`${Ele} criou uma missão especial pra você`, corpo:corta(m.t), go:'', ic:'star'},
     saudade: x => x.quem === outro && {titulo:`${Ele} tá com saudade de você`, corpo:`${x.n || 1}x hoje no termômetro`, go:'saudade', tag:'saudade', k:'n' + (x.n || 1), ic:'termo'},
-    gostos: g => g.autor === outro && g.sobre === eu && {titulo:`${Ele} colocou uma coisa que você ama`, corpo:corta(g.legenda), go:'gostos', ic:'heart'},
-    musicas: m => m.autor === outro && {titulo:`${Ele} colocou uma música na nossa playlist`, corpo:corta(m.titulo || m.nome || ''), go:'playlist', ic:'music'},
-    diario: d => d.autor === outro && {titulo:`${Ele} escreveu no diário de hoje`, corpo:'Vem ler e escrever o seu também', go:'diario', ic:'livro'},
-    filmes: f => f.autor === outro && {titulo:`${Ele} colocou um filme na nossa lista`, corpo:corta(f.titulo), go:'filmes', ic:'film'},
-    lugares: l => l.autor === outro && {titulo:`${Ele} marcou um lugar no nosso mapa`, corpo:corta(l.nome || l.titulo || ''), go:'lugares', ic:'pin'},
-    primeiras: p => p.autor === outro && {titulo:`${Ele} guardou uma primeira vez nossa`, corpo:corta(p.titulo || p.t || ''), go:'primeiras', ic:'star'},
-    datasMarcantes: d => d.autor === outro && {titulo:`${Ele} guardou uma data marcante`, corpo:corta(d.titulo || d.legenda), go:'datas', ic:'cal12'},
+    gostos: g => g.autor === outro && g.sobre === eu && {titulo:`${Ele} colocou uma coisa que você ama`, corpo:corta(g.legenda), go:'gostos@gostos:' + g.id, ic:'heart'},
+    musicas: m => m.autor === outro && {titulo:`${Ele} colocou uma música na nossa playlist`, corpo:corta(m.titulo || m.nome || ''), go:'playlist@musicas:' + m.id, ic:'music'},
+    diario: d => d.autor === outro && {titulo:`${Ele} escreveu no diário de hoje`, corpo:'Vem ler e escrever o seu também', go:'diario@diario:' + d.dia, ic:'livro'},
+    filmes: f => f.autor === outro && {titulo:`${Ele} colocou um filme na nossa lista`, corpo:corta(f.titulo), go:'filmes@filmes:' + f.id, ic:'film'},
+    lugares: l => l.autor === outro && {titulo:`${Ele} marcou um lugar no nosso mapa`, corpo:corta(l.nome || l.titulo || ''), go:'lugares@lugares:' + l.id, ic:'pin'},
+    primeiras: p => p.autor === outro && {titulo:`${Ele} guardou uma primeira vez nossa`, corpo:corta(p.titulo || p.t || ''), go:'primeiras@primeiras:' + p.id, ic:'star'},
+    datasMarcantes: d => d.autor === outro && {titulo:`${Ele} guardou uma data marcante`, corpo:corta(d.titulo || d.legenda), go:'datas@datasMarcantes:' + d.id, ic:'cal12'},
     mesversario: m => m.autor === outro && {titulo:`${Ele} escreveu pro nosso mesversário`, corpo:'Vem ler ♥', go:'mes', ic:'cal12'},
-    roleta: r => r.autor === outro && {titulo:`${Ele} colocou uma ideia nova na roleta`, corpo:corta(r.texto), go:'roleta', ic:'star'},
-    planosLista: p => p.autor === outro && {titulo:`${Ele} colocou um plano novo pra gente`, corpo:corta(p.t), go:'planos', ic:'mapa'},
-    contagens: c => c.autor === outro && {titulo:`${Ele} criou uma contagem regressiva`, corpo:corta(c.titulo), go:'contagem', ic:'cal12'},
-    comentarios: c => c.autor === outro && (!c.para || c.para === eu) && {titulo:`${Ele} comentou no que você escreveu`, corpo:corta(c.texto), go:({primeiras:'primeiras', bilhetes:'bilhetes', diario:'diario', musicas:'playlist', lugares:'lugares', gostos:'gostos', filmes:'filmes', datasMarcantes:'datas'})[String(c.alvo).split(':')[0]] || '', ic:'chat'},
-    premios: p => p.autor === outro && p.para === eu && !p.comprado ? {titulo:`${Ele} ofereceu um prêmio pra você`, corpo:corta(p.t), go:'premios', k:'novo', ic:'gift'}
-      : p.autor === eu && p.comprado && !p.entregue && p.por === outro ? {titulo:`${Ele} trocou chocolates por um prêmio`, corpo:`${corta(p.t)}. Tá esperando você cumprir ♥`, go:'premios', k:'troca', ic:'gift', forte:1}
-      : p.para === eu && p.entregue && p.autor === outro ? {titulo:`${Ele} cumpriu o seu prêmio`, corpo:corta(p.t), go:'premios', k:'ok', ic:'medalha'} : null
+    roleta: r => r.autor === outro && {titulo:`${Ele} colocou uma ideia nova na roleta`, corpo:corta(r.texto), go:'roleta@roleta:' + r.id, ic:'star'},
+    planosLista: p => p.autor === outro && {titulo:`${Ele} colocou um plano novo pra gente`, corpo:corta(p.t), go:'planos@planosLista:' + p.id, ic:'mapa'},
+    contagens: c => c.autor === outro && {titulo:`${Ele} criou uma contagem regressiva`, corpo:corta(c.titulo), go:'contagem@contagens:' + c.id, ic:'cal12'},
+    comentarios: c => c.autor === outro && {titulo:c.para === eu ? `${Ele} comentou no que você escreveu` : `${Ele} deixou um comentário`, corpo:corta(c.texto), go:(v => v ? v + '@' + c.alvo : '')(({primeiras:'primeiras', bilhetes:'bilhetes', diario:'diario', musicas:'playlist', lugares:'lugares', gostos:'gostos', filmes:'filmes', datasMarcantes:'datas'})[String(c.alvo).split(':')[0]]), ic:'chat'},
+    premios: p => p.autor === outro && p.para === eu && !p.comprado ? {titulo:`${Ele} ofereceu um prêmio pra você`, corpo:corta(p.t), go:'premios@premios:' + p.id, k:'novo', ic:'gift'}
+      : p.autor === eu && p.comprado && !p.entregue && p.por === outro ? {titulo:`${Ele} trocou chocolates por um prêmio`, corpo:`${corta(p.t)}. Tá esperando você cumprir ♥`, go:'premios@premios:' + p.id, k:'troca', ic:'gift', forte:1}
+      : p.para === eu && p.entregue && p.autor === outro ? {titulo:`${Ele} cumpriu o seu prêmio`, corpo:corta(p.t), go:'premios@premios:' + p.id, k:'ok', ic:'medalha'} : null
   };
 }
 /* avisos na tela inicial, com X pra dispensar */
@@ -5829,7 +5842,7 @@ function caixaAvisos(el){
       ${its.length > 3 && !aberto ? `<button type="button" class="av-mais" id="avmais">ver mais ${its.length - 3}</button>` : ''}</div>`;
     el.querySelectorAll('.av-it').forEach(r => {
       r.querySelector('.av-x').onclick = () => { lido(r.dataset.k); r.classList.add('sai'); setTimeout(draw, 220); };
-      r.querySelector('.av-go').onclick = e => { lido(r.dataset.k); const g = e.currentTarget.dataset.go; g ? openStop(g) : draw(); };
+      r.querySelector('.av-go').onclick = e => { lido(r.dataset.k); const g = e.currentTarget.dataset.go; g ? irPara(g) : draw(); };
     });
     const lm = el.querySelector('#avlimpa'); if(lm) lm.onclick = () => { its.forEach(n => lido(n.k)); draw(); };
     const mm = el.querySelector('#avmais'); if(mm) mm.onclick = () => { aberto = true; draw(); };
@@ -5900,7 +5913,8 @@ VIEWS.notificacoes = () => {
   draw();
 };
 /* abrir direto numa tela quando toca na notificação */
-function irDoLink(){ const m = location.hash.match(/^#ir-([a-z0-9]+)$/i); if(!m) return; history.replaceState(null, '', location.pathname + location.search); setTimeout(() => irPara(m[1]), 600); }
+addEventListener('hashchange', () => { if(/^#ir-/.test(location.hash)) irDoLink(); });
+function irDoLink(){ const m = location.hash.match(/^#ir-(.+)$/i); if(!m) return; history.replaceState(null, '', location.pathname + location.search); let g = m[1]; try{ g = decodeURIComponent(g); }catch(e){} setTimeout(() => irPara(g), 600); }
 
 
 /* ---------- zerar tudo pra começar no dia 24/10 (só a Mih vê) ---------- */
@@ -6321,8 +6335,8 @@ VIEWS.cartadata = () => {
   const draw = () => { if(!$('cdp')) return;
     const pra = F.ap(list.filter(c => c.para === eu), c => c.abreEm), minhas = F.ap(list.filter(c => c.de === eu), c => c.abreEm);
     $('cdp').innerHTML = pra.length ? pra.map(c => { const n = diasAte(c.abreEm); return n > 0
-        ? `<article class="cd-env lock"><span class="cd-seal">${icon('heart')}</span><div><b>Cartinha de ${c.de === 'Di' ? 'Di' : 'Mihzinha'}</b><small>abre em ${new Date(c.abreEm + 'T12:00:00').toLocaleDateString('pt-BR')} · faltam ${n} ${n === 1 ? 'dia' : 'dias'}</small></div>${icon('lock')}</article>`
-        : `<details class="cd-env open"><summary><span class="cd-seal">${icon('heart')}</span><div><b>Cartinha de ${c.de === 'Di' ? 'Di' : 'Mihzinha'}</b><small>liberada em ${new Date(c.abreEm + 'T12:00:00').toLocaleDateString('pt-BR')} · toca pra ler</small></div></summary><div class="paper cd-paper">${c.texto ? `<p>${esc(c.texto)}</p>` : ''}${audioHTML(c.audio, c.de)}<p class="sign">${c.de === 'Di' ? 'Di' : 'Mihzinha'}</p></div></details>`; }).join('')
+        ? `<article class="cd-env lock" data-id="${c.id}"><span class="cd-seal">${icon('heart')}</span><div><b>Cartinha de ${c.de === 'Di' ? 'Di' : 'Mihzinha'}</b><small>abre em ${new Date(c.abreEm + 'T12:00:00').toLocaleDateString('pt-BR')} · faltam ${n} ${n === 1 ? 'dia' : 'dias'}</small></div>${icon('lock')}</article>`
+        : `<details class="cd-env open" data-id="${c.id}"><summary><span class="cd-seal">${icon('heart')}</span><div><b>Cartinha de ${c.de === 'Di' ? 'Di' : 'Mihzinha'}</b><small>liberada em ${new Date(c.abreEm + 'T12:00:00').toLocaleDateString('pt-BR')} · toca pra ler</small></div></summary><div class="paper cd-paper">${c.texto ? `<p>${esc(c.texto)}</p>` : ''}${audioHTML(c.audio, c.de)}<p class="sign">${c.de === 'Di' ? 'Di' : 'Mihzinha'}</p></div></details>`; }).join('')
       : `<p class="lead hq-empty">Nenhuma cartinha pra você ainda.</p>`;
     $('cdm').innerHTML = minhas.length ? minhas.map(c => `<article class="cd-env mine"><span class="cd-seal">${icon('mail')}</span><div><b>Pra ${c.para}${c.audio ? ` ${icon('mic')}` : ''}</b><small>${diasAte(c.abreEm) > 0 ? `abre em ${new Date(c.abreEm + 'T12:00:00').toLocaleDateString('pt-BR')}` : 'já liberada'}</small></div><button class="ib" type="button" data-del="${c.id}" aria-label="Apagar">${icon('trash')}</button></article>`).join('') : `<p class="lead hq-empty">Você ainda não lacrou nenhuma.</p>`;
     $('cdm').querySelectorAll('[data-del]').forEach(b => b.onclick = () => { if(!b.dataset.sure){ b.dataset.sure = 1; b.classList.add('sure'); setTimeout(() => { delete b.dataset.sure; b.classList.remove('sure'); }, 2500); return; } col.remove(b.dataset.del); });
@@ -7646,6 +7660,7 @@ VIEWS.roleta = () => {
 
 /* ---------- a última surpresa ---------- */
 VIEWS.carta = () => {
+  if(!jaNatal() && !modoEd()){ shell('por último','A última surpresa','Abre com carinho', `<div class="rt-lock"><span class="rt-big">${icon('lock')}</span><h3>Só no dia 25 de dezembro</h3></div>`); return; }
   shell('por último','A última surpresa','Abre com carinho',
     `<div class="gift-wrap"><button class="gift" id="gift" aria-label="Abrir o presente"><span class="lid"></span><span class="box"></span><span class="rib"></span><svg class="bow" viewBox="0 0 60 36" aria-hidden="true"><path d="M30 18C22 4 6 2 6 14s16 8 24 4zM30 18c8-14 24-16 24-4s-16 8-24 4z" fill="#bf9455"/><path d="M30 18l-8 16M30 18l8 16" stroke="#bf9455" stroke-width="5" stroke-linecap="round"/><circle cx="30" cy="18" r="5" fill="#a07a40"/></svg></button>
      <p class="lead" id="tap">toca no presente</p><div id="slot" style="width:100%"></div></div>`);
