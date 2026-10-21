@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=96">
-<link rel="apple-touch-icon" href="icon-180.png?v=96">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=96">
+<link rel="manifest" href="manifest.json?v=98">
+<link rel="apple-touch-icon" href="icon-180.png?v=98">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=98">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -1608,9 +1608,6 @@ html body .home .band.b-stripes-blue{background:url("data:image/svg+xml,%3Csvg x
   .vg-card{max-width:480px}
 }
 @media (hover:hover) and (pointer:fine){
-  .cs-tabs,.gs-cats,.bk-anos{scrollbar-width:thin!important;scrollbar-color:rgba(122,20,36,.35) transparent;cursor:grab}
-  .cs-tabs::-webkit-scrollbar,.gs-cats::-webkit-scrollbar,.bk-anos::-webkit-scrollbar{height:6px;display:block}
-  .cs-tabs::-webkit-scrollbar-thumb,.gs-cats::-webkit-scrollbar-thumb,.bk-anos::-webkit-scrollbar-thumb{background:rgba(122,20,36,.3);border-radius:6px}
   .arrastando{cursor:grabbing!important;user-select:none;scroll-behavior:auto!important}
 }
 @media (min-width: 760px){
@@ -1838,6 +1835,10 @@ html body .busca-it:hover,html body .busca-it:focus-visible{background:#fbf3f4}
 .busca-tx small{display:block;font-size:11.5px;color:var(--muted);font-weight:600}
 .busca-tx mark{background:#ffe6a8;color:inherit;border-radius:3px;padding:0 1px}
 .busca-nada{margin:10px;font-size:13px;color:var(--muted)}
+html body .recolhido{display:none!important}
+html body .add-tog{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:0;margin:0 0 14px;padding:13px 16px;border-radius:18px;background:#fff;color:#9b1630;border:1.5px dashed rgba(155,22,48,.35);box-shadow:none;font-size:14.5px;font-weight:800}
+html body .add-tog .icn{font-size:18px;transition:transform .25s}
+html body .add-tog.aberto{border-style:solid;background:#fdf1f3}html body .add-tog.aberto .icn{transform:rotate(45deg)}
 /* filtros */
 .flt{display:flex;flex-direction:column;gap:8px;margin:4px 0 14px;padding:10px 12px;border-radius:18px;background:rgba(255,255,255,.7);box-shadow:0 0 0 1px var(--line2)}
 .flt-r{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
@@ -2083,6 +2084,10 @@ html body .ed-btrow{max-width:100%!important}
 /* quebra de palavra só com hífen e no lugar certo (português) */
 html body{overflow-wrap:break-word;-webkit-hyphens:manual;hyphens:manual}
 html body :is(input,textarea,select,.endsync b,a[href^="http"]){-webkit-hyphens:manual;hyphens:manual}
+/* toda barra de rolagem do app é invisível (vertical e horizontal), em qualquer lugar */
+html *,html *::before,html *::after{scrollbar-width:none!important;-ms-overflow-style:none!important}
+html *::-webkit-scrollbar,html::-webkit-scrollbar{display:none!important;width:0!important;height:0!important;background:transparent!important}
+@media (pointer:fine){.cs-tabs,.gs-cats,.bk-anos,.dm-pstrip,.fz-tabs,.ab-tabs{cursor:grab}}.arrastando{cursor:grabbing!important;user-select:none}
 </style>
 
 <canvas id="petals" aria-hidden="true"></canvas>
@@ -3654,7 +3659,7 @@ function renderHome(y = 0){
       <div id="ncvbox" class="mdiabox ncv-fim"></div>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
       <p class="endsync" id="endsync"></p>
-      <p class="endver">versão de 21/10 · 11h30</p>
+      <p class="endver">versão de 21/10 · 12h05</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
@@ -4000,6 +4005,17 @@ function hifeniza(raiz = document.body){
   const ns = []; for(let n = w.nextNode(); n; n = w.nextNode()) ns.push(n);
   ns.forEach(n => { const nv = n.data.replace(/[A-Za-zÀ-ÿ­]{11,}/g, m => m.includes('­') ? m : silabas(m)); if(nv !== n.data) n.data = nv; n.__hif = n.data; });
 }
+/* no PC: listas que rolam pro lado dá pra arrastar com o mouse e rolar com a rodinha */
+(() => {
+  const rolaX = el => { for(let n = el; n && n !== document.body; n = n.parentElement){ if(!(n instanceof HTMLElement)) continue; const cs = getComputedStyle(n); if(/(auto|scroll)/.test(cs.overflowX) && n.scrollWidth > n.clientWidth + 2) return n; } return null; };
+  const rolaY = el => { for(let n = el; n && n !== document.body; n = n.parentElement){ if(!(n instanceof HTMLElement)) continue; const cs = getComputedStyle(n); if(/(auto|scroll)/.test(cs.overflowY) && n.scrollHeight > n.clientHeight + 2) return n; } return null; };
+  let alvo = null, x0 = 0, s0 = 0, moveu = false;
+  document.addEventListener('pointerdown', e => { if(e.pointerType !== 'mouse' || e.button !== 0 || e.target.closest('input,textarea,select,[data-mv].mv-on,.mv-sz,.ft-bar')) return; const r = rolaX(e.target); if(!r) return; alvo = r; x0 = e.clientX; s0 = r.scrollLeft; moveu = false; });
+  addEventListener('pointermove', e => { if(!alvo) return; const dx = e.clientX - x0; if(!moveu && Math.abs(dx) < 5) return; moveu = true; alvo.classList.add('arrastando'); alvo.scrollLeft = s0 - dx; });
+  addEventListener('pointerup', () => { if(!alvo) return; const a = alvo; alvo = null; a.classList.remove('arrastando'); if(moveu){ const bloq = ev => { ev.stopPropagation(); ev.preventDefault(); }; addEventListener('click', bloq, {capture:true, once:true}); setTimeout(() => removeEventListener('click', bloq, {capture:true}), 50); } });
+  addEventListener('wheel', e => { if(e.ctrlKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return; const r = rolaX(e.target); if(!r) return; const y = rolaY(e.target); if(y && r.contains(y)) return;
+    const max = r.scrollWidth - r.clientWidth; if((e.deltaY > 0 && r.scrollLeft >= max - 1) || (e.deltaY < 0 && r.scrollLeft <= 0)) return; r.scrollLeft += e.deltaY; e.preventDefault(); }, {passive:false});
+})();
 /* editar QUALQUER texto: no modo editar, liga "Aa" e toca no texto */
 let edLivre = false;
 const LIVRE_FORA = 'script,style,textarea,input,select,[data-edt],#edlv,#edlvbar,#edtx,.pin-wrap,.mv-sz,.edk,template';
@@ -4157,6 +4173,8 @@ document.addEventListener('click', async e => {
   if(b.classList.contains('cmt-ok')){ const ta = el.querySelector('textarea'), t = ta.value.trim(); if(!t){ cmtAberto.delete(alvo); el.dataset.v = ''; aplicaCmts(); return; }
     b.disabled = true; try{ await Sync.col('comentarios').add({alvo, texto:t, autor:Sync.quem || 'Di', para:el.dataset.autor || ''}); cmtAberto.delete(alvo); sparkle(b); }catch(x){ b.disabled = false; } }
 }, true);
+const ROTULO_ADD = {primeiras:'Adicionar primeira vez', bilhetes:'Escrever bilhete', diario:'Escrever o meu dia', playlist:'Adicionar música', datas:'Adicionar data marcante', filmes:'Adicionar filme ou série', contagem:'Nova contagem', cartadata:'Escrever cartinha', mes:'Escrever pro dia 12', planos:'Novo plano', premios:'Oferecer um prêmio', roleta:'Nova ideia'};
+function abreForm(form){ if(!form || !form.classList.contains('recolhido')) return; form.classList.remove('recolhido'); const tg = form._tog; if(tg){ tg.classList.add('aberto'); tg.querySelector('span').textContent = 'Esconder'; } }
 /* lista primeiro, numa caixinha com rolagem; o formulário de escrever fica embaixo */
 const ROLA = {primeiras:'#pf', bilhetes:'#bf', diario:'#dif', playlist:'#mf', lugares:'#lgdet', datas:'#dmf', filmes:'#flf', contagem:'#ctf', cartadata:'#cdf', gostos:'#gsform', mes:'#msf', planos:{f:'#plf', box:['#pll']}, premios:{f:'#pzf', box:['h3.ct-sep','#pzpra','#pzgan','#pzmeus']}, roleta:{f:'#of', box:['#ol']}};
 function listaPrimeiro(){
@@ -4169,13 +4187,19 @@ function listaPrimeiro(){
   const fica = n => n.matches('input[type=file],.savenote,.gs-catsed');
   const antes = []; depois.forEach(n => { if(fica(n)) return; if(n.matches('.flt,.fz-tabs,.fl-tabs,.dm-pols,.gs-cats') && !box.children.length) antes.push(n); else box.append(n); });
   antes.forEach(n => form.before(n)); form.before(box); }
+  /* o lugar de escrever fica recolhido: abre no botão ou no + */
+  if(form.tagName === 'DETAILS') form.open = false;
+  else if(!form.querySelector('details')){ const nome = ROTULO_ADD[curView] || 'Adicionar';
+    const tg = document.createElement('button'); tg.type = 'button'; tg.className = 'add-tog'; tg.innerHTML = `${icon('plus')}<span>${nome}</span>`; form.before(tg); form.classList.add('recolhido');
+    tg.onclick = () => { const ab = form.classList.toggle('recolhido'); tg.classList.toggle('aberto', !ab); tg.querySelector('span').textContent = ab ? nome : 'Esconder'; if(!ab) setTimeout(() => { form.scrollIntoView({behavior:'smooth', block:'center'}); const i = form.querySelector('textarea, input[type=text], input:not([type])'); i && i.focus({preventScroll:true}); }, 60); };
+    form._tog = tg; }
   /* botão + que desce até o lugar de escrever */
   document.getElementById('addfab')?.remove();
   const f = document.createElement('button'); f.type = 'button'; f.id = 'addfab'; f.className = 'addfab'; f.setAttribute('aria-label', 'Escrever'); f.innerHTML = icon('plus');
-  f.onclick = () => { if(form.tagName === 'DETAILS') form.open = true; const d = form.querySelector('details'); if(d) d.open = true;
+  f.onclick = () => { abreForm(form); if(form.tagName === 'DETAILS') form.open = true; const d = form.querySelector('details'); if(d) d.open = true;
     form.scrollIntoView({behavior:'smooth', block:'center'}); setTimeout(() => { const i = form.querySelector('textarea, input[type=text], input:not([type]), select'); i && i.focus({preventScroll:true}); }, 500); };
   document.body.append(f);
-  const vista = curView; try{ const io = new IntersectionObserver(es => { if(curView !== vista || !form.isConnected){ io.disconnect(); f.remove(); return; } f.classList.toggle('some', es[0].isIntersecting); }, {threshold:.25}); io.observe(form); }catch(e){}
+  const vista = curView; try{ const io = new IntersectionObserver(es => { if(curView !== vista || !form.isConnected){ io.disconnect(); f.remove(); return; } f.classList.toggle('some', es.some(x => x.isIntersecting) || [form._tog, form].some(el => el && el.getBoundingClientRect().top < innerHeight && el.getBoundingClientRect().bottom > 0 && el.offsetParent)); }, {threshold:.25}); io.observe(form); if(form._tog) io.observe(form._tog); }catch(e){}
 }
 function shell(eb, title, sub, body){
   document.documentElement.classList.toggle('di-ver', !modoEd());
@@ -6769,7 +6793,7 @@ VIEWS.gostos = () => {
      <details class="gs-det gs-catsed" id="gscated"><summary>${icon('pencil')} Mexer nas categorias</summary><div id="gscatbox"></div></details>`);
   const $ = id => document.getElementById(id), col = Sync.col('gostos');
   let formAberto = false, editando = null;
-  const form = () => aba === outro ? `<details class="gs-det" id="gsdet" ${formAberto || !list.some(x => x.sobre === outro) ? 'open' : ''}><summary>${icon('plus')} Colocar uma coisa que ${nome(outro)} ama</summary><form class="gs-form" id="gsf">
+  const form = () => aba === outro ? `<details class="gs-det" id="gsdet" ${formAberto ? 'open' : ''}><summary>${icon('plus')} Colocar uma coisa que ${nome(outro)} ama</summary><form class="gs-form" id="gsf">
       <button type="button" class="gs-pick" id="gspick">${foto ? `<img src="${foto}" alt="">` : `<span>${icon('image')}<small>escolher foto</small></span>`}</button>
       <div class="gs-campos"><label class="fz-lab">Categoria<select id="gscat">${gcats().map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label>
       <label class="fz-lab">Legenda<input type="text" id="gsleg" maxlength="80" placeholder="ex: Minecraft, joga desde criança"></label>
@@ -6892,7 +6916,7 @@ VIEWS.datas = () => {
     ol.querySelectorAll('.dm-item').forEach(li => {
       const d = list.find(x => x.id === li.dataset.id); if(!d) return;
       li.querySelector('.d-edit').onclick = () => { editId = d.id; img = d.img || ''; preview(); $('dmd').value = d.data; $('dmt').value = d.titulo || ''; $('dml').value = d.legenda || '';
-        $('dmft').textContent = 'Editar data marcante'; $('dmsave').textContent = 'Salvar'; $('dmcancel').hidden = false; $('dmf').scrollIntoView({behavior:'smooth', block:'start'}); };
+        $('dmft').textContent = 'Editar data marcante'; $('dmsave').textContent = 'Salvar'; $('dmcancel').hidden = false; abreForm($('dmf')); $('dmf').scrollIntoView({behavior:'smooth', block:'start'}); };
       li.querySelector('.d-del').onclick = e => { const b = e.currentTarget; if(!b.dataset.sure){ b.dataset.sure = 1; b.classList.add('sure'); setTimeout(() => { delete b.dataset.sure; b.classList.remove('sure'); }, 2500); return; } col.remove(d.id); };
     });
   }
@@ -7443,7 +7467,7 @@ function editavel(form, btn, txtNovo){
   const st = {id:null};
   st.abrir = (id, valores) => { st.id = id; Object.entries(valores).forEach(([k, v]) => { const el = document.getElementById(k); if(el) el.value = v ?? ''; });
     btn.textContent = 'Salvar alterações'; form.classList.add('editando'); let c = form.querySelector('.ed-cancel'); if(!c){ c = document.createElement('button'); c.type = 'button'; c.className = 'ghost ed-cancel'; c.textContent = 'Cancelar'; btn.insertAdjacentElement('beforebegin', c); c.onclick = () => st.fechar(true); }
-    form.scrollIntoView({behavior:'smooth', block:'start'}); };
+    abreForm(form); form.scrollIntoView({behavior:'smooth', block:'start'}); };
   st.fechar = limpar => { st.id = null; btn.textContent = txtNovo; form.classList.remove('editando'); form.querySelector('.ed-cancel')?.remove(); if(limpar) form.reset(); };
   return st;
 }
