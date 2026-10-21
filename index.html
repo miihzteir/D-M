@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=100">
-<link rel="apple-touch-icon" href="icon-180.png?v=100">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=100">
+<link rel="manifest" href="manifest.json?v=103">
+<link rel="apple-touch-icon" href="icon-180.png?v=103">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=103">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -411,12 +411,12 @@ form.editando{outline:2px solid #e8798f;outline-offset:2px}
 .gs-cats{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px}.gs-cats:empty{display:none}
 .gs-cats button{flex:none;width:auto!important;min-height:32px!important;padding:0 12px!important;font-size:13px!important;background:#fff!important;color:var(--wine)!important;border:1px solid #ecd4d6!important;box-shadow:none!important}
 .gs-cats button.on{background:var(--wine)!important;color:#fff!important}
-.gs-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.gs-card{background:#fff;border-radius:18px;overflow:hidden;box-shadow:var(--shadow);text-align:left;display:flex;flex-direction:column}
+.gs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:9px}@media(min-width:700px){.gs-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}}
+.gs-card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:var(--shadow);text-align:left;display:flex;flex-direction:column}
 .gs-card img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
-.gs-sem{display:grid;place-items:center;aspect-ratio:1;background:#fbeef0;color:#e58fa5;font-size:34px}
-.gs-card div{padding:10px 12px 12px}.gs-card small{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#b3707e}
-.gs-card p{margin:4px 0 0;font-size:14.5px;font-weight:600;color:#3a2a2a;line-height:1.3}.gs-card .linkbtn{margin-top:6px;font-size:12px}
+.gs-sem{display:grid;place-items:center;aspect-ratio:1;background:#fbeef0;color:#e58fa5;font-size:26px}
+.gs-card > div{padding:7px 8px 9px;min-width:0}.gs-card .cmts{margin-top:5px}html body .gs-card .cmt-b{padding:2px 8px;font-size:11px;max-width:100%}.gs-card .cmt-b svg{width:12px;height:12px}.gs-card .cmt{font-size:11.5px;padding:4px 7px}.gs-card .cmt-f{flex-wrap:wrap}.gs-card .cmt-f textarea{flex:1 1 100%;min-width:0}.gs-card small{display:block;line-height:1.3;font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#b3707e}
+.gs-card p{margin:3px 0 0;font-size:12.5px;font-weight:600;color:#3a2a2a;line-height:1.25}.gs-card .linkbtn{margin-top:4px;font-size:11px}
 .cstoast{position:fixed!important;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 86px);transform:translate(-50%,20px);z-index:9400;width:auto!important;max-width:86vw;margin:0!important;padding:10px 16px;border-radius:999px;background:#1f1a17;color:#fbf6ec;font-size:13px;font-weight:600;text-align:center;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s}
 .cstoast.in{opacity:1;transform:translate(-50%,0)}
 .sw.sure{outline:2px solid #7a1424;outline-offset:2px}
@@ -1458,7 +1458,7 @@ details.cd-env{display:block}details.cd-env summary{display:flex;align-items:cen
 .ed-save{align-self:flex-end}
 .ed-fim{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap}
 .ed-dica{margin:4px 0 0;font-size:12.5px;color:var(--muted);display:flex;gap:6px;align-items:center}
-.di-ver #dmf,.di-ver .dm-act,.di-ver #lgf,.di-ver .lg-act .ib,.di-ver .mact{display:none!important}
+.di-ver #dmf,.di-ver .dm-act,.di-ver #lgdet,.di-ver .lg-act .ib,.di-ver .mact{display:none!important}
 
 .ed-grupo{margin:10px 0 -4px;font-family:var(--f-display);font-style:italic;font-size:20px;color:var(--ink)}
 .ed-sec{background:#fffdf8;border:1px solid var(--line2);border-radius:16px;padding:12px 14px}
@@ -1836,6 +1836,7 @@ html body .busca-it:hover,html body .busca-it:focus-visible{background:#fbf3f4}
 .busca-tx mark{background:#ffe6a8;color:inherit;border-radius:3px;padding:0 1px}
 .busca-nada{margin:10px;font-size:13px;color:var(--muted)}
 html body .recolhido{display:none!important}
+html:not(.di-ver) .tx-vazio{display:inline-block;min-width:56px;min-height:1.1em;vertical-align:middle;outline:1.5px dashed rgba(155,22,48,.4);outline-offset:2px;border-radius:6px}
 html body .add-tog{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:0;margin:0 0 14px;padding:13px 16px;border-radius:18px;background:#fff;color:#9b1630;border:1.5px dashed rgba(155,22,48,.35);box-shadow:none;font-size:14.5px;font-weight:800}
 html body .add-tog .icn{font-size:18px;transition:transform .25s}
 html body .add-tog.aberto{border-style:solid;background:#fdf1f3}html body .add-tog.aberto .icn{transform:rotate(45deg)}
@@ -3659,7 +3660,7 @@ function renderHome(y = 0){
       <div id="ncvbox" class="mdiabox ncv-fim"></div>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
       <p class="endsync" id="endsync"></p>
-      <p class="endver">versão de 21/10 · 12h30</p>
+      <p class="endver">versão de 21/10 · 11h30</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
@@ -3893,9 +3894,10 @@ function markDone(id){ const d = store.get('done', {}); d[id] = true; store.set(
 /* ---------- editar qualquer título e texto direto na tela (modo editar) ---------- */
 let TELAS = {};
 const hk = t => { let h = 5381; for(const c of String(t)) h = ((h << 5) + h + c.charCodeAt(0)) | 0; return (h >>> 0).toString(36); };
+const VAZIO = '\u200b'; /* texto salvo em branco */
 const temTx = k => TELAS[k] != null && TELAS[k] !== '';
 const DEF_T = {}; /* original de cada texto com chave */
-const T = (k, def) => { if(def != null && !(k in DEF_T)) DEF_T[k] = String(def).replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'"); return `<span data-edt="${k}">${temTx(k) ? esc(TELAS[k]) : def}</span>`; };
+const T = (k, def) => { if(def != null && !(k in DEF_T)) DEF_T[k] = String(def).replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'"); return `<span data-edt="${k}"${TELAS[k] === VAZIO ? ' class="tx-vazio"' : ''}>${temTx(k) ? esc(TELAS[k]) : def}</span>`; };
 const EK = (k, def, lab = '') => modoEd() ? `<i class="edk" data-edk="${k}" data-lab="${esc(lab)}" role="button" aria-label="editar texto">${icon('pencil')}</i><template data-def="${k}">${def}</template>` : '';
 const TE = (k, def, lab) => T(k, def) + EK(k, def, lab);
 document.addEventListener('click', e => { const b = e.target.closest('.edk'); if(!b) return; e.preventDefault(); e.stopPropagation();
@@ -3903,20 +3905,20 @@ document.addEventListener('click', e => { const b = e.target.closest('.edk'); if
   abreTexto(k, def, b.dataset.lab || '');
 }, true);
 function abreTexto(k, def, lab){
-  const atual = temTx(k) ? TELAS[k] : def, longo = atual.length > 60;
+  const atual = temTx(k) ? TELAS[k].replace(VAZIO, '') : def, longo = atual.length > 60;
   const w = document.createElement('div'); w.className = 'tk-wrap'; w.id = 'edtx';
   w.innerHTML = `<div class="sheet2"><button class="inst-x" id="edtxx" aria-label="Fechar">${icon('plus')}</button><h3>Editar texto</h3>${lab ? `<p class="lead">${esc(lab)}</p>` : ''}
     <textarea id="edtxv" rows="${longo ? 5 : 2}">${esc(atual)}</textarea><p class="edtx-dica">Enter pula linha</p>
     <div class="edtx-acts">${temTx(k) ? `<button type="button" class="ghost" id="edtxr">Voltar ao original</button>` : ''}<button type="button" id="edtxs">Salvar</button></div></div>`;
   document.body.append(w); const inp = w.querySelector('#edtxv'); inp.focus(); inp.select && inp.select();
   const fecha = () => w.remove();
-  const aplica = v => { document.querySelectorAll(`[data-edt="${k}"]`).forEach(el => { if(v) el.textContent = v; else el.innerHTML = def ? esc(def) : ''; }); };
-  const salva = async v => { const novo = Object.assign({}, TELAS); if(v) novo[k] = v; else delete novo[k]; TELAS = novo; aplica(v);
+  const aplica = v => { document.querySelectorAll(`[data-edt="${k}"]`).forEach(el => { if(v) el.textContent = v; else el.innerHTML = def ? esc(def) : ''; el.classList.toggle('tx-vazio', v === VAZIO); }); };
+  const salva = async (v, volta) => { if(!volta && !v) v = VAZIO; const novo = Object.assign({}, TELAS); if(v) novo[k] = v; else delete novo[k]; TELAS = novo; aplica(v);
     try{ await Sync.col('conteudo').set('telas', {m:novo}); csToast('Texto salvo ♥'); }catch(x){} fecha(); };
   w.onclick = ev => { if(ev.target === w) fecha(); };
   w.querySelector('#edtxx').onclick = fecha;
   w.querySelector('#edtxs').onclick = () => salva(inp.value.trim());
-  w.querySelector('#edtxr')?.addEventListener('click', () => salva(''));
+  w.querySelector('#edtxr')?.addEventListener('click', () => salva('', 1));
 }
 
 
@@ -4016,6 +4018,14 @@ function hifeniza(raiz = document.body){
   addEventListener('wheel', e => { if(e.ctrlKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return; const r = rolaX(e.target); if(!r) return; const y = rolaY(e.target); if(y && r.contains(y)) return;
     const max = r.scrollWidth - r.clientWidth; if((e.deltaY > 0 && r.scrollLeft >= max - 1) || (e.deltaY < 0 && r.scrollLeft <= 0)) return; r.scrollLeft += e.deltaY; e.preventDefault(); }, {passive:false});
 })();
+/* abriu algo com um toque: a tela desce junto pra mostrar o que apareceu */
+document.addEventListener('click', e => { const b = e.target.closest && e.target.closest('button,summary,[role=button],.linkbtn,label');
+  if(!b || b.closest('.busca-res,.tk-wrap,.av-box,#addfab,.addfab,.vbar,.add-tog,#edlvbar')) return;
+  const box = b.closest('details,form,.card-form,.card,.rolabox,article,section,li') || b.parentElement; if(!box) return;
+  const sc = b.closest('#xapp'), y0 = sc ? sc.scrollTop : scrollY, b0 = box.getBoundingClientRect().bottom;
+  setTimeout(() => { if(!box.isConnected || Math.abs((sc ? sc.scrollTop : scrollY) - y0) > 4) return; const r = box.getBoundingClientRect(), H = sc ? sc.getBoundingClientRect().bottom : innerHeight;
+    if(r.bottom > b0 + 8 && r.bottom > H - 12){ const d = Math.min(r.bottom - H + 24, r.top - 80); if(d > 8) (sc || window).scrollBy({top:d, behavior:'smooth'}); } }, 140);
+});
 /* editar QUALQUER texto: no modo editar, liga "Aa" e toca no texto */
 let edLivre = false;
 const LIVRE_FORA = 'script,style,textarea,input,select,[data-edt],#edlv,#edlvbar,#edtx,.pin-wrap,.mv-sz,.edk,template';
@@ -4027,6 +4037,7 @@ function aplicaLivres(raiz = document.body){
     const orig = n.__orig != null ? n.__orig : n.data, t = orig.trim().replace(/\u00AD/g, ''), v = TELAS['g_' + hk(t)];
     if(v != null && v !== ''){ const nv = orig.replace(orig.trim(), v); if(n.data !== nv){ n.__orig = orig; n.data = nv; if(v.includes('\n') && n.parentElement) n.parentElement.style.whiteSpace = 'pre-line'; } }
     else if(n.__orig != null){ n.data = n.__orig; delete n.__orig; }
+    const pe = n.parentElement; if(pe) pe.classList.toggle('tx-vazio', v === VAZIO && pe.textContent.trim() === VAZIO);
   }
 }
 function textoNoToque(e){
@@ -4043,19 +4054,19 @@ function ligaLivre(on){
   const f = document.getElementById('edlvfab'); if(f) f.classList.toggle('on', edLivre);
 }
 function abrirLivre(n){
-  const orig = n.__orig != null ? n.__orig : n.data, t = orig.trim().replace(/\u00AD/g, ''), k = 'g_' + hk(t), atual = TELAS[k] || t, longo = atual.length > 60;
+  const orig = n.__orig != null ? n.__orig : n.data, t = orig.trim().replace(/\u00AD/g, ''), k = 'g_' + hk(t), atual = (TELAS[k] || t).replace(VAZIO, ''), longo = atual.length > 60;
   const w = document.createElement('div'); w.className = 'tk-wrap'; w.id = 'edlv';
   w.innerHTML = `<div class="sheet2"><button class="inst-x" aria-label="Fechar">${icon('plus')}</button><h3>Editar texto</h3><p class="lead">Muda em todo lugar que aparece esse mesmo texto</p>
     <textarea id="edlvv" rows="${longo ? 5 : 2}">${esc(atual)}</textarea><p class="edtx-dica">Enter pula linha</p>
     <div class="edtx-acts">${TELAS[k] ? `<button type="button" class="ghost" id="edlvr">Voltar ao original</button>` : ''}<button type="button" id="edlvs">Salvar</button></div></div>`;
   document.body.append(w); const inp = w.querySelector('#edlvv'); inp.focus(); inp.select && inp.select();
   const fecha = () => w.remove();
-  const salva = async v => { const novo = Object.assign({}, TELAS); if(v && v !== t) novo[k] = v; else delete novo[k]; TELAS = novo; aplicaLivres._tinha = true; aplicaLivres(); fecha();
+  const salva = async (v, volta) => { if(!volta && !v) v = VAZIO; const novo = Object.assign({}, TELAS); if(v && v !== t) novo[k] = v; else delete novo[k]; TELAS = novo; aplicaLivres._tinha = true; aplicaLivres(); fecha();
     try{ await Sync.col('conteudo').set('telas', {m:novo}); csToast('Texto salvo ♥'); }catch(x){} };
   w.onclick = ev => { ev.stopPropagation(); if(ev.target === w) fecha(); };
   w.querySelector('.inst-x').onclick = fecha;
   w.querySelector('#edlvs').onclick = () => salva(inp.value.trim());
-  w.querySelector('#edlvr')?.addEventListener('click', () => salva(''));
+  w.querySelector('#edlvr')?.addEventListener('click', () => salva('', 1));
 }
 /* trocar a foto direto de onde ela aparece (modo editar) */
 function trocaFoto(alvo){
@@ -4178,7 +4189,7 @@ function abreForm(form){ if(!form || !form.classList.contains('recolhido')) retu
 /* lista primeiro, numa caixinha com rolagem; o formulário de escrever fica embaixo */
 const ROLA = {primeiras:'#pf', bilhetes:'#bf', diario:'#dif', playlist:'#mf', lugares:'#lgdet', datas:'#dmf', filmes:'#flf', contagem:'#ctf', cartadata:'#cdf', gostos:'#gsform', mes:'#msf', planos:{f:'#plf', box:['#pll']}, premios:{f:'#pzf', box:['h3.ct-sep','#pzpra','#pzgan','#pzmeus']}, roleta:{f:'#of', box:['#ol']}};
 function listaPrimeiro(){
-  const cfg = ROLA[curView]; if(!cfg) return; const sel = typeof cfg === 'string' ? cfg : cfg.f; const form = app.querySelector('.view ' + sel); if(!form || form.dataset.rola) return; form.dataset.rola = 1;
+  const cfg = ROLA[curView]; if(!cfg) return; const sel = typeof cfg === 'string' ? cfg : cfg.f; const form = app.querySelector('.view ' + sel); if(!form || form.dataset.rola) return; if(!modoEd() && form.matches('#dmf,#lgdet')) return; form.dataset.rola = 1;
   const box = document.createElement('div'); box.className = 'rolabox';
   if(cfg.box){ const els = []; cfg.box.forEach(q => app.querySelectorAll('.view ' + q).forEach(e => { if(!els.includes(e)) els.push(e); }));
     els.sort((a, b) => a.compareDocumentPosition(b) & 4 ? -1 : 1).forEach(e => box.append(e)); form.before(box); }
@@ -4207,7 +4218,7 @@ function buscaNaTela(title){
   if(!BUSCA_TELAS.includes(curView) || (curView === 'cartas' && modoEd())) return; const v = app.querySelector('.view'), h = v && v.querySelector('.vhead'); if(!h || v.querySelector('#buscatela')) return;
   const el = document.createElement('div'); el.className = 'busca-wrap'; el.id = 'buscatela'; h.after(el);
   const nome = String(temTx(chaveTitulo(curView, title)) ? TELAS[chaveTitulo(curView, title)] : title).replace(/\s+/g, ' ');
-  buscaBox(el, [curView], 'Pesquisar em ' + nome.replace(/[.…\s]+$/, '') + '…', true);
+  buscaBox(el, [curView], 'Pesquisar aqui…', true);
 }
 function shell(eb, title, sub, body){
   document.documentElement.classList.toggle('di-ver', !modoEd());
@@ -4225,7 +4236,7 @@ function shell(eb, title, sub, body){
     <header class="vhead">${(it => it ? (([bg, fg]) => `<span class="vh-ic" style="--bg:${bg};--fg:${fg}">${icon(it.ico)}</span>`)(corDe(it.id)) : '')(Object.values(LISTS).flat().find(x => x.id === curView))}<h2>${TE(chaveTitulo(curView, title), title, 'Título desta tela')}</h2>${sub || modoEd() ? `<p>${TE('s_' + curView + '_' + hk(title), sub || '', 'Texto embaixo do título')}</p>` : ''}</header>
     ${body}</div>`;
   if(yVolta){ window.scrollTo({top:yVolta, behavior:'instant'}); requestAnimationFrame(() => window.scrollTo({top:yVolta, behavior:'instant'})); }
-  { const nv = hubDe(curView) ? 1 : (hk => hk && curView !== hubAtual && (HUBS[hk].itens().some(r => r.id === curView) || HUBS[hk].extra === curView) ? 2 : 1)(hubDe(hubAtual)); entradaHistorico(nv, urlDe(curView), nv === 2 ? `#/${hubAtual}` : undefined); } listaPrimeiro(); buscaNaTela(title);
+  { const nv = hubDe(curView) ? 1 : (hk => hk && curView !== hubAtual && (HUBS[hk].itens().some(r => r.id === curView) || HUBS[hk].extra === curView) ? 2 : 1)(hubDe(hubAtual)); entradaHistorico(nv, urlDe(curView), nv === 2 ? `#/${hubAtual}` : undefined); } listaPrimeiro(); buscaNaTela(title); { const vv = curView; setTimeout(() => colheTela(vv), 900); }
   document.getElementById('back').onclick = () => { stopGame(); const hk = hubDe(hubAtual); if(hk && curView !== hubAtual && (HUBS[hk].itens().some(r => r.id === curView) || HUBS[hk].extra === curView)){ curView = hubAtual; voltandoPara = true; VIEWS[hubAtual](); return; } hubAtual = null; renderHome(homeY); };
 }
 const VIEWS = {};
@@ -4272,7 +4283,7 @@ function abrirHub(k){
         <span class="jh-ic">${icon(r.ico)}</span><b>${TE('pt_' + r.id, r.t, 'Nome no botão')}</b><small>${TE('ps_' + r.id, r.s, 'Texto pequeno do botão')}</small><span class="jh-go">${icon('play')} ${k === 'jogos' ? 'jogar' : 'abrir'}</span></button>`; }).join('')}</div>
     ${h.extra === 'carta' ? `<button type="button" class="lastbtn" data-hub="carta">${icon('gift')}A última surpresa</button>` : ''}</div>`);
   app.querySelectorAll('[data-hub]').forEach(b => b.onclick = () => { const id = b.dataset.hub; markDone(id); curView = id; VIEWS[id](); });
-  buscaBox(document.getElementById('buscahub'), itens.map(r => r.id), 'Pesquisar em ' + (temTx('hb_t_' + k) ? TELAS['hb_t_' + k] : h.t).replace(/\s+/g, ' ') + '…');
+  buscaBox(document.getElementById('buscahub'), itens.map(r => r.id), 'Pesquisar aqui…');
   if(dest.id === 'casinha'){ const off = Sync.col('chocolates').on(l => { const el = document.getElementById('jhchips'); if(!el){ setTimeout(() => off && off()); return; }
     const eu = Sync.quem || 'Di', of = ofensiva(l, eu);
     el.innerHTML = jaComecou() || PREVIA ? `<i>${CHOCO_SVG} ${chocoInfinito() ? '∞' : l.filter(valeChoco).reduce((t, c) => t + (+c.qtd || 1), 0)}</i><i>${FLAME_SVG} ${of.seguidos} ${of.seguidos === 1 ? 'dia' : 'dias'}</i>` : `<i>começa dia 25</i>`; }); }
@@ -4540,7 +4551,7 @@ VIEWS.planos = () => {
     `<ul class="plans" id="pll"></ul>
      <form class="card-form" id="plf"><p class="wo-t">Novo plano</p>
        <input type="text" id="plt" maxlength="80" placeholder="O que a gente vai fazer?" aria-label="Plano">
-       <input type="text" id="pld" maxlength="30" placeholder="Quando? (ex: 2027, nas férias)" aria-label="Quando">
+       <input type="text" id="pld" maxlength="30" placeholder="Quando? (opcional)" aria-label="Quando">
        <button type="submit">Adicionar plano</button></form>`);
   const col = Sync.col('planosLista'); let extra = [], st = {planos:{}, planosEdit:{}}, editing = null;
   function items(){
@@ -5882,6 +5893,29 @@ const BUSCA_COLS = {bilhetes:['bilhetes', b => [b.texto], 'note', 'Bilhetinho'],
   gostos:['gostos', g => [g.legenda], 'heart', 'O que cada um ama'], contagens:['contagem', c => [c.titulo], 'hourglass', 'Contagem'], planosLista:['planos', p => [p.t, p.d], 'mapa', 'Plano'], roleta:['roleta', r => [r.texto], 'star', 'Ideia de date'],
   comentarios:['', c => [c.texto], 'chat', 'Comentário'], diario:['diario', d => [d.texto], 'livro', 'Diário'], respostas:['pergunta', r => [r.texto, r.pergunta], 'chat', 'Pergunta do dia'], cartasData:['cartadata', c => [c.texto], 'envrelogio', 'Cartinha com data'], premios:['premios', p => [p.t], 'medalha', 'Prêmio'], cartasFilhos:['filhos', c => [c.texto], 'baby', 'Carta ao filho'], mesversario:['mes', m => [m.texto], 'cal12', 'Mesversário']};
 const BUSCA_DADOS = {}; let buscaLigada = false;
+/* textos do próprio app (títulos, categorias, explicações de cada tela) */
+const INDICE_APP = {"saudade":["Termômetro de saudade","Toca no botão toda vez que bater saudade. O coração vai enchendo","Tô com saudade","A Mih ainda não apertou hoje"],"diario":["Diário do casal","Cada um conta como foi o dia. Você só lê o dela depois de escrever o seu"],"pergunta":["Pergunta do dia","Responde, e aí você vê o que o outro respondeu","Responder","Nosso histórico","A partir de amanhã, as perguntas e as respostas de vocês dois ficam guardadas aqui pra sempre."],"bilhetes":["Bilhetinhos","Deixa um recado pro outro achar"],"mes":["Mesversário"],"primeiras":["Nossas primeiras vezes","Primeiro filme, primeira viagem, primeira briga… vai adicionando"],"playlist":["Nossa playlist","As músicas que lembram a gente"],"planos":["Nossos planos","Tudo que a gente quer viver junto. Marca quando realizar"],"lugares":["Nossos lugares","Cada lugar que a gente foi junto, com foto. Qualquer um dos dois pode colocar","Começa pelo shopping do primeiro encontro?"],"gostos":["O que cada um ama","Você coloca o que o outro ama, com foto e legenda. Assim cada um mostra que presta atenção","O que o Di ama","O que a Mihzinha ama","Mexer nas categorias","Os dois podem criar, renomear e apagar. O que já tá numa categoria apagada vai pra \"sem categoria\"."],"filmes":["Filmes e séries","O que a gente quer ver junto e o que achou depois","Pra ver","Já vimos"],"financas":["Nossas finanças","O que a gente gasta junto, sem conta de quem pagou","gastamos nesse mês","Nenhum gasto nesse mês ainda.","Novo gasto","Obs:","Valor","Data","O que foi","Adicionar gasto","Rolês","Comida","Cinema","Mercado","Viagem","Outros","+ Nova categoria…"],"retromes":[],"retro":["Retrospectiva 2027","Um resumo de tudo que a gente viveu esse ano","Ainda tá sendo escrita","Tudo que vocês fizerem até lá entra na conta."],"datas":["Datas marcantes","Os nossos dias especiais, com foto e legenda","Ainda não tem nenhuma data. Que tal começar pelo dia 12 de abril?"],"comemorativas":["Datas comemorativas","Cada festa que a gente passar junto fica guardada aqui","Nosso primeiro Natal","O presentinho tá balançando lá em cima da tela até o dia 25. Ou abre por aqui.","Abrir o Natal","todo ano","Nossos aniversários","No dia de cada um, a casinha enche de balões, vocês ganham chapéu de festa e aparece um bolo na sala.","Salvar aniversários","as próximas datas vão aparecendo aqui"],"contagem":["Contagem regressiva","Viagem, show, aniversário… tudo que a gente tá esperando"],"numeros":["Nossos números","Tudo que a gente já viveu, contado","juntos há","bilhetinhos no mural","perguntas respondidas","abraços na casinha","beijos na casinha","danças na casinha","chocolates do dia pegos","filmes vistos juntos","lugares que a gente foi","datas marcantes","primeiras vezes","músicas na playlist","cartas escritas","cartas abertas","apertos no termômetro de saudade"],"casinha":["Nossa casinha","Cada dia que vocês entram, ganham um chocolate. Junta e monta a casa de vocês","chocolates","Pegar o chocolate de hoje","A Mihzinha ainda não pegou hoje","Missões de hoje","a primeira vale 1 chocolate, a segunda 2","criar uma missão especial pra Mih","Prêmios de verdade","troca seus chocolates por mimos de verdade","Nós dois","Frente da casa","Sala","Quarto","Cozinha","Banheiro","Sala de jogos","Piscina","Quarto do bebê","passeios","Sorveteria","Cinema","Cafeteria","Praia","Parque","Igreja","Vocês dois já moram aqui. As roupas e os acessórios vão sendo conquistados","Roupa de casamento","precisa de Alianças","Look de inverno","Look de praia","Pijamas combinando","Moletons de casal","Look de domingo","Roupa de festa","Look de Natal","Óculos nerd do Di","Boné do Di","Lacinho da Mihzinha","Tiara de flores da Mihzinha","Alianças"],"roleta":["Roleta do date","Gira e o destino escolhe o nosso próximo programa","Girar","Ideias de date"],"coracoes":["Pegue os corações","Cada coração tem uma coisa que eu amo em você. Pega os 25!","Pronto?","Começar"],"memoria":["Jogo da memória","Encontra todos os pares"],"raspa":["Raspadinha","Passa o dedo pra descobrir","surpresa!","Exemplo: a foto surpresa"],"quiz":["Quanto você me conhece?","Vamos ver se você presta atenção em mim","Qual é a minha comida favorita?","Pizza","Sushi","Hambúrguer","Lasanha"],"provavel":["Quem é mais provável…","Escolhe, depois vê o que a Mihzinha respondeu","Quem dorme primeiro no meio do filme?","A Mihzinha","Os dois"],"abra":["Abra quando…","Cartas pra abrir quando precisar. Cada um escreve pro outro, e cada vez que abrir um envelope sai uma carta diferente","Pra eu abrir","Escrever pra Milena","Escolhe o envelope do jeito que você estiver se sentindo. São as cartas que a Mihzinha escreveu pra você.","Ver o álbum de cartas"],"cartas":["Cartas pro futuro","Cada uma só abre no dia certo","abre quando você precisar","pra abrir no dia em que a gente noivar","pra abrir no dia do nosso casamento"],"cartadata":["Cartinha com data","Escreve hoje e escolhe o dia que a Mihzinha vai poder abrir"],"filhos":["Ao nosso primeiro filho","Cartas que eu e você vamos escrever pra quem ainda vai chegar. Pode escrever quantas quiser","Quem está escrevendo?","Assim que descobrirmos","o dia em que a gente soube de você","nenhuma carta ainda","Assim que você nascer","pra ler nos seus primeiros dias","No seu primeiro ano de vida","seu primeiro aniversário","Aos seus 18 anos","quando você virar adulto","No seu casamento","no dia mais bonito da sua vida","Na sua formatura","quando você conquistar isso","Por enquanto as cartas ficam salvas só neste aparelho."],"album":["Álbum de cartas","Um álbum pra cada ano, com todas as cartas que já foram abertas","Quando uma carta do \"Abra quando…\" for aberta, ela vem morar aqui pra sempre","Nossas cartas","ainda vazio","capa","arrasta pro lado ou toca nas setas"],"premios":["Prêmios de verdade","Os chocolates da casinha também viram coisas de verdade. Um escolhe os prêmios do outro","chocolates pra gastar"],"vales":["Vales-presente","Cada vale só pode ser resgatado uma vez. Quando resgatar, me manda o ticket","Vale um cafuné","Vale escolher o filme","Vale um jantar feito por mim","Vale um abraço demorado","Vale um sorvete","Vale ganhar uma discussão"],"fotos":["Nossas fotos","Todas as nossas fotos num lugar só. Toca numa foto pra ver grandona","Nossos primeiros encontros","As fotos daqui a Mihzinha ainda vai colocar.","Aquele dia","um dia que a gente nunca vai esquecer","Eu e você","só nós dois","Polaroids","toca em cada uma pra ler o que tem atrás","nosso 1º encontro","aquele dia","eu e você","meu favorito"]};
+const IDX_FORA = '.rolabox,.busca-wrap,.cmts,[data-id],script,style,template,textarea,input,.edk,.add-tog,#addfab,.ft-bar,.av-box,.vbar,svg,[hidden],.recolhido';
+const IDX_GEN = new Set(['Mihzinha','Milena','Você','abrir','jogar','Resgatar','Comprar','Criar','mais novos primeiro','mais antigos primeiro','só áudios','toca pra ir','Em destaque','EM DESTAQUE','Até','ATÉ','O FAVORITO','Voltar','Salvar','Esconder','Adicionar','Cancelar','Apagar','Editar','Pronto','Enviar','Fechar','Limpar','Ok','Sim','Não','Comentar','Trocar foto']);
+function textosDaTela(raiz){
+  const set = new Set(), blocos = new Set(), limpa = t => String(t || '').replace(/[­​]/g, '').replace(/\s+/g, ' ').trim();
+  const pega = t => { t = limpa(t); if(t.length < 4 || t.length > 260 || !/[a-zà-ú]{3}/i.test(t) || /[♥♪☾★✿✕↑↓]/.test(t) || /faltam? \d|\d+ dias?\b|R\$|^\d|·\s*\d/i.test(t) || IDX_GEN.has(t)) return; set.add(t); };
+  const w = document.createTreeWalker(raiz, NodeFilter.SHOW_TEXT);
+  for(let n = w.nextNode(); n; n = w.nextNode()){ const pe = n.parentElement; if(!pe || !limpa(n.data) || pe.closest(IDX_FORA) || pe.closest('select')) continue;
+    const b = pe.closest('h1,h2,h3,h4,h5,p,summary,button,label,li,small,a,td,figcaption,b,strong,span') || pe; if(blocos.has(b)) continue; blocos.add(b);
+    if(!b.getClientRects().length || (b.querySelector('h1,h2,h3,h4,p,small,b,strong,span') && limpa(b.textContent).length > 40)) continue; pega(b.textContent); }
+  raiz.querySelectorAll('select option').forEach(o => { if(o.value && !o.closest(IDX_FORA)) pega(o.textContent); });
+  return [...set].slice(0, 120);
+}
+function colheTela(vista){ try{ if(PREVIA || modoEd() || curView !== vista) return; const v = app.querySelector('.view'); if(!v) return;
+  const idx = store.get('idxApp', {}); idx[vista] = textosDaTela(v); store.set('idxApp', idx); }catch(e){} }
+const nomeTela = id => { const h = Object.values(HUBS).find(x => x.view === id); if(h){ const k = Object.keys(HUBS).find(x => HUBS[x] === h); return temTx('hb_t_' + k) ? TELAS['hb_t_' + k] : h.t; }
+  const r = Object.values(LISTS).flat().find(x => x.id === id); return r ? (temTx('pt_' + r.id) ? TELAS['pt_' + r.id] : r.t) : ({casinha:'Nossa casinha', financas:'Nossas finanças', fotos:'Nossas fotos', numeros:'Nossos números', notificacoes:'Notificações'})[id] || ''; };
+const icoTela = id => { const r = Object.values(LISTS).flat().find(x => x.id === id); return r ? r.ico : hubDe(id) ? 'cards' : 'heart'; };
+function achaTexto(txt){ const v = app.querySelector('.view'); if(!v) return; const alvo = semAc(txt);
+  const els = [...v.querySelectorAll('h1,h2,h3,h4,p,summary,button,label,li,small,figcaption,b,span,option')].filter(e => e.getClientRects().length && semAc((e.innerText || '').replace(/[­​]/g, '').replace(/\s+/g, ' ')).includes(alvo));
+  const el = els.sort((a, b) => (a.innerText || '').length - (b.innerText || '').length)[0]; if(!el) return;
+  el.scrollIntoView({behavior:'smooth', block:'center'}); el.classList.remove('alvo-pisca'); void el.offsetWidth; el.classList.add('alvo-pisca'); }
 const semAc = t => String(t || '').normalize('NFD').replace(/[̀-ͯ­]/g, '').toLowerCase();
 function ligaBusca(){ if(buscaLigada) return; buscaLigada = true; Object.keys(BUSCA_COLS).forEach(n => Sync.col(n).on(l => { BUSCA_DADOS[n] = l; })); }
 function buscaTudo(q){
@@ -5894,6 +5928,9 @@ function buscaTudo(q){
   Object.values(LISTS).flat().forEach(r => { if(vistos.has(r.id)) return; vistos.add(r.id); const nome = temTx('pt_' + r.id) ? TELAS['pt_' + r.id] : r.t; if(tem(nome) || tem(r.s)) out.push({ic:r.ico, t:nome, s:r.s, go:r.id, peso:3}); });
   [['casinha','house','Nossa casinha'],['financas','wallet','Nossas finanças'],['notificacoes','bell','Notificações'],['fotos','image','Nossas fotos'],['numeros','barras','Nossos números']].forEach(([id, ic, nome]) => { if(!vistos.has(id) && tem(nome)) out.push({ic, t:nome, s:'Tela', go:id, peso:3}); });
   if(tem('natal')) out.push({ic:'gift', t:'Nosso Natal', s:'Tela de Natal', go:'natal', peso:3});
+  { const idx = Object.assign({}, INDICE_APP, store.get('idxApp', {})), ja = new Set(out.map(o => semAc(o.t))); let n = 0;
+    Object.entries(idx).forEach(([vw, l]) => (l || []).forEach(x => { if(n >= 14 || !tem(x) || ja.has(semAc(x)) || !VIEWS[vw]) return; const nome = nomeTela(vw); if(!nome) return; ja.add(semAc(x)); n++;
+      out.push({ic:icoTela(vw), t:trecho(x), s:nome, go:vw, txt:x.length > 60 ? semAc(q).trim() : x, peso:2}); })); }
   C.memorias.forEach(m => { const nome = temTx('v_memoria2_' + hk(m.titulo)) ? TELAS['v_memoria2_' + hk(m.titulo)] : m.titulo; if(tem(nome) || tem(m.sub)) out.push({ic:'image', t:nome, s:'Memória', go:'memoria2:' + m.id, peso:3}); });
   /* cartas pro futuro: título sempre; texto só quando já abriu */
   C.cartas.forEach((c, k) => { const aberta = !c.abre || c.abre <= new Date(); if(tem(c.titulo) || (aberta && tem(c.texto))) out.push({ic:'mail', t:c.titulo, s:'Carta pro futuro', go:'cartas@cartas:' + k, peso:2}); });
@@ -5914,7 +5951,7 @@ function buscaTudo(q){
 }
 function buscaBox(el, escopo, ph, soConteudo){
   if(!el || PREVIA) return;
-  el.innerHTML = `<div class="busca"><span class="busca-ic">${icon('busca')}</span><input type="search" id="buscain" placeholder="${esc(ph || 'Pesquisar no nosso app…')}" autocomplete="off" aria-label="Pesquisar"><button type="button" class="busca-x" id="buscax" hidden aria-label="Limpar">×</button></div><div class="busca-res" id="buscares" hidden></div>`;
+  el.innerHTML = `<div class="busca"><span class="busca-ic">${icon('busca')}</span><input type="search" id="buscain" placeholder="${esc(ph || 'Pesquisar…')}" autocomplete="off" aria-label="Pesquisar"><button type="button" class="busca-x" id="buscax" hidden aria-label="Limpar">×</button></div><div class="busca-res" id="buscares" hidden></div>`;
   const inp = el.querySelector('#buscain'), res = el.querySelector('#buscares'), x = el.querySelector('#buscax');
   const marca = (txt, q) => { const s0 = esc(txt), t = semAc(q).trim(); if(!t) return s0; const i = semAc(txt).indexOf(t); return i < 0 ? s0 : esc(txt.slice(0, i)) + '<mark>' + esc(txt.slice(i, i + t.length)) + '</mark>' + esc(txt.slice(i + t.length)); };
   const draw = () => { const q = inp.value; x.hidden = !q; const r = buscaTudo(q).filter(it => !escopo || (escopo.includes(String(it.go).split('@')[0]) && !(soConteudo && it.peso === 3)));
@@ -5925,7 +5962,7 @@ function buscaBox(el, escopo, ph, soConteudo){
     res.querySelectorAll('[data-i]').forEach(b => b.onclick = () => { const it = r[+b.dataset.i]; inp.value = ''; draw(); inp.blur();
       if(it.go === 'natal'){ renderXmas(); return; }
       if(it.go.startsWith('memoria2:')){ hubAtual = null; curView = 'memoria2'; VIEWS.memoria2(it.go.split(':')[1]); return; }
-      irPara(it.go); }); };
+      irPara(it.go); if(it.txt) setTimeout(() => achaTexto(it.txt), 450); }); };
   inp.addEventListener('focus', ligaBusca);
   inp.addEventListener('input', draw);
   x.onmousedown = e => e.preventDefault(); x.onclick = () => { inp.value = ''; draw(); inp.focus(); };
@@ -6176,7 +6213,7 @@ function abrirMissoesEsp(){
   const w = document.createElement('div'); w.className = 'tk-wrap'; w.id = 'mesp';
   w.innerHTML = `<div class="sheet2"><button class="inst-x" id="mespx" aria-label="Fechar">${icon('plus')}</button>
     <h3>Missões especiais ${pro}</h3><p class="lead">Coisas que só ${outro === 'Di' ? 'ele' : 'ela'} entenderia. Com data, ela aparece naquele dia. Sem data, aparece num domingo. Vale 2 chocolates.</p>
-    <form class="write" id="mespf"><textarea id="mespt" rows="2" maxlength="140" placeholder="ex: me manda uma foto do pôr do sol de hoje"></textarea>
+    <form class="write" id="mespf"><textarea id="mespt" rows="2" maxlength="140" placeholder="Qual é a missão?"></textarea>
       <label class="fz-lab">Dia (opcional)<input type="date" id="mespd"></label><button type="submit">Criar missão</button><p class="werr" id="mespe"></p></form>
     <div id="mespl" class="mesp-l"></div></div>`;
   document.body.append(w);
@@ -6225,7 +6262,7 @@ VIEWS.premios = () => {
      <h3 class="ct-sep">Pra você trocar</h3><div class="pz-list" id="pzpra"></div>
      <h3 class="ct-sep">Que você já ganhou</h3><div class="pz-list" id="pzgan"></div>
      <h3 class="ct-sep">Prêmios que você oferece ${pro}</h3>
-     <form class="card-form pz-form" id="pzf"><input type="text" id="pzt" maxlength="80" placeholder="ex: Vale um jantar que você escolhe" aria-label="Prêmio">
+     <form class="card-form pz-form" id="pzf"><input type="text" id="pzt" maxlength="80" placeholder="Nome do prêmio" aria-label="Prêmio">
        <label class="fz-lab">Custa quantos chocolates<input type="number" id="pzp" min="1" max="999" value="30"></label>
        <div class="pz-sug">${PREMIO_SUG.map(([t, n]) => `<button type="button" data-t="${esc(t)}" data-n="${n}">${esc(t.replace(/^Vale (um |uma |o |a )?/i, ''))}</button>`).join('')}</div>
        <button type="submit" id="pzb">Oferecer prêmio</button><p class="werr" id="pze"></p></form>
@@ -6336,7 +6373,7 @@ VIEWS.contagem = () => {
   const eu = Sync.quem || 'Di';
   shell('tá chegando','Contagem regressiva','Viagem, show, aniversário… tudo que a gente tá esperando',
     `<form class="card-form" id="ctf"><p class="wo-t">Nova contagem</p>
-      <label class="fz-lab">O que vai acontecer<input type="text" id="ctt" maxlength="50" placeholder="ex: nossa viagem pra praia"></label>
+      <label class="fz-lab">O que vai acontecer<input type="text" id="ctt" maxlength="50" placeholder="O que vai acontecer"></label>
       <label class="fz-lab">Quando<input type="date" id="ctd"></label>
       <div class="pl-act"><button type="submit">Começar a contar</button></div><p class="werr" id="cte"></p></form>
      <div class="ct-list" id="ctl"></div>`);
@@ -6359,7 +6396,7 @@ VIEWS.filmes = () => {
   const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'Mihzinha' : 'Di';
   let aba = 'ver';
   shell('sessão pipoca','Filmes e séries','O que a gente quer ver junto e o que achou depois',
-    `<form class="card-form" id="flf"><p class="wo-t">Adicionar</p><div class="fz-row"><label class="fz-lab">Nome<input type="text" id="flt" maxlength="60" placeholder="ex: Interestelar"></label>
+    `<form class="card-form" id="flf"><p class="wo-t">Adicionar</p><div class="fz-row"><label class="fz-lab">Nome<input type="text" id="flt" maxlength="60" placeholder="Título"></label>
       <label class="fz-lab">É um<select id="flk"><option>Filme</option><option>Série</option><option>Anime</option><option>Documentário</option></select></label></div>
       <div class="pl-act"><button type="submit">Adicionar à lista</button></div></form>
      <div class="fz-tabs fl-tabs"><button type="button" data-a="ver" class="on">Pra ver</button><button type="button" data-a="visto">Já vimos</button></div>
@@ -6399,7 +6436,7 @@ VIEWS.lugares = () => {
      <p class="lg-como">Foto, nome, cidade, dia e uma lembrança.</p>
      <form class="card-form dm-form" id="lgf"><p class="wo-t">Novo lugar</p>
       <button type="button" class="dm-pick" id="lgpick"><span id="lgprev">${icon('image')}<small>escolher foto</small></span></button><input type="file" id="lgfile" accept="image/*" hidden>
-      <div class="fz-row"><label class="fz-lab">Lugar<input type="text" id="lgn" maxlength="50" placeholder="ex: Sorveteria da praça"></label><label class="fz-lab">Cidade<input type="text" id="lgc" maxlength="40" placeholder="ex: Sinop"></label></div>
+      <div class="fz-row"><label class="fz-lab">Lugar<input type="text" id="lgn" maxlength="50" placeholder="Nome do lugar"></label><label class="fz-lab">Cidade<input type="text" id="lgc" maxlength="40" placeholder="Cidade"></label></div>
       <label class="fz-lab">Quando<input type="date" id="lgd"></label>
       <label class="fz-lab">Uma lembrança<textarea id="lgl" rows="2" maxlength="200" placeholder="O que aconteceu lá…"></textarea></label>
       <div class="pl-act"><button type="submit" id="lgs">Guardar lugar</button></div><p class="werr" id="lge"></p></form></details>
@@ -6710,7 +6747,7 @@ VIEWS.editar = (foco, origem, abaIni) => {
         return `<div class="ed-memslot" data-slot="memfoto_${k}"><button type="button" class="ed-ph ed-memph" data-troca="memfoto_${k}" aria-label="foto ${k + 1}">${img ? `<img src="${img}" alt="">` : `<span>${icon('plus')}</span>`}</button>${img ? `<button type="button" class="ghost ed-memx" data-tira="memfoto_${k}">Excluir</button>` : ''}</div>`; }).join('')}</div></article>`; };
   const cartas = () => `<div id="edcl">${C.cartas.map((c, k) => `<article class="ed-card ed-carta" data-k="${k}">
       <label class="fz-lab">Título<input type="text" maxlength="60" data-f="titulo" value="${esc(c.titulo)}"></label>
-      <div class="fz-row"><label class="fz-lab">Abre em (opcional)<input type="date" data-f="abre" value="${dIso(c.abre)}"></label><label class="fz-lab">Ou quando<input type="text" maxlength="60" data-f="quando" placeholder="ex: no dia do noivado" value="${esc(c.quando || '')}"></label></div>
+      <div class="fz-row"><label class="fz-lab">Abre em (opcional)<input type="date" data-f="abre" value="${dIso(c.abre)}"></label><label class="fz-lab">Ou quando<input type="text" maxlength="60" data-f="quando" placeholder="Quando abrir" value="${esc(c.quando || '')}"></label></div>
       <label class="fz-lab">Carta<textarea rows="6" maxlength="4000" data-f="texto">${esc(c.texto)}</textarea></label>
       <div class="ed-btns"><button type="button" class="ghost" data-delc="${k}">Excluir carta</button></div></article>`).join('')}</div>
     <div class="ed-fim"><button type="button" class="ghost" id="edadd">${icon('plus')} Nova carta</button><button type="button" id="edsalvac">Salvar cartas</button></div>
@@ -6806,7 +6843,7 @@ VIEWS.gostos = () => {
   const form = () => aba === outro ? `<details class="gs-det" id="gsdet" ${formAberto ? 'open' : ''}><summary>${icon('plus')} Colocar uma coisa que ${nome(outro)} ama</summary><form class="gs-form" id="gsf">
       <button type="button" class="gs-pick" id="gspick">${foto ? `<img src="${foto}" alt="">` : `<span>${icon('image')}<small>escolher foto</small></span>`}</button>
       <div class="gs-campos"><label class="fz-lab">Categoria<select id="gscat">${gcats().map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label>
-      <label class="fz-lab">Legenda<input type="text" id="gsleg" maxlength="80" placeholder="ex: Minecraft, joga desde criança"></label>
+      <label class="fz-lab">Legenda<input type="text" id="gsleg" maxlength="80" placeholder="Legenda"></label>
       <button type="submit" id="gssave">Guardar</button><p class="werr" id="gserr"></p></div></form></details>`
     : `<p class="gs-nota">${icon('heart')} Essa parte é ${eu === 'Di' ? 'a ' + apelido('Mihzinha', 38) : 'o ' + apelido('Di', 38)} que preenche. Aqui você vê o que ${eu === 'Di' ? 'ela' : 'ele'} sabe que você ama.</p>`;
   const draw = () => { if(!$('gsgrid')) return;
@@ -6836,7 +6873,7 @@ VIEWS.gostos = () => {
   const semear = async () => { if(gcatsCol && gcatsCol.length) return; const base = gcats(); for(let k = 0; k < base.length; k++) await colCat.set(base[k][0], {nome:base[k][1], ordem:k}); };
   const drawCats = () => { const box = $('gscatbox'); if(!box) return; const cs = gcats();
     box.innerHTML = `<p class="gs-catdica">Os dois podem criar, renomear e apagar. O que já tá numa categoria apagada vai pra "sem categoria".</p>` + cs.map(([id, nm]) => `<div class="gs-catrow"><input type="text" size="1" maxlength="30" value="${esc(nm)}" data-cid="${id}"><button type="button" class="ib" data-cdel="${id}" aria-label="Apagar categoria">${icon('trash')}</button></div>`).join('')
-      + `<div class="gs-catrow"><input type="text" size="1" maxlength="30" id="gsnovacat" placeholder="Nova categoria (ex: Séries de anime)"><button type="button" id="gsaddcat">Criar</button></div>`;
+      + `<div class="gs-catrow"><input type="text" size="1" maxlength="30" id="gsnovacat" placeholder="Nova categoria"><button type="button" id="gsaddcat">Criar</button></div>`;
     box.querySelectorAll('[data-cid]').forEach(i => i.onchange = async () => { const v = i.value.trim(); if(!v) return; await semear(); const atual = (gcatsCol || []).find(c => c.id === i.dataset.cid) || {}; await colCat.set(i.dataset.cid, {nome:v, ordem:atual.ordem ?? 0}); sparkle(i); });
     box.querySelectorAll('[data-cdel]').forEach(b => b.onclick = async () => { if(!b.dataset.sure){ b.dataset.sure = 1; b.classList.add('sure'); setTimeout(() => { delete b.dataset.sure; b.classList.remove('sure'); }, 2500); return; } await semear(); await colCat.remove(b.dataset.cdel); });
     $('gsaddcat').onclick = async () => { const v = $('gsnovacat').value.trim(); if(!v) return; await semear(); const ord = Math.max(0, ...((gcatsCol || []).map(c => c.ordem ?? 0))) + 1; await colCat.set('c' + Date.now().toString(36), {nome:v, ordem:ord}); sparkle($('gsaddcat')); };
@@ -6881,7 +6918,7 @@ VIEWS.datas = () => {
        <p class="wo-t" id="dmft">Nova data marcante</p>
        <button type="button" class="dm-pick" id="dmpick"><span id="dmprev">${icon('image')}<small>escolher foto</small></span></button>
        <input type="file" id="dmfile" accept="image/*" hidden>
-       <div class="fz-row"><label class="fz-lab">Data<input type="date" id="dmd" aria-label="Data"></label><label class="fz-lab">Título<input type="text" id="dmt" maxlength="40" placeholder="ex: nosso 1º beijo" aria-label="Título"></label></div>
+       <div class="fz-row"><label class="fz-lab">Data<input type="date" id="dmd" aria-label="Data"></label><label class="fz-lab">Título<input type="text" id="dmt" maxlength="40" placeholder="Título" aria-label="Título"></label></div>
        <label class="fz-lab">Legenda<textarea id="dml" rows="3" maxlength="300" placeholder="Conta o que aconteceu nesse dia…" aria-label="Legenda"></textarea></label>
        <div class="pl-act"><button class="ghost" type="button" id="dmcancel" hidden>Cancelar</button><button type="submit" id="dmsave">Guardar</button></div>
        <p class="werr" id="dmerr"></p>
@@ -6952,7 +6989,7 @@ VIEWS.financas = () => {
        <p class="wo-t" id="fzft">Novo gasto</p>
        <p class="fz-obs">${RHEART()}<span><b>Obs:</b> presente um pro outro não vale! Não coloca o valor de presente aqui, tá?</span></p>
        <div class="fz-row"><label class="fz-lab">Valor<input type="text" id="fzv" inputmode="decimal" placeholder="R$ 0,00" aria-label="Valor"></label><label class="fz-lab">Data<input type="date" id="fzd" aria-label="Data"></label></div>
-       <label class="fz-lab">O que foi<input type="text" id="fzw" maxlength="60" placeholder="ex: pizza no sábado" aria-label="O que foi comprado"></label>
+       <label class="fz-lab">O que foi<input type="text" id="fzw" maxlength="60" placeholder="O que foi" aria-label="O que foi comprado"></label>
        <label class="fz-lab">Categoria<select id="fzc" aria-label="Categoria"></select></label>
        <div class="fz-newcat" id="fznc" hidden><input type="text" id="fznct" maxlength="20" placeholder="Nome da nova categoria" aria-label="Nova categoria"><button type="button" id="fzncb">Criar</button></div>
        <div class="pl-act"><button class="ghost" type="button" id="fzcancel" hidden>Cancelar</button><button type="submit" id="fzsave">Adicionar gasto</button></div>
@@ -7166,8 +7203,8 @@ function editaCartas(){
   const $ = id => document.getElementById(id); let tm = null;
   const salva = () => { clearTimeout(tm); tm = setTimeout(async () => { try{ await Sync.col('conteudo').set('cartas', {lista}); csToast('Carta salva ♥'); }catch(e){} }, 800); };
   const draw = () => { $('ecl').innerHTML = lista.map((c, i) => `<article class="ec-card card-form" data-i="${i}">
-      <label class="fz-lab">Título<input type="text" data-f="titulo" maxlength="60" value="${esc(c.titulo)}" placeholder="ex: Para abrir no Natal"></label>
-      <div class="fz-row"><label class="fz-lab">Abre em<input type="date" data-f="abre" value="${esc(c.abre)}"></label><label class="fz-lab">Ou "abre quando"<input type="text" data-f="quando" maxlength="40" value="${esc(c.quando)}" placeholder="ex: quando sentir saudade"></label></div>
+      <label class="fz-lab">Título<input type="text" data-f="titulo" maxlength="60" value="${esc(c.titulo)}" placeholder="Título da carta"></label>
+      <div class="fz-row"><label class="fz-lab">Abre em<input type="date" data-f="abre" value="${esc(c.abre)}"></label><label class="fz-lab">Ou "abre quando"<input type="text" data-f="quando" maxlength="40" value="${esc(c.quando)}" placeholder="Quando abrir"></label></div>
       <label class="fz-lab">Carta<textarea data-f="texto" rows="6" placeholder="Meu amor…">${esc(c.texto)}</textarea></label>
       <button type="button" class="linkbtn ec-del" data-del="${i}">excluir carta</button></article>`).join('') || '<p class="lead empty">Nenhuma carta ainda.</p>';
     $('ecl').querySelectorAll('[data-f]').forEach(inp => inp.addEventListener('input', () => { const i = +inp.closest('.ec-card').dataset.i; lista[i][inp.dataset.f] = inp.value; salva(); }));
