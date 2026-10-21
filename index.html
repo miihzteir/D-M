@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=116">
-<link rel="apple-touch-icon" href="icon-180.png?v=116">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=116">
+<link rel="manifest" href="manifest.json?v=119">
+<link rel="apple-touch-icon" href="icon-180.png?v=119">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=119">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -1794,7 +1794,10 @@ html.modo-ed [data-foto]{outline:2px dashed rgba(155,22,48,.4);outline-offset:3p
 html body .dm-pol{flex:none;width:112px;min-height:0;margin:0;padding:7px 7px 6px;background:#fff;border:0;border-radius:4px;box-shadow:0 10px 20px -14px rgba(74,18,36,.55);transform:rotate(var(--r));display:flex;flex-direction:column;gap:5px;color:var(--ink)}
 .dm-pol img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:2px;display:block}.dm-pol small{font-family:var(--f-hand);font-size:14px;line-height:1.15;text-align:center;white-space:pre-line}
 html body .dm-tag{display:inline-flex;align-items:center;gap:5px;width:auto;min-height:0;margin:6px 0 0;padding:4px 10px;border-radius:99px;background:#efe7fb;color:#6b4bb0;border:0;box-shadow:none;font-size:12px;font-weight:700}
-.fl-card.tem-capa{flex-direction:row;align-items:flex-start;gap:12px}
+.fl-row{display:flex;align-items:flex-start;gap:12px}.fl-head{display:flex;align-items:flex-start;justify-content:space-between;gap:6px}.fl-ht{min-width:0}
+.fl-tools{display:flex;gap:2px;flex:none;margin:-4px -6px 0 0}html body .fl-tools .ib{width:30px!important;height:30px!important;min-height:0!important;background:transparent!important;box-shadow:none!important;border:0!important;color:#a8939a!important}.fl-tools .ib svg{width:16px;height:16px}
+.fl-card .fl-act{justify-content:flex-start;margin-top:2px}.fl-card .fl-notas{background:#fbf6ee;border-radius:12px;padding:8px 10px;gap:6px 18px;margin-top:6px}
+.fl-cm{border-top:1px dashed var(--line2);padding-top:6px}.fl-cm .cmts{margin-top:0}
 .fl-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:10px}
 .fl-capa{flex:none;width:calc(72px * var(--s,1));max-width:42%;position:relative}
 html body .fl-cp{width:100%;aspect-ratio:2/3;min-height:0;margin:0;padding:0;border-radius:10px;overflow:hidden;background:#f3ece4;border:1.5px dashed #d9c8bd;box-shadow:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#a08f84;font-size:20px}
@@ -1827,6 +1830,8 @@ html body .nm{font-weight:800}html body .nm-di{color:#2f6db3!important}html body
 .pd-form{display:flex;flex-direction:column;gap:10px}.pd-ac{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;align-items:center}html body .pd-ac button{width:auto!important;min-height:34px!important;padding:0 14px!important;font-size:13px}.pd-ac label{display:flex;align-items:center;gap:6px;font-size:12.5px;color:#6a5a5a}.pd-ac input{width:70px;min-height:34px;border-radius:10px;border:1.5px solid #ecd4d6;padding:0 8px;font:inherit}
 .pz-card.no{opacity:.7}.pd-rec .pz-tx{min-width:0;flex:1}
 .duo.quatro{grid-template-columns:1fr 1fr!important}.duo button.certa{outline:2px solid #3f8a4a;outline-offset:2px}
+html body .cmts{margin-top:8px;padding-top:6px;border-top:1px dashed rgba(122,20,36,.18)}html body .fl-cm{border-top:0;padding-top:0}.postit:has(.del){padding-top:28px}
+html body .fl-tabs3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .dm-ext{display:flex;align-items:center;justify-content:space-between;gap:8px}.di-ver .dm-ext .d-edit{display:none}
 .alvo-pisca{animation:alvopisca 1.1s ease-in-out 2;border-radius:14px}
 /* busca universal */
@@ -3965,7 +3970,7 @@ function maybeInstallPrompt(forcar){
 }
 if('serviceWorker' in navigator && /github\.io$/.test(location.hostname)) addEventListener('load', () => navigator.serviceWorker.register('sw.js').then(r => r.update()).catch(() => {}));
 /* sempre a versão mais nova: se o GitHub tem uma versão diferente da aberta, limpa o guardado e recarrega sozinho */
-const VERSAO_APP = 'versão de 21/10 · 16h55';
+const VERSAO_APP = 'versão de 21/10 · 17h40';
 async function confereVersao(){
   if(!/github\.io$/.test(location.hostname) || !navigator.onLine) return;
   try{ const r = await fetch(location.pathname + '?nc=' + Date.now(), {cache:'no-store'}); if(!r.ok) return; const t = await r.text(), m = t.match(/const VERSAO_APP = '([^']+)'/);
@@ -6559,35 +6564,39 @@ VIEWS.contagem = () => {
 /* ---------- filmes e séries ---------- */
 VIEWS.filmes = () => {
   const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'Mihzinha' : 'Di';
-  let aba = 'ver';
+  let aba = store.get('flAba', 'vendo'); if(!['ver','vendo','visto'].includes(aba)) aba = 'vendo';
+  const st = f => f.visto ? 'visto' : f.vendo ? 'vendo' : 'ver';
+  const vaiPara = a => { aba = a; store.set('flAba', a); document.querySelectorAll('.fl-tabs button').forEach(x => x.classList.toggle('on', x.dataset.a === a)); };
   shell('sessão pipoca','Filmes e séries','O que a gente quer ver junto e o que achou depois',
     `<form class="card-form" id="flf"><p class="wo-t">Adicionar</p><div class="fz-row"><label class="fz-lab">Nome<input type="text" id="flt" maxlength="60" placeholder="Título"></label>
       <label class="fz-lab">É um<select id="flk"><option>Filme</option><option>Série</option><option>Anime</option><option>Documentário</option></select></label></div>
       <div class="pl-act"><button type="submit">Adicionar à lista</button></div></form>
-     <div class="fz-tabs fl-tabs"><button type="button" data-a="ver" class="on">Pra ver</button><button type="button" data-a="visto">Já vimos</button></div>
+     <div class="fz-tabs fl-tabs fl-tabs3"><button type="button" data-a="ver">Pra ver</button><button type="button" data-a="vendo">Vendo</button><button type="button" data-a="visto">Já vimos</button></div>
      <div id="fll" class="fl-list"></div><input type="file" id="flcap" accept="image/*" hidden>`);
   const col = Sync.col('filmes'), $ = id => document.getElementById(id);
   let list = [];
   const ESTRELA = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9z"/></svg>';
   const notas = (f, q, edit) => `<span class="fl-n ${edit ? 'edit' : ''}" data-id="${f.id}">${[1,2,3,4,5].map(k => `<i data-k="${k}" class="${((f.notas || {})[q] || 0) >= k ? 'on' : ''}" ${edit ? `role="button" aria-label="${k} estrela${k > 1 ? 's' : ''}"` : ''}>${ESTRELA}</i>`).join('')}</span>`;
   const ehSerie = f => (f.tipo || 'Filme') !== 'Filme';
-  const epBox = f => ehSerie(f) && !f.visto ? `<div class="fl-ep" data-id="${f.id}"><span class="fl-ep-t">Onde paramos</span><div class="fl-ep-c"><small>Temporada</small><button type="button" class="ib" data-ep="temp" data-d="-1" aria-label="menos">−</button><b>${f.temp || 1}</b><button type="button" class="ib" data-ep="temp" data-d="1" aria-label="mais">+</button></div><div class="fl-ep-c"><small>Episódio</small><button type="button" class="ib" data-ep="ep" data-d="-1" aria-label="menos">−</button><b>${f.ep || 1}</b><button type="button" class="ib" data-ep="ep" data-d="1" aria-label="mais">+</button></div>${datinha(f, 'ultimaVez', 'última vez?', 'última vez em')}</div>` : '';
+  const epBox = f => ehSerie(f) && st(f) === 'vendo' ? `<div class="fl-ep" data-id="${f.id}"><span class="fl-ep-t">Onde paramos</span><div class="fl-ep-c"><small>Temporada</small><button type="button" class="ib" data-ep="temp" data-d="-1" aria-label="menos">−</button><b>${f.temp || 1}</b><button type="button" class="ib" data-ep="temp" data-d="1" aria-label="mais">+</button></div><div class="fl-ep-c"><small>Episódio</small><button type="button" class="ib" data-ep="ep" data-d="-1" aria-label="menos">−</button><b>${f.ep || 1}</b><button type="button" class="ib" data-ep="ep" data-d="1" aria-label="mais">+</button></div>${datinha(f, 'ultimaVez', 'última vez?', 'última vez em')}</div>` : '';
   const datinha = (f, campo, vazio, pre) => { const v = f[campo] || ''; return `<span class="fl-dt ${v ? 'tem' : ''}"><label>${icon('calendar')}<span>${v ? pre + ' ' + new Date(v + 'T12:00:00').toLocaleDateString('pt-BR') : vazio}</span><input type="date" data-dt="${campo}" data-id="${f.id}" value="${esc(v)}"></label>${v ? `<button type="button" class="fl-dtx" data-dtx="${campo}" data-id="${f.id}" aria-label="tirar a data">×</button>` : ''}</span>`; };
   const draw = () => { if(!$('fll')) return;
-    const l = list.filter(f => aba === 'visto' ? f.visto : !f.visto);
-    poeLista($('fll'), l.length ? l.map(f => `<article class="fl-card tem-capa"><div class="fl-capa" style="--s:${f.capaS || 1}"><button type="button" class="fl-cp" data-capa="${f.id}" aria-label="Capa">${f.capa ? `<img src="${f.capa}" alt="">` : `${icon('image')}<small>capa</small>`}</button>${f.capa ? `<span class="fl-sz"><i data-cs="-1" data-id="${f.id}">−</i><i data-cs="1" data-id="${f.id}">+</i></span>` : ''}</div><div class="fl-body"><div class="fl-top"><span class="fl-k">${esc(f.tipo || 'Filme')}</span><h3>${esc(f.titulo)}</h3>
+    const l = list.filter(f => st(f) === aba);
+    poeLista($('fll'), l.length ? l.map(f => `<article class="fl-card"><div class="fl-row"><div class="fl-capa" style="--s:${f.capaS || 1}"><button type="button" class="fl-cp" data-capa="${f.id}" aria-label="Capa">${f.capa ? `<img src="${f.capa}" alt="">` : `${icon('image')}<small>capa</small>`}</button>${f.capa ? `<span class="fl-sz"><i data-cs="-1" data-id="${f.id}">−</i><i data-cs="1" data-id="${f.id}">+</i></span>` : ''}</div><div class="fl-body"><div class="fl-top"><div class="fl-head"><div class="fl-ht"><span class="fl-k">${esc(f.tipo || 'Filme')}</span><h3>${esc(f.titulo)}</h3></div><div class="fl-tools">${st(f) !== 'ver' ? `<button class="ib" type="button" data-volta="${f.id}" aria-label="Voltar uma etapa" title="${st(f) === 'visto' && ehSerie(f) ? 'Voltar pra vendo' : 'Voltar pra lista'}">${icon('rebobina')}</button>` : ''}<button class="ib" type="button" data-fed="${f.id}" aria-label="Editar">${icon('pencil')}</button><button class="ib" type="button" data-del="${f.id}" aria-label="Apagar">${icon('trash')}</button></div></div>
         ${epBox(f)}${f.visto ? datinha(f, 'vistoEm', 'quando a gente viu?', 'vimos em') : ''}${f.visto ? `<div class="fl-notas"><div><small>sua nota</small>${notas(f, eu, true)}</div><div><small>${outro}</small>${notas(f, outro, false)}</div></div>` : ''}</div>
-        <div class="fl-act">${f.visto ? `<button type="button" class="ghost" data-volta="${f.id}">Voltar pra lista</button>` : `<button type="button" data-vi="${f.id}">Vimos!</button>`}<button class="ib" type="button" data-fed="${f.id}" aria-label="Editar">${icon('pencil')}</button><button class="ib" type="button" data-del="${f.id}" aria-label="Apagar">${icon('trash')}</button></div>${cmtBox('filmes', f.id, f.autor)}</div></article>`).join('')
-      : `<p class="lead hq-empty">${aba === 'ver' ? 'Lista vazia. Bora escolher o próximo?' : 'Quando vocês assistirem, toca em "Vimos!" e dão nota.'}</p>`);
-    $('fll').querySelectorAll('[data-vi]').forEach(b => b.onclick = () => { const f0 = list.find(x => x.id === b.dataset.vi); if(f0) evento(`{eu} marcou ${(f0.titulo || '').slice(0, 60)} como visto`, 'Dá a sua nota ♥', 'filmes@filmes:' + f0.id, 'film'); col.set(b.dataset.vi, Object.assign({}, list.find(x => x.id === b.dataset.vi), {visto:true, vistoPor:eu})); sparkle(b); });
-    $('fll').querySelectorAll('[data-volta]').forEach(b => b.onclick = () => col.set(b.dataset.volta, Object.assign({}, list.find(x => x.id === b.dataset.volta), {visto:false})));
+        ${st(f) === 'visto' ? '' : `<div class="fl-act">${st(f) === 'ver' && ehSerie(f) ? `<button type="button" data-com="${f.id}">Começamos</button>` : `<button type="button" data-vi="${f.id}">${st(f) === 'vendo' ? 'Terminamos' : 'Vimos!'}</button>`}</div>`}</div></div><div class="fl-cm">${cmtBox('filmes', f.id, f.autor)}</div></article>`).join('')
+      : `<p class="lead hq-empty">${aba === 'ver' ? 'Lista vazia. Bora escolher o próximo?' : aba === 'vendo' ? 'Nada em andamento agora. Quando começarem uma série, toca em "Começamos".' : 'Quando vocês terminarem, toca em "Vimos!" e dão nota.'}</p>`);
+    $('fll').querySelectorAll('[data-vi]').forEach(b => b.onclick = () => { const f0 = list.find(x => x.id === b.dataset.vi); if(f0) evento(`{eu} marcou ${(f0.titulo || '').slice(0, 60)} como visto`, 'Dá a sua nota ♥', 'filmes@filmes:' + f0.id, 'film'); col.set(b.dataset.vi, Object.assign({}, list.find(x => x.id === b.dataset.vi), {visto:true, vendo:false, vistoPor:eu})); sparkle(b); vaiPara('visto'); });
+    $('fll').querySelectorAll('[data-com]').forEach(b => b.onclick = () => { const f0 = list.find(x => x.id === b.dataset.com); if(!f0) return; evento(`{eu} marcou que vocês começaram ${(f0.titulo || '').slice(0, 60)}`, 'Tá em "Vendo" agora', 'filmes@filmes:' + f0.id, 'film');
+      col.set(f0.id, Object.assign({}, f0, {vendo:true, temp:f0.temp || 1, ep:f0.ep || 1, ultimaVez:hoje()})); sparkle(b); vaiPara('vendo'); });
+    $('fll').querySelectorAll('[data-volta]').forEach(b => b.onclick = () => { const f0 = list.find(x => x.id === b.dataset.volta); if(!f0) return; const volta = st(f0) === 'visto' && ehSerie(f0) ? {visto:false, vendo:true} : {visto:false, vendo:false}; col.set(f0.id, Object.assign({}, f0, volta)); });
     $('fll').querySelectorAll('.fl-n.edit i').forEach(i => i.onclick = () => { const id = i.parentElement.dataset.id, f = list.find(x => x.id === id);
       if(f && !(f.notas || {})[eu]) evento(`{eu} deu ${i.dataset.k} ${+i.dataset.k === 1 ? 'estrela' : 'estrelas'} pra ${(f.titulo || '').slice(0, 60)}`, (f.notas || {})[outro] ? 'Vem ver as notas' : 'Falta a sua nota', 'filmes@filmes:' + id, 'star'); col.set(id, Object.assign({}, f, {notas:Object.assign({}, f.notas || {}, {[eu]:+i.dataset.k})})); });
     $('fll').querySelectorAll('.fl-dt label').forEach(l => l.onclick = e => { const i = l.querySelector('input'); if(e.target === i) return; e.preventDefault(); try{ i.showPicker(); }catch(x){ i.focus(); i.click(); } });
     $('fll').querySelectorAll('[data-dtx]').forEach(b => b.onclick = () => { const f = list.find(x => x.id === b.dataset.id); if(!f) return; f[b.dataset.dtx] = ''; draw(); col.set(f.id, Object.assign({}, f)).catch(() => {}); });
     $('fll').querySelectorAll('[data-dt]').forEach(i => i.onchange = () => { const f = list.find(x => x.id === i.dataset.id); if(!f) return; f[i.dataset.dt] = i.value || ''; draw(); col.set(f.id, Object.assign({}, f)).catch(() => {}); });
     $('fll').querySelectorAll('[data-ep]').forEach(b => b.onclick = () => { const id = b.closest('.fl-ep').dataset.id, f = list.find(x => x.id === id); if(!f) return; const c = b.dataset.ep;
-      const v = Math.max(1, Math.min(999, (+f[c] || 1) + +b.dataset.d)); if(v === (+f[c] || 1)) return; f[c] = v; if(c === 'temp' && +b.dataset.d > 0) f.ep = 1; draw();
+      const v = Math.max(1, Math.min(999, (+f[c] || 1) + +b.dataset.d)); if(v === (+f[c] || 1)) return; f[c] = v; if(c === 'temp' && +b.dataset.d > 0) f.ep = 1; f.ultimaVez = hoje(); draw();
       clearTimeout(tEp); tEp = setTimeout(() => col.set(f.id, Object.assign({}, f)).catch(() => {}), 600); });
     $('fll').querySelectorAll('[data-del]').forEach(b => b.onclick = () => { if(!b.dataset.sure){ b.dataset.sure = 1; b.classList.add('sure'); setTimeout(() => { delete b.dataset.sure; b.classList.remove('sure'); }, 2500); return; } col.remove(b.dataset.del); });
     $('fll').querySelectorAll('[data-capa]').forEach(b => b.onclick = () => { capaDe = b.dataset.capa; $('flcap').value = ''; $('flcap').click(); });
@@ -6595,7 +6604,8 @@ VIEWS.filmes = () => {
     $('fll').querySelectorAll('[data-fed]').forEach(b => b.onclick = () => { const f = list.find(x => x.id === b.dataset.fed); if(f) fed.abrir(f.id, {flt:f.titulo, flk:f.tipo || 'Filme'}); });
   };
   const fed = editavel($('flf'), document.querySelector('#flf button[type=submit]'), 'Adicionar à lista');
-  document.querySelectorAll('.fl-tabs button').forEach(b => b.onclick = () => { aba = b.dataset.a; document.querySelectorAll('.fl-tabs button').forEach(x => x.classList.toggle('on', x === b)); draw(); });
+  document.querySelectorAll('.fl-tabs button').forEach(b => b.onclick = () => { vaiPara(b.dataset.a); draw(); });
+  vaiPara(aba);
   $('flf').onsubmit = async e => { e.preventDefault(); const t = $('flt').value.trim(); if(!t) return; try{ if(fed.id){ const f = list.find(x => x.id === fed.id) || {}; await col.set(fed.id, Object.assign({}, f, {titulo:t, tipo:$('flk').value})); fed.fechar(); } else await col.add({titulo:t, tipo:$('flk').value, visto:false, autor:eu, notas:{}}); $('flt').value = ''; sparkle(e.target.querySelector('button[type=submit]')); }catch(x){} };
   let capaDe = null, tCap = null, tEp = null;
   $('flcap').onchange = async () => { const fl = $('flcap').files[0], f = list.find(x => x.id === capaDe); if(!fl || !f) return;
