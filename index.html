@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=86">
-<link rel="apple-touch-icon" href="icon-180.png?v=86">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=86">
+<link rel="manifest" href="manifest.json?v=87">
+<link rel="apple-touch-icon" href="icon-180.png?v=87">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=87">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -2014,6 +2014,7 @@ html body .ft-bar{position:absolute!important;display:flex!important;left:0!impo
 html body .ft-bar i{position:static!important;width:auto!important;height:28px!important;background:#fff!important;color:#9b1630!important;font-family:var(--f-body)!important;transform:none!important;border-radius:99px!important}
 .ft-bar.so-ic i em{display:none}.ft-bar.so-ic{top:6px}.ft-bar.so-ic i{padding:0 7px}
 .ft-bar i em{font-style:normal;font-size:12px}.ft-bar i .icn{font-size:15px}
+.mcap.mv-on::before{content:'';position:absolute;left:50%;top:-7px;width:26px;height:4px;margin-left:-13px;border-radius:4px;background:rgba(155,22,48,.45)}
 .mv-sz{pointer-events:none;position:absolute;left:16px;top:-26px;display:flex;gap:3px;z-index:21}
 .mv-sz i{pointer-events:auto;height:22px;box-sizing:border-box;display:grid;place-items:center;font-style:normal;font-family:var(--f-body,inherit);font-size:11px;font-weight:800;line-height:1;padding:5px 6px;border-radius:8px;background:#fff;color:#9b1630;box-shadow:0 3px 8px rgba(0,0,0,.22);cursor:pointer;letter-spacing:0;text-transform:none}
 .mv-h .icn{width:14px;height:14px;stroke:#fff;stroke-width:2}
@@ -3612,7 +3613,7 @@ function renderHome(y = 0){
       <div id="ncvbox" class="mdiabox ncv-fim"></div>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
       <p class="endsync" id="endsync"></p>
-      <p class="endver">versão de 20/10 · 08h55</p>
+      <p class="endver">versão de 21/10 · 09h25</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
@@ -3926,10 +3927,10 @@ function mvFs(el, p){ if(!el.dataset.fs0){ el.style.fontSize = ''; el.dataset.fs
 function ligaArrastoEl(el){
   if(el._arr) return; el._arr = 1;
   el.addEventListener('pointerdown', e => {
-    if(!modoEd() || edLivre || e.button > 0 || e.target.closest('input,textarea,select,.mv-sz,.edk')) return;
+    if(!modoEd() || edLivre || e.button > 0 || e.target.closest('select,.mv-sz,.edk,.ft-bar') || (e.target.closest('input,textarea') && document.activeElement === e.target)) return;
     const k = el.dataset.mv, pai = el.offsetParent || el.parentElement, r = pai.getBoundingClientRect(), p0 = Object.assign({x:0, y:0}, POS[k]), x0 = e.clientX, y0 = e.clientY; let mov = false;
     const mv = ev => { const dx = ev.clientX - x0, dy = ev.clientY - y0;
-      if(!mov){ if(Math.hypot(dx, dy) < 5) return; mov = true; el.classList.add('mv-arr'); try{ el.setPointerCapture(e.pointerId); }catch(x){} }
+      if(!mov){ if(Math.hypot(dx, dy) < 6) return; mov = true; el.classList.add('mv-arr'); if(document.activeElement && el.contains(document.activeElement)) document.activeElement.blur(); try{ el.setPointerCapture(e.pointerId); }catch(x){} }
       ev.preventDefault(); POS[k] = Object.assign({}, p0, {x:+(p0.x + dx / r.width).toFixed(4), y:+(p0.y + dy / r.height).toFixed(4)}); el.style.transform = mvTf(POS[k], r); };
     const up = async () => { removeEventListener('pointermove', mv); removeEventListener('pointerup', up); removeEventListener('pointercancel', up); if(!mov) return; el.classList.remove('mv-arr');
       const bloq = ev => { ev.stopPropagation(); ev.preventDefault(); }; el.addEventListener('click', bloq, {capture:true, once:true}); setTimeout(() => el.removeEventListener('click', bloq, {capture:true}), 350);
