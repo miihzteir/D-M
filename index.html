@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=112">
-<link rel="apple-touch-icon" href="icon-180.png?v=112">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=112">
+<link rel="manifest" href="manifest.json?v=114">
+<link rel="apple-touch-icon" href="icon-180.png?v=114">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=114">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -1823,6 +1823,10 @@ html.modo-ed body .addfab{bottom:calc(84px + env(safe-area-inset-bottom,0px))}
 @media (min-width:700px){html body .addfab{right:calc(50% - 240px + 18px)}}
 html body .nm{font-weight:800}html body .nm-di{color:#2f6db3!important}html body .nm-mi{color:#c2185b!important}
 @keyframes alvopisca{0%,100%{box-shadow:0 0 0 0 rgba(200,24,44,0)}30%{box-shadow:0 0 0 4px rgba(200,24,44,.45)}}
+.pd-box{display:flex;flex-direction:column;gap:8px;margin-top:4px}html body .pd-tog{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:44px;border-radius:14px;background:#fff!important;color:var(--wine)!important;border:1.5px dashed #e7a9b8!important;box-shadow:none!important;font-weight:700}.pd-tog svg{width:16px;height:16px}
+.pd-form{display:flex;flex-direction:column;gap:10px}.pd-ac{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;align-items:center}html body .pd-ac button{width:auto!important;min-height:34px!important;padding:0 14px!important;font-size:13px}.pd-ac label{display:flex;align-items:center;gap:6px;font-size:12.5px;color:#6a5a5a}.pd-ac input{width:70px;min-height:34px;border-radius:10px;border:1.5px solid #ecd4d6;padding:0 8px;font:inherit}
+.pz-card.no{opacity:.7}.pd-rec .pz-tx{min-width:0;flex:1}
+.dm-ext{display:flex;align-items:center;justify-content:space-between;gap:8px}.di-ver .dm-ext .d-edit{display:none}
 .alvo-pisca{animation:alvopisca 1.1s ease-in-out 2;border-radius:14px}
 /* busca universal */
 .busca-wrap{position:relative;margin:4px 0 10px;z-index:40}
@@ -1841,6 +1845,8 @@ html body .busca-it:hover,html body .busca-it:focus-visible{background:#fbf3f4}
 .busca-tx mark{background:#ffe6a8;color:inherit;border-radius:3px;padding:0 1px}
 .busca-nada{margin:10px;font-size:13px;color:var(--muted)}
 html body .recolhido{display:none!important}
+html body main#app > .view{gap:14px}html body .vhead{gap:6px}html body .busca-wrap{margin:0}html body .fl-tabs,html body .gs-tabs{margin:0}html body .rolabox{margin-bottom:2px}
+@media(min-width:700px){html body main#app > .view{gap:18px}}
 .mem-ed{margin-top:18px;background:#fffdf8;border:1px solid var(--line2);border-radius:18px;padding:14px}.mem-ed-t{margin:0 0 10px;font-weight:700;color:var(--wine);text-align:left}
 .mem-ed-g{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.mem-ed-s{position:relative;aspect-ratio:3/4;border-radius:12px;overflow:visible;background:#fbeef0;border:2px dashed #e7a9b8;display:grid;place-items:center;color:#b3122c;font-weight:700}
 .mem-ed-s img{width:100%;height:100%;object-fit:cover;border-radius:10px;display:block}.mem-ed-s:has(img){border-style:solid}
@@ -3713,7 +3719,7 @@ function renderHome(y = 0){
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
       <div class="minhafoto" id="minhafoto"></div>
       <p class="endsync" id="endsync"></p>
-      <p class="endver">versão de 21/10 · 15h30</p>
+      <p class="endver">versão de 21/10 · 16h20</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
@@ -4103,6 +4109,14 @@ function hifeniza(raiz = document.body){
   addEventListener('wheel', e => { if(e.ctrlKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return; const r = rolaX(e.target); if(!r) return; const y = rolaY(e.target); if(y && r.contains(y)) return;
     const max = r.scrollWidth - r.clientWidth; if((e.deltaY > 0 && r.scrollLeft >= max - 1) || (e.deltaY < 0 && r.scrollLeft <= 0)) return; r.scrollLeft += e.deltaY; e.preventDefault(); }, {passive:false});
 })();
+/* trocou de aba ou categoria: a tela acompanha pra mostrar a lista */
+document.addEventListener('click', e => { const b = e.target.closest && e.target.closest('.fz-tabs button,.gs-cats button,.seg button,.flt button'); if(!b) return;
+  const g = b.parentElement, y0 = scrollY;
+  setTimeout(() => { if(!g.isConnected || Math.abs(scrollY - y0) > 4) return; const r = g.getBoundingClientRect();
+    let n = g.nextElementSibling; for(let m = n; m; m = m.nextElementSibling){ if(m.matches('.rolabox,.gs-grid,.fl-list') && m.getClientRects().length){ n = m; break; } }
+    while(n && !n.getClientRects().length) n = n.nextElementSibling; if(!n) return;
+    const nr = n.getBoundingClientRect(); if(nr.bottom > innerHeight - 8 && r.top > 90){ const d = Math.min(r.top - 84, nr.bottom - innerHeight + 24); if(d > 8) window.scrollBy({top:d, behavior:'smooth'}); } }, 90);
+});
 /* abriu algo com um toque: a tela desce junto pra mostrar o que apareceu */
 document.addEventListener('click', e => { const b = e.target.closest && e.target.closest('button,summary,[role=button],.linkbtn,label');
   if(!b || b.closest('.busca-res,.tk-wrap,.av-box,#addfab,.addfab,.vbar,.add-tog,#edlvbar')) return;
@@ -4246,20 +4260,39 @@ function chaveTitulo(v, title){
   if(k !== velho && !temTx(k) && temTx(velho)) TELAS[k] = TELAS[velho];
   return k;
 }
+/* o subtítulo do botão e o de dentro da tela são o mesmo texto: mudou num, muda no outro */
+function chaveSub(v, title){
+  const velho = 's_' + v + '_' + hk(title), hkk = hubDe(v);
+  const k = hkk ? 'hb_s_' + hkk : Object.values(LISTS).flat().some(x => x.id === v) ? 'ps_' + v : velho;
+  if(k !== velho && !temTx(k) && temTx(velho)) TELAS[k] = TELAS[velho];
+  return k;
+}
+/* troca a lista sem piscar: o que não mudou fica no lugar (foto não recarrega) */
+function poeLista(el, html){
+  if(!el) return; const t = document.createElement('template'); t.innerHTML = html;
+  const velhos = new Map(); [...el.children].forEach(c => { const k = c.__sig; if(k){ if(!velhos.has(k)) velhos.set(k, []); velhos.get(k).push(c); } });
+  const novos = [...t.content.children].map(c => { const k = hk(c.outerHTML); const v = velhos.get(k); if(v && v.length) return v.shift(); c.__sig = k; return c; });
+  const atuais = [...el.childNodes]; if(novos.length === atuais.length && novos.every((n, i) => n === atuais[i])) return;
+  el.replaceChildren(...novos);
+}
 /* nome de cada um com a sua cor */
 const quemCls = q => q === 'Di' ? 'nm-di' : q === 'Mihzinha' ? 'nm-mi' : '';
 const quemTag = q => `<b class="nm ${quemCls(q)}">${esc(q || '')}</b>`;
 /* comentários: os dois comentam no que o outro escreveu */
-const cmtBox = (col, id, autor) => `<div class="cmts" data-alvo="${esc(col + ':' + id)}" data-autor="${esc(autor || '')}"></div>`;
 let CMTS = [], cmtAberto = new Set(), cmtLigado = false;
+function cmtConteudo(alvo){
+  const eu = Sync.quem || 'Di', nm = q => q === 'Di' ? apelido('Di', 41) : q === 'Mihzinha' ? apelido('Mihzinha', 41) : q;
+  const cs = CMTS.filter(c => c.alvo === alvo), ab = cmtAberto.has(alvo), sig = cs.map(c => c.id + (c.texto || '')).join('|') + ab;
+  return [sig, `${cs.map(c => `<p class="cmt"><b class="${quemCls(c.autor)}">${esc(nm(c.autor))}</b> ${esc(c.texto)}${c.autor === eu ? ` <button type="button" class="cmt-x" data-cx="${c.id}" aria-label="apagar">×</button>` : ''}</p>`).join('')}
+      ${ab ? `<div class="cmt-f"><textarea rows="1" maxlength="300" placeholder="Escreve um comentário…"></textarea><button type="button" class="cmt-ok">${icon('send')}</button></div>` : `<button type="button" class="cmt-b">${icon('chat')} ${cs.length ? 'responder' : 'comentar'}</button>`}`, ab];
+}
+const cmtBox = (col, id, autor) => { const alvo = col + ':' + id; let sig = '', h = ''; try{ ligaCmts(); [sig, h] = cmtConteudo(alvo); }catch(e){} return `<div class="cmts" data-alvo="${esc(alvo)}" data-autor="${esc(autor || '')}" data-v="${esc(sig)}">${h}</div>`; };
 function ligaCmts(){ if(cmtLigado) return; cmtLigado = true; Sync.col('comentarios').on(l => { CMTS = l.slice().sort((a, b) => (a.criadoEm || 0) - (b.criadoEm || 0)); document.querySelectorAll('.cmts').forEach(el => { el.dataset.v = ''; }); aplicaCmts(); }); }
 function aplicaCmts(){
   const boxes = document.querySelectorAll('.cmts'); if(!boxes.length) return; ligaCmts();
-  const eu = Sync.quem || 'Di', nm = q => q === 'Di' ? apelido('Di', 41) : q === 'Mihzinha' ? apelido('Mihzinha', 41) : q;
-  boxes.forEach(el => { const alvo = el.dataset.alvo, cs = CMTS.filter(c => c.alvo === alvo), ab = cmtAberto.has(alvo), sig = cs.map(c => c.id + (c.texto || '')).join('|') + ab;
+  boxes.forEach(el => { const [sig, h, ab] = cmtConteudo(el.dataset.alvo);
     if(el.dataset.v === sig) return; el.dataset.v = sig;
-    el.innerHTML = `${cs.map(c => `<p class="cmt"><b class="${quemCls(c.autor)}">${esc(nm(c.autor))}</b> ${esc(c.texto)}${c.autor === eu ? ` <button type="button" class="cmt-x" data-cx="${c.id}" aria-label="apagar">×</button>` : ''}</p>`).join('')}
-      ${ab ? `<div class="cmt-f"><textarea rows="1" maxlength="300" placeholder="Escreve um comentário…"></textarea><button type="button" class="cmt-ok">${icon('send')}</button></div>` : `<button type="button" class="cmt-b">${icon('chat')} ${cs.length ? 'responder' : 'comentar'}</button>`}`;
+    el.innerHTML = h;
     if(ab){ const ta = el.querySelector('textarea'); setTimeout(() => ta && ta.focus(), 30); } });
 }
 document.addEventListener('click', async e => {
@@ -4319,7 +4352,7 @@ function shell(eb, title, sub, body){
   const [pcb, pc] = corDe(curView);
   app.innerHTML = `<div class="view page" style="--pc:${pc};--pcb:${pcb}">
     <div class="vbar"><button class="vback" id="back" aria-label="Voltar"><svg viewBox="0 0 24 24" class="icn"><path d="M15 5l-7 7 7 7"/></svg><span>Voltar</span></button></div>
-    <header class="vhead">${(it => it ? (([bg, fg]) => `<span class="vh-ic" style="--bg:${bg};--fg:${fg}">${icon(it.ico)}</span>`)(corDe(it.id)) : '')(Object.values(LISTS).flat().find(x => x.id === curView))}<h2>${TE(chaveTitulo(curView, title), title, 'Título desta tela')}</h2>${sub || modoEd() ? `<p>${TE('s_' + curView + '_' + hk(title), sub || '', 'Texto embaixo do título')}</p>` : ''}</header>
+    <header class="vhead">${(it => it ? (([bg, fg]) => `<span class="vh-ic" style="--bg:${bg};--fg:${fg}">${icon(it.ico)}</span>`)(corDe(it.id)) : '')(Object.values(LISTS).flat().find(x => x.id === curView))}<h2>${TE(chaveTitulo(curView, title), title, 'Título desta tela')}</h2>${sub || modoEd() ? `<p>${TE(chaveSub(curView, title), sub || '', 'Texto embaixo do título')}</p>` : ''}</header>
     ${body}</div>`;
   if(yVolta){ window.scrollTo({top:yVolta, behavior:'instant'}); requestAnimationFrame(() => window.scrollTo({top:yVolta, behavior:'instant'})); }
   { const nv = hubDe(curView) ? 1 : (hk => hk && curView !== hubAtual && (HUBS[hk].itens().some(r => r.id === curView) || HUBS[hk].extra === curView) ? 2 : 1)(hubDe(hubAtual)); entradaHistorico(nv, urlDe(curView), nv === 2 ? `#/${hubAtual}` : undefined); } listaPrimeiro(); buscaNaTela(title); { const vv = curView; setTimeout(() => colheTela(vv), 900); }
@@ -5938,7 +5971,7 @@ async function avisar(n){
 }
 
 /* avisa o servidor (Cloudflare) pra mandar notificação pro outro celular */
-const EVENTOS_PUSH = ['eventos','bilhetes','respostas','abraQuando','cartasData','cartasFilhos','abracos','missoesEsp','gostos','musicas','saudade','premios','pensei','diario','filmes','lugares','primeiras','datasMarcantes','mesversario','capsula','roleta','planosLista','contagens','comentarios','teste'];
+const EVENTOS_PUSH = ['eventos','pedidos','bilhetes','respostas','abraQuando','cartasData','cartasFilhos','abracos','missoesEsp','gostos','musicas','saudade','premios','pensei','diario','filmes','lugares','primeiras','datasMarcantes','mesversario','capsula','roleta','planosLista','contagens','comentarios','teste'];
 const workerURL = () => ((conteudoAtual || []).find(x => x.id === 'config') || {}).worker || 'https://dm-avisos.miihzteir.workers.dev';
 /* coisas que não viram documento próprio (vale resgatado, plano realizado…) avisam o outro por aqui */
 function evento(titulo, corpo, go, ic){ try{ if(PREVIA || perspDi()) return; const eu = Sync.quem || 'Di', Eu = eu === 'Di' ? 'O ' + apelido('Di', 15) : 'A ' + apelido('Mihzinha', 15);
@@ -5978,7 +6011,10 @@ function regrasAviso(eu){
     planosLista: p => p.autor === outro && {titulo:`${Ele} colocou um plano novo pra gente`, corpo:corta(p.t), go:'planos@planosLista:' + p.id, ic:'mapa'},
     contagens: c => c.autor === outro && {titulo:`${Ele} criou uma contagem regressiva`, corpo:corta(c.titulo), go:'contagem@contagens:' + c.id, ic:'cal12'},
     comentarios: c => c.autor === outro && {titulo:c.para === eu ? `${Ele} comentou no que você escreveu` : `${Ele} deixou um comentário`, corpo:corta(c.texto), go:(v => v ? v + '@' + c.alvo : '')(({primeiras:'primeiras', bilhetes:'bilhetes', diario:'diario', musicas:'playlist', lugares:'lugares', gostos:'gostos', filmes:'filmes', datasMarcantes:'datas'})[String(c.alvo).split(':')[0]]), ic:'chat'},
-    premios: p => p.autor === outro && p.para === eu && !p.comprado ? {titulo:`${Ele} ofereceu um prêmio pra você`, corpo:corta(p.t), go:'premios@premios:' + p.id, k:'novo', ic:'gift'}
+    pedidos: p => p.de === outro && p.para === eu && p.status === 'pendente' ? {titulo:`${Ele} te pediu um prêmio`, corpo:corta(p.t), go:'premios', k:'novo', ic:'gift', forte:1}
+      : p.de === eu && p.status === 'aceito' ? {titulo:`${Ele} aceitou o seu pedido`, corpo:`${corta(p.t)} já tá nos prêmios pra trocar`, go:'premios', k:'ok', ic:'gift'}
+      : p.de === eu && p.status === 'recusado' ? {titulo:`${Ele} não aceitou o seu pedido`, corpo:corta(p.t), go:'premios', k:'no', ic:'gift'} : null,
+    premios: p => p.autor === outro && p.para === eu && !p.comprado && !p.doPedido ? {titulo:`${Ele} ofereceu um prêmio pra você`, corpo:corta(p.t), go:'premios@premios:' + p.id, k:'novo', ic:'gift'}
       : p.autor === eu && p.comprado && !p.entregue && p.por === outro ? {titulo:`${Ele} trocou chocolates por um prêmio`, corpo:`${corta(p.t)}. Tá esperando você cumprir ♥`, go:'premios@premios:' + p.id, k:'troca', ic:'gift', forte:1}
       : p.para === eu && p.entregue && p.autor === outro ? {titulo:`${Ele} cumpriu o seu prêmio`, corpo:corta(p.t), go:'premios@premios:' + p.id, k:'ok', ic:'medalha'} : null
   };
@@ -6358,6 +6394,12 @@ VIEWS.premios = () => {
   shell('mimos de verdade','Prêmios de verdade','Os chocolates da casinha também viram coisas de verdade. Um escolhe os prêmios do outro',
     `<div class="pz-saldo"><span class="cs-ic">${CHOCO_SVG}</span><div><b id="pzs">0</b><small>chocolates pra gastar</small></div></div>
      <h3 class="ct-sep">Pra você trocar</h3><div class="pz-list" id="pzpra"></div>
+     <div class="pd-box"><button type="button" class="pd-tog" id="pdtog">${icon('plus')}<span>Pedir um prêmio</span></button>
+       <form class="card-form pd-form recolhido" id="pdf"><label class="fz-lab">O que você quer ganhar<input type="text" id="pdt" maxlength="80" placeholder="Prêmio"></label>
+         <label class="fz-lab">Quantos chocolates você acha justo (opcional)<input type="number" id="pdn" min="1" max="999"></label>
+         <button type="submit" id="pdb">Enviar pedido</button><p class="werr" id="pde"></p></form>
+       <div class="pz-list" id="pdmeus"></div></div>
+     <div id="pdrec"></div>
      <h3 class="ct-sep">Que você já ganhou</h3><div class="pz-list" id="pzgan"></div>
      <h3 class="ct-sep">Prêmios que você oferece ${pro}</h3>
      <form class="card-form pz-form" id="pzf"><input type="text" id="pzt" maxlength="80" placeholder="Nome do prêmio" aria-label="Prêmio">
@@ -6365,16 +6407,31 @@ VIEWS.premios = () => {
        <div class="pz-sug">${PREMIO_SUG.map(([t, n]) => `<button type="button" data-t="${esc(t)}" data-n="${n}">${esc(t.replace(/^Vale (um |uma |o |a )?/i, ''))}</button>`).join('')}</div>
        <button type="submit" id="pzb">Oferecer prêmio</button><p class="werr" id="pze"></p></form>
      <div class="pz-list" id="pzmeus"></div>`);
-  const $ = id => document.getElementById(id), col = Sync.col('premios'), colC = Sync.col('chocolates'), colP = Sync.col('compras');
-  let list = [], chocs = [], compras = [];
+  const $ = id => document.getElementById(id), col = Sync.col('premios'), colC = Sync.col('chocolates'), colP = Sync.col('compras'), colD = Sync.col('pedidos');
+  let list = [], chocs = [], compras = [], peds = [], aceitando = null;
+  /* pedidos: um pede, o outro aceita (vira prêmio com preço) ou recusa */
+  const drawPed = () => { if(!$('pdmeus')) return;
+    const meus = peds.filter(p => p.de === eu && p.status !== 'aceito').slice().reverse(), rec = peds.filter(p => p.para === eu && p.status === 'pendente');
+    poeLista($('pdmeus'), meus.map(p => `<div class="pz-card mine ${p.status === 'recusado' ? 'no' : 'esp'}"><span class="pz-ic">${icon('send')}</span><div class="pz-tx"><b>${esc(p.t)}</b><small>${p.status === 'recusado' ? 'não foi dessa vez' : `pedido enviado${p.sug ? ' · sugeriu ' + p.sug + ' chocolates' : ''}`}</small></div><button class="ib" type="button" data-pdx="${p.id}" aria-label="Apagar">${icon('trash')}</button></div>`).join(''));
+    poeLista($('pdrec'), rec.length ? `<h3 class="ct-sep">${Ele} te pediu</h3><div class="pz-list">${rec.map(p => `<div class="pz-card pd-rec"><span class="pz-ic">${icon('gift')}</span><div class="pz-tx"><b>${esc(p.t)}</b><small>${p.sug ? 'sugeriu ' + p.sug + ' chocolates' : 'sem sugestão de preço'}</small>
+      ${aceitando === p.id ? `<div class="pd-ac"><label>Custa<input type="number" id="pdpreco" min="1" max="999" value="${p.sug || 30}"></label><button type="button" data-pdok="${p.id}">Criar prêmio</button></div>` : `<div class="pd-ac"><button type="button" data-pdac="${p.id}">Aceitar</button><button type="button" class="ghost" data-pdno="${p.id}">Recusar</button></div>`}</div></div>`).join('')}</div>` : '');
+    $('pdmeus').querySelectorAll('[data-pdx]').forEach(b => b.onclick = () => { if(!b.dataset.sure){ b.dataset.sure = 1; b.classList.add('sure'); setTimeout(() => { delete b.dataset.sure; b.classList.remove('sure'); }, 2500); return; } colD.remove(b.dataset.pdx); });
+    $('pdrec').querySelectorAll('[data-pdac]').forEach(b => b.onclick = () => { aceitando = b.dataset.pdac; drawPed(); setTimeout(() => { const i = $('pdpreco'); i && i.focus(); }, 50); });
+    $('pdrec').querySelectorAll('[data-pdno]').forEach(b => b.onclick = async () => { if(!b.dataset.sure){ b.dataset.sure = 1; b.textContent = 'Recusar mesmo?'; return; } const p = peds.find(x => x.id === b.dataset.pdno); if(p) await colD.set(p.id, Object.assign({}, p, {status:'recusado'})); });
+    $('pdrec').querySelectorAll('[data-pdok]').forEach(b => b.onclick = async () => { const p = peds.find(x => x.id === b.dataset.pdok); if(!p) return; const n = Math.max(1, Math.round(+$('pdpreco').value || 0)); b.disabled = true;
+      try{ await col.add({t:p.t, preco:n, para:p.de, autor:eu, doPedido:true}); await colD.set(p.id, Object.assign({}, p, {status:'aceito', preco:n})); aceitando = null; sparkle(b); csToast('Prêmio criado ♥'); }catch(x){ b.disabled = false; } });
+  };
+  $('pdtog').onclick = () => { const f = $('pdf'), ab = f.classList.toggle('recolhido'); $('pdtog').classList.toggle('aberto', !ab); $('pdtog').querySelector('span').textContent = ab ? 'Pedir um prêmio' : 'Esconder'; if(!ab) setTimeout(() => { f.scrollIntoView({behavior:'smooth', block:'center'}); $('pdt').focus({preventScroll:true}); }, 60); };
+  $('pdf').onsubmit = async e => { e.preventDefault(); const t = $('pdt').value.trim(), n = Math.round(+$('pdn').value || 0); if(!t){ $('pde').textContent = 'Escreve o que você quer.'; return; }
+    const b = $('pdb'); b.disabled = true; try{ await colD.add({t, sug:n > 0 ? n : 0, de:eu, para:outro, status:'pendente'}); $('pdt').value = ''; $('pdn').value = ''; $('pde').textContent = ''; sparkle(b); csToast('Pedido enviado ♥'); $('pdf').classList.add('recolhido'); $('pdtog').classList.remove('aberto'); $('pdtog').querySelector('span').textContent = 'Pedir um prêmio'; }catch(x){ $('pde').textContent = 'Não deu pra enviar.'; } b.disabled = false; };
   const saldo = () => chocoSaldo(chocs, compras);
   const draw = () => { if(!$('pzpra')) return; const sl = saldo();
     $('pzs').textContent = chocoInfinito() ? '∞' : sl;
     const pra = list.filter(p => p.para === eu && !p.comprado).sort((a, b) => a.preco - b.preco), gan = list.filter(p => p.para === eu && p.comprado), meus = list.filter(p => p.autor === eu);
-    $('pzpra').innerHTML = pra.length ? pra.map(p => `<div class="pz-card"><span class="pz-ic">${icon('gift')}</span><div class="pz-tx"><b>${esc(p.t)}</b><small>${Ele.replace(/^O |^A /, m => m.toLowerCase())} ofereceu</small></div><button type="button" class="pz-buy ${sl >= p.preco ? '' : 'falta'}" data-buy="${p.id}">${p.preco} ${CHOCO_SVG}</button></div>`).join('')
-      : `<p class="lead hq-empty">${Ele} ainda não ofereceu nenhum prêmio. Pede um ♥︎</p>`;
-    $('pzgan').innerHTML = gan.length ? gan.map(p => `<div class="pz-card ${p.entregue ? 'ok' : 'esp'}"><span class="pz-ic">${icon(p.entregue ? 'heart' : 'ticket')}</span><div class="pz-tx"><b>${esc(p.t)}</b><small>${p.entregue ? 'já cumprido ♥︎' : `trocado, agora é com ${outro === 'Di' ? 'ele' : 'ela'}`}</small></div></div>`).join('') : `<p class="lead hq-empty">Nada ainda. Junta chocolates e troca!</p>`;
-    $('pzmeus').innerHTML = meus.length ? meus.map(p => `<div class="pz-card mine ${p.comprado && !p.entregue ? 'esp' : ''}"><span class="pz-ic">${icon('gift')}</span><div class="pz-tx"><b>${esc(p.t)}</b><small>${p.preco} chocolates · ${p.entregue ? 'cumprido ♥︎' : p.comprado ? `${Ele} trocou! Hora de cumprir` : 'esperando a troca'}</small></div>${p.comprado && !p.entregue ? `<button type="button" class="pz-ok" data-ent="${p.id}">Cumpri</button>` : ''}${p.comprado ? '' : `<button class="ib" type="button" data-del="${p.id}" aria-label="Apagar">${icon('trash')}</button>`}</div>`).join('') : '';
+    poeLista($('pzpra'), pra.length ? pra.map(p => `<div class="pz-card"><span class="pz-ic">${icon('gift')}</span><div class="pz-tx"><b>${esc(p.t)}</b><small>${Ele.replace(/^O |^A /, m => m.toLowerCase())} ofereceu</small></div><button type="button" class="pz-buy ${sl >= p.preco ? '' : 'falta'}" data-buy="${p.id}">${p.preco} ${CHOCO_SVG}</button></div>`).join('')
+      : `<p class="lead hq-empty">${Ele} ainda não ofereceu nenhum prêmio. Pede um aqui embaixo ♥︎</p>`);
+    poeLista($('pzgan'), gan.length ? gan.map(p => `<div class="pz-card ${p.entregue ? 'ok' : 'esp'}"><span class="pz-ic">${icon(p.entregue ? 'heart' : 'ticket')}</span><div class="pz-tx"><b>${esc(p.t)}</b><small>${p.entregue ? 'já cumprido ♥︎' : `trocado, agora é com ${outro === 'Di' ? 'ele' : 'ela'}`}</small></div></div>`).join('') : `<p class="lead hq-empty">Nada ainda. Junta chocolates e troca!</p>`);
+    poeLista($('pzmeus'), meus.length ? meus.map(p => `<div class="pz-card mine ${p.comprado && !p.entregue ? 'esp' : ''}"><span class="pz-ic">${icon('gift')}</span><div class="pz-tx"><b>${esc(p.t)}</b><small>${p.preco} chocolates · ${p.entregue ? 'cumprido ♥︎' : p.comprado ? `${Ele} trocou! Hora de cumprir` : 'esperando a troca'}</small></div>${p.comprado && !p.entregue ? `<button type="button" class="pz-ok" data-ent="${p.id}">Cumpri</button>` : ''}${p.comprado ? '' : `<button class="ib" type="button" data-del="${p.id}" aria-label="Apagar">${icon('trash')}</button>`}</div>`).join('') : '');
     $('pzpra').querySelectorAll('[data-buy]').forEach(b => b.onclick = async () => { const p = list.find(x => x.id === b.dataset.buy); if(!p) return; const sl2 = saldo();
       if(!jaComecou() && !PREVIA){ csToast('Os chocolates começam no dia 24 de outubro'); return; }
       if(sl2 < p.preco){ csToast(`Faltam ${p.preco - sl2} chocolates pra esse`); b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake'); return; }
@@ -6387,8 +6444,8 @@ VIEWS.premios = () => {
   $('pzf').onsubmit = async e => { e.preventDefault(); const t = $('pzt').value.trim(), n = Math.max(1, Math.round(+$('pzp').value || 0));
     if(!t){ $('pze').textContent = 'Escreve o prêmio.'; return; } const b = $('pzb'); b.disabled = true;
     try{ await col.add({t, preco:n, para:outro, autor:eu}); $('pzt').value = ''; $('pze').textContent = ''; sparkle(b); }catch(x){ $('pze').textContent = 'Não deu pra guardar.'; } b.disabled = false; };
-  const o1 = col.on(l => { list = l; draw(); }), o2 = colC.on(l => { chocs = l; draw(); }), o3 = colP.on(l => { compras = l; draw(); });
-  const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { o1(); o2(); o3(); prev(); };
+  const o1 = col.on(l => { list = l; draw(); }), o2 = colC.on(l => { chocs = l; draw(); }), o3 = colP.on(l => { compras = l; draw(); }), o4 = colD.on(l => { peds = l; drawPed(); });
+  const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { o1(); o2(); o3(); o4(); prev(); };
 };
 
 /* ---------- abraços na casinha ---------- */
@@ -6453,11 +6510,11 @@ VIEWS.diario = () => {
     const meu = list.find(x => x.id === `${hoje()}_${eu}`);
     if(meu && !carregou){ $('dit').value = meu.texto; carregou = true; } $('dis').textContent = meu ? 'Salvar' : 'Guardar';
     const dias = F.ap([...new Set(list.map(x => x.dia))], d => d);
-    $('dil').innerHTML = dias.length ? dias.map(d => { const m = list.find(x => x.id === `${d}_${eu}`), o = list.find(x => x.id === `${d}_${outro}`);
+    poeLista($('dil'), dias.length ? dias.map(d => { const m = list.find(x => x.id === `${d}_${eu}`), o = list.find(x => x.id === `${d}_${outro}`);
       return `<article class="dia-card"><p class="dia-d">${fmtLongo(d)}</p>
         ${m ? `<div class="dia-e me"><small class="${quemCls(eu)}">você</small><p>${esc(m.texto)}</p></div>` : ''}
         ${o ? (m ? `<div class="dia-e"><small class="${quemCls(outro)}">${outro}</small><p>${esc(o.texto)}</p></div>` : `<div class="dia-e lock">${icon('lock')} ${nomeO} escreveu nesse dia. ${d === hoje() ? 'Escreve o seu pra ler!' : 'Só dava pra ler escrevendo o seu.'}</div>`) : `<div class="dia-e vazio">${nomeO} não escreveu ${d === hoje() ? 'ainda' : 'nesse dia'}</div>`}${m || o ? cmtBox('diario', d, '') : ''}</article>`; }).join('')
-      : F.ativo() ? F.vazio : `<p class="lead hq-empty">O primeiro dia do diário de vocês começa hoje.</p>`;
+      : F.ativo() ? F.vazio : `<p class="lead hq-empty">O primeiro dia do diário de vocês começa hoje.</p>`);
   };
   $('dif').onsubmit = async e => { e.preventDefault(); const t = $('dit').value.trim(); if(!t){ $('die').textContent = 'Escreve alguma coisinha.'; return; }
     const b = $('dis'); b.disabled = true; try{ await col.set(`${hoje()}_${eu}`, {dia:hoje(), autor:eu, texto:t}); sparkle(b); $('die').classList.add('ok'); $('die').textContent = 'Guardado'; setTimeout(() => { $('die').textContent = ''; $('die').classList.remove('ok'); }, 2000); }catch(x){ $('die').textContent = 'Não deu pra guardar. Tenta de novo.'; } b.disabled = false; };
@@ -6481,7 +6538,7 @@ VIEWS.contagem = () => {
     const auto = ['Di','Mihzinha'].map(q => { const p = proxNiver(q); return p && {id:'nv_' + q, titulo:`Aniversário ${doDa(q)}`, data:p.data, auto:1}; }).filter(Boolean);
     const fut = list.concat(auto).filter(c => diasAte(c.data) >= 0).sort((a, b) => a.data.localeCompare(b.data)), pas = list.filter(c => diasAte(c.data) < 0).sort((a, b) => b.data.localeCompare(a.data));
     const card = c => { const n = diasAte(c.data); return `<article class="ct-card ${n < 0 ? 'past' : n === 0 ? 'today' : ''}"><div class="ct-num">${n === 0 ? `<b>${icon('heart')}</b><small>é hoje!</small>` : n > 0 ? `<b>${n}</b><small>${n === 1 ? 'dia' : 'dias'}</small>` : `<b>${-n}</b><small>dias atrás</small>`}</div><div class="ct-tx"><h3>${esc(c.titulo)}</h3><p>${fmtLongo(c.data)}</p></div>${c.auto ? `<span class="ct-auto">${icon('cake')}</span>` : `<button class="ib ct-del" type="button" data-del="${c.id}" aria-label="Apagar">${icon('trash')}</button>`}</article>`; };
-    $('ctl').innerHTML = (fut.length ? fut.map(card).join('') : `<p class="lead hq-empty">Nenhuma contagem ainda. O que vocês estão esperando?</p>`) + (pas.length ? `<h3 class="ct-sep">Já aconteceu</h3>` + pas.map(card).join('') : '');
+    poeLista($('ctl'), (fut.length ? fut.map(card).join('') : `<p class="lead hq-empty">Nenhuma contagem ainda. O que vocês estão esperando?</p>`) + (pas.length ? `<h3 class="ct-sep">Já aconteceu</h3>` + pas.map(card).join('') : ''));
     $('ctl').querySelectorAll('[data-del]').forEach(b => b.onclick = () => { if(!b.dataset.sure){ b.dataset.sure = 1; b.classList.add('sure'); setTimeout(() => { delete b.dataset.sure; b.classList.remove('sure'); }, 2500); return; } col.remove(b.dataset.del); });
   };
   $('ctf').onsubmit = async e => { e.preventDefault(); const t = $('ctt').value.trim(), d = $('ctd').value; if(!t || !d){ $('cte').textContent = 'Coloca o nome e a data.'; return; } $('cte').textContent = ''; try{ await col.add({titulo:t, data:d, autor:eu}); e.target.reset(); sparkle(e.target.querySelector('button')); }catch(x){} };
@@ -6508,12 +6565,11 @@ VIEWS.filmes = () => {
   const datinha = (f, campo, vazio, pre) => { const v = f[campo] || ''; return `<span class="fl-dt ${v ? 'tem' : ''}"><label>${icon('calendar')}<span>${v ? pre + ' ' + new Date(v + 'T12:00:00').toLocaleDateString('pt-BR') : vazio}</span><input type="date" data-dt="${campo}" data-id="${f.id}" value="${esc(v)}"></label>${v ? `<button type="button" class="fl-dtx" data-dtx="${campo}" data-id="${f.id}" aria-label="tirar a data">×</button>` : ''}</span>`; };
   const draw = () => { if(!$('fll')) return;
     const l = list.filter(f => aba === 'visto' ? f.visto : !f.visto);
-    $('fll').innerHTML = l.length ? l.map(f => `<article class="fl-card tem-capa"><div class="fl-capa" style="--s:${f.capaS || 1}"><button type="button" class="fl-cp" data-capa="${f.id}" aria-label="Capa">${f.capa ? `<img src="${f.capa}" alt="">` : `${icon('image')}<small>capa</small>`}</button>${f.capa ? `<span class="fl-sz"><i data-cs="-1" data-id="${f.id}">−</i><i data-cs="1" data-id="${f.id}">+</i></span>` : ''}</div><div class="fl-body"><div class="fl-top"><span class="fl-k">${esc(f.tipo || 'Filme')}</span><h3>${esc(f.titulo)}</h3>
+    poeLista($('fll'), l.length ? l.map(f => `<article class="fl-card tem-capa"><div class="fl-capa" style="--s:${f.capaS || 1}"><button type="button" class="fl-cp" data-capa="${f.id}" aria-label="Capa">${f.capa ? `<img src="${f.capa}" alt="">` : `${icon('image')}<small>capa</small>`}</button>${f.capa ? `<span class="fl-sz"><i data-cs="-1" data-id="${f.id}">−</i><i data-cs="1" data-id="${f.id}">+</i></span>` : ''}</div><div class="fl-body"><div class="fl-top"><span class="fl-k">${esc(f.tipo || 'Filme')}</span><h3>${esc(f.titulo)}</h3>
         ${epBox(f)}${f.visto ? datinha(f, 'vistoEm', 'quando a gente viu?', 'vimos em') : ''}${f.visto ? `<div class="fl-notas"><div><small>sua nota</small>${notas(f, eu, true)}</div><div><small>${outro}</small>${notas(f, outro, false)}</div></div>` : ''}</div>
         <div class="fl-act">${f.visto ? `<button type="button" class="ghost" data-volta="${f.id}">Voltar pra lista</button>` : `<button type="button" data-vi="${f.id}">Vimos!</button>`}<button class="ib" type="button" data-fed="${f.id}" aria-label="Editar">${icon('pencil')}</button><button class="ib" type="button" data-del="${f.id}" aria-label="Apagar">${icon('trash')}</button></div>${cmtBox('filmes', f.id, f.autor)}</div></article>`).join('')
-      : `<p class="lead hq-empty">${aba === 'ver' ? 'Lista vazia. Bora escolher o próximo?' : 'Quando vocês assistirem, toca em "Vimos!" e dão nota.'}</p>`;
-    $('fll').querySelectorAll('[data-vi]').forEach(b => b.addEventListener('click', () => { const f = list.find(x => x.id === b.dataset.vi); if(f) evento(`{eu} marcou ${(f.titulo || '').slice(0, 60)} como visto`, 'Dá a sua nota ♥', 'filmes@filmes:' + f.id, 'film'); }));
-    $('fll').querySelectorAll('[data-vi]').forEach(b => b.onclick = () => { col.set(b.dataset.vi, Object.assign({}, list.find(x => x.id === b.dataset.vi), {visto:true, vistoPor:eu})); sparkle(b); });
+      : `<p class="lead hq-empty">${aba === 'ver' ? 'Lista vazia. Bora escolher o próximo?' : 'Quando vocês assistirem, toca em "Vimos!" e dão nota.'}</p>`);
+    $('fll').querySelectorAll('[data-vi]').forEach(b => b.onclick = () => { const f0 = list.find(x => x.id === b.dataset.vi); if(f0) evento(`{eu} marcou ${(f0.titulo || '').slice(0, 60)} como visto`, 'Dá a sua nota ♥', 'filmes@filmes:' + f0.id, 'film'); col.set(b.dataset.vi, Object.assign({}, list.find(x => x.id === b.dataset.vi), {visto:true, vistoPor:eu})); sparkle(b); });
     $('fll').querySelectorAll('[data-volta]').forEach(b => b.onclick = () => col.set(b.dataset.volta, Object.assign({}, list.find(x => x.id === b.dataset.volta), {visto:false})));
     $('fll').querySelectorAll('.fl-n.edit i').forEach(i => i.onclick = () => { const id = i.parentElement.dataset.id, f = list.find(x => x.id === id);
       if(f && !(f.notas || {})[eu]) evento(`{eu} deu ${i.dataset.k} ${+i.dataset.k === 1 ? 'estrela' : 'estrelas'} pra ${(f.titulo || '').slice(0, 60)}`, (f.notas || {})[outro] ? 'Vem ver as notas' : 'Falta a sua nota', 'filmes@filmes:' + id, 'star'); col.set(id, Object.assign({}, f, {notas:Object.assign({}, f.notas || {}, {[eu]:+i.dataset.k})})); });
@@ -6557,10 +6613,10 @@ VIEWS.lugares = () => {
   $('lgfile').onchange = async () => { const f = $('lgfile').files[0]; if(!f) return; try{ img = await compressImage(f, 1000, .72, {r:4/3}); $('lgprev').innerHTML = `<img src="${img}" alt="">`; }catch(e){ $('lge').textContent = e.code === 'cancel' ? '' : 'Não deu pra usar essa foto.'; } };
   const draw = () => { if(!$('lgl2')) return;
     const l = F.ap(list, p => p.data || hoje(new Date(p.criadoEm || 0)));
-    $('lgl2').innerHTML = l.length ? l.map((p, k) => `<article class="lg-card" style="--r:${[-1.4,1.2,-.8,1.6][k % 4]}deg">${p.img ? `<div class="lg-ph"><img src="${p.img}" alt="" loading="lazy"></div>` : ''}
+    poeLista($('lgl2'), l.length ? l.map((p, k) => `<article class="lg-card" style="--r:${[-1.4,1.2,-.8,1.6][k % 4]}deg">${p.img ? `<div class="lg-ph"><img src="${p.img}" alt="" loading="lazy"></div>` : ''}
       <div class="lg-tx"><h3>${esc(p.nome)}</h3><p class="lg-meta">${icon('compass')} ${esc(p.cidade || '')}${p.data ? ` · ${new Date(p.data + 'T12:00:00').toLocaleDateString('pt-BR')}` : ''}</p>${p.legenda ? `<p class="lg-leg">${esc(p.legenda)}</p>` : ''}
       <div class="lg-act"><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.nome + ' ' + (p.cidade || ''))}" target="_blank" rel="noopener">ver no mapa</a><button class="ib" type="button" data-led="${p.id}" aria-label="Editar">${icon('pencil')}</button><button class="ib" type="button" data-del="${p.id}" aria-label="Apagar">${icon('trash')}</button></div>${cmtBox('lugares', p.id, p.autor)}</div></article>`).join('')
-      : `<p class="lead hq-empty">Começa pelo shopping do primeiro encontro?</p>`;
+      : `<p class="lead hq-empty">Começa pelo shopping do primeiro encontro?</p>`);
     $('lgl2').querySelectorAll('[data-del]').forEach(b => b.onclick = () => { if(!b.dataset.sure){ b.dataset.sure = 1; b.classList.add('sure'); setTimeout(() => { delete b.dataset.sure; b.classList.remove('sure'); }, 2500); return; } col.remove(b.dataset.del); });
     $('lgl2').querySelectorAll('[data-led]').forEach(b => b.onclick = () => { const p = list.find(x => x.id === b.dataset.led); if(!p) return; $('lgdet').open = true; img = p.img || ''; $('lgprev').innerHTML = img ? `<img src="${img}" alt="">` : `${icon('image')}<small>escolher foto</small>`; led.abrir(p.id, {lgn:p.nome, lgc:p.cidade, lgd:p.data, lgl:p.legenda}); });
   };
@@ -6588,11 +6644,11 @@ VIEWS.cartadata = () => {
   let list = [];
   const draw = () => { if(!$('cdp')) return;
     const pra = F.ap(list.filter(c => c.para === eu), c => c.abreEm), minhas = F.ap(list.filter(c => c.de === eu), c => c.abreEm);
-    $('cdp').innerHTML = pra.length ? pra.map(c => { const n = diasAte(c.abreEm); return n > 0
+    poeLista($('cdp'), pra.length ? pra.map(c => { const n = diasAte(c.abreEm); return n > 0
         ? `<article class="cd-env lock" data-id="${c.id}"><span class="cd-seal">${icon('heart')}</span><div><b>Cartinha de ${c.de === 'Di' ? 'Di' : 'Mihzinha'}</b><small>abre em ${new Date(c.abreEm + 'T12:00:00').toLocaleDateString('pt-BR')} · faltam ${n} ${n === 1 ? 'dia' : 'dias'}</small></div>${icon('lock')}</article>`
         : `<details class="cd-env open" data-id="${c.id}"><summary><span class="cd-seal">${icon('heart')}</span><div><b>Cartinha de ${c.de === 'Di' ? 'Di' : 'Mihzinha'}</b><small>liberada em ${new Date(c.abreEm + 'T12:00:00').toLocaleDateString('pt-BR')} · toca pra ler</small></div></summary><div class="paper cd-paper">${c.texto ? `<p>${esc(c.texto)}</p>` : ''}${audioHTML(c.audio, c.de)}<p class="sign">${c.de === 'Di' ? 'Di' : 'Mihzinha'}</p></div></details>`; }).join('')
-      : `<p class="lead hq-empty">Nenhuma cartinha pra você ainda.</p>`;
-    $('cdm').innerHTML = minhas.length ? minhas.map(c => `<article class="cd-env mine"><span class="cd-seal">${icon('mail')}</span><div><b>Pra ${c.para}${c.audio ? ` ${icon('mic')}` : ''}</b><small>${diasAte(c.abreEm) > 0 ? `abre em ${new Date(c.abreEm + 'T12:00:00').toLocaleDateString('pt-BR')}` : 'já liberada'}</small></div><button class="ib" type="button" data-del="${c.id}" aria-label="Apagar">${icon('trash')}</button></article>`).join('') : `<p class="lead hq-empty">Você ainda não lacrou nenhuma.</p>`;
+      : `<p class="lead hq-empty">Nenhuma cartinha pra você ainda.</p>`);
+    poeLista($('cdm'), minhas.length ? minhas.map(c => `<article class="cd-env mine"><span class="cd-seal">${icon('mail')}</span><div><b>Pra ${c.para}${c.audio ? ` ${icon('mic')}` : ''}</b><small>${diasAte(c.abreEm) > 0 ? `abre em ${new Date(c.abreEm + 'T12:00:00').toLocaleDateString('pt-BR')}` : 'já liberada'}</small></div><button class="ib" type="button" data-del="${c.id}" aria-label="Apagar">${icon('trash')}</button></article>`).join('') : `<p class="lead hq-empty">Você ainda não lacrou nenhuma.</p>`);
     $('cdm').querySelectorAll('[data-del]').forEach(b => b.onclick = () => { if(!b.dataset.sure){ b.dataset.sure = 1; b.classList.add('sure'); setTimeout(() => { delete b.dataset.sure; b.classList.remove('sure'); }, 2500); return; } col.remove(b.dataset.del); });
   };
   const cgv = novoGravador(); if($('cdgrav')) cgv.montar($('cdgrav'));
@@ -6962,10 +7018,10 @@ VIEWS.gostos = () => {
     document.querySelectorAll('.gs-tabs button').forEach(b => b.classList.toggle('on', b.dataset.a === aba));
     const meus = list.filter(x => x.sobre === aba), ids = [...new Set(meus.map(x => x.cat))], cats = [...gcats().filter(([v]) => ids.includes(v)), ...ids.filter(v => !gcats().some(c => c[0] === v)).map(v => [v, nomeCat(v)])];
     if(filtro !== 'tudo' && !cats.some(([v]) => v === filtro)) filtro = 'tudo';
-    $('gscats').innerHTML = meus.length ? [['tudo','Tudo'], ...cats].map(([v, t]) => `<button type="button" class="${filtro === v ? 'on' : ''}" data-f="${v}">${t}</button>`).join('') : '';
+    poeLista($('gscats'), meus.length ? [['tudo','Tudo'], ...cats].map(([v, t]) => `<button type="button" class="${filtro === v ? 'on' : ''}" data-f="${v}">${t}</button>`).join('') : '');
     const vis = meus.filter(x => filtro === 'tudo' || x.cat === filtro).slice().reverse();
-    $('gsgrid').innerHTML = vis.length ? vis.map(x => `<article class="gs-card">${x.img ? `<img src="${x.img}" alt="">` : `<span class="gs-sem">${icon('star')}</span>`}<div><small>${esc(nomeCat(x.cat))}</small><p>${esc(x.legenda || '')}</p>${(x.autor === eu && x.sobre !== eu) || modoEd() ? `<span class="gs-acts"><button type="button" class="linkbtn" data-ed="${x.id}">editar</button><button type="button" class="linkbtn" data-del="${x.id}">apagar</button></span>` : ''}${cmtBox('gostos', x.id, x.autor)}</div></article>`).join('')
-      : `<p class="lead hq-empty">${aba === outro ? `Ainda não tem nada aqui. Coloca a primeira coisa que ${nome(outro)} ama!` : `${eu === 'Di' ? 'A ' + apelido('Mihzinha', 39) : 'O ' + apelido('Di', 39)} ainda não colocou nada. Logo aparece!`}</p>`;
+    poeLista($('gsgrid'), vis.length ? vis.map(x => `<article class="gs-card">${x.img ? `<img src="${x.img}" alt="">` : `<span class="gs-sem">${icon('star')}</span>`}<div><small>${esc(nomeCat(x.cat))}</small><p>${esc(x.legenda || '')}</p>${(x.autor === eu && x.sobre !== eu) || modoEd() ? `<span class="gs-acts"><button type="button" class="linkbtn" data-ed="${x.id}">editar</button><button type="button" class="linkbtn" data-del="${x.id}">apagar</button></span>` : ''}${cmtBox('gostos', x.id, x.autor)}</div></article>`).join('')
+      : `<p class="lead hq-empty">${aba === outro ? `Ainda não tem nada aqui. Coloca a primeira coisa que ${nome(outro)} ama!` : `${eu === 'Di' ? 'A ' + apelido('Mihzinha', 39) : 'O ' + apelido('Di', 39)} ainda não colocou nada. Logo aparece!`}</p>`);
     $('gscats').querySelectorAll('[data-f]').forEach(b => b.onclick = () => { filtro = b.dataset.f; draw(); });
     $('gsgrid').querySelectorAll('[data-del]').forEach(d => d.onclick = () => { if(d.dataset.sure) col.remove(d.dataset.del); else { d.dataset.sure = 1; d.textContent = 'toca de novo'; } });
     $('gsgrid').querySelectorAll('[data-ed]').forEach(d => d.onclick = () => { const x = list.find(y => y.id === d.dataset.ed); if(!x) return; editando = x; foto = x.img || ''; formAberto = true; drawForm(); $('gscat').value = x.cat; if($('gscat').value !== x.cat){ $('gscat').insertAdjacentHTML('beforeend', `<option value="${x.cat}">${esc(nomeCat(x.cat))}</option>`); $('gscat').value = x.cat; } $('gsleg').value = x.legenda || ''; $('gssave').textContent = 'Salvar alterações'; $('gsform').scrollIntoView({behavior:'smooth', block:'start'}); });
@@ -7051,7 +7107,9 @@ VIEWS.datas = () => {
     if(!data){ $('dmerr').textContent = 'Escolhe a data.'; return; }
     if(!titulo && !legenda && !img){ $('dmerr').textContent = 'Coloca pelo menos um título, uma legenda ou uma foto.'; return; }
     const b = $('dmsave'); b.disabled = true;
-    try{ const o = {data, titulo, legenda, img, autor:eu}; editId ? await col.set(editId, o) : await col.add(o); sparkle(b); const keep = editId; reset();
+    try{ const o = {data, titulo, legenda, img, autor:eu};
+      if(editId && editId.startsWith('p_')){ const pid = editId.slice(2), pr = prims.find(x => x.id === pid) || {}; await Sync.col('primeiras').set(pid, Object.assign({}, pr, {data, titulo, texto:legenda})); }
+      else editId ? await col.set(editId, Object.assign({}, list.find(x => x.id === editId) || {}, o, {autor:(list.find(x => x.id === editId) || {}).autor || eu})) : await col.add(o); sparkle(b); const keep = editId; reset();
       setTimeout(() => document.querySelector(keep ? `[data-id="${keep}"]` : '.dm-item')?.scrollIntoView({behavior:'smooth', block:'center'}), 300); }
     catch(x){ $('dmerr').textContent = erroFoto(x); }
     b.disabled = false;
@@ -7062,23 +7120,24 @@ VIEWS.datas = () => {
     const ord = F.ap(list.concat(extra), d => d.data || '');
     const pz = $('dmpols'); if(pz) pz.innerHTML = pols.length ? `<p class="dm-pt">Das nossas polaroids</p><div class="dm-pstrip">${pols.map((f, k) => `<button type="button" class="dm-pol" style="--r:${[-3,2,-1.5,2.5][k % 4]}deg" data-mem="${f.mem}"><img src="${f.img}" alt="" loading="lazy"><small>${esc(f.legenda || (C.memorias.find(m => m.id === f.mem) || {}).titulo || '')}</small></button>`).join('')}</div>` : '';
     pz && pz.querySelectorAll('[data-mem]').forEach(bt => bt.onclick = () => { hubAtual = null; curView = 'memoria2'; VIEWS.memoria2(bt.dataset.mem); });
-    ol.innerHTML = ord.length ? ord.map((d,k) => `<li class="dm-item" data-id="${d.id}" style="--r:${[-1.6,1.4,-1,1.8][k % 4]}deg">
+    poeLista(ol, ord.length ? ord.map((d,k) => `<li class="dm-item" data-id="${d.id}" style="--r:${[-1.6,1.4,-1,1.8][k % 4]}deg">
         <p class="dm-date">${fmt(d.data)}</p>
         <div class="dm-card">
           ${d.img ? `<div class="dm-photo"><img src="${d.img}" alt="" loading="lazy"></div>` : ''}
           ${d.titulo ? `<h3>${esc(d.titulo)}</h3>` : ''}
           ${d.legenda ? `<p class="dm-leg">${esc(d.legenda)}</p>` : ''}
           ${d.ext ? '' : cmtBox('datasMarcantes', d.id, d.autor)}
-          ${d.ext ? `<button type="button" class="dm-tag" data-ir="primeiras">${icon('star')} primeira vez</button>` : `<div class="dm-act"><button class="ib d-edit" type="button" aria-label="Editar">${icon('pencil')}</button><button class="ib d-del" type="button" aria-label="Excluir">${icon('trash')}</button></div>`}
-        </div></li>`).join('') : `<li class="dm-empty"><p class="lead">Ainda não tem nenhuma data. Que tal começar pelo dia 12 de abril?</p></li>`;
+          ${d.ext ? `<div class="dm-ext"><button type="button" class="dm-tag" data-ir="primeiras">${icon('star')} primeira vez</button><button class="ib d-edit" type="button" aria-label="Editar">${icon('pencil')}</button></div>` : `<div class="dm-act"><button class="ib d-edit" type="button" aria-label="Editar">${icon('pencil')}</button><button class="ib d-del" type="button" aria-label="Excluir">${icon('trash')}</button></div>`}
+        </div></li>`).join('') : `<li class="dm-empty"><p class="lead">Ainda não tem nenhuma data. Que tal começar pelo dia 12 de abril?</p></li>`);
     ol.querySelectorAll('[data-ir]').forEach(bt => bt.onclick = () => openStop(bt.dataset.ir));
     ol.querySelectorAll('.dm-item').forEach(li => {
-      const d = list.find(x => x.id === li.dataset.id); if(!d) return;
+      const d = list.find(x => x.id === li.dataset.id) || (li.dataset.id.startsWith('p_') && extraDe(li.dataset.id)); if(!d) return;
       li.querySelector('.d-edit').onclick = () => { editId = d.id; img = d.img || ''; preview(); $('dmd').value = d.data; $('dmt').value = d.titulo || ''; $('dml').value = d.legenda || '';
         $('dmft').textContent = 'Editar data marcante'; $('dmsave').textContent = 'Salvar'; $('dmcancel').hidden = false; abreForm($('dmf')); $('dmf').scrollIntoView({behavior:'smooth', block:'start'}); };
-      li.querySelector('.d-del').onclick = e => { const b = e.currentTarget; if(!b.dataset.sure){ b.dataset.sure = 1; b.classList.add('sure'); setTimeout(() => { delete b.dataset.sure; b.classList.remove('sure'); }, 2500); return; } col.remove(d.id); };
+      li.querySelector('.d-del') && (li.querySelector('.d-del').onclick = e => { const b = e.currentTarget; if(!b.dataset.sure){ b.dataset.sure = 1; b.classList.add('sure'); setTimeout(() => { delete b.dataset.sure; b.classList.remove('sure'); }, 2500); return; } col.remove(d.id); });
     });
   }
+  const extraDe = id => { const p = prims.find(x => 'p_' + x.id === id); return p && {id, data:p.data, titulo:p.titulo || '', legenda:p.texto || '', img:'', ext:'primeira'}; };
   const F = filtro('dmflt', draw);
   const offs = [col.on(l => { list = l; draw(); }), Sync.col('primeiras').on(l => { prims = l; draw(); }), Sync.col('fotosMem').on(l => { pols = l.filter(x => x.img).sort((x, y) => C.memorias.findIndex(m => m.id === x.mem) - C.memorias.findIndex(m => m.id === y.mem) || x.slot - y.slot); draw(); })];
   const off = () => offs.forEach(f => f && f());
@@ -7399,9 +7458,13 @@ VIEWS.filhos = () => {
 };
 
 /* ---------- vales ---------- */
+/* cada vale com um símbolo diferente (os novos não ficam todos iguais) */
+const VALE_POOL = ['hand','film','dinner','hug','icecream','crown','cake','music','sun','star','ring','gift','key','camera','ticket','mail','compass','house','heart'];
+function valeIco(k){ const usados = new Set(C.vales.map(v => v.i).filter(i => i && i !== 'heart')); let livre = VALE_POOL.filter(i => !usados.has(i));
+  const v = C.vales[k] || {}; if(v.i && v.i !== 'heart') return v.i; const sem = C.vales.map((x, i) => (!x.i || x.i === 'heart') ? i : -1).filter(i => i >= 0); return livre[sem.indexOf(k) % livre.length] || 'heart'; }
 VIEWS.vales = () => {
   shell('pra usar comigo','Vales-presente', Sync.quem === 'Mihzinha' ? 'Os vales que você deu pro Di. Aqui você vê quais ele já usou' : 'Cada vale só pode ser resgatado uma vez. Quando resgatar, me manda o ticket',
-    `<div class="vales">${C.vales.map((v,k)=>`<div class="vale st" style="--i:${k}"><span class="ico">${icon(v.i)}</span><b>${esc(v.t)}</b>${Sync.quem === 'Mihzinha' ? `<span class="vstatus" data-s="${k}">ainda não resgatado</span><button type="button" class="ghost vlib" data-lib="${k}" hidden>Liberar de novo</button>` : `<button data-k="${k}">Resgatar</button>`}</div>`).join('')}</div>
+    `<div class="vales">${C.vales.map((v,k)=>`<div class="vale st" style="--i:${k}"><span class="ico">${icon(valeIco(k))}</span><b>${esc(v.t)}</b>${Sync.quem === 'Mihzinha' ? `<span class="vstatus" data-s="${k}">ainda não resgatado</span><button type="button" class="ghost vlib" data-lib="${k}" hidden>Liberar de novo</button>` : `<button data-k="${k}">Resgatar</button>`}</div>`).join('')}</div>
      ${Sync.quemReal === 'Mihzinha' && !PREVIA ? `<button type="button" class="vale-add" id="valeadd">${icon('plus')} Criar ou editar vales</button>` : ''}`);
   document.getElementById('valeadd')?.addEventListener('click', () => { curView = 'editar'; VIEWS.editar('vales', 'vales', 'textos'); });
   app.querySelectorAll('[data-lib]').forEach(b => b.onclick = async () => { if(!b.dataset.sure){ b.dataset.sure = 1; b.textContent = 'Toca de novo'; setTimeout(() => { if(b.isConnected){ delete b.dataset.sure; b.textContent = 'Liberar de novo'; } }, 2500); return; }
@@ -7444,7 +7507,7 @@ function showTicket(k, t){
       <div class="ticket">
         <div class="tk-main">
           <p class="eyebrow">vale-presente resgatado</p>
-          <span class="tk-ico">${icon(v.i)}</span>
+          <span class="tk-ico">${icon(valeIco(k))}</span>
           <h3>${esc(v.t)}</h3>
           <p class="tk-who">resgatado por ${esc(info.por)} em ${data}</p>
         </div>
@@ -7513,10 +7576,10 @@ VIEWS.bilhetes = () => {
   const col = Sync.col('bilhetes');
   let ult = []; const F = filtro('bflt', () => rend(ult)); const rend = list => { ult = list;
     const m = document.getElementById('mural'); if(!m) return;
-    const fl = F.ap(list, x => hoje(new Date(x.criadoEm || 0))); m.innerHTML = fl.length ? fl.map((b,k) => `<div class="postit c${k % 4}" style="--r:${(k % 5 - 2) * 1.3}deg">
+    const fl = F.ap(list, x => hoje(new Date(x.criadoEm || 0))); poeLista(m, fl.length ? fl.map((b,k) => `<div class="postit c${k % 4}" style="--r:${(k % 5 - 2) * 1.3}deg">
       ${b.texto ? `<p>${esc(b.texto)}</p>` : ''}${audioHTML(b.audio, 'curto')}<small>${quemTag(b.autor)} · ${new Date(b.criadoEm).toLocaleDateString('pt-BR')}</small>
       ${b.autor === eu ? `<button class="del" data-del="${b.id}">apagar</button>` : ''}${cmtBox('bilhetes', b.id, b.autor)}</div>`).join('')
-      : F.ativo() ? F.vazio : `<p class="lead empty">O mural ainda está vazio. Cola o primeiro bilhetinho!</p>`;
+      : F.ativo() ? F.vazio : `<p class="lead empty">O mural ainda está vazio. Cola o primeiro bilhetinho!</p>`);
     m.querySelectorAll('.del').forEach(d => d.onclick = () => { if(d.dataset.sure) col.remove(d.dataset.del); else { d.dataset.sure = 1; d.textContent = 'toca de novo'; } });
   }; const off = col.on(rend);
   const bgv = novoGravador(); if(document.getElementById('bgrav')) bgv.montar(document.getElementById('bgrav'));
@@ -7603,8 +7666,8 @@ VIEWS.primeiras = () => {
   let ult = []; const F = filtro('pflt', () => rend(ult)); const rend = list => { ult = list;
     const ol = document.getElementById('pl'); if(!ol) return;
     const ord = F.ap(list, p => p.data || '');
-    ol.innerHTML = ord.length ? ord.map(p => `<li><time>${p.data ? p.data.split('-').reverse().join(' · ') : ''}</time><h3>${esc(p.titulo)}</h3>${p.texto ? `<p>${esc(p.texto)}</p>` : ''}<p class="by">por ${quemTag(p.autor)} · <button class="linkbtn" data-ed="${p.id}">editar</button> · <button class="linkbtn" data-del="${p.id}">apagar</button></p>${cmtBox('primeiras', p.id, p.autor)}</li>`).join('')
-      : `<li class="emptyli"><p class="lead">Nenhuma ainda. Que tal começar pelo primeiro encontro no shopping?</p></li>`;
+    poeLista(ol, ord.length ? ord.map(p => `<li><time>${p.data ? p.data.split('-').reverse().join(' · ') : ''}</time><h3>${esc(p.titulo)}</h3>${p.texto ? `<p>${esc(p.texto)}</p>` : ''}<p class="by">por ${quemTag(p.autor)} · <button class="linkbtn" data-ed="${p.id}">editar</button> · <button class="linkbtn" data-del="${p.id}">apagar</button></p>${cmtBox('primeiras', p.id, p.autor)}</li>`).join('')
+      : `<li class="emptyli"><p class="lead">Nenhuma ainda. Que tal começar pelo primeiro encontro no shopping?</p></li>`);
     ol.querySelectorAll('[data-del]').forEach(d => d.onclick = () => { if(d.dataset.sure) col.remove(d.dataset.del); else { d.dataset.sure = 1; d.textContent = 'toca de novo'; } });
     ol.querySelectorAll('[data-ed]').forEach(d => d.onclick = () => { const p = list.find(x => x.id === d.dataset.ed); if(p) ed.abrir(p.id, {pt:p.titulo, pd:p.data, px:p.texto}); });
     lista = list;
@@ -7643,13 +7706,13 @@ VIEWS.playlist = () => {
   let lista = [];
   let ult = []; const F = filtro('mflt', () => rend(ult)); const rend = list => { ult = list;
     const box = document.getElementById('songs'); if(!box) return;
-    const fl = F.ap(list, x => hoje(new Date(x.criadoEm || 0))); box.innerHTML = fl.length ? fl.map((m,k) => {
+    const fl = F.ap(list, x => hoje(new Date(x.criadoEm || 0))); poeLista(box, fl.length ? fl.map((m,k) => {
       const raw = (m.link || '').trim(), link = !raw ? '' : /^https?:\/\//i.test(raw) ? raw : 'https://' + raw.replace(/^\/+/, '');
       const fonte = /spotify/i.test(link) ? 'Ouvir no Spotify' : /youtu/i.test(link) ? 'Ver no YouTube' : /deezer/i.test(link) ? 'Ouvir no Deezer' : 'Abrir link';
       return `<div class="song st" style="--i:${k}">
         ${link ? `<a class="play" href="${esc(link)}" target="_blank" rel="noopener" aria-label="Ouvir">${icon('play')}</a>` : `<span class="play off">${icon('music')}</span>`}
         <div class="sinfo">${link ? `<a class="stitle-a" href="${esc(link)}" target="_blank" rel="noopener">${esc(m.titulo)}</a>` : `<b>${esc(m.titulo)}</b>`}<small>${esc(m.artista || '')}</small>${m.porque ? `<p>${esc(m.porque)}</p>` : ''}${link ? `<a class="slink" href="${esc(link)}" target="_blank" rel="noopener">${icon('play')}${fonte}</a>` : ''}<small class="by">${quemTag(m.autor)} · <button class="linkbtn" data-ed="${m.id}">editar</button> · <button class="linkbtn" data-del="${m.id}">tirar</button></small>${cmtBox('musicas', m.id, m.autor)}</div></div>`;
-    }).join('') : `<p class="lead empty">A playlist ainda está vazia. Qual é a primeira música de vocês?</p>`;
+    }).join('') : `<p class="lead empty">A playlist ainda está vazia. Qual é a primeira música de vocês?</p>`);
     box.querySelectorAll('[data-del]').forEach(d => d.onclick = () => { if(d.dataset.sure) col.remove(d.dataset.del); else { d.dataset.sure = 1; d.textContent = 'toca de novo'; } });
     box.querySelectorAll('[data-ed]').forEach(d => d.onclick = () => { const m = list.find(x => x.id === d.dataset.ed); if(m) ed.abrir(m.id, {mt:m.titulo, ma:m.artista, ml:m.link, mp:m.porque}); });
     lista = list;
