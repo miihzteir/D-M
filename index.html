@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=111">
-<link rel="apple-touch-icon" href="icon-180.png?v=111">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=111">
+<link rel="manifest" href="manifest.json?v=112">
+<link rel="apple-touch-icon" href="icon-180.png?v=112">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=112">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -3457,7 +3457,7 @@ function renderXmas(){
         <p class="xm-pre">${TE('xm_carta', esc(C.cartaNatal), 'Bilhete de Natal')}</p>
         <p class="sign">${TE('xm_ass', 'Mihzinha', 'Assinatura do bilhete de Natal')}</p>
       </div>
-      <div class="xflower">${FLOWER('xfl','nós no Natal', f0.foto, 'foto_pol0').replace('#fbe6ea','#f7ece6').replace('#e9b3c0','#d9b3ab')}<span class="ribbon">${RED_RIBBON}</span></div>
+      <div class="xflower">${FLOWER('xfl','nós no Natal', C.fotoNatal || BASE.polaroids[0].foto, 'foto_natal').replace('#fbe6ea','#f7ece6').replace('#e9b3c0','#d9b3ab')}<span class="ribbon">${RED_RIBBON}</span></div>
     </section>
     <section class="xb xb4">
       <span class="xholly">${HOLLY}</span>
@@ -3713,7 +3713,7 @@ function renderHome(y = 0){
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
       <div class="minhafoto" id="minhafoto"></div>
       <p class="endsync" id="endsync"></p>
-      <p class="endver">versão de 21/10 · 15h20</p>
+      <p class="endver">versão de 21/10 · 15h30</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
@@ -4161,7 +4161,7 @@ function trocaFoto(alvo){
     if(alvo.startsWith('mem:')){ const [, mid, sl] = alvo.split(':');
       try{ const img = await compressImage(f, 1000, .72, {r:1}); csToast('Salvando a foto…'); await comTempo(Sync.col('fotosMem').set(mid + '_' + sl, {mem:mid, slot:+sl, img, autor:Sync.quem || 'Mihzinha'})); csToast('Foto salva ♥'); }
       catch(e){ if(e.code !== 'cancel') csToast(erroFoto(e)); } return; }
-    try{ const img = await compressImage(f, alvo.startsWith('memfoto') || alvo.startsWith('foto_who') ? 520 : 900, .74, alvo.startsWith('memfoto') ? {r:.75, m:'redondo'} : alvo.startsWith('foto_who') ? {r:1} : /^foto_(inicio|encontro)$/.test(alvo) || alvo === 'foto_pol0' && document.getElementById('xapp') ? {r:1, m:'flor'} : {r:1});
+    try{ const img = await compressImage(f, alvo.startsWith('memfoto') || alvo.startsWith('foto_who') ? 520 : 900, .74, alvo.startsWith('memfoto') ? {r:.75, m:'redondo'} : alvo.startsWith('foto_who') ? {r:1} : /^foto_(inicio|encontro|natal)$/.test(alvo) || alvo === 'foto_natal' ? {r:1, m:'flor'} : {r:1});
       csToast('Salvando a foto…'); await comTempo(Sync.col('conteudo').set(alvo, {img})); csToast('Foto salva ♥');
       setTimeout(() => { const y = window.scrollY; if(document.getElementById('xapp')){ const xa = document.getElementById('xapp'), sy = xa.scrollTop; xa.remove(); renderXmas(); const nx = document.getElementById('xapp'); if(nx) nx.scrollTop = sy; }
         else if(document.getElementById('whoprev') || document.getElementById('tour') || document.getElementById('dedic')){}
@@ -4347,7 +4347,7 @@ const HUBS = {
   mimos: {view:'hub_mimos', t:'Prêmios e mimos', s:'prêmios de verdade e vales-presente', vt:'Prêmios e mimos', vs:'Coisas de verdade pra gente aproveitar junto', itens:() => LISTS.mimos, dest:'premios', cor:['#fbf0d0','#b0820f','rgba(176,130,15,.55)']}
 };
 const hubDe = view => Object.keys(HUBS).find(k => HUBS[k].view === view);
-const hubPic = (k, grande) => k === 'datas' ? `<span class="hb-bigic" style="--fg:#7b5cc4">${icon('cal12')}</span>` : k === 'mimos' ? `<span class="hb-bigic" style="--fg:#b0820f">${icon('gift')}</span>` : k === 'jogos' ? `<img src="${APP_ICON}" alt="" class="px">` : k === 'nos' && (C.fotoInicio || (C.polaroids[0] || {}).foto) ? `<img src="${esc(C.fotoInicio || C.polaroids[0].foto)}" alt="" data-foto="foto_inicio">` : k === 'dia' ? `<span class="hb-daisy">${DAISY('#f0bac6', '#fff')}</span>` : `<span class="hb-env"><span></span><i>${icon('heart')}</i></span>`;
+const hubPic = (k, grande) => k === 'datas' ? `<span class="hb-bigic" style="--fg:#7b5cc4">${icon('cal12')}</span>` : k === 'mimos' ? `<span class="hb-bigic" style="--fg:#b0820f">${icon('gift')}</span>` : k === 'jogos' ? `<img src="${APP_ICON}" alt="" class="px">` : k === 'nos' ? `<img src="${esc(C.fotoHubNos || BASE.fotoInicio || BASE.polaroids[0].foto)}" alt="" data-foto="foto_hubnos">` : k === 'dia' ? `<span class="hb-daisy">${DAISY('#f0bac6', '#fff')}</span>` : `<span class="hb-env"><span></span><i>${icon('heart')}</i></span>`;
 function hubTile(k){
   const h = HUBS[k], [bg, fg, sh] = h.cor;
   return `<div role="button" tabindex="0" class="hb-tile rv" data-go="${h.view}" style="--hb:${bg};--hf:${fg};--hs:${sh}">
@@ -6790,6 +6790,7 @@ function aplicarConteudo(list){
   const f = (id, chave, fb) => { const d = doc(id); return d && d[chave] !== undefined ? d[chave] : fb; };
   C.fotoInicio = f('foto_inicio', 'img', BASE.fotoInicio);
   C.fotoEncontro = f('foto_encontro', 'img', BASE.fotoEncontro);
+  C.fotoNatal = f('foto_natal', 'img', ''); C.fotoHubNos = f('foto_hubnos', 'img', '');
   C.raspadinha = {foto:f('foto_raspa', 'img', BASE.raspadinha.foto), legenda:f('foto_raspa', 'legenda', BASE.raspadinha.legenda)};
   C.polaroids = BASE.polaroids.map((p, k) => Object.assign({}, p, {foto:f('foto_pol' + k, 'img', p.foto), legenda:f('foto_pol' + k, 'legenda', p.legenda), verso:f('foto_pol' + k, 'verso', p.verso)}));
   const cs = doc('cartas');
@@ -6839,7 +6840,9 @@ VIEWS.editar = (foco, origem, abaIni) => {
   const SLOTS = [
     {id:'foto_inicio', t:'Foto do início', s:'na flor "nós dois", logo embaixo dos nomes', img:() => C.fotoInicio},
     {id:'foto_encontro', t:'Foto do primeiro encontro', s:'na flor de "A nossa história"', img:() => C.fotoEncontro},
-    ...[0,1,2,3].map(k => ({id:'foto_pol' + k, t:`Polaroid ${k + 1}`, s:`em "Nossas fotos"${k === 0 ? ' e na tela de Natal' : ''}`, img:() => C.polaroids[k].foto, leg:() => C.polaroids[k].legenda, verso:() => C.polaroids[k].verso})),
+    {id:'foto_natal', t:'Foto da tela de Natal', s:'na flor "nós no Natal"', img:() => C.fotoNatal || BASE.polaroids[0].foto},
+    {id:'foto_hubnos', t:'Foto do quadro "Nossas coisas"', s:'no quadro da tela inicial', img:() => C.fotoHubNos || BASE.fotoInicio},
+    ...[0,1,2,3].map(k => ({id:'foto_pol' + k, t:`Polaroid ${k + 1}`, s:`em "Nossas fotos"`, img:() => C.polaroids[k].foto, leg:() => C.polaroids[k].legenda, verso:() => C.polaroids[k].verso})),
     {id:'foto_raspa', t:'Foto da raspadinha', s:'a foto escondida no jogo', img:() => C.raspadinha.foto, leg:() => C.raspadinha.legenda}
   ];
   const fotos = () => SLOTS.map(sl => `<article class="ed-card" data-slot="${sl.id}">
@@ -6899,7 +6902,7 @@ VIEWS.editar = (foco, origem, abaIni) => {
     if(alvo.startsWith('mem:')){ const [, mid, sl] = alvo.split(':');
       try{ const img = await compressImage(f, 1000, .72, {r:1}); csToast('Salvando a foto…'); await comTempo(Sync.col('fotosMem').set(mid + '_' + sl, {mem:mid, slot:+sl, img, autor:Sync.quem || 'Mihzinha'})); csToast('Foto salva ♥'); }
       catch(e){ if(e.code !== 'cancel') csToast(erroFoto(e)); } return; }
-    try{ const img = await compressImage(f, alvo.startsWith('memfoto') || alvo.startsWith('foto_who') ? 520 : 900, .74, alvo.startsWith('memfoto') ? {r:.75, m:'redondo'} : alvo.startsWith('foto_who') ? {r:1} : /^foto_(inicio|encontro)$/.test(alvo) ? {r:1, m:'flor'} : {r:1}); if(card) card.innerHTML = '<span><small>salvando…</small></span>'; await comTempo(col.set(alvo, {img})); csToast('Foto salva ♥'); setTimeout(() => draw(), 300); }
+    try{ const img = await compressImage(f, alvo.startsWith('memfoto') || alvo.startsWith('foto_who') ? 520 : 900, .74, alvo.startsWith('memfoto') ? {r:.75, m:'redondo'} : alvo.startsWith('foto_who') ? {r:1} : /^foto_(inicio|encontro|natal)$/.test(alvo) ? {r:1, m:'flor'} : {r:1}); if(card) card.innerHTML = '<span><small>salvando…</small></span>'; await comTempo(col.set(alvo, {img})); csToast('Foto salva ♥'); setTimeout(() => draw(), 300); }
     catch(e){ if(e.code === 'cancel'){ draw(); return; } if(card) card.innerHTML = `<span class="ed-err"><small>${erroFoto(e)}</small></span>`; csToast(erroFoto(e)); } };
   document.querySelectorAll('.ed-tabs button').forEach(b => b.onclick = () => { aba = b.dataset.a; store.set('edAba', aba); draw(); });
   /* salva sozinho enquanto escreve (sem precisar achar o botão) */
