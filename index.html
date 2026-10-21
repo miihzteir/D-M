@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=115">
-<link rel="apple-touch-icon" href="icon-180.png?v=115">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=115">
+<link rel="manifest" href="manifest.json?v=116">
+<link rel="apple-touch-icon" href="icon-180.png?v=116">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=116">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -2205,7 +2205,7 @@ const C = {
 
   /* mensagem do dia: uma diferente por dia */
   mensagens: [
-    'Você é o meu presente de Natal mais bonito, todo dia do ano.',
+    'Hoje começa o nosso cantinho. Vai ter um bilhetinho meu aqui todo dia, só pra você.',
     'Hoje eu tô torcendo por você do jeito mais exagerado possível.',
     'Você é o meu assunto favorito.',
     'Esperar em Deus nunca é perder tempo.',
@@ -3378,7 +3378,7 @@ function renderWho(){
   app.querySelectorAll('[data-q]').forEach(b => b.onclick = async () => {
     if(b.dataset.q === 'Mihzinha' && !PREVIA && !pinSessao() && !(await pedirSenha())) return;
     app.querySelectorAll('[data-q]').forEach(x => x.disabled = true); b.classList.add('chosen'); sparkle(b);
-    try{ sessionStorage.setItem('dm_quem', '1'); }catch(e){}
+    try{ sessionStorage.setItem(QS, '1'); }catch(e){}
     try{ await Sync.setQuem(b.dataset.q); }catch(e){}
     setTimeout(nextStep, 450);
   });
@@ -3387,9 +3387,10 @@ function renderWho(){
 const quizFeito = () => { try{ return sessionStorage.getItem('dm_quiz') === '1'; }catch(e){ return false; } };
 const pinSessao = () => { try{ return sessionStorage.getItem('dm_pin') === '1'; }catch(e){ return false; } };
 const marcaPin = () => { try{ sessionStorage.setItem('dm_pin', '1'); }catch(e){} };
-const quemSessao = () => { try{ return sessionStorage.getItem('dm_quem') === '1'; }catch(e){ return true; } };
+const QS = PREVIA ? 'dm_quem_pv' : 'dm_quem';
+const quemSessao = () => { try{ return sessionStorage.getItem(QS) === '1'; }catch(e){ return true; } };
 async function nextStep(){
-  if(!PREVIA && !quemSessao()) return renderWho();
+  if(!quemSessao()) return renderWho();
   if((Sync.quemReal || store.get('quem', '')) === 'Mihzinha' && !PREVIA && !pinSessao()){
     app.innerHTML = '<div class="gate page"></div>';
     if(!(await pedirSenha(true))) return renderWho();
@@ -3719,7 +3720,7 @@ function renderHome(y = 0){
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
       <div class="minhafoto" id="minhafoto"></div>
       <p class="endsync" id="endsync"></p>
-      <p class="endver">versão de 21/10 · 16h35</p>
+      <p class="endver">${VERSAO_APP}</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
@@ -3962,7 +3963,19 @@ function maybeInstallPrompt(forcar){
   document.getElementById('instcopy')?.addEventListener('click', async e => { try{ await navigator.clipboard.writeText(location.origin + location.pathname); e.currentTarget.textContent = 'Link copiado!'; }catch(x){ e.currentTarget.textContent = location.origin + location.pathname; } });
   w.addEventListener('click', e => { if(e.target === w) close(); });
 }
-if('serviceWorker' in navigator && /github\.io$/.test(location.hostname)) addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+if('serviceWorker' in navigator && /github\.io$/.test(location.hostname)) addEventListener('load', () => navigator.serviceWorker.register('sw.js').then(r => r.update()).catch(() => {}));
+/* sempre a versão mais nova: se o GitHub tem uma versão diferente da aberta, limpa o guardado e recarrega sozinho */
+const VERSAO_APP = 'versão de 21/10 · 16h55';
+async function confereVersao(){
+  if(!/github\.io$/.test(location.hostname) || !navigator.onLine) return;
+  try{ const r = await fetch(location.pathname + '?nc=' + Date.now(), {cache:'no-store'}); if(!r.ok) return; const t = await r.text(), m = t.match(/const VERSAO_APP = '([^']+)'/);
+    if(!m || m[1] === VERSAO_APP) return;
+    const ja = sessionStorage.getItem('dm_atualizou'); if(ja === m[1]) return; sessionStorage.setItem('dm_atualizou', m[1]);
+    try{ const ks = await caches.keys(); await Promise.all(ks.map(k => caches.delete(k))); }catch(e){}
+    try{ const reg = await navigator.serviceWorker.getRegistration(); reg && await reg.update(); }catch(e){}
+    location.reload(); }catch(e){}
+}
+setTimeout(confereVersao, 2500); document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'visible') confereVersao(); });
 function setNum(id, v){ const b = document.getElementById(id); if(b && b.textContent !== String(v)){ b.textContent = v; b.classList.remove('tick'); void b.offsetWidth; b.classList.add('tick'); } }
 function split(sec){ const d = Math.floor(sec/86400); sec -= d*86400; const h = Math.floor(sec/3600); sec -= h*3600; const m = Math.floor(sec/60); return [d,h,m,Math.floor(sec-m*60)]; }
 function xtick(){
@@ -4416,13 +4429,7 @@ VIEWS.fotos = (foco) => {
   const souEla = Sync.quemReal === 'Mihzinha';
   shell('nós dois','Nossas fotos','Todas as nossas fotos num lugar só. Toca numa foto pra ver grandona',
     `${C.memorias.map((m, k) => `<section class="fm-sec" id="fm-${m.id}"><div class="fm-head"><div><h3>${T('v_memoria2_' + hk(m.titulo), esc(m.titulo))}</h3><p>${T('s_memoria2_' + hk(m.titulo), esc(m.sub || ''))}</p></div>${souEla ? `<button type="button" class="ghost fm-ed" data-mem="${m.id}">${icon('pencil')} fotos</button>` : ''}</div>
-        <div class="fm-grid" id="fmg-${m.id}">${[0,1,2,3].map(i => `<div class="fm-ph ph ${['','b','c','d'][i]}" style="--r:${[-2,1.5,-1,2][i]}deg"><span>${icon('image')}</span></div>`).join('')}</div></section>`).join('')}
-     <section class="fm-sec"><div class="fm-head"><div><h3>Polaroids</h3><p>toca em cada uma pra ler o que tem atrás</p></div></div>
-     <div class="polas">${C.polaroids.map((p,k)=>`
-      <button class="pola" style="--i:${k}"><span class="tape"></span><div class="in">
-        <div class="face" data-foto="foto_pol${k}">${photo(p.foto,p.cls)}<span data-mv="pol_${k}">${esc(p.legenda)}</span></div>
-        <div class="face backf">${esc(p.verso)}</div></div></button>`).join('')}</div></section>`);
-  app.querySelectorAll('.pola').forEach(b => b.onclick = () => b.classList.toggle('flip'));
+        <div class="fm-grid" id="fmg-${m.id}">${[0,1,2,3].map(i => `<div class="fm-ph ph ${['','b','c','d'][i]}" style="--r:${[-2,1.5,-1,2][i]}deg"><span>${icon('image')}</span></div>`).join('')}</div></section>`).join('')}`);
   app.querySelectorAll('.fm-ed').forEach(b => b.onclick = () => { VIEWS.memoria2(b.dataset.mem); const bk = document.getElementById('back'), pv = bk.onclick; bk.onclick = () => { pv(); setTimeout(() => { curView = 'fotos'; VIEWS.fotos(b.dataset.mem); }, 30); }; });
   const zoom = (src, leg) => { const w = document.createElement('div'); w.className = 'tk-wrap fm-zoom'; w.innerHTML = `<figure><img src="${src}" alt="">${leg ? `<figcaption>${esc(leg)}</figcaption>` : ''}</figure>`; w.onclick = () => w.remove(); document.body.append(w); };
   const col = Sync.col('fotosMem');
@@ -6029,7 +6036,7 @@ const BUSCA_COLS = {bilhetes:['bilhetes', b => [b.texto], 'note', 'Bilhetinho'],
   comentarios:['', c => [c.texto], 'chat', 'Comentário'], diario:['diario', d => [d.texto], 'livro', 'Diário'], respostas:['pergunta', r => [r.texto, r.pergunta], 'chat', 'Pergunta do dia'], premios:['premios', p => [p.t], 'medalha', 'Prêmio'], cartasFilhos:['filhos', c => [c.texto], 'baby', 'Carta ao filho'], mesversario:['mes', m => [m.texto], 'cal12', 'Mesversário']};
 const BUSCA_DADOS = {}; let buscaLigada = false;
 /* textos do próprio app (títulos, categorias, explicações de cada tela) */
-const INDICE_APP = {"saudade":["Termômetro de saudade","Toca no botão toda vez que bater saudade. O coração vai enchendo","Tô com saudade","A Mih ainda não apertou hoje"],"diario":["Diário do casal","Cada um conta como foi o dia. Você só lê o dela depois de escrever o seu"],"pergunta":["Pergunta do dia","Responde, e aí você vê o que o outro respondeu","Responder","Nosso histórico","A partir de amanhã, as perguntas e as respostas de vocês dois ficam guardadas aqui pra sempre."],"bilhetes":["Bilhetinhos","Deixa um recado pro outro achar"],"mes":["Mesversário"],"primeiras":["Nossas primeiras vezes","Primeiro filme, primeira viagem, primeira briga… vai adicionando"],"playlist":["Nossa playlist","As músicas que lembram a gente"],"planos":["Nossos planos","Tudo que a gente quer viver junto. Marca quando realizar"],"lugares":["Nossos lugares","Cada lugar que a gente foi junto, com foto. Qualquer um dos dois pode colocar","Começa pelo shopping do primeiro encontro?"],"gostos":["O que cada um ama","Você coloca o que o outro ama, com foto e legenda. Assim cada um mostra que presta atenção","O que o Di ama","O que a Mihzinha ama","Mexer nas categorias","Os dois podem criar, renomear e apagar. O que já tá numa categoria apagada vai pra \"sem categoria\"."],"filmes":["Filmes e séries","O que a gente quer ver junto e o que achou depois","Pra ver","Já vimos"],"financas":["Nossas finanças","O que a gente gasta junto, sem conta de quem pagou","gastamos nesse mês","Nenhum gasto nesse mês ainda.","Novo gasto","Obs:","Valor","Data","O que foi","Adicionar gasto","Rolês","Comida","Cinema","Mercado","Viagem","Outros","+ Nova categoria…"],"retromes":[],"retro":["Retrospectiva 2027","Um resumo de tudo que a gente viveu esse ano","Ainda tá sendo escrita","Tudo que vocês fizerem até lá entra na conta."],"datas":["Datas marcantes","Os nossos dias especiais, com foto e legenda","Ainda não tem nenhuma data. Que tal começar pelo dia 12 de abril?"],"comemorativas":["Datas comemorativas","Cada festa que a gente passar junto fica guardada aqui","Nosso primeiro Natal","O presentinho tá balançando lá em cima da tela até o dia 25. Ou abre por aqui.","Abrir o Natal","todo ano","Nossos aniversários","No dia de cada um, a casinha enche de balões, vocês ganham chapéu de festa e aparece um bolo na sala.","Salvar aniversários","as próximas datas vão aparecendo aqui"],"contagem":["Contagem regressiva","Viagem, show, aniversário… tudo que a gente tá esperando"],"numeros":["Nossos números","Tudo que a gente já viveu, contado","juntos há","bilhetinhos no mural","perguntas respondidas","abraços na casinha","beijos na casinha","danças na casinha","chocolates do dia pegos","filmes vistos juntos","lugares que a gente foi","datas marcantes","primeiras vezes","músicas na playlist","cartas escritas","cartas abertas","apertos no termômetro de saudade"],"casinha":["Nossa casinha","Cada dia que vocês entram, ganham um chocolate. Junta e monta a casa de vocês","chocolates","Pegar o chocolate de hoje","A Mihzinha ainda não pegou hoje","Missões de hoje","a primeira vale 1 chocolate, a segunda 2","criar uma missão especial pra Mih","Prêmios de verdade","troca seus chocolates por mimos de verdade","Nós dois","Frente da casa","Sala","Quarto","Cozinha","Banheiro","Sala de jogos","Piscina","Quarto do bebê","passeios","Sorveteria","Cinema","Cafeteria","Praia","Parque","Igreja","Vocês dois já moram aqui. As roupas e os acessórios vão sendo conquistados","Roupa de casamento","precisa de Alianças","Look de inverno","Look de praia","Pijamas combinando","Moletons de casal","Look de domingo","Roupa de festa","Look de Natal","Óculos nerd do Di","Boné do Di","Lacinho da Mihzinha","Tiara de flores da Mihzinha","Alianças"],"roleta":["Roleta do date","Gira e o destino escolhe o nosso próximo programa","Girar","Ideias de date"],"coracoes":["Pegue os corações","Cada coração tem uma coisa que eu amo em você. Pega os 25!","Pronto?","Começar"],"memoria":["Jogo da memória","Encontra todos os pares"],"raspa":["Raspadinha","Passa o dedo pra descobrir","surpresa!","Exemplo: a foto surpresa"],"quiz":["Quanto você me conhece?","Vamos ver se você presta atenção em mim","Qual é a minha comida favorita?","Pizza","Sushi","Hambúrguer","Lasanha"],"provavel":["Quem é mais provável…","Escolhe, depois vê o que a Mihzinha respondeu","Quem dorme primeiro no meio do filme?","A Mihzinha","Os dois"],"abra":["Abra quando…","Cartas pra abrir quando precisar. Cada um escreve pro outro, e cada vez que abrir um envelope sai uma carta diferente","Pra eu abrir","Escrever pra Milena","Escolhe o envelope do jeito que você estiver se sentindo. São as cartas que a Mihzinha escreveu pra você.","Ver o álbum de cartas"],"cartas":["Cartas pro futuro","Cada uma só abre no dia certo","abre quando você precisar","pra abrir no dia em que a gente noivar","pra abrir no dia do nosso casamento"],"filhos":["Ao nosso primeiro filho","Cartas que eu e você vamos escrever pra quem ainda vai chegar. Pode escrever quantas quiser","Quem está escrevendo?","Assim que descobrirmos","o dia em que a gente soube de você","nenhuma carta ainda","Assim que você nascer","pra ler nos seus primeiros dias","No seu primeiro ano de vida","seu primeiro aniversário","Aos seus 18 anos","quando você virar adulto","No seu casamento","no dia mais bonito da sua vida","Na sua formatura","quando você conquistar isso","Por enquanto as cartas ficam salvas só neste aparelho."],"album":["Álbum de cartas","Um álbum pra cada ano, com todas as cartas que já foram abertas","Quando uma carta do \"Abra quando…\" for aberta, ela vem morar aqui pra sempre","Nossas cartas","ainda vazio","capa","arrasta pro lado ou toca nas setas"],"premios":["Prêmios de verdade","Os chocolates da casinha também viram coisas de verdade. Um escolhe os prêmios do outro","chocolates pra gastar"],"vales":["Vales-presente","Cada vale só pode ser resgatado uma vez. Quando resgatar, me manda o ticket","Vale um cafuné","Vale escolher o filme","Vale um jantar feito por mim","Vale um abraço demorado","Vale um sorvete","Vale ganhar uma discussão"],"fotos":["Nossas fotos","Todas as nossas fotos num lugar só. Toca numa foto pra ver grandona","Nossos primeiros encontros","As fotos daqui a Mihzinha ainda vai colocar.","Aquele dia","um dia que a gente nunca vai esquecer","Eu e você","só nós dois","Polaroids","toca em cada uma pra ler o que tem atrás","nosso 1º encontro","aquele dia","eu e você","meu favorito"]};
+const INDICE_APP = {"saudade":["Termômetro de saudade","Toca no botão toda vez que bater saudade. O coração vai enchendo","Tô com saudade","A Mih ainda não apertou hoje"],"diario":["Diário do casal","Cada um conta como foi o dia. Você só lê o dela depois de escrever o seu"],"pergunta":["Pergunta do dia","Responde, e aí você vê o que o outro respondeu","Responder","Nosso histórico","A partir de amanhã, as perguntas e as respostas de vocês dois ficam guardadas aqui pra sempre."],"bilhetes":["Bilhetinhos","Deixa um recado pro outro achar"],"mes":["Mesversário"],"primeiras":["Nossas primeiras vezes","Primeiro filme, primeira viagem, primeira briga… vai adicionando"],"playlist":["Nossa playlist","As músicas que lembram a gente"],"planos":["Nossos planos","Tudo que a gente quer viver junto. Marca quando realizar"],"lugares":["Nossos lugares","Cada lugar que a gente foi junto, com foto. Qualquer um dos dois pode colocar","Começa pelo shopping do primeiro encontro?"],"gostos":["O que cada um ama","Você coloca o que o outro ama, com foto e legenda. Assim cada um mostra que presta atenção","O que o Di ama","O que a Mihzinha ama","Mexer nas categorias","Os dois podem criar, renomear e apagar. O que já tá numa categoria apagada vai pra \"sem categoria\"."],"filmes":["Filmes e séries","O que a gente quer ver junto e o que achou depois","Pra ver","Já vimos"],"financas":["Nossas finanças","O que a gente gasta junto, sem conta de quem pagou","gastamos nesse mês","Nenhum gasto nesse mês ainda.","Novo gasto","Obs:","Valor","Data","O que foi","Adicionar gasto","Rolês","Comida","Cinema","Mercado","Viagem","Outros","+ Nova categoria…"],"retromes":[],"retro":["Retrospectiva 2027","Um resumo de tudo que a gente viveu esse ano","Ainda tá sendo escrita","Tudo que vocês fizerem até lá entra na conta."],"datas":["Datas marcantes","Os nossos dias especiais, com foto e legenda","Ainda não tem nenhuma data. Que tal começar pelo dia 12 de abril?"],"comemorativas":["Datas comemorativas","Cada festa que a gente passar junto fica guardada aqui","Nosso primeiro Natal","O presentinho tá balançando lá em cima da tela até o dia 25. Ou abre por aqui.","Abrir o Natal","todo ano","Nossos aniversários","No dia de cada um, a casinha enche de balões, vocês ganham chapéu de festa e aparece um bolo na sala.","Salvar aniversários","as próximas datas vão aparecendo aqui"],"contagem":["Contagem regressiva","Viagem, show, aniversário… tudo que a gente tá esperando"],"numeros":["Nossos números","Tudo que a gente já viveu, contado","juntos há","bilhetinhos no mural","perguntas respondidas","abraços na casinha","beijos na casinha","danças na casinha","chocolates do dia pegos","filmes vistos juntos","lugares que a gente foi","datas marcantes","primeiras vezes","músicas na playlist","cartas escritas","cartas abertas","apertos no termômetro de saudade"],"casinha":["Nossa casinha","Cada dia que vocês entram, ganham um chocolate. Junta e monta a casa de vocês","chocolates","Pegar o chocolate de hoje","A Mihzinha ainda não pegou hoje","Missões de hoje","a primeira vale 1 chocolate, a segunda 2","criar uma missão especial pra Mih","Prêmios de verdade","troca seus chocolates por mimos de verdade","Nós dois","Frente da casa","Sala","Quarto","Cozinha","Banheiro","Sala de jogos","Piscina","Quarto do bebê","passeios","Sorveteria","Cinema","Cafeteria","Praia","Parque","Igreja","Vocês dois já moram aqui. As roupas e os acessórios vão sendo conquistados","Roupa de casamento","precisa de Alianças","Look de inverno","Look de praia","Pijamas combinando","Moletons de casal","Look de domingo","Roupa de festa","Look de Natal","Óculos nerd do Di","Boné do Di","Lacinho da Mihzinha","Tiara de flores da Mihzinha","Alianças"],"roleta":["Roleta do date","Gira e o destino escolhe o nosso próximo programa","Girar","Ideias de date"],"coracoes":["Pegue os corações","Cada coração tem uma coisa que eu amo em você. Pega os 25!","Pronto?","Começar"],"memoria":["Jogo da memória","Encontra todos os pares"],"raspa":["Raspadinha","Passa o dedo pra descobrir","surpresa!","Exemplo: a foto surpresa"],"quiz":["Quanto você me conhece?","Vamos ver se você presta atenção em mim","Qual é a minha comida favorita?","Pizza","Sushi","Hambúrguer","Lasanha"],"provavel":["Quem é mais provável…","Escolhe, depois vê o que a Mihzinha respondeu","Quem dorme primeiro no meio do filme?","A Mihzinha","Os dois"],"abra":["Abra quando…","Cartas pra abrir quando precisar. Cada um escreve pro outro, e cada vez que abrir um envelope sai uma carta diferente","Pra eu abrir","Escrever pra Milena","Escolhe o envelope do jeito que você estiver se sentindo. São as cartas que a Mihzinha escreveu pra você.","Ver o álbum de cartas"],"cartas":["Cartas pro futuro","Cada uma só abre no dia certo","abre quando você precisar","pra abrir no dia em que a gente noivar","pra abrir no dia do nosso casamento"],"filhos":["Ao nosso primeiro filho","Cartas que eu e você vamos escrever pra quem ainda vai chegar. Pode escrever quantas quiser","Quem está escrevendo?","Assim que descobrirmos","o dia em que a gente soube de você","nenhuma carta ainda","Assim que você nascer","pra ler nos seus primeiros dias","No seu primeiro ano de vida","seu primeiro aniversário","Aos seus 18 anos","quando você virar adulto","No seu casamento","no dia mais bonito da sua vida","Na sua formatura","quando você conquistar isso","Por enquanto as cartas ficam salvas só neste aparelho."],"album":["Álbum de cartas","Um álbum pra cada ano, com todas as cartas que já foram abertas","Quando uma carta do \"Abra quando…\" for aberta, ela vem morar aqui pra sempre","Nossas cartas","ainda vazio","capa","arrasta pro lado ou toca nas setas"],"premios":["Prêmios de verdade","Os chocolates da casinha também viram coisas de verdade. Um escolhe os prêmios do outro","chocolates pra gastar"],"vales":["Vales-presente","Cada vale só pode ser resgatado uma vez. Quando resgatar, me manda o ticket","Vale um cafuné","Vale escolher o filme","Vale um jantar feito por mim","Vale um abraço demorado","Vale um sorvete","Vale ganhar uma discussão"],"fotos":["Nossas fotos","Todas as nossas fotos num lugar só. Toca numa foto pra ver grandona","Nossos primeiros encontros","As fotos daqui a Mihzinha ainda vai colocar.","Aquele dia","um dia que a gente nunca vai esquecer","Eu e você","só nós dois"]};
 const IDX_FORA = '.rolabox,.busca-wrap,.cmts,[data-id],script,style,template,textarea,input,.edk,.add-tog,#addfab,.ft-bar,.av-box,.vbar,svg,[hidden],.recolhido';
 const IDX_GEN = new Set(['Mihzinha','Milena','Você','abrir','jogar','Resgatar','Comprar','Criar','mais novos primeiro','mais antigos primeiro','só áudios','toca pra ir','Em destaque','EM DESTAQUE','Até','ATÉ','O FAVORITO','Voltar','Salvar','Esconder','Adicionar','Cancelar','Apagar','Editar','Pronto','Enviar','Fechar','Limpar','Ok','Sim','Não','Comentar','Trocar foto']);
 function textosDaTela(raiz){
@@ -6713,7 +6720,8 @@ function entrarPrevia(quem, dia){
   if(typeof quem !== 'string') quem = ''; dia = dia || '';
   const hash = quem ? `#previa-${quem}${dia ? '@' + dia : ''}` : '#previa';
   const vai = () => { location.replace(location.pathname + location.search + hash); location.reload(); };
-  if(PREVIA){ try{ Object.keys(localStorage).filter(k => /^previa_(viuFesta_|viuNatal|viuDedicatoria)/.test(k)).forEach(k => localStorage.removeItem(k)); if(quem) localStorage.setItem('previa_quem', JSON.stringify(quem)); }catch(e){} vai(); return; }
+  try{ sessionStorage.removeItem('dm_quem_pv'); sessionStorage.removeItem('dm_ult'); }catch(e){}
+  if(PREVIA){ try{ Object.keys(localStorage).filter(k => /^previa_(viuFesta_|viuNatal|viuDedicatoria|viuTour|quem|entrou|lugar|ultimaTela)/.test(k)).forEach(k => localStorage.removeItem(k)); }catch(e){} vai(); return; }
   /* leva uma cópia de tudo de vocês pra prévia (fotos, textos, listas), e lá nada é salvo de verdade */
   csToast && csToast('Preparando a prévia…');
   const copia = {}, offs = []; let est = {};
@@ -6725,7 +6733,7 @@ function entrarPrevia(quem, dia){
     try{ Object.keys(localStorage).filter(k => k.startsWith('previa_')).forEach(k => localStorage.removeItem(k));
       const L = (k, v) => { try{ localStorage.setItem('previa_' + k, JSON.stringify(v)); }catch(e){} };
       Object.entries(est).forEach(([g, v]) => L(g, v || {}));
-      L('quem', quem || 'Di'); L('entrou', true); L('viuLogin', true); L('installSeen', true); L('modoEdicao', false); L('viuTour', store.get('viuTour', false));
+      L('viuLogin', true); L('installSeen', true); L('modoEdicao', false);
     }catch(e){}
     vai(); }, 2500));
 }
@@ -6753,6 +6761,7 @@ function abrirViagem(){
   ligarViagem(w);
 }
 function sairPrevia(){
+  try{ sessionStorage.removeItem('dm_ult'); sessionStorage.removeItem('dm_quem_pv'); }catch(e){}
   try{ Object.keys(localStorage).filter(k => k.startsWith('previa_')).forEach(k => localStorage.removeItem(k)); }catch(e){}
   location.replace(location.pathname + location.search); setTimeout(() => location.reload(), 50);
 }
@@ -6901,7 +6910,6 @@ VIEWS.editar = (foco, origem, abaIni) => {
     {id:'foto_encontro', t:'Foto do primeiro encontro', s:'na flor de "A nossa história"', img:() => C.fotoEncontro},
     {id:'foto_natal', t:'Foto da tela de Natal', s:'na flor "nós no Natal"', img:() => C.fotoNatal || BASE.polaroids[0].foto},
     {id:'foto_hubnos', t:'Foto do quadro "Nossas coisas"', s:'no quadro da tela inicial', img:() => C.fotoHubNos || BASE.fotoInicio},
-    ...[0,1,2,3].map(k => ({id:'foto_pol' + k, t:`Polaroid ${k + 1}`, s:`em "Nossas fotos"`, img:() => C.polaroids[k].foto, leg:() => C.polaroids[k].legenda, verso:() => C.polaroids[k].verso})),
     {id:'foto_raspa', t:'Foto da raspadinha', s:'a foto escondida no jogo', img:() => C.raspadinha.foto, leg:() => C.raspadinha.legenda}
   ];
   const fotos = () => SLOTS.map(sl => `<article class="ed-card" data-slot="${sl.id}">
