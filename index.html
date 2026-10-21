@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=98">
-<link rel="apple-touch-icon" href="icon-180.png?v=98">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=98">
+<link rel="manifest" href="manifest.json?v=99">
+<link rel="apple-touch-icon" href="icon-180.png?v=99">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=99">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -3659,7 +3659,7 @@ function renderHome(y = 0){
       <div id="ncvbox" class="mdiabox ncv-fim"></div>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
       <p class="endsync" id="endsync"></p>
-      <p class="endver">versão de 21/10 · 12h05</p>
+      <p class="endver">versão de 21/10 · 12h15</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
@@ -4255,7 +4255,7 @@ let hubAtual = null;
 function abrirHub(k){
   const h = HUBS[k], [bg, fg, sh] = h.cor; hubAtual = h.view;
   const itens = h.itens(), dest = itens.find(r => r.id === h.dest) || itens[0], resto = itens.filter(r => r !== dest);
-  shell(h.vs, h.vt, h.vs, `<div class="jh" style="--hb:${bg};--hf:${fg};--hs:${sh}">
+  shell(h.vs, h.vt, h.vs, `<div class="busca-wrap" id="buscahub"></div><div class="jh" style="--hb:${bg};--hf:${fg};--hs:${sh}">
     <button type="button" class="jh-casa" data-hub="${dest.id}">
       <span class="jh-casa-pic ${dest.id === 'casinha' ? '' : 'ic'}" style="${dest.id === 'casinha' ? '' : `--bg:${corDe(dest.id)[0]};--fg:${corDe(dest.id)[1]}`}">${dest.id === 'casinha' ? `<img src="${APP_ICON}" alt="" class="px">` : icon(dest.ico)}</span>
       <span class="jh-casa-tx"><small>${TE('hb_dest_' + k, k === 'jogos' ? 'o favorito' : 'em destaque', 'Etiqueta do destaque')}</small><b>${TE('pt_' + dest.id, dest.t, 'Nome no botão')}</b><span>${TE('ps_' + dest.id, dest.s, 'Texto pequeno do botão')}</span>${dest.id === 'casinha' ? `<em class="jh-chips" id="jhchips"></em>` : ''}</span>
@@ -4264,6 +4264,7 @@ function abrirHub(k){
         <span class="jh-ic">${icon(r.ico)}</span><b>${TE('pt_' + r.id, r.t, 'Nome no botão')}</b><small>${TE('ps_' + r.id, r.s, 'Texto pequeno do botão')}</small><span class="jh-go">${icon('play')} ${k === 'jogos' ? 'jogar' : 'abrir'}</span></button>`; }).join('')}</div>
     ${h.extra === 'carta' ? `<button type="button" class="lastbtn" data-hub="carta">${icon('gift')}A última surpresa</button>` : ''}</div>`);
   app.querySelectorAll('[data-hub]').forEach(b => b.onclick = () => { const id = b.dataset.hub; markDone(id); curView = id; VIEWS[id](); });
+  buscaBox(document.getElementById('buscahub'), itens.map(r => r.id), 'Pesquisar em ' + (temTx('hb_t_' + k) ? TELAS['hb_t_' + k] : h.t).replace(/\s+/g, ' ') + '…');
   if(dest.id === 'casinha'){ const off = Sync.col('chocolates').on(l => { const el = document.getElementById('jhchips'); if(!el){ setTimeout(() => off && off()); return; }
     const eu = Sync.quem || 'Di', of = ofensiva(l, eu);
     el.innerHTML = jaComecou() || PREVIA ? `<i>${CHOCO_SVG} ${chocoInfinito() ? '∞' : l.filter(valeChoco).reduce((t, c) => t + (+c.qtd || 1), 0)}</i><i>${FLAME_SVG} ${of.seguidos} ${of.seguidos === 1 ? 'dia' : 'dias'}</i>` : `<i>começa dia 25</i>`; }); }
@@ -5811,7 +5812,7 @@ function notiToast(n){
 }
 /* abre a tela e vai direto no item (go = "tela@colecao:id") */
 function irPara(go){ if(!go) return renderHome(0); const [v, alvo] = String(go).split('@'); if(!VIEWS[v]) return;
-  document.querySelectorAll('.tk-wrap:not(#inst),#ntoast').forEach(x => x.remove()); hubAtual = null; openStop(v);
+  document.querySelectorAll('.tk-wrap:not(#inst),#ntoast').forEach(x => x.remove()); { const hkk = hubDe(hubAtual); if(!(hkk && curView === hubAtual && HUBS[hkk].itens().some(r => r.id === v))) hubAtual = null; } openStop(v);
   if(!alvo) return; let n = 0;
   const id = alvo.split(':').slice(1).join(':'), q = CSS.escape(id);
   const acha = () => { const c = document.querySelector(`.cmts[data-alvo="${CSS.escape(alvo)}"]`) || (id && document.querySelector(`[data-id="${q}"],[data-del="${q}"],[data-ed="${q}"],[data-k="${q}"],[data-led="${q}"],[data-fed="${q}"],[data-pz="${q}"],[data-cid="${q}"],[data-buy="${q}"],[data-ent="${q}"],[data-rid="${q}"]`)); if(!c){ if(++n < 30) setTimeout(acha, 150); return; }
@@ -5902,12 +5903,12 @@ function buscaTudo(q){
   }));
   return out.sort((a, b) => b.peso - a.peso).slice(0, 40);
 }
-function buscaBox(el){
+function buscaBox(el, escopo, ph){
   if(!el || PREVIA) return;
-  el.innerHTML = `<div class="busca"><span class="busca-ic">${icon('busca')}</span><input type="search" id="buscain" placeholder="Pesquisar no nosso app…" autocomplete="off" aria-label="Pesquisar"><button type="button" class="busca-x" id="buscax" hidden aria-label="Limpar">×</button></div><div class="busca-res" id="buscares" hidden></div>`;
+  el.innerHTML = `<div class="busca"><span class="busca-ic">${icon('busca')}</span><input type="search" id="buscain" placeholder="${esc(ph || 'Pesquisar no nosso app…')}" autocomplete="off" aria-label="Pesquisar"><button type="button" class="busca-x" id="buscax" hidden aria-label="Limpar">×</button></div><div class="busca-res" id="buscares" hidden></div>`;
   const inp = el.querySelector('#buscain'), res = el.querySelector('#buscares'), x = el.querySelector('#buscax');
   const marca = (txt, q) => { const s0 = esc(txt), t = semAc(q).trim(); if(!t) return s0; const i = semAc(txt).indexOf(t); return i < 0 ? s0 : esc(txt.slice(0, i)) + '<mark>' + esc(txt.slice(i, i + t.length)) + '</mark>' + esc(txt.slice(i + t.length)); };
-  const draw = () => { const q = inp.value; x.hidden = !q; const r = buscaTudo(q);
+  const draw = () => { const q = inp.value; x.hidden = !q; const r = buscaTudo(q).filter(it => !escopo || escopo.includes(String(it.go).split('@')[0]));
     if(semAc(q).trim().length < 2){ res.hidden = true; res.innerHTML = ''; return; }
     res.hidden = false;
     res.innerHTML = r.length ? r.map((it, i) => `<button type="button" class="busca-it" data-i="${i}"><span class="busca-iic">${icon(it.ic)}</span><span class="busca-tx"><b>${marca(it.t, q)}</b><small>${esc(it.s || '')}</small></span></button>`).join('') : `<p class="busca-nada">Nada encontrado.</p>`;
