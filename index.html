@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=99">
-<link rel="apple-touch-icon" href="icon-180.png?v=99">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=99">
+<link rel="manifest" href="manifest.json?v=100">
+<link rel="apple-touch-icon" href="icon-180.png?v=100">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=100">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -3659,7 +3659,7 @@ function renderHome(y = 0){
       <div id="ncvbox" class="mdiabox ncv-fim"></div>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
       <p class="endsync" id="endsync"></p>
-      <p class="endver">versão de 21/10 · 12h15</p>
+      <p class="endver">versão de 21/10 · 12h30</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
@@ -4201,6 +4201,14 @@ function listaPrimeiro(){
   document.body.append(f);
   const vista = curView; try{ const io = new IntersectionObserver(es => { if(curView !== vista || !form.isConnected){ io.disconnect(); f.remove(); return; } f.classList.toggle('some', es.some(x => x.isIntersecting) || [form._tog, form].some(el => el && el.getBoundingClientRect().top < innerHeight && el.getBoundingClientRect().bottom > 0 && el.offsetParent)); }, {threshold:.25}); io.observe(form); if(form._tog) io.observe(form._tog); }catch(e){}
 }
+/* busca dentro de cada tela: só o que está nela */
+const BUSCA_TELAS = ['primeiras','bilhetes','diario','playlist','lugares','datas','filmes','contagem','cartadata','gostos','planos','premios','roleta','cartas','abra','pergunta','filhos','mes'];
+function buscaNaTela(title){
+  if(!BUSCA_TELAS.includes(curView) || (curView === 'cartas' && modoEd())) return; const v = app.querySelector('.view'), h = v && v.querySelector('.vhead'); if(!h || v.querySelector('#buscatela')) return;
+  const el = document.createElement('div'); el.className = 'busca-wrap'; el.id = 'buscatela'; h.after(el);
+  const nome = String(temTx(chaveTitulo(curView, title)) ? TELAS[chaveTitulo(curView, title)] : title).replace(/\s+/g, ' ');
+  buscaBox(el, [curView], 'Pesquisar em ' + nome.replace(/[.…\s]+$/, '') + '…', true);
+}
 function shell(eb, title, sub, body){
   document.documentElement.classList.toggle('di-ver', !modoEd());
   document.getElementById('edfab')?.remove();
@@ -4217,7 +4225,7 @@ function shell(eb, title, sub, body){
     <header class="vhead">${(it => it ? (([bg, fg]) => `<span class="vh-ic" style="--bg:${bg};--fg:${fg}">${icon(it.ico)}</span>`)(corDe(it.id)) : '')(Object.values(LISTS).flat().find(x => x.id === curView))}<h2>${TE(chaveTitulo(curView, title), title, 'Título desta tela')}</h2>${sub || modoEd() ? `<p>${TE('s_' + curView + '_' + hk(title), sub || '', 'Texto embaixo do título')}</p>` : ''}</header>
     ${body}</div>`;
   if(yVolta){ window.scrollTo({top:yVolta, behavior:'instant'}); requestAnimationFrame(() => window.scrollTo({top:yVolta, behavior:'instant'})); }
-  { const nv = hubDe(curView) ? 1 : (hk => hk && curView !== hubAtual && (HUBS[hk].itens().some(r => r.id === curView) || HUBS[hk].extra === curView) ? 2 : 1)(hubDe(hubAtual)); entradaHistorico(nv, urlDe(curView), nv === 2 ? `#/${hubAtual}` : undefined); } listaPrimeiro();
+  { const nv = hubDe(curView) ? 1 : (hk => hk && curView !== hubAtual && (HUBS[hk].itens().some(r => r.id === curView) || HUBS[hk].extra === curView) ? 2 : 1)(hubDe(hubAtual)); entradaHistorico(nv, urlDe(curView), nv === 2 ? `#/${hubAtual}` : undefined); } listaPrimeiro(); buscaNaTela(title);
   document.getElementById('back').onclick = () => { stopGame(); const hk = hubDe(hubAtual); if(hk && curView !== hubAtual && (HUBS[hk].itens().some(r => r.id === curView) || HUBS[hk].extra === curView)){ curView = hubAtual; voltandoPara = true; VIEWS[hubAtual](); return; } hubAtual = null; renderHome(homeY); };
 }
 const VIEWS = {};
@@ -5872,7 +5880,7 @@ function regrasAviso(eu){
 const BUSCA_COLS = {bilhetes:['bilhetes', b => [b.texto], 'note', 'Bilhetinho'], primeiras:['primeiras', p => [p.titulo, p.texto], 'flag', 'Primeira vez'], musicas:['playlist', m => [m.titulo, m.artista, m.porque], 'music', 'Música'],
   lugares:['lugares', l => [l.nome, l.cidade, l.legenda], 'pin', 'Lugar'], filmes:['filmes', f => [f.titulo, f.tipo], 'film', 'Filme ou série'], datasMarcantes:['datas', d => [d.titulo, d.legenda], 'cal12', 'Data marcante'],
   gostos:['gostos', g => [g.legenda], 'heart', 'O que cada um ama'], contagens:['contagem', c => [c.titulo], 'hourglass', 'Contagem'], planosLista:['planos', p => [p.t, p.d], 'mapa', 'Plano'], roleta:['roleta', r => [r.texto], 'star', 'Ideia de date'],
-  comentarios:['', c => [c.texto], 'chat', 'Comentário'], diario:['diario', d => [d.texto], 'livro', 'Diário'], respostas:['pergunta', r => [r.texto, r.pergunta], 'chat', 'Pergunta do dia'], cartasData:['cartadata', c => [c.texto], 'envrelogio', 'Cartinha com data'], premios:['premios', p => [p.t], 'medalha', 'Prêmio']};
+  comentarios:['', c => [c.texto], 'chat', 'Comentário'], diario:['diario', d => [d.texto], 'livro', 'Diário'], respostas:['pergunta', r => [r.texto, r.pergunta], 'chat', 'Pergunta do dia'], cartasData:['cartadata', c => [c.texto], 'envrelogio', 'Cartinha com data'], premios:['premios', p => [p.t], 'medalha', 'Prêmio'], cartasFilhos:['filhos', c => [c.texto], 'baby', 'Carta ao filho'], mesversario:['mes', m => [m.texto], 'cal12', 'Mesversário']};
 const BUSCA_DADOS = {}; let buscaLigada = false;
 const semAc = t => String(t || '').normalize('NFD').replace(/[̀-ͯ­]/g, '').toLowerCase();
 function ligaBusca(){ if(buscaLigada) return; buscaLigada = true; Object.keys(BUSCA_COLS).forEach(n => Sync.col(n).on(l => { BUSCA_DADOS[n] = l; })); }
@@ -5888,13 +5896,14 @@ function buscaTudo(q){
   if(tem('natal')) out.push({ic:'gift', t:'Nosso Natal', s:'Tela de Natal', go:'natal', peso:3});
   C.memorias.forEach(m => { const nome = temTx('v_memoria2_' + hk(m.titulo)) ? TELAS['v_memoria2_' + hk(m.titulo)] : m.titulo; if(tem(nome) || tem(m.sub)) out.push({ic:'image', t:nome, s:'Memória', go:'memoria2:' + m.id, peso:3}); });
   /* cartas pro futuro: título sempre; texto só quando já abriu */
-  C.cartas.forEach((c, k) => { const aberta = !c.abre || c.abre <= new Date(); if(tem(c.titulo) || (aberta && tem(c.texto))) out.push({ic:'mail', t:c.titulo, s:'Carta pro futuro', go:'cartas', peso:2}); });
+  C.cartas.forEach((c, k) => { const aberta = !c.abre || c.abre <= new Date(); if(tem(c.titulo) || (aberta && tem(c.texto))) out.push({ic:'mail', t:c.titulo, s:'Carta pro futuro', go:'cartas@cartas:' + k, peso:2}); });
   C.abraQuando.forEach(c => { if(tem(c.titulo)) out.push({ic:'open', t:c.titulo, s:'Abra quando…', go:'abra', peso:2}); });
   /* o que foi escrito */
   Object.entries(BUSCA_COLS).forEach(([n, [v, f, ic, rot]]) => (BUSCA_DADOS[n] || []).forEach(it => {
     if(n === 'diario' && it.autor !== eu) return;
     if(n === 'respostas' && it.quem !== eu && it.dia >= hj) return;
     if(n === 'cartasData' && !(it.de === eu || (it.abreEm && it.abreEm <= hj))) return;
+    if(n === 'mesversario' && it.autor !== eu && !(it.mes && hoje(new Date(C.inicioNamoro.getFullYear(), C.inicioNamoro.getMonth() + (+it.mes), 12)) <= hj)) return;
     const campos = f(it).filter(Boolean), achou = campos.find(tem); if(!achou) return;
     let go = v, alvo = n + ':' + (n === 'diario' ? it.dia : it.id);
     if(n === 'comentarios'){ const [c0] = String(it.alvo).split(':'); go = ({primeiras:'primeiras', bilhetes:'bilhetes', diario:'diario', musicas:'playlist', lugares:'lugares', gostos:'gostos', filmes:'filmes', datasMarcantes:'datas'})[c0] || ''; alvo = it.alvo; }
@@ -5903,12 +5912,12 @@ function buscaTudo(q){
   }));
   return out.sort((a, b) => b.peso - a.peso).slice(0, 40);
 }
-function buscaBox(el, escopo, ph){
+function buscaBox(el, escopo, ph, soConteudo){
   if(!el || PREVIA) return;
   el.innerHTML = `<div class="busca"><span class="busca-ic">${icon('busca')}</span><input type="search" id="buscain" placeholder="${esc(ph || 'Pesquisar no nosso app…')}" autocomplete="off" aria-label="Pesquisar"><button type="button" class="busca-x" id="buscax" hidden aria-label="Limpar">×</button></div><div class="busca-res" id="buscares" hidden></div>`;
   const inp = el.querySelector('#buscain'), res = el.querySelector('#buscares'), x = el.querySelector('#buscax');
   const marca = (txt, q) => { const s0 = esc(txt), t = semAc(q).trim(); if(!t) return s0; const i = semAc(txt).indexOf(t); return i < 0 ? s0 : esc(txt.slice(0, i)) + '<mark>' + esc(txt.slice(i, i + t.length)) + '</mark>' + esc(txt.slice(i + t.length)); };
-  const draw = () => { const q = inp.value; x.hidden = !q; const r = buscaTudo(q).filter(it => !escopo || escopo.includes(String(it.go).split('@')[0]));
+  const draw = () => { const q = inp.value; x.hidden = !q; const r = buscaTudo(q).filter(it => !escopo || (escopo.includes(String(it.go).split('@')[0]) && !(soConteudo && it.peso === 3)));
     if(semAc(q).trim().length < 2){ res.hidden = true; res.innerHTML = ''; return; }
     res.hidden = false;
     res.innerHTML = r.length ? r.map((it, i) => `<button type="button" class="busca-it" data-i="${i}"><span class="busca-iic">${icon(it.ic)}</span><span class="busca-tx"><b>${marca(it.t, q)}</b><small>${esc(it.s || '')}</small></span></button>`).join('') : `<p class="busca-nada">Nada encontrado.</p>`;
