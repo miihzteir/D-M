@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=103">
-<link rel="apple-touch-icon" href="icon-180.png?v=103">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=103">
+<link rel="manifest" href="manifest.json?v=105">
+<link rel="apple-touch-icon" href="icon-180.png?v=105">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=105">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -1836,6 +1836,10 @@ html body .busca-it:hover,html body .busca-it:focus-visible{background:#fbf3f4}
 .busca-tx mark{background:#ffe6a8;color:inherit;border-radius:3px;padding:0 1px}
 .busca-nada{margin:10px;font-size:13px;color:var(--muted)}
 html body .recolhido{display:none!important}
+.wb-ini{overflow:visible;position:relative}.wb-foto{padding:0;background:#f3e6e8!important}html body .wb-ini > .ft-bar{top:auto!important;bottom:-12px!important}html body .whobtn .wb-ini.wb-foto{background:transparent!important;border-radius:50%!important}.wb-foto img{width:100%;height:100%;object-fit:cover;display:block;border-radius:50%!important}
+.whoprev{position:fixed;inset:0;z-index:9000;background:#f4ede4;overflow:auto;scrollbar-width:none;display:flex;align-items:center;justify-content:center;padding:56px 16px}.whoprev .gate{width:100%;max-width:460px;margin:auto}.whoprev-x{position:fixed!important;top:14px;right:14px;z-index:2}
+.ent-l{display:flex;flex-direction:column;gap:8px;margin-top:6px}html body .ent-l button{display:flex;align-items:center;gap:10px;justify-content:flex-start;background:#fff;color:var(--wine);border:1px solid #ecd4d6;box-shadow:none;min-height:50px;padding:0 16px;font-weight:700}.ent-l button svg{width:20px;height:20px;flex:none}
+.tour-card .edk,.dedic-card .edk{display:inline-grid;vertical-align:middle;margin-left:4px}html body #edtx,html body #edlv{z-index:9500!important}
 html:not(.di-ver) .tx-vazio{display:inline-block;min-width:56px;min-height:1.1em;vertical-align:middle;outline:1.5px dashed rgba(155,22,48,.4);outline-offset:2px;border-radius:6px}
 html body .add-tog{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:0;margin:0 0 14px;padding:13px 16px;border-radius:18px;background:#fff;color:#9b1630;border:1.5px dashed rgba(155,22,48,.35);box-shadow:none;font-size:14.5px;font-weight:800}
 html body .add-tog .icn{font-size:18px;transition:transform .25s}
@@ -3079,6 +3083,12 @@ const hoje = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth()+1).pa
 /* o Firestore recusa campos "undefined": tira antes de salvar */
 const erroSalvar = e => { try{ console.warn(e); const t = /permission/i.test(e && (e.code || e.message)) ? 'sem permissão' : /exceed|too large|size/i.test(e && e.message) ? 'ficou grande demais' : 'confere a internet'; window.csToast && csToast('Não salvou (' + t + '). Tenta de novo.'); }catch(x){} };
 const semUndef = v => Array.isArray(v) ? v.map(x => x === undefined ? null : semUndef(x)) : (v && typeof v === 'object' && Object.getPrototypeOf(v) === Object.prototype) ? Object.fromEntries(Object.entries(v).filter(([, x]) => x !== undefined).map(([k, x]) => [k, semUndef(x)])) : v;
+/* cópia de tudo pra prévia: fica no IndexedDB (cabe foto e áudio, o localStorage não aguenta) */
+const IDBP = {
+  db(){ return this._db || (this._db = new Promise((ok, no) => { const r = indexedDB.open('dm_previa', 1); r.onupgradeneeded = () => r.result.createObjectStore('kv'); r.onsuccess = () => ok(r.result); r.onerror = () => no(r.error); })); },
+  async put(k, v){ const db = await this.db(); return new Promise((ok, no) => { const t = db.transaction('kv', 'readwrite'); t.objectStore('kv').put(v, k); t.oncomplete = () => ok(); t.onerror = () => no(t.error); t.onabort = () => no(t.error); }); },
+  async get(k){ const db = await this.db(); return new Promise((ok, no) => { const r = db.transaction('kv').objectStore('kv').get(k); r.onsuccess = () => ok(r.result); r.onerror = () => no(r.error); }); }
+};
 const Sync = (() => {
   let mode = 'local', fdb = null, user = null, quem = store.get('quem', '');
   let state = {planos:{}, vales:{}, pensei:{}, lidas:{}}, stateUnsub = null;
@@ -3095,8 +3105,10 @@ const Sync = (() => {
     if(!stateUnsub) stateUnsub = fdb.doc('compartilhado/estado').onSnapshot(d => { const v = d.data() || {}; state = {planos:v.planos || {}, vales:v.vales || {}, pensei:v.pensei || {}, lidas:v.lidas || {}, datesEdit:v.datesEdit || {}, planosEdit:v.planosEdit || {}, cats:v.cats || {}, casinha:v.casinha || {}, niver:v.niver || {}}; emitState(); }, () => {});
     Object.values(cols).forEach(c => c.attach());
   }
+  let PV = null;
   const ready = (async () => {
-    if(!FIREBASE.apiKey || PREVIA) return;
+    if(PREVIA){ try{ PV = await IDBP.get('copia'); }catch(e){ PV = null; } return; }
+    if(!FIREBASE.apiKey) return;
     try{
       const v = '10.12.2', base = `https://www.gstatic.com/firebasejs/${v}/`;
       await loadScript(base + 'firebase-app-compat.js');
@@ -3112,6 +3124,7 @@ const Sync = (() => {
     const emit = () => c.L.forEach(f => f(c.items));
     const saveLocal = () => { store.set('col_' + name, c.items); emit(); };
     c.attach = () => {
+      if(PREVIA){ if(!c.pv && PV && PV.cols){ c.pv = 1; if(localStorage.getItem(PFX + 'col_' + name) == null && PV.cols[name]){ c.items = PV.cols[name]; emit(); } } return; }
       if(!online() || c.unsub || !c.L.length) return;
       c.unsub = fdb.collection(name).onSnapshot(snap => {
         c.items = snap.docs.map(d => ({id:d.id, ...d.data(), criadoEm: d.data().criadoEm?.toMillis?.() ?? Date.now()})).sort((a,b) => a.criadoEm - b.criadoEm); emit();
@@ -3314,18 +3327,35 @@ function pedirSenha(trava){
     if(!trava) w.onclick = e => { if(e.target === w) fecha(false); };
   });
 }
+/* "Quem está aí?": fotos e textos editáveis; guarda uma cópia no aparelho porque essa tela aparece antes do login */
+const whoFoto = q => { const d = (conteudoAtual || []).find(x => x.id === 'foto_who_' + q); if(d) return d.img || ''; return (store.get('whoCache', {}).f || {})[q] || ''; };
+function whoGuarda(){ try{ const f = {di:whoFoto('di'), mi:whoFoto('mi')}, tx = {}; Object.keys(TELAS).forEach(k => { if(k.startsWith('who_')) tx[k] = TELAS[k]; });
+  const novo = {f, tx}, j = JSON.stringify(novo); if(j !== JSON.stringify(store.get('whoCache', {}))) store.set('whoCache', novo); }catch(e){} }
+function whoHTML(){
+  if(!Object.keys(TELAS).some(k => k.startsWith('who_'))) TELAS = Object.assign({}, store.get('whoCache', {}).tx || {}, TELAS);
+  const av = (q, ini) => { const img = whoFoto(q), df = modoEd() ? ` data-foto="foto_who_${q}"` : ''; return img ? `<span class="wb-ini wb-foto"${df}><img src="${img}" alt=""></span>` : `<span class="wb-ini"${df}>${ini}</span>`; };
+  return `<div class="sheet who-sheet">
+      <div class="wax wax-pic"><img src="${APP_ICON}" alt="D&amp;M"></div>
+      <p class="eyebrow st" style="--i:0">${TE('who_eb', 'bem-vindo ao nosso cantinho', 'Frase de cima')}</p>
+      <h1 class="q st" style="--i:1">${TE('who_t', 'Quem está aí?', 'Título')}</h1>
+      <p class="lead st" style="--i:2">${TE('who_lead', 'Escolhe você, e o app guarda tudo do seu jeito.', 'Embaixo do título')}</p>
+      <div class="whos st" style="--i:3">
+        <button class="whobtn" data-q="Di">${av('di', 'D')}<b>${TE('who_di', 'Di', 'Nome dele')}</b><small>${TE('who_dis', 'o Diogo', 'Embaixo do nome dele')}</small></button>
+        <button class="whobtn" data-q="Mihzinha">${av('mi', 'M')}<b>${TE('who_mi', 'Mihzinha', 'Seu nome')}</b><small>${TE('who_mis', 'a Milena', 'Embaixo do seu nome')}</small></button>
+      </div>
+    </div>`;
+}
+function whoPrevia(){
+  let w = document.getElementById('whoprev');
+  if(!w){ w = document.createElement('div'); w.id = 'whoprev'; w.className = 'whoprev'; document.body.append(w); entradaHistorico(null); }
+  w.innerHTML = `<button type="button" class="inst-x whoprev-x" aria-label="Fechar">${icon('plus')}</button><div class="gate page">${whoHTML()}</div>`;
+  w.querySelector('.whoprev-x').onclick = () => { w.remove(); };
+  w.querySelectorAll('.whobtn').forEach(b => b.onclick = e => e.preventDefault());
+  aplicaFotos();
+}
 function renderWho(){
   app.innerHTML = `
-    <div class="gate page"><div class="sheet who-sheet">
-      <div class="wax wax-pic"><img src="${APP_ICON}" alt="D&amp;M"></div>
-      <p class="eyebrow st" style="--i:0">bem-vindo ao nosso cantinho</p>
-      <h1 class="q st" style="--i:1">Quem está aí?</h1>
-      <p class="lead st" style="--i:2">Escolhe você, e o app guarda tudo do seu jeito.</p>
-      <div class="whos st" style="--i:3">
-        <button class="whobtn" data-q="Di"><span class="wb-ini">D</span><b>Di</b><small>o Diogo</small></button>
-        <button class="whobtn" data-q="Mihzinha"><span class="wb-ini">M</span><b>Mihzinha</b><small>a Milena</small></button>
-      </div>
-    </div></div>`;
+    <div class="gate page">${whoHTML()}</div>`;
   app.querySelectorAll('[data-q]').forEach(b => b.onclick = async () => {
     if(b.dataset.q === 'Mihzinha' && !PREVIA && !pinSessao() && !(await pedirSenha())) return;
     app.querySelectorAll('[data-q]').forEach(x => x.disabled = true); b.classList.add('chosen'); sparkle(b);
@@ -3592,7 +3622,7 @@ function renderHome(y = 0){
   app.innerHTML = `
   <div class="home page">
     <section class="band b-sage hero ${modoEd() ? 'ed-on' : ''}"><span class="deco d1">${RHEART()}</span><span class="deco d2">${RHEART()}</span><span class="deco d3">${RHEART()}</span>
-      ${Sync.quemReal === 'Mihzinha' ? `<div class="ed-modo"><div class="ed-sw"><button type="button" data-modo="ver" class="${modoEd() ? '' : 'on'}">Ver</button><button type="button" data-modo="editar" class="${modoEd() ? 'on' : ''}">Editar</button></div>${modoEd() ? `<div class="ed-btrow"><div class="ed-sw ed-persp" title="editar para"><button type="button" data-persp="Di" class="${perspDi() ? 'on' : ''}">p/ Di</button><button type="button" data-persp="Mihzinha" class="${perspDi() ? '' : 'on'}">p/ Mih</button></div><button type="button" class="ed-abrir" data-go="editar">${icon('pencil')} editor</button><button type="button" class="ed-abrir" id="edviajar">${icon('calendar')} viajar</button><button type="button" class="ed-abrir ed-zero" id="edzero">${icon('sparkle')} zerar</button></div>` : `<button type="button" class="ed-abrir" id="edprev2">${icon('play')} ver do começo</button>`}</div>` : ''}
+      ${Sync.quemReal === 'Mihzinha' ? `<div class="ed-modo"><div class="ed-sw"><button type="button" data-modo="ver" class="${modoEd() ? '' : 'on'}">Ver</button><button type="button" data-modo="editar" class="${modoEd() ? 'on' : ''}">Editar</button></div>${modoEd() ? `<div class="ed-btrow"><div class="ed-sw ed-persp" title="editar para"><button type="button" data-persp="Di" class="${perspDi() ? 'on' : ''}">p/ Di</button><button type="button" data-persp="Mihzinha" class="${perspDi() ? '' : 'on'}">p/ Mih</button></div><button type="button" class="ed-abrir" data-go="editar">${icon('pencil')} editor</button><button type="button" class="ed-abrir" id="edviajar">${icon('calendar')} viajar</button><button type="button" class="ed-abrir" id="edentrada">${icon('heart')} entrada</button><button type="button" class="ed-abrir ed-zero" id="edzero">${icon('sparkle')} zerar</button></div>` : `<button type="button" class="ed-abrir" id="edprev2">${icon('play')} ver do começo</button>`}</div>` : ''}
       <p class="hhello">${saud}, <b>${eu}</b></p>
       <h1 class="names" aria-label="Diogo e Milena"><span class="n1">Diogo</span><button class="n2" id="logo" aria-label="coração">${RHEART()}</button><span class="n3">Milena</span></h1>
       <p class="hdate">${TE('hdate', 'desde 12 de abril de 2026', 'Data embaixo dos nomes')}</p>
@@ -3660,7 +3690,7 @@ function renderHome(y = 0){
       <div id="ncvbox" class="mdiabox ncv-fim"></div>
       ${jaInstalado() ? '' : `<button type="button" class="ghost endinst" id="endinst">${icon('heart')} Baixar o app no celular</button>`}
       <p class="endsync" id="endsync"></p>
-      <p class="endver">versão de 21/10 · 11h30</p>
+      <p class="endver">versão de 21/10 · 12h10</p>
     </section>
   </div>`;
   document.getElementById('tabbar')?.remove();
@@ -3669,6 +3699,7 @@ function renderHome(y = 0){
   setTimeout(chocoDoDia, 1200); setTimeout(avisoAbraco, 400); setTimeout(dedicatoria, 900); setTimeout(avisoRecado, 2600);
   document.getElementById('edprev2')?.addEventListener('click', () => entrarPrevia());
   document.getElementById('edviajar')?.addEventListener('click', abrirViagem);
+  document.getElementById('edentrada')?.addEventListener('click', abrirEntrada);
   document.getElementById('edzero')?.addEventListener('click', zeroKm);
   document.getElementById('endinst')?.addEventListener('click', () => maybeInstallPrompt(true));
   app.querySelectorAll('[data-persp]').forEach(b => b.onclick = () => { persp = b.dataset.persp; renderHome(window.scrollY); });
@@ -3834,14 +3865,45 @@ function mostraRecado(html, ligar){
 function fechaRecado(){ const w = document.getElementById('rcwrap'); if(!w) return; w.classList.remove('in'); setTimeout(() => w.remove(), 400); }
 /* recadinho da primeira vez que ele entra */
 const tourPendente = () => !store.get('viuTour', false) && (jaComecou() || PREVIA) && (C.tour || []).some(p => p && (p.t || p.s));
-function dedicatoria(){
-  if(Sync.quemReal !== 'Di' || store.get('viuDedicatoria', false) || document.getElementById('dedic')) return;
-  if(tourPendente() || document.getElementById('tour')) return;
-  store.set('viuDedicatoria', true);
+function dedicatoria(forcar){
+  if(document.getElementById('dedic')) return;
+  if(forcar !== true){ if(Sync.quemReal !== 'Di' || store.get('viuDedicatoria', false)) return;
+    if(tourPendente() || document.getElementById('tour')) return;
+    store.set('viuDedicatoria', true); }
   const w = document.createElement('div'); w.id = 'dedic'; w.className = 'dedic';
-  w.innerHTML = `<div class="dedic-card"><span class="dedic-ic">${icon('heart')}</span><p>${esc(C.textos.dedicatoria)}</p><p class="sign">Mihzinha</p><button type="button">Eu também te amo</button></div>`;
-  document.body.append(w); requestAnimationFrame(() => w.classList.add('in')); setTimeout(() => burst(innerWidth / 2, innerHeight / 2, 50), 300);
-  w.querySelector('button').onclick = () => { w.classList.remove('in'); setTimeout(() => w.remove(), 400); };
+  const draw = () => { const tx = C.textos.dedicatoria || '';
+    w.innerHTML = `<div class="dedic-card"><span class="dedic-ic">${icon('heart')}</span><p><span${!tx ? ' class="tx-vazio"' : ''}>${esc(tx)}</span>${modoEd() ? `<i class="edk" data-dd="1" role="button" aria-label="editar texto">${icon('pencil')}</i>` : ''}</p><p class="sign">${TE('dd_ass', 'Mihzinha', 'Assinatura do recadinho')}</p><button type="button" class="dd-ok">${TE('dd_bt', 'Eu também te amo', 'Botão do recadinho')}</button></div>`;
+    w.querySelector('.dd-ok').onclick = () => { w.classList.remove('in'); setTimeout(() => w.remove(), 400); };
+    w.querySelector('[data-dd]')?.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); editaTx('textos.dedicatoria', null, null, 'Recadinho da primeira vez', draw); }, true); };
+  draw(); document.body.append(w); requestAnimationFrame(() => w.classList.add('in')); setTimeout(() => burst(innerWidth / 2, innerHeight / 2, 50), 300);
+}
+/* editar um texto do editor (tx_) direto de onde ele aparece */
+function editaTx(k, idx, campo, lab, depois){
+  let v = JSON.parse(JSON.stringify(getP(C, k) ?? (idx == null ? '' : [])));
+  const atual = idx == null ? String(v || '') : String((v[idx] || {})[campo] || '');
+  const w = document.createElement('div'); w.className = 'tk-wrap'; w.id = 'edtx';
+  w.innerHTML = `<div class="sheet2"><button class="inst-x" aria-label="Fechar">${icon('plus')}</button><h3>Editar texto</h3>${lab ? `<p class="lead">${esc(lab)}</p>` : ''}
+    <textarea id="edtxv" rows="${atual.length > 60 ? 5 : 2}">${esc(atual)}</textarea><p class="edtx-dica">Enter pula linha</p>
+    <div class="edtx-acts"><button type="button" id="edtxs">Salvar</button></div></div>`;
+  document.body.append(w); const inp = w.querySelector('#edtxv'); inp.focus();
+  const fecha = () => w.remove();
+  w.onclick = e => { e.stopPropagation(); if(e.target === w) fecha(); };
+  w.querySelector('.inst-x').onclick = fecha;
+  w.querySelector('#edtxs').onclick = async () => { const nv = inp.value.trim();
+    if(idx == null) v = nv; else { if(!Array.isArray(v)) v = []; v[idx] = Object.assign({}, v[idx] || {}, {[campo]:nv}); }
+    setP(C, k, v); fecha(); depois && depois();
+    try{ await Sync.col('conteudo').set('tx_' + k, {v}); csToast('Texto salvo ♥'); }catch(x){} };
+}
+/* telas da entrada (modo editar): ver e editar o que o Di vê antes de tudo */
+function abrirEntrada(){
+  document.getElementById('entsheet')?.remove();
+  const w = document.createElement('div'); w.className = 'tk-wrap'; w.id = 'entsheet';
+  w.innerHTML = `<div class="sheet2"><button class="inst-x" aria-label="Fechar">${icon('plus')}</button><h3>Telas da entrada</h3>
+    <div class="ent-l"><button type="button" data-e="who">${icon('duo')}<span>Quem está aí?</span></button><button type="button" data-e="tour">${icon('sparkle')}<span>Boas-vindas</span></button><button type="button" data-e="dd">${icon('heart')}<span>Recadinho da primeira vez</span></button></div></div>`;
+  document.body.append(w);
+  const fecha = () => w.remove();
+  w.onclick = e => { if(e.target === w) fecha(); }; w.querySelector('.inst-x').onclick = fecha;
+  w.querySelectorAll('[data-e]').forEach(b => b.onclick = () => { fecha(); const e = b.dataset.e; if(e === 'who') whoPrevia(); else if(e === 'tour') tourInicio(true); else dedicatoria(true); });
 }
 /* convite pra baixar o app: aparece uma vez, some no X */
 let deferredInstall = null;
@@ -3900,7 +3962,7 @@ const DEF_T = {}; /* original de cada texto com chave */
 const T = (k, def) => { if(def != null && !(k in DEF_T)) DEF_T[k] = String(def).replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'"); return `<span data-edt="${k}"${TELAS[k] === VAZIO ? ' class="tx-vazio"' : ''}>${temTx(k) ? esc(TELAS[k]) : def}</span>`; };
 const EK = (k, def, lab = '') => modoEd() ? `<i class="edk" data-edk="${k}" data-lab="${esc(lab)}" role="button" aria-label="editar texto">${icon('pencil')}</i><template data-def="${k}">${def}</template>` : '';
 const TE = (k, def, lab) => T(k, def) + EK(k, def, lab);
-document.addEventListener('click', e => { const b = e.target.closest('.edk'); if(!b) return; e.preventDefault(); e.stopPropagation();
+document.addEventListener('click', e => { const b = e.target.closest('.edk[data-edk]'); if(!b) return; e.preventDefault(); e.stopPropagation();
   const k = b.dataset.edk, tpl = document.querySelector(`template[data-def="${k}"]`), def = tpl ? tpl.innerHTML.replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'") : '';
   abreTexto(k, def, b.dataset.lab || '');
 }, true);
@@ -4076,9 +4138,10 @@ function trocaFoto(alvo){
     if(alvo.startsWith('mem:')){ const [, mid, sl] = alvo.split(':');
       try{ const img = await compressImage(f, 1000, .72, {r:1}); csToast('Salvando a foto…'); await comTempo(Sync.col('fotosMem').set(mid + '_' + sl, {mem:mid, slot:+sl, img, autor:Sync.quem || 'Mihzinha'})); csToast('Foto salva ♥'); }
       catch(e){ if(e.code !== 'cancel') csToast(erroFoto(e)); } return; }
-    try{ const img = await compressImage(f, alvo.startsWith('memfoto') ? 520 : 900, .74, alvo.startsWith('memfoto') ? {r:.75, m:'redondo'} : /^foto_(inicio|encontro)$/.test(alvo) || alvo === 'foto_pol0' && document.getElementById('xapp') ? {r:1, m:'flor'} : {r:1});
+    try{ const img = await compressImage(f, alvo.startsWith('memfoto') || alvo.startsWith('foto_who') ? 520 : 900, .74, alvo.startsWith('memfoto') ? {r:.75, m:'redondo'} : alvo.startsWith('foto_who') ? {r:1} : /^foto_(inicio|encontro)$/.test(alvo) || alvo === 'foto_pol0' && document.getElementById('xapp') ? {r:1, m:'flor'} : {r:1});
       csToast('Salvando a foto…'); await comTempo(Sync.col('conteudo').set(alvo, {img})); csToast('Foto salva ♥');
       setTimeout(() => { const y = window.scrollY; if(document.getElementById('xapp')){ const xa = document.getElementById('xapp'), sy = xa.scrollTop; xa.remove(); renderXmas(); const nx = document.getElementById('xapp'); if(nx) nx.scrollTop = sy; }
+        else if(document.getElementById('whoprev') || document.getElementById('tour') || document.getElementById('dedic')){}
         else if(curView && VIEWS[curView]){ voltandoPara = true; scrollMem[curView] = y; VIEWS[curView](); } else renderHome(y); }, 400); }
     catch(e){ if(e.code !== 'cancel') csToast(erroFoto(e)); } };
   inp.click();
@@ -6187,18 +6250,20 @@ function tourInicio(forcar){
   if(!forcar && (document.querySelector('.tk-wrap') || document.getElementById('inst'))) return setTimeout(tourInicio, 1500);
   if(document.getElementById('tour')) return;
   store.set('viuTour', true);
-  const passos = (C.tour || []).filter(p => p && (p.t || p.s)), eu = Sync.quem || 'Di';
-  if(!passos.length) return;
+  const lista = () => (C.tour || []).map((p, i) => Object.assign({i}, p)).filter(p => p && (modoEd() || p.t || p.s)), eu = Sync.quem || 'Di';
+  let passos = lista(); if(!passos.length) return;
   let k = 0;
   const w = document.createElement('div'); w.id = 'tour'; w.className = 'tour';
-  const draw = () => { const p = passos[k], [bg, fg] = TOUR_COR[k % TOUR_COR.length], ult = k === passos.length - 1;
+  const ed = (campo, lab) => modoEd() ? `<i class="edk" data-tx="${campo}" data-lab="${lab}" role="button" aria-label="editar texto">${icon('pencil')}</i>` : '';
+  const draw = () => { passos = lista(); if(k >= passos.length) k = passos.length - 1; const p = passos[k], [bg, fg] = TOUR_COR[k % TOUR_COR.length], ult = k === passos.length - 1;
     w.innerHTML = `<div class="tour-card" style="--tb:${bg};--tf:${fg}">
       <button type="button" class="tour-pular" id="tourx">pular</button>
       <span class="tour-ic">${k === 0 ? `<img src="${APP_ICON}" alt="">` : icon(TOUR_IC[k % TOUR_IC.length])}</span>
-      <h2>${esc(p.t)}</h2><p>${esc(p.s)}</p>
+      <h2><span${!p.t ? ' class="tx-vazio"' : ''}>${esc(p.t || '')}</span>${ed('t', 'Título')}</h2><p><span${!p.s ? ' class="tx-vazio"' : ''}>${esc(p.s || '')}</span>${ed('s', 'Texto')}</p>
       <div class="tour-dots">${passos.map((_, i) => `<i class="${i === k ? 'on' : ''}"></i>`).join('')}</div>
       <div class="tour-acts">${k ? `<button type="button" class="ghost" id="tourv">Voltar</button>` : ''}<button type="button" id="tourn">${ult ? 'Bora começar' : 'Próximo'}</button></div>
-      ${k === 0 ? `<p class="tour-sign">com amor, ${eu === 'Di' ? 'sua Mih' : 'seu Di'}</p>` : ''}</div>`;
+      ${k === 0 ? `<p class="tour-sign">${TE('tour_ass', 'com amor, sua Mih', 'Assinatura das boas-vindas')}</p>` : ''}</div>`;
+    w.querySelectorAll('[data-tx]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); editaTx('tour', p.i, b.dataset.tx, 'Boas-vindas, passo ' + (k + 1), draw); }, true));
     w.querySelector('#tourn').onclick = e => { if(ult){ const r = e.currentTarget.getBoundingClientRect(); burst(r.left + r.width / 2, r.top, 60); fecha(); } else { k++; draw(); } };
     w.querySelector('#tourv')?.addEventListener('click', () => { k--; draw(); });
     w.querySelector('#tourx').onclick = fecha; };
@@ -6539,28 +6604,26 @@ VIEWS.retro = () => {
 };
 
 /* ---------- prévia do Di ---------- */
-const COLS_PREVIA = ['missoesEsp','premios','gostos','gostosCats','recados','abraQuando','abracos','bilhetes','capsula','cartasData','cartasFilhos','chocolates','compras','contagens','datasMarcantes','diario','filmes','fotosMem','gastos','lugares','mesversario','musicas','planosLista','primeiras','respostas','roleta','saudade'];
+const COLS_PREVIA = ['comentarios','audios','missoesEsp','premios','gostos','gostosCats','recados','abraQuando','abracos','bilhetes','capsula','cartasData','cartasFilhos','chocolates','compras','contagens','datasMarcantes','diario','filmes','fotosMem','gastos','lugares','mesversario','musicas','planosLista','primeiras','respostas','roleta','saudade'];
 function entrarPrevia(quem, dia){
   if(typeof quem !== 'string') quem = ''; dia = dia || '';
-  if(!quem){
+  const hash = quem ? `#previa-${quem}${dia ? '@' + dia : ''}` : '#previa';
+  const vai = () => { location.replace(location.pathname + location.search + hash); location.reload(); };
+  if(PREVIA){ try{ Object.keys(localStorage).filter(k => /^previa_(viuFesta_|viuNatal|viuDedicatoria)/.test(k)).forEach(k => localStorage.removeItem(k)); if(quem) localStorage.setItem('previa_quem', JSON.stringify(quem)); }catch(e){} vai(); return; }
+  /* leva uma cópia de tudo de vocês pra prévia (fotos, textos, listas), e lá nada é salvo de verdade */
+  csToast && csToast('Preparando a prévia…');
+  const copia = {}, offs = []; let est = {};
+  ['conteudo', ...COLS_PREVIA].forEach(n => offs.push(Sync.col(n).on(l => { copia[n] = l; })));
+  offs.push(Sync.on('state', st => { est = st; }));
+  Sync.ready.then(() => setTimeout(async () => { offs.forEach(f => { try{ f(); }catch(e){} });
+    copia.conteudo = conteudoAtual.length ? conteudoAtual : (copia.conteudo || []);
+    try{ await IDBP.put('copia', {cols:JSON.parse(JSON.stringify(copia)), em:Date.now()}); }catch(e){ csToast('Não deu pra copiar tudo pra prévia'); }
     try{ Object.keys(localStorage).filter(k => k.startsWith('previa_')).forEach(k => localStorage.removeItem(k));
-      localStorage.setItem('previa_col_conteudo', JSON.stringify(conteudoAtual)); }catch(e){}
-    location.replace(location.pathname + location.search + '#previa'); location.reload(); return;
-  }
-  /* viagem no tempo: leva uma cópia de tudo de vocês pra prévia, e lá nada é salvo de verdade */
-  const vai = () => { location.replace(location.pathname + location.search + `#previa-${quem}${dia ? '@' + dia : ''}`); location.reload(); };
-  if(PREVIA){ try{ Object.keys(localStorage).filter(k => /^previa_(viuFesta_|viuNatal|viuDedicatoria)/.test(k)).forEach(k => localStorage.removeItem(k)); localStorage.setItem('previa_quem', JSON.stringify(quem)); }catch(e){} vai(); return; }
-  const copia = {}, offs = [];
-  COLS_PREVIA.forEach(n => offs.push(Sync.col(n).on(l => { copia[n] = l; })));
-  let est = {}; offs.push(Sync.on('state', st => { est = st; }));
-  setTimeout(() => { offs.forEach(f => { try{ f(); }catch(e){} });
-    try{ Object.keys(localStorage).filter(k => k.startsWith('previa_')).forEach(k => localStorage.removeItem(k));
-      const L = (k, v) => localStorage.setItem('previa_' + k, JSON.stringify(v));
-      L('col_conteudo', conteudoAtual); Object.entries(copia).forEach(([n, l]) => L('col_' + n, l));
+      const L = (k, v) => { try{ localStorage.setItem('previa_' + k, JSON.stringify(v)); }catch(e){} };
       Object.entries(est).forEach(([g, v]) => L(g, v || {}));
-      L('quem', quem); L('entrou', true); L('viuLogin', true); L('installSeen', true); L('modoEdicao', false);
+      L('quem', quem || 'Di'); L('entrou', true); L('viuLogin', true); L('installSeen', true); L('modoEdicao', false); L('viuTour', store.get('viuTour', false));
     }catch(e){}
-    vai(); }, 1600);
+    vai(); }, 2500));
 }
 function viagemHTML(){
   const nv = typeof niverAtual !== 'undefined' ? niverAtual : {}, prox = q => { const b = nv[q]; if(!b) return ''; const y = new Date().getFullYear(); let d = `${y}-${b.slice(5)}`; if(d < hoje()) d = `${y + 1}-${b.slice(5)}`; return d; };
@@ -6696,6 +6759,7 @@ function aplicarConteudo(list){
     if(e.tipo === 'objs' && e.fixo) setP(C, e.k, base.map((b, i) => Object.assign({}, b, (d.v || [])[i] || {})));
     else setP(C, e.k, d.v); });
   const sig = (C.fotoInicio || '').length + '|' + (C.fotoEncontro || '').length + '|' + (C.fotoInicio || '').slice(-40) + (C.fotoEncontro || '').slice(-40);
+  whoGuarda(); if(document.getElementById('whoprev')) whoPrevia();
   if(sig !== conteudoSig){ const antes = conteudoSig; conteudoSig = sig; if(antes && document.querySelector('.home')) renderHome(window.scrollY); }
 }
 Sync.col('conteudo').on(l => { conteudoAtual = l; aplicarConteudo(l); });
@@ -6790,7 +6854,7 @@ VIEWS.editar = (foco, origem, abaIni) => {
     if(alvo.startsWith('mem:')){ const [, mid, sl] = alvo.split(':');
       try{ const img = await compressImage(f, 1000, .72, {r:1}); csToast('Salvando a foto…'); await comTempo(Sync.col('fotosMem').set(mid + '_' + sl, {mem:mid, slot:+sl, img, autor:Sync.quem || 'Mihzinha'})); csToast('Foto salva ♥'); }
       catch(e){ if(e.code !== 'cancel') csToast(erroFoto(e)); } return; }
-    try{ const img = await compressImage(f, alvo.startsWith('memfoto') ? 520 : 900, .74, alvo.startsWith('memfoto') ? {r:.75, m:'redondo'} : /^foto_(inicio|encontro)$/.test(alvo) ? {r:1, m:'flor'} : {r:1}); if(card) card.innerHTML = '<span><small>salvando…</small></span>'; await comTempo(col.set(alvo, {img})); csToast('Foto salva ♥'); setTimeout(() => draw(), 300); }
+    try{ const img = await compressImage(f, alvo.startsWith('memfoto') || alvo.startsWith('foto_who') ? 520 : 900, .74, alvo.startsWith('memfoto') ? {r:.75, m:'redondo'} : alvo.startsWith('foto_who') ? {r:1} : /^foto_(inicio|encontro)$/.test(alvo) ? {r:1, m:'flor'} : {r:1}); if(card) card.innerHTML = '<span><small>salvando…</small></span>'; await comTempo(col.set(alvo, {img})); csToast('Foto salva ♥'); setTimeout(() => draw(), 300); }
     catch(e){ if(e.code === 'cancel'){ draw(); return; } if(card) card.innerHTML = `<span class="ed-err"><small>${erroFoto(e)}</small></span>`; csToast(erroFoto(e)); } };
   document.querySelectorAll('.ed-tabs button').forEach(b => b.onclick = () => { aba = b.dataset.a; store.set('edAba', aba); draw(); });
   /* salva sozinho enquanto escreve (sem precisar achar o botão) */
