@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=123">
-<link rel="apple-touch-icon" href="icon-180.png?v=123">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=123">
+<link rel="manifest" href="manifest.json?v=125">
+<link rel="apple-touch-icon" href="icon-180.png?v=125">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=125">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -1833,6 +1833,14 @@ html body .nm{font-weight:800}html body .nm-di{color:#2f6db3!important}html body
 html body .cmts{margin-top:8px;padding-top:6px;border-top:1px dashed rgba(122,20,36,.18)}html body .fl-cm{border-top:0;padding-top:0}.postit:has(.del){padding-top:28px}
 html body .fl-tabs3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .paper.kid:has(.del){padding-top:40px}
+.mo-list{display:flex;flex-direction:column;gap:12px}.mo-card{background:#fffdf8;border:1px solid var(--line2);border-radius:18px;overflow:hidden}.mo-card.feito{border-color:#e7c27a;background:linear-gradient(#fffaf0,#fffdf8)}
+html body .mo-head{display:flex;align-items:center;gap:12px;width:100%;min-height:0;padding:14px;background:transparent!important;box-shadow:none!important;border:0!important;color:var(--ink)!important;text-align:left}
+.mo-ic{width:42px;height:42px;border-radius:14px;flex:none;display:grid;place-items:center;background:#fbeef0;color:#9b1630}.mo-card.feito .mo-ic{background:#f7e6bf;color:#9a6a12}.mo-ic svg{width:22px;height:22px}
+.mo-tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}.mo-tx b{font-family:var(--f-display);font-size:16.5px}.mo-tx small{font-size:12px;color:var(--muted);font-weight:600}
+.mo-seta svg{width:16px;height:16px;color:var(--muted);transition:transform .25s}.mo-card.ab .mo-seta svg{transform:rotate(45deg)}
+.mo-body{display:flex;flex-direction:column;gap:10px;padding:0 14px 14px}.mo-carta{position:relative;margin:0}.mo-carta .del{position:absolute;top:8px;right:8px}.mo-quando{font-size:12px;color:var(--muted);text-align:right;margin:4px 0 0}
+.mo-lacre{display:flex;gap:10px;align-items:flex-start;background:#fbf6ee;border-radius:14px;padding:12px;font-size:13.5px;color:#6a5a5a}.mo-lacre svg{width:18px;height:18px;flex:none;color:#9b1630;margin-top:2px}
+.mo-vazio{margin:0;font-size:13.5px;color:var(--muted);text-align:center}html body .mo-marca{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:#fff!important;color:#9a6a12!important;border:1.5px dashed #e7c27a!important;box-shadow:none!important}.mo-marca svg{width:16px;height:16px}.mo-desm{align-self:center;font-size:12px}
 .dm-ext{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .alvo-pisca{animation:alvopisca 1.1s ease-in-out 2;border-radius:14px}
 /* busca universal */
@@ -2173,7 +2181,7 @@ const C = {
   /* palavras escritas nos corações do jogo (20) */
   motivos: ['seu sorriso','sua voz','seus cachinhos','seu lado nerd','sua inteligência','sua paciência','sua coragem','sua determinação','seu amor','seu romantismo',
             'seu chamego','seu acolhimento','seu abraço','seu cheiro','nossa intimidade','suas piadas','suas provocações','seu capricho','sua comida','sua proatividade',
-            'seu jeito de me olhar','sua fé','seu cuidado comigo','sua risada','seu beijo','seu jeito de me acalmar','sua honestidade','seu jeito protetor','os nossos planos','você inteirinho'],
+            'seu jeito de me olhar','sua fé','seu cuidado comigo','sua risada','seu beijo','seu jeito de me acalmar','sua honestidade','seu jeito protetor','os nossos planos','sua parceria','seu carinho','seu olhar','sua sinceridade','sua companhia','seu jeito bobo','seu coração bom','suas mãos','seu jeito de falar comigo','você inteirinho'],
   quiz: [
     {p:'Qual é a minha comida favorita?', o:['Pizza','Sushi','Hambúrguer','Lasanha'], c:1},
     {p:'Qual é a minha cor preferida?', o:['Azul','Rosa','Roxo','Vermelho'], c:2},
@@ -2194,8 +2202,7 @@ const C = {
     {titulo:'Para abrir no Natal', abre:new Date(2026,11,25), texto:'Exemplo: uma carta que só abre no dia 25.'},
     {titulo:'Nosso 1 ano de namoro', abre:new Date(2027,3,12), texto:'Exemplo: carta de 1 ano.'},
     {titulo:'Nosso próximo Natal', abre:new Date(2027,11,25), texto:'Exemplo: carta do Natal de 2027.'},
-    {titulo:'No nosso noivado', abre:null, quando:'pra abrir no dia em que a gente noivar', texto:'Exemplo: carta pro dia do nosso noivado.'},
-    {titulo:'No nosso casamento', abre:null, quando:'pra abrir no dia do nosso casamento', texto:'Exemplo: carta pro dia do nosso casamento.'}
+
   ],
   /* cartas ao nosso primeiro filho: os dois escrevem, sem limite */
   momentos: [
@@ -3094,9 +3101,13 @@ const BASE_URL = location.pathname + location.search;
 const LINK_INI = PREVIA ? '' : ((location.hash.match(/^#\/(.+)$/) || [])[1] || '');
 try{ history.replaceState(null, '', LINK_INI ? BASE_URL : location.href); }catch(e){}
 const PFX = PREVIA ? 'previa_' : 'diogo_';
+/* o aparelho ficou sem espaço (cópias antigas da prévia, fotos guardadas…): libera o que não faz falta */
+function limpaEspaco(){ try{ Object.keys(localStorage).forEach(k => { if(!PREVIA && k.startsWith('previa_')) localStorage.removeItem(k); });
+  Object.keys(localStorage).filter(k => /^diogo_(col_|idxApp)/.test(k)).forEach(k => { if((localStorage.getItem(k) || '').length > 50000) localStorage.removeItem(k); }); }catch(e){} }
+if(!PREVIA) try{ Object.keys(localStorage).filter(k => k.startsWith('previa_')).forEach(k => localStorage.removeItem(k)); }catch(e){}
 const store = {
   get(k, d){ try{ return JSON.parse(localStorage.getItem(PFX+k)) ?? d }catch(e){ return d } },
-  set(k, v){ try{ localStorage.setItem(PFX+k, JSON.stringify(v)) }catch(e){} }
+  set(k, v){ const j = JSON.stringify(v); try{ localStorage.setItem(PFX+k, j); }catch(e){ try{ limpaEspaco(); localStorage.setItem(PFX+k, j); }catch(e2){} } }
 };
 const photo = (f, cls, label) => f ? `<img src="${esc(f)}" alt="" style="width:100%;aspect-ratio:1;object-fit:cover;display:block">`
                                   : `<div class="ph ${cls||''}">${label||'sua foto aqui'}</div>`;
@@ -3566,6 +3577,7 @@ const LISTS = {
   cartas: [
     {id:'abra',     ico:'open',     t:'Abra quando…',        s:'Uma carta nova a cada vez'},
     {id:'cartas',   ico:'mail',     t:'Cartas pro futuro',   s:'Abrem em datas especiais'},
+    {id:'momentos', ico:'ring',     t:'Cartas pros nossos momentos', s:'Abrem quando cada momento chegar'},
     {id:'filhos',   ico:'baby',     t:'Ao nosso primeiro filho', s:'Cartas que nós dois escrevemos'},
     {id:'album',    ico:'albumfoto', t:'Álbum de cartas',    s:'As cartas que já foram abertas'}],
   mimos: [
@@ -3971,7 +3983,7 @@ function maybeInstallPrompt(forcar){
 }
 if('serviceWorker' in navigator && /github\.io$/.test(location.hostname)) addEventListener('load', () => navigator.serviceWorker.register('sw.js').then(r => r.update()).catch(() => {}));
 /* sempre a versão mais nova: se o GitHub tem uma versão diferente da aberta, limpa o guardado e recarrega sozinho */
-const VERSAO_APP = 'versão de 22/10 · 10h10';
+const VERSAO_APP = 'versão de 22/10 · 10h55';
 async function confereVersao(){
   if(!/github\.io$/.test(location.hostname) || !navigator.onLine) return;
   try{ const r = await fetch(location.pathname + '?nc=' + Date.now(), {cache:'no-store'}); if(!r.ok) return; const t = await r.text(), m = t.match(/const VERSAO_APP = '([^']+)'/);
@@ -4325,7 +4337,7 @@ document.addEventListener('click', async e => {
 const ROTULO_ADD = {primeiras:'Adicionar primeira vez', bilhetes:'Escrever bilhete', diario:'Escrever o meu dia', playlist:'Adicionar música', datas:'Adicionar data marcante', filmes:'Adicionar filme ou série', contagem:'Nova contagem', cartadata:'Escrever cartinha', mes:'Escrever pro dia 12', planos:'Novo plano', premios:'Oferecer um prêmio', roleta:'Nova ideia'};
 function abreForm(form){ if(!form || !form.classList.contains('recolhido')) return; form.classList.remove('recolhido'); const tg = form._tog; if(tg){ tg.classList.add('aberto'); tg.querySelector('span').textContent = 'Esconder'; } }
 /* lista primeiro, numa caixinha com rolagem; o formulário de escrever fica embaixo */
-const ROLA = {primeiras:'#pf', bilhetes:'#bf', diario:'#dif', playlist:'#mf', lugares:'#lgdet', datas:'#dmf', filmes:'#flf', contagem:'#ctf', cartadata:'#cdf', gostos:'#gsform', mes:'#msf', planos:{f:'#plf', box:['#pll']}, premios:{f:'#pzf', box:['h3.ct-sep','#pzpra','#pzgan','#pzmeus']}, roleta:{f:'#of', box:['#ol']}};
+const ROLA = {primeiras:'#pf', bilhetes:'#bf', playlist:'#mf', lugares:'#lgdet', datas:'#dmf', filmes:'#flf', contagem:'#ctf', cartadata:'#cdf', gostos:'#gsform', mes:'#msf', planos:{f:'#plf', box:['#pll']}, premios:{f:'#pzf', box:['h3.ct-sep','#pzpra','#pzgan','#pzmeus']}, roleta:{f:'#of', box:['#ol']}};
 function listaPrimeiro(){
   const cfg = ROLA[curView]; if(!cfg) return; const sel = typeof cfg === 'string' ? cfg : cfg.f; const form = app.querySelector('.view ' + sel); if(!form || form.dataset.rola) return; form.dataset.rola = 1;
   const box = document.createElement('div'); box.className = 'rolabox';
@@ -4505,7 +4517,7 @@ VIEWS.memoria = () => {
 let gameRAF = null;
 function stopGame(){ if(gameRAF) cancelAnimationFrame(gameRAF); gameRAF = null; }
 VIEWS.coracoes = () => {
-  const META = Math.min(25, C.motivos.length), VIDAS = 5;
+  const META = Math.min(30, C.motivos.length), VIDAS = 4;
   shell('jogo','Pegue os corações',`Cada coração tem uma coisa que eu amo em você. Pega os ${META}!`,
     `<div class="game" id="game"><canvas id="gc"></canvas>
       <div class="hud" aria-live="polite"><span id="hp"></span><span id="hs">♥︎ 0 / ${META}</span></div>
@@ -4591,11 +4603,11 @@ VIEWS.coracoes = () => {
   function loop(t){
     const dt = Math.min(40, t - last); last = t;
     const lvl = caught.length / META;
-    const speed = 1 + lvl * 1.8;
-    const every = 950 - lvl * 520;
+    const speed = 1.2 + lvl * 2.4;
+    const every = 820 - lvl * 480;
     spawn -= dt;
     if(spawn <= 0){
-      let bad = Math.random() < .14 + lvl * .14;
+      let bad = Math.random() < .2 + lvl * .18;
       if(!bad && !pool.length) bad = true;
       const it = {x:0, y:-30, v:(.11+Math.random()*.06)*speed, bad, w:Math.random()*6};
       if(!bad){ it.word = pool.shift(); x.font = FONT; it.r = Math.max(28, x.measureText(splitWord(it.word)[1]).width * .62 + 10); }
@@ -5987,7 +5999,7 @@ async function avisar(n){
 }
 
 /* avisa o servidor (Cloudflare) pra mandar notificação pro outro celular */
-const EVENTOS_PUSH = ['eventos','pedidos','bilhetes','respostas','abraQuando','cartasData','cartasFilhos','abracos','missoesEsp','gostos','musicas','saudade','premios','pensei','diario','filmes','lugares','primeiras','datasMarcantes','mesversario','capsula','roleta','planosLista','contagens','comentarios','teste'];
+const EVENTOS_PUSH = ['eventos','pedidos','momCartas','bilhetes','respostas','abraQuando','cartasData','cartasFilhos','abracos','missoesEsp','gostos','musicas','saudade','premios','pensei','diario','filmes','lugares','primeiras','datasMarcantes','mesversario','capsula','roleta','planosLista','contagens','comentarios','teste'];
 const workerURL = () => ((conteudoAtual || []).find(x => x.id === 'config') || {}).worker || 'https://dm-avisos.miihzteir.workers.dev';
 /* coisas que não viram documento próprio (vale resgatado, plano realizado…) avisam o outro por aqui */
 function evento(titulo, corpo, go, ic){ try{ if(PREVIA || perspDi()) return; const eu = Sync.quem || 'Di', Eu = eu === 'Di' ? 'O ' + apelido('Di', 15) : 'A ' + apelido('Mihzinha', 15);
@@ -6009,6 +6021,7 @@ function regrasAviso(eu){
     bilhetes: b => b.autor === outro && {titulo:`${Ele} colou um bilhetinho pra você`, corpo:b.texto ? corta(b.texto) : 'Tem um áudio novo', go:'bilhetes@bilhetes:' + b.id, ic:'note'},
     respostas: r => r.quem === outro && {titulo:`${Ele} respondeu a pergunta de hoje`, corpo:`Vem ver o que ${ele} disse`, go:'pergunta', ic:'chat'},
     eventos: e => e.autor === outro && e.titulo && {titulo:e.titulo, corpo:e.corpo || '', go:e.go || '', ic:e.ic || 'heart'},
+    momCartas: c => c.autor === outro && {titulo:`${Ele} escreveu uma carta ${({noivado:'pro nosso noivado', casamento:'pro nosso casamento', filho:'pra quando a gente descobrir o nosso filho', casa:'pra quando a gente for morar junto'})[c.mom] || 'pra um momento nosso'}`, corpo:'Ela só abre quando esse momento chegar ♥', go:'momentos', ic:'ring'},
     cartasFilhos: c => c.autor === outro && {titulo:`${Ele} escreveu uma carta pro nosso primeiro filho`, corpo:'Vem ler ♥', go:'filhos', ic:'baby'},
     abraQuando: c => (c.autor || '') === outro && {titulo:`${Ele} escreveu uma carta nova pra você`, corpo:'Tem envelope novo no Abra quando…', go:'abra', ic:'mail'},
     cartasData: c => c.de === outro && c.para === eu && {titulo:`${Ele} lacrou uma cartinha pra você`, corpo:`Ela abre em ${new Date(c.abreEm + 'T12:00:00').toLocaleDateString('pt-BR')}`, go:'cartadata@cartasData:' + c.id, ic:'envrelogio'},
@@ -6121,7 +6134,8 @@ function buscaBox(el, escopo, ph, soConteudo){
 function caixaAvisos(el){
   if(!el || PREVIA) return;
   const eu = Sync.quem || 'Di', R = regrasAviso(eu), chave = 'avLidos_' + eu, d = {}, offs = [];
-  const lidos = () => store.get(chave, []), lido = k => { const l = lidos(); if(!l.includes(k)){ l.push(k); store.set(chave, l.slice(-500)); } };
+  const mem = caixaAvisos.mem || (caixaAvisos.mem = new Set());
+  const lidos = () => { const l = store.get(chave, []); mem.forEach(k => l.includes(k) || l.push(k)); return l; }, lido = k => { mem.add(k); const l = lidos(); store.set(chave, l.slice(-800)); };
   const desde = Date.now() - 14 * 864e5; let raf = 0, aberto = false;
   const draw = () => { raf = 0; if(!el.isConnected){ offs.forEach(f => f && f()); return; }
     const l = lidos(), its = [];
@@ -6519,7 +6533,7 @@ VIEWS.diario = () => {
     `<form class="card-form" id="dif"><p class="wo-t">Como foi o seu dia hoje?</p><p class="dia-data">${fmtLongo(hoje())}</p>
       <textarea id="dit" rows="5" maxlength="1500" placeholder="Me conta tudo…" aria-label="Seu dia"></textarea>
       <div class="pl-act"><button type="submit" id="dis">Guardar</button></div><p class="werr" id="die"></p></form>
-     ${filtroHTML('diflt')}<div id="dil" class="dia-lista"></div>`);
+     ${filtroHTML('diflt')}<div id="dil" class="dia-lista rolabox"></div>`);
   const col = Sync.col('diario'), $ = id => document.getElementById(id);
   let list = [], carregou = false;
   const draw = () => { if(!$('dil')) return;
@@ -6873,6 +6887,9 @@ function aplicarConteudo(list){
   C.polaroids = BASE.polaroids.map((p, k) => Object.assign({}, p, {foto:f('foto_pol' + k, 'img', p.foto), legenda:f('foto_pol' + k, 'legenda', p.legenda), verso:f('foto_pol' + k, 'verso', p.verso)}));
   const cs = doc('cartas');
   C.cartas = cs && Array.isArray(cs.lista) ? cs.lista.map(c => ({titulo:c.titulo || '', abre:c.abre ? new Date(c.abre + 'T00:00:00') : null, quando:c.quando || '', texto:c.texto || ''})) : BASE.cartas.map(c => Object.assign({}, c));
+  /* noivado e casamento viraram "Cartas pros nossos momentos" (os dois escrevem) */
+  C.cartasMomento = C.cartas.filter(c => !c.abre && /noiv|casament/i.test(c.titulo + ' ' + (c.quando || '')));
+  C.cartas = C.cartas.filter(c => !C.cartasMomento.includes(c));
   /* "Para um dia triste" é do Abra quando, não das cartas pro futuro */
   const triste = C.cartas.find(c => /dia triste/i.test(c.titulo) && !c.abre && !c.quando);
   if(triste){ C.cartas = C.cartas.filter(c => c !== triste); if(triste.texto && !/^Exemplo/.test(triste.texto)) setTimeout(() => { const e = C.abraQuando.find(x => x.id === 'triste'); if(e && /^Exemplo/.test(e.texto || '')) e.texto = triste.texto; }, 0); }
@@ -7414,6 +7431,50 @@ VIEWS.cartas = () => {
   wireEnvelopes(C.cartas, c => `<div class="paper unfold">${quandoEscrita((c.abre || new Date()).getTime())}<p class="to">${esc(c.titulo)}</p><p>${esc(c.texto)}</p><p class="sign">Mihzinha</p></div>`);
 };
 /* ---------- cartas ao nosso primeiro filho ---------- */
+/* ---------- cartas pros nossos momentos: cada um escreve, e só abre quando o momento acontecer ---------- */
+const MOMENTOS = [
+  {id:'noivado', t:'Quando a gente noivar', fez:'noivou', ic:'ring'},
+  {id:'casamento', t:'No nosso casamento', fez:'casou', ic:'heart'},
+  {id:'filho', t:'Quando descobrirmos que vamos ser pais', fez:'descobriu que vai ter um filho', ic:'baby'},
+  {id:'casa', t:'Quando a gente for morar junto', fez:'foi morar junto', ic:'house'}
+];
+VIEWS.momentos = () => {
+  const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'Mihzinha' : 'Di', nomeO = outro === 'Di' ? apelido('Di', 22) : apelido('Mihzinha', 22);
+  shell('pra quando chegar a hora','Cartas pros nossos momentos','Cada um escreve pro outro. As cartas só abrem quando o momento acontecer', `<div class="mo-list" id="molist"></div>`);
+  const $ = id => document.getElementById(id), col = Sync.col('momCartas'), colM = Sync.col('marcos');
+  let cartas = [], marcos = [], aberto = store.get('moAberto', ''), escrevendo = '';
+  const fmt = d => new Date(d + 'T12:00:00').toLocaleDateString('pt-BR', {day:'numeric', month:'long', year:'numeric'});
+  const draw = () => { const box = $('molist'); if(!box) return;
+    poeLista(box, MOMENTOS.map(m => { const mk = marcos.find(x => x.id === m.id), minhas = cartas.filter(c => c.mom === m.id && c.autor === eu).sort((a, b) => a.criadoEm - b.criadoEm), dele = cartas.filter(c => c.mom === m.id && c.autor === outro).sort((a, b) => a.criadoEm - b.criadoEm);
+      const daMih = m.id === 'noivado' || m.id === 'casamento' ? (C.cartasMomento || []).filter(c => /noivado/i.test(c.titulo + c.quando) === (m.id === 'noivado') && c.texto && !/^Exemplo/.test(c.texto)) : [];
+      const delePlus = outro === 'Mihzinha' ? dele.length + daMih.length : dele.length, ab = aberto === m.id;
+      const carta = (txt, autor, quando) => `<article class="paper mo-carta"><p class="to">${autor === eu ? 'Você escreveu' : (autor === 'Di' ? 'Do ' + apelido('Di', 23) : 'Da ' + apelido('Mihzinha', 23)) + ' pra você'}</p>${esc(txt).split(/\n+/).map(t => `<p>${t}</p>`).join('')}${quando ? `<p class="mo-quando">${quando}</p>` : ''}</article>`;
+      return `<section class="mo-card ${mk ? 'feito' : ''} ${ab ? 'ab' : ''}" data-mo="${m.id}">
+        <button type="button" class="mo-head" data-tg="${m.id}"><span class="mo-ic">${icon(m.ic)}</span><span class="mo-tx"><b>${esc(m.t)}</b><small>${mk ? `aconteceu em ${fmt(mk.em)} · cartas abertas ♥` : `${minhas.length ? minhas.length + (minhas.length === 1 ? ' carta sua' : ' cartas suas') : 'nenhuma carta sua'} · ${delePlus ? delePlus + ' ' + (outro === 'Di' ? 'dele' : 'dela') + ' esperando' : 'nenhuma ' + (outro === 'Di' ? 'dele' : 'dela')}`}</small></span><span class="mo-seta">${icon('plus')}</span></button>
+        ${ab ? `<div class="mo-body">
+          ${mk ? [...(outro === 'Mihzinha' ? daMih.map(c => carta(c.texto, 'Mihzinha')) : []), ...dele.map(c => carta(c.texto, outro, new Date(c.criadoEm).toLocaleDateString('pt-BR')))].join('') || `<p class="mo-vazio">${nomeO} não escreveu carta pra esse momento.</p>`
+            : delePlus ? `<div class="mo-lacre">${icon('lock')}<span>${delePlus} ${delePlus === 1 ? 'carta' : 'cartas'} ${outro === 'Di' ? 'do ' + nomeO : 'da ' + nomeO} pra você. Abre quando a gente marcar que ${m.fez}.</span></div>` : ''}
+          ${minhas.map(c => carta(c.texto, eu, new Date(c.criadoEm).toLocaleDateString('pt-BR')) .replace('</article>', `<button type="button" class="del" data-mdel="${c.id}">apagar</button></article>`)).join('')}
+          ${escrevendo === m.id ? `<form class="write mo-f" data-mf="${m.id}"><textarea rows="5" maxlength="4000" placeholder="Escreve com carinho…"></textarea><div class="pl-act"><button type="button" class="ghost" data-mcan="1">Cancelar</button><button type="submit">Guardar carta</button></div></form>`
+            : `<button type="button" class="add-tog" data-mesc="${m.id}">${icon('plus')}<span>Escrever ${outro === 'Di' ? 'pro ' + nomeO : 'pra ' + nomeO}</span></button>`}
+          ${mk ? (modoEd() ? `<button type="button" class="linkbtn mo-desm" data-mdes="${m.id}">desmarcar</button>` : '') : `<button type="button" class="mo-marca" data-mmarca="${m.id}">${icon('sparkle')} A gente ${m.fez}!</button>`}
+        </div>` : ''}</section>`; }).join(''));
+    box.querySelectorAll('[data-tg]').forEach(b => b.onclick = () => { aberto = aberto === b.dataset.tg ? '' : b.dataset.tg; escrevendo = ''; store.set('moAberto', aberto); draw(); });
+    box.querySelectorAll('[data-mesc]').forEach(b => b.onclick = () => { escrevendo = b.dataset.mesc; draw(); setTimeout(() => { const t = box.querySelector('.mo-f textarea'); if(t){ t.focus({preventScroll:true}); t.scrollIntoView({behavior:'smooth', block:'center'}); } }, 50); });
+    box.querySelectorAll('[data-mcan]').forEach(b => b.onclick = () => { escrevendo = ''; draw(); });
+    box.querySelectorAll('[data-mf]').forEach(f => f.onsubmit = async e => { e.preventDefault(); const t = f.querySelector('textarea').value.trim(); if(!t) return; const bt = f.querySelector('button[type=submit]'); bt.disabled = true;
+      try{ await col.add({mom:f.dataset.mf, autor:eu, texto:t}); escrevendo = ''; sparkle(bt); csToast('Carta guardada ♥'); draw(); }catch(x){ bt.disabled = false; } });
+    box.querySelectorAll('[data-mdel]').forEach(b => b.onclick = () => { if(!b.dataset.sure){ b.dataset.sure = 1; b.textContent = 'apagar?'; return; } col.remove(b.dataset.mdel); });
+    box.querySelectorAll('[data-mmarca]').forEach(b => b.onclick = async () => { const m = MOMENTOS.find(x => x.id === b.dataset.mmarca); if(!b.dataset.sure){ b.dataset.sure = 1; b.innerHTML = `${icon('sparkle')} Toca de novo pra confirmar`; setTimeout(() => { if(b.isConnected){ delete b.dataset.sure; b.innerHTML = `${icon('sparkle')} A gente ${m.fez}!`; } }, 3000); return; }
+      b.disabled = true; try{ await colM.set(m.id, {em:hoje(), por:eu}); burst(innerWidth / 2, innerHeight / 2, 80); evento(`{eu} marcou que a gente ${m.fez}!`, 'As cartas desse momento foram abertas ♥', 'momentos', 'ring'); }catch(x){ b.disabled = false; } });
+    box.querySelectorAll('[data-mdes]').forEach(b => b.onclick = () => colM.remove(b.dataset.mdes));
+  };
+  const o1 = col.on(l => { cartas = l; draw(); }), o2 = colM.on(l => { marcos = l;
+    /* momento novo marcado: abre sozinho as cartas, com festa, na primeira vez que entra */
+    const novo = l.find(m => !store.get('moVisto_' + m.id, false)); if(novo){ store.set('moVisto_' + novo.id, true); aberto = novo.id; escrevendo = ''; setTimeout(() => { burst(innerWidth / 2, innerHeight / 3, 90); document.querySelector(`[data-mo="${novo.id}"]`)?.scrollIntoView({behavior:'smooth', block:'start'}); }, 400); }
+    draw(); });
+  const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { o1(); o2(); prev(); };
+};
 VIEWS.filhos = () => {
   let autor = Sync.quem;
   const open = new Set();
@@ -7553,9 +7614,10 @@ VIEWS.pergunta = () => {
   const dj = diaJornada(), ANTESQ = dj < 1, FIMQ = dj >= 365 || ANTESQ, pq = FIMQ ? '' : itemDoDia(C.perguntas, 3);
   const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'Mihzinha' : 'Di';
   shell('hoje','Pergunta do dia','Responde, e aí você vê o que o outro respondeu',
-    `${filtroHTML('qflt')}<section class="hqwrap rolabox" id="qold"></section><div class="qcard"><p class="eyebrow">${new Date().toLocaleDateString('pt-BR',{day:'numeric',month:'long'})}${dj >= 1 && dj <= 364 ? ` · pergunta ${dj} de 364` : ''}</p>${ANTESQ ? `<h3>As perguntas começam dia 22 de outubro</h3><p class="lead">A primeira chega no dia 22 de outubro. Faltam ${1 - dj} ${1 - dj === 1 ? 'dia' : 'dias'}.</p>` : FIMQ ? `<h3>Fim das perguntas</h3><p class="lead">${esc(C.textos.perguntasFim)}</p>` : `<h3>${esc(pq)}</h3>`}
+    `<div class="qcard"><p class="eyebrow">${new Date().toLocaleDateString('pt-BR',{day:'numeric',month:'long'})}${dj >= 1 && dj <= 364 ? ` · pergunta ${dj} de 364` : ''}</p>${ANTESQ ? `<h3>As perguntas começam dia 22 de outubro</h3><p class="lead">A primeira chega no dia 22 de outubro. Faltam ${1 - dj} ${1 - dj === 1 ? 'dia' : 'dias'}.</p>` : FIMQ ? `<h3>Fim das perguntas</h3><p class="lead">${esc(C.textos.perguntasFim)}</p>` : `<h3>${esc(pq)}</h3>`}
       <form class="write" id="qf"><textarea id="qta" rows="4" placeholder="Sua resposta…" aria-label="Sua resposta"></textarea><button type="submit">Responder</button><p class="werr" id="qerr" role="status"></p></form>
-      <div id="qans"></div></div>`);
+      <div id="qans"></div></div>
+     ${filtroHTML('qflt')}<section class="hqwrap rolabox" id="qold"></section>`);
   const col = Sync.col('respostas');
   let ult = []; const F = filtro('qflt', () => rend(ult)); const rend = list => { ult = list;
     const box = document.getElementById('qans'); if(!box) return;
@@ -7842,16 +7904,20 @@ VIEWS.album = () => {
        </div>
        <p class="bkhint">arrasta pro lado ou toca nas setas</p>
      </div>`);
-  const col = Sync.col('abraQuando'); let list = [], lidas = {}, pages = [], cur = 0, busy = false, ano = null;
+  const col = Sync.col('abraQuando'); let list = [], lidas = {}, pages = [], cur = 0, busy = false, ano = null, momC = [], marcos = [];
+  const emDe = c => c.em || (lidas[c.id] || {}).em || Date.now();
   const fmt = t => new Date(t).toLocaleDateString('pt-BR', {day:'numeric', month:'long', year:'numeric'});
   function build(){
     const todas = [...list.map(c => ({...c, cat:C.abraQuando.find(k => k.id === c.cat) || {titulo:'Abra quando…'}})), ...C.abraQuando.map(cat => ({id:'ex_' + cat.id, cat, texto:cat.texto, exemplo:true}))];
-    const abertasTodas = todas.filter(c => lidas[c.id]).sort((a,b) => (lidas[a.id].em || 0) - (lidas[b.id].em || 0));
-    const anos = [...new Set(abertasTodas.map(c => new Date(lidas[c.id].em || Date.now()).getFullYear()))].sort();
+    const agora = Date.now();
+    const futuro = (C.cartas || []).filter(c => c.abre && c.abre.getTime() <= agora && c.texto && !/^Exemplo/.test(c.texto)).map((c, k) => ({id:'cf_' + k, cat:{titulo:c.titulo}, texto:c.texto, autor:'Mihzinha', em:c.abre.getTime()}));
+    const moms = momC.map(c => { const mk = marcos.find(m => m.id === c.mom), mo = MOMENTOS.find(m => m.id === c.mom); return mk && mo ? {id:'mo_' + c.id, cat:{titulo:mo.t}, texto:c.texto, autor:c.autor, em:new Date(mk.em + 'T12:00:00').getTime()} : null; }).filter(Boolean);
+    const abertasTodas = [...todas.filter(c => lidas[c.id] && !(c.exemplo && /^Exemplo/.test(c.texto || ''))), ...futuro, ...moms].sort((a,b) => emDe(a) - emDe(b));
+    const anos = [...new Set(abertasTodas.map(c => new Date(emDe(c)).getFullYear()))].sort();
     const atual = new Date().getFullYear(); if(!anos.includes(atual)) anos.push(atual);
     if(ano === null || !anos.includes(ano)) ano = anos[anos.length - 1];
     const bar = document.getElementById('bkanos'); if(bar){ bar.innerHTML = anos.map(a => `<button type="button" class="${a === ano ? 'on' : ''}" data-ano="${a}">${a}</button>`).join(''); bar.hidden = anos.length < 2; bar.querySelectorAll('[data-ano]').forEach(b => b.onclick = () => { ano = +b.dataset.ano; cur = 0; build(); render(); }); }
-    const abertas = abertasTodas.filter(c => new Date(lidas[c.id].em || Date.now()).getFullYear() === ano);
+    const abertas = abertasTodas.filter(c => new Date(emDe(c)).getFullYear() === ano);
     pages = [{type:'cover', n:abertas.length, ano}, ...abertas.map((c,i) => ({type:'letter', c, i:i+1, total:abertas.length})), {type:'end', n:abertas.length}];
     if(cur > pages.length - 1) cur = pages.length - 1;
   }
@@ -7862,10 +7928,10 @@ VIEWS.album = () => {
         <div class="bk-ctext"><span class="bk-mono"><img src="${APP_ICON}" alt="D&amp;M"></span><h3>Nossas cartas</h3><p class="bk-sub">${pg.n ? `${pg.n} ${pg.n === 1 ? 'carta aberta' : 'cartas abertas'}` : 'ainda vazio'}</p><p class="bk-year">${pg.ano || new Date().getFullYear()}</p></div>
         <span class="bk-bow">${RIBBON}</span></div>`;
     if(pg.type === 'end') return `<div class="bk-paper bk-endpage"><span class="bk-flower">${DAISY('#f0bac6','#fff')}</span>
-        <p class="bk-endtxt">${pg.n ? 'E ainda tem muitas cartas esperando por você no "Abra quando…"' : 'Quando uma carta do "Abra quando…" for aberta, ela vem morar aqui pra sempre'}</p><p class="sign">Mihzinha</p>${LIPS('kiss')}</div>`;
+        <p class="bk-endtxt">${pg.n ? 'E ainda tem muitas cartas esperando por vocês' : 'Toda carta que for aberta vem morar aqui pra sempre'}</p><p class="sign">Mihzinha</p>${LIPS('kiss')}</div>`;
     const c = pg.c;
     return `<div class="bk-paper">
-        <div class="bk-head"><span class="albdate">${fmt(lidas[c.id].em)}</span></div>
+        <div class="bk-head"><span class="albdate">${fmt(emDe(c))}</span></div>
         <p class="bk-cat">${esc(c.cat.titulo)}</p>
         <div class="bk-lines">${esc(c.texto).split(/\n+/).map(t => `<p>${t}</p>`).join('')}${c.audio ? audioHTML(c.audio, autorDe(c)) : ''}</div>
         <p class="sign">${autorDe(c)}</p>
@@ -7901,7 +7967,8 @@ VIEWS.album = () => {
   addEventListener('keydown', onKey);
   const offA = col.on(l => { list = l; build(); if(!busy) render(); });
   const offS = Sync.on('state', st => { lidas = st.lidas || {}; build(); if(!busy) render(); });
-  const back = document.getElementById('back'), prv = back.onclick; back.onclick = () => { offA(); offS(); prv(); };
+  const offM = Sync.col('momCartas').on(l => { momC = l; build(); if(!busy) render(); }), offK = Sync.col('marcos').on(l => { marcos = l; build(); if(!busy) render(); });
+  const back = document.getElementById('back'), prv = back.onclick; back.onclick = () => { offA(); offS(); offM(); offK(); prv(); };
 };
 
 /* ---------- roleta do date ---------- */
