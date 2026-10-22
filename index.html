@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=119">
-<link rel="apple-touch-icon" href="icon-180.png?v=119">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=119">
+<link rel="manifest" href="manifest.json?v=120">
+<link rel="apple-touch-icon" href="icon-180.png?v=120">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=120">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -2210,7 +2210,7 @@ const C = {
 
   /* mensagem do dia: uma diferente por dia */
   mensagens: [
-    'Hoje começa o nosso cantinho. Vai ter um bilhetinho meu aqui todo dia, só pra você.',
+    'Hoje começa o nosso cantinho. Cada pedacinho daqui eu fiz pensando em você: no seu sorriso, no seu abraço, no jeito que você cuida de mim e em tudo que a gente ainda vai viver junto. A partir de hoje, todo dia vai ter um bilhetinho meu te esperando aqui, pra você nunca esquecer o quanto é amado. Seja muito bem-vindo, esse lugar é seu. Te amo.',
     'Hoje eu tô torcendo por você do jeito mais exagerado possível.',
     'Você é o meu assunto favorito.',
     'Esperar em Deus nunca é perder tempo.',
@@ -2984,7 +2984,7 @@ const C = {
     vespera: 'Amanhã faz um ano que esse app é seu. Foram 364 bilhetes, um pra cada dia. Esse aqui é só pra dizer que eu escolheria você em todos eles de novo.',
     fimDiario: 'Um ano de bilhetes, um ano de perguntas, um ano de nós. Os bilhetes acabaram, mas eu continuo aqui te amando todos os dias.',
     perguntasFim: 'Foram 364 perguntas e um ano inteiro de respostas. Tá tudo guardado aqui embaixo, pra gente reler sempre que quiser.',
-    antesInicio: 'Contagem regressiva: {dias} pro dia 24 de outubro. A partir daí, todo dia vai ter um bilhetinho novo aqui, um pra cada dia do nosso ano.',
+    antesInicio: 'Contagem regressiva: {dias} pro dia 22 de outubro. A partir daí, todo dia vai ter um bilhetinho novo aqui, um pra cada dia do nosso ano.',
     memoriaFim: 'Achou todos os pares! Isso vale um beijo de recompensa. Vem buscar.',
     natal25: 'Hoje é o nosso primeiro Natal juntos. Obrigada por ser o meu melhor presente desse ano e de todos os outros que vierem.\n\nQue Deus abençoe a nossa história. Eu te amo.',
     ultimaAssinatura: 'te amo, Mihzinha', fimAssinatura: 'com todo o meu amor,', fimNome: 'Mihzinha'
@@ -3498,8 +3498,8 @@ function renderXmas(){
 /* ---------- mensagem do dia ---------- */
 function diaDoAno(d = new Date()){ return Math.floor((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - Date.UTC(2026,0,1)) / 86400000); }
 /* 364 bilhetes: um diferente pra cada dia, sem repetir no ano */
-/* a contagem começa em 24/10/2026 (dia do presente): dia 1 = 24/10/2026 … dia 364 = 22/10/2027, dia 365 = véspera, dia 366 em diante = encerrado (horário do celular) */
-const INICIO_JORNADA = Date.UTC(2026, 9, 24);
+/* a contagem começa em 22/10/2026 (dia do presente): dia 1 = 22/10/2026 … dia 364 = 20/10/2027, dia 365 = véspera, dia 366 em diante = encerrado (horário do celular) */
+const INICIO_JORNADA = Date.UTC(2026, 9, 22);
 function diaJornada(){ const m = location.hash.match(/^#dia(\d+)$/); if(m) return +m[1]; const d = agoraMT(); return Math.floor((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - INICIO_JORNADA) / 86400000) + 1; }
 function itemDoDia(lista, mult){ const n = lista.length; if(!n) return ''; const dj = diaJornada(); if(dj >= 1) return lista[(dj - 1) % n]; return lista[((diaDoAno() * mult) % n + n) % n]; }
 function mensagemDoDia(){ const dj = diaJornada(); if(dj < 1){ const n = 1 - dj; return (C.textos.antesInicio || '').replace('{dias}', n === 1 ? '1 dia' : n + ' dias'); } if(dj === 365) return C.textos.vespera; if(dj > 365) return C.textos.fimDiario; return itemDoDia(C.mensagens, 5); }
@@ -3806,7 +3806,7 @@ function festaDeHoje(){
   const h = location.hash, md = mdMT(), ano = agoraMT().getFullYear();
   const forc = {'#fim':'fim', '#natal25':'natal', '#anonovo':'anoNovo', '#namorados':'namorados', '#namoro':'namoro', '#niver':'niver'}[h];
   const nv = typeof niverHoje === 'function' ? niverHoje() : [];
-  const id = forc || (md === '10-24' && ano >= 2027 ? 'fim' : md === '12-25' && ano === 2026 ? 'natal' : nv.length ? 'niver' : md === '01-01' ? 'anoNovo' : md === '04-12' && ano > 2026 ? 'namoro' : md === '06-12' ? 'namorados' : '');
+  const id = forc || (md === '10-22' && ano >= 2027 ? 'fim' : md === '12-25' && ano === 2026 ? 'natal' : nv.length ? 'niver' : md === '01-01' ? 'anoNovo' : md === '04-12' && ano > 2026 ? 'namoro' : md === '06-12' ? 'namorados' : '');
   return id ? {id, ano, nv:nv.length ? nv : ['Di']} : null;
 }
 function firstScreen(){
@@ -3819,7 +3819,7 @@ function renderFesta(f){
   const eu = Sync.quem || 'Di', F = C.festas, T = C.textos;
   let cfg;
   if(f.id === 'natal') cfg = {tema:'natal', eb:'25 de dezembro', titulo:T.natalFestaTitulo || 'Chegou o nosso dia!', sub:T.natalFestaSub || 'o nosso primeiro Natal juntos', texto:T.natal25, btn:'Abrir o nosso Natal', acao:() => renderXmas(), fx:'neve'};
-  else if(f.id === 'fim') cfg = {tema:'namoro', eb:'24 de outubro de 2027', titulo:F.fim.titulo, sub:F.fim.sub, texto:F.fim.texto};
+  else if(f.id === 'fim') cfg = {tema:'namoro', eb:'22 de outubro de 2027', titulo:F.fim.titulo, sub:F.fim.sub, texto:F.fim.texto};
   else if(f.id === 'anoNovo') cfg = {tema:'anonovo', eb:`1º de janeiro de ${f.ano}`, titulo:F.anoNovo.titulo.replace('{ano}', f.ano), sub:F.anoNovo.sub, texto:F.anoNovo.texto, fx:'fogos'};
   else if(f.id === 'namorados') cfg = {tema:'namorados', eb:'12 de junho', titulo:F.namorados.titulo, sub:F.namorados.sub, texto:F.namorados.texto, fx:'coracoes'};
   else if(f.id === 'namoro'){ const n = Math.max(1, f.ano - 2026); cfg = {tema:'namoro', eb:'12 de abril', titulo:F.namoro.titulo.replace('{anos}', `${n} ${n === 1 ? 'ano' : 'anos'}`), sub:F.namoro.sub, texto:F.namoro.texto, fx:'coracoes'}; }
@@ -3970,7 +3970,7 @@ function maybeInstallPrompt(forcar){
 }
 if('serviceWorker' in navigator && /github\.io$/.test(location.hostname)) addEventListener('load', () => navigator.serviceWorker.register('sw.js').then(r => r.update()).catch(() => {}));
 /* sempre a versão mais nova: se o GitHub tem uma versão diferente da aberta, limpa o guardado e recarrega sozinho */
-const VERSAO_APP = 'versão de 21/10 · 17h40';
+const VERSAO_APP = 'versão de 22/10 · 08h50';
 async function confereVersao(){
   if(!/github\.io$/.test(location.hostname) || !navigator.onLine) return;
   try{ const r = await fetch(location.pathname + '?nc=' + Date.now(), {cache:'no-store'}); if(!r.ok) return; const t = await r.text(), m = t.match(/const VERSAO_APP = '([^']+)'/);
@@ -5053,10 +5053,10 @@ const CASA = {
   precoCor: 6, precoParede: 10, precoPiso: 10, bonusInicio: 10, bonusOfensiva: 3
 };
 
-const INICIO_STR = '2026-10-24';
+const INICIO_STR = '2026-10-22';
 const jaComecou = () => diaJornada() >= 1;
 const faltamInicio = () => Math.max(0, 1 - diaJornada());
-/* chocolates de antes do dia 24/10 (testes) não contam */
+/* chocolates de antes do dia 22/10 (testes) não contam */
 const valeChoco = c => location.hash.startsWith('#dia') || !(m => m && m[1] < INICIO_STR)(String(c.id).match(/(\d{4}-\d\d-\d\d)/));
 const chocoInfinito = () => PREVIA;
 function chocoSaldo(chocs, compras){
@@ -5663,7 +5663,7 @@ function sequenciaHTML(chocs, eu, outro){
     html += `<div class="sq-mes"><p>${m.toLocaleDateString('pt-BR', {month:'long', year:'numeric'})}</p><div class="sq-grid">${['D','S','T','Q','Q','S','S'].map(x => `<b>${x}</b>`).join('')}${cells}</div></div>`;
   });
   html += `<div class="sq-leg"><span><i class="sq-d ambos">${icon('heart')}</i>os dois</span><span><i class="sq-d eu"></i>só você</span><span><i class="sq-d ele"></i>só ${outro === 'Di' ? 'o ' + apelido('Di', 5) : 'a ' + apelido('Mihzinha', 5)}</span></div>`;
-  if(!jaComecou()) html = `<p class="sq-aviso">A sequência começa a contar no dia 24 de outubro.</p>` + html;
+  if(!jaComecou()) html = `<p class="sq-aviso">A sequência começa a contar no dia 22 de outubro.</p>` + html;
   return html;
 }
 VIEWS.casinha = () => {
@@ -5712,8 +5712,8 @@ VIEWS.casinha = () => {
     const saldo = chocoSaldo(chocs, compras), of = ofensiva(chocs, eu), ofo = ofensiva(chocs, outro);
     $('cssaldo').textContent = chocoInfinito() ? '∞' : saldo; $('csfogo').textContent = of.seguidos; $('csfogot').textContent = `${of.seguidos === 1 ? 'dia seguido' : 'dias seguidos'} · ${of.total} no total`;
     if(!jaComecou() && !PREVIA){ const n = faltamInicio();
-      $('cshoje').innerHTML = `<span class="cs-espera">${icon('gift')} Os chocolates começam no dia 24 de outubro</span><small>faltam ${n} ${n === 1 ? 'dia' : 'dias'}. Dá pra espiar tudo até lá</small>`;
-      $('csmis').innerHTML = `<div class="ms-head ms-off"><b>Missões do dia</b><small>começam no dia 24/10</small></div>`; }
+      $('cshoje').innerHTML = `<span class="cs-espera">${icon('gift')} Os chocolates começam no dia 22 de outubro</span><small>faltam ${n} ${n === 1 ? 'dia' : 'dias'}. Dá pra espiar tudo até lá</small>`;
+      $('csmis').innerHTML = `<div class="ms-head ms-off"><b>Missões do dia</b><small>começam no dia 22/10</small></div>`; }
     else {
     $('cshoje').innerHTML = (of.hoje ? `<span class="ok">${icon('heart')} o seu de hoje já tá guardado</span>` : `<button type="button" id="cspega">${icon('gift')} Pegar o chocolate de hoje</button>`)
       + `<small>${outro === 'Di' ? 'O ' + apelido('Di', 7) : 'A ' + apelido('Mihzinha', 7)} ${ofo.hoje ? 'também já pegou hoje' : 'ainda não pegou hoje'}${ofo.seguidos ? ` · ${ofo.seguidos} ${ofo.seguidos === 1 ? 'dia seguido' : 'dias seguidos'}` : ''}</small><small class="cs-dica">a cada 7 dias seguidos, +${CASA.bonusOfensiva} chocolates de bônus</small>`;
@@ -6208,14 +6208,14 @@ addEventListener('hashchange', () => { if(/^#ir-/.test(location.hash)) irDoLink(
 function irDoLink(){ const m = location.hash.match(/^#ir-(.+)$/i); if(!m) return; history.replaceState(null, '', location.pathname + location.search); let g = m[1]; try{ g = decodeURIComponent(g); }catch(e){} setTimeout(() => irPara(g), 600); }
 
 
-/* ---------- zerar tudo pra começar no dia 24/10 (só a Mih vê) ---------- */
+/* ---------- zerar tudo pra começar no dia 22/10 (só a Mih vê) ---------- */
 const ZERO_COLS = ['audios','chocolates','compras','abracos','respostas','bilhetes','saudade','diario','roleta','gastos','avisosTeste'];
 const ZERO_GRUPOS = ['casinha','vales','planos','lidas','pensei'];
 function zeroKm(){
   const w = document.createElement('div'); w.className = 'tk-wrap'; w.id = 'zerokm';
   w.innerHTML = `<div class="sheet2 zk"><button class="inst-x" id="zkx" aria-label="Fechar">${icon('plus')}</button>
     <span class="zk-ic">${icon('sparkle')}</span><h3>Começar do zero</h3>
-    <p class="lead">Pra você e o Di começarem juntos no dia 24 de outubro, tudo zero km.</p>
+    <p class="lead">Pra você e o Di começarem juntos no dia 22 de outubro, tudo zero km.</p>
     <div class="zk-cols"><div><b>Apaga</b><ul><li>chocolates, casinha e compras</li><li>missões e dias seguidos</li><li>respostas e bilhetinhos</li><li>saudade, pensei em você e abraços</li><li>diário, roleta e gastos</li><li>cartas e vales marcados como lidos/usados</li><li>prêmios trocados</li></ul></div>
       <div><b>Continua</b><ul><li>fotos e textos que você editou</li><li>cartas que você escreveu pra ele</li><li>prêmios e missões que você criou</li><li>gostos, playlist, planos, datas e lugares</li></ul></div></div>
     <button type="button" id="zkok" class="zk-ok">Zerar tudo</button><p class="nt-msg" id="zkm"></p></div>`;
@@ -6236,7 +6236,7 @@ function zeroKm(){
       ['seenBilhetes','abracosVistos'].forEach(k => store.set(k, 0)); store.set('jogou', {}); store.set('viuTour', false);
       persp = perspAntes;
       b.textContent = 'Prontinho!'; sparkle(b); burst(innerWidth / 2, innerHeight / 2, 50);
-      m.textContent = 'Tudo zerado. No dia 24 de outubro vocês começam juntos ♥';
+      m.textContent = 'Tudo zerado. No dia 22 de outubro vocês começam juntos ♥';
       setTimeout(() => { fecha(); renderHome(0); }, 2200);
     }catch(err){ persp = perspAntes; b.disabled = false; b.textContent = 'Zerar tudo'; m.style.color = '#c8182c'; m.textContent = 'Não deu pra zerar agora. Confere a internet e tenta de novo.'; }
   };
@@ -6292,8 +6292,8 @@ VIEWS.numeros = () => {
 VIEWS.retromes = () => {
   const hj = agoraMT(), mAtual = mesesJuntos(hj);
   const fim = new Date(hj.getFullYear(), hj.getMonth(), 12); if(hj.getDate() < 12) fim.setMonth(fim.getMonth() - 1);
-  const ini = new Date(fim); ini.setMonth(ini.getMonth() - 1); if(ini < C.inicioNamoro) ini.setTime(C.inicioNamoro.getTime()); if(ini < new Date(2026, 9, 24)) ini.setTime(new Date(2026, 9, 24).getTime());
-  if(hj < new Date(2026, 10, 12) && location.hash !== '#dia12'){ shell('todo dia 12', 'Retrospectiva do mês', 'Um resuminho de cada mês, todo dia 12', `<div class="rm-vazio">${icon('calendar')}<p>A primeira chega no dia 12 de novembro, contando tudo desde o dia 24 de outubro ♥</p></div>`); return; }
+  const ini = new Date(fim); ini.setMonth(ini.getMonth() - 1); if(ini < C.inicioNamoro) ini.setTime(C.inicioNamoro.getTime()); if(ini < new Date(2026, 9, 22)) ini.setTime(new Date(2026, 9, 22).getTime());
+  if(hj < new Date(2026, 10, 12) && location.hash !== '#dia12'){ shell('todo dia 12', 'Retrospectiva do mês', 'Um resuminho de cada mês, todo dia 12', `<div class="rm-vazio">${icon('calendar')}<p>A primeira chega no dia 12 de novembro, contando tudo desde o dia 22 de outubro ♥</p></div>`); return; }
   const nMes = mesesJuntos(fim);
   const ds = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`, iS = ds(ini), fS = ds(fim);
   const noMes = x => { const dia = x.dia || (/^\d{4}-\d\d-\d\d/.test(String(x.id)) ? String(x.id).slice(0, 10) : x.criadoEm ? ds(new Date(x.criadoEm)) : ''); return dia >= iS && dia < fS; };
@@ -6448,7 +6448,7 @@ VIEWS.premios = () => {
     poeLista($('pzgan'), gan.length ? gan.map(p => `<div class="pz-card ${p.entregue ? 'ok' : 'esp'}"><span class="pz-ic">${icon(p.entregue ? 'heart' : 'ticket')}</span><div class="pz-tx"><b>${esc(p.t)}</b><small>${p.entregue ? 'já cumprido ♥︎' : `trocado, agora é com ${outro === 'Di' ? 'ele' : 'ela'}`}</small></div></div>`).join('') : `<p class="lead hq-empty">Nada ainda. Junta chocolates e troca!</p>`);
     poeLista($('pzmeus'), meus.length ? meus.map(p => `<div class="pz-card mine ${p.comprado && !p.entregue ? 'esp' : ''}"><span class="pz-ic">${icon('gift')}</span><div class="pz-tx"><b>${esc(p.t)}</b><small>${p.preco} chocolates · ${p.entregue ? 'cumprido ♥︎' : p.comprado ? `${Ele} trocou! Hora de cumprir` : 'esperando a troca'}</small></div>${p.comprado && !p.entregue ? `<button type="button" class="pz-ok" data-ent="${p.id}">Cumpri</button>` : ''}${p.comprado ? '' : `<button class="ib" type="button" data-del="${p.id}" aria-label="Apagar">${icon('trash')}</button>`}</div>`).join('') : '');
     $('pzpra').querySelectorAll('[data-buy]').forEach(b => b.onclick = async () => { const p = list.find(x => x.id === b.dataset.buy); if(!p) return; const sl2 = saldo();
-      if(!jaComecou() && !PREVIA){ csToast('Os chocolates começam no dia 24 de outubro'); return; }
+      if(!jaComecou() && !PREVIA){ csToast('Os chocolates começam no dia 22 de outubro'); return; }
       if(sl2 < p.preco){ csToast(`Faltam ${p.preco - sl2} chocolates pra esse`); b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake'); return; }
       if(!b.dataset.sure){ b.dataset.sure = 1; const o = b.innerHTML; b.textContent = `Trocar ${p.preco}?`; b.classList.add('sure'); setTimeout(() => { if(!b.isConnected) return; delete b.dataset.sure; b.innerHTML = o; b.classList.remove('sure'); }, 2600); return; }
       b.disabled = true; try{ await colP.set('premio_' + p.id, {preco:p.preco, autor:eu}); await col.set(p.id, Object.assign({}, p, {comprado:true, compradoEm:Date.now(), por:eu})); const r = b.getBoundingClientRect(); burst(r.left + r.width / 2, r.top, 50); csToast(`É seu! Agora ${outro === 'Di' ? 'o ' + apelido('Di', 21) : 'a ' + apelido('Mihzinha', 21)} tem que cumprir ♥︎`); }catch(x){ b.disabled = false; } });
@@ -6680,9 +6680,9 @@ VIEWS.cartadata = () => {
 };
 
 /* ---------- retrospectiva ---------- */
-/* a primeira retrospectiva é a de 2027 (o app chega em 24/10/2026), contando desde 24/10/2026 */
+/* a primeira retrospectiva é a de 2027 (o app chega em 22/10/2026), contando desde 22/10/2026 */
 const anoRetro = (d = new Date()) => Math.max(2027, d.getMonth() === 0 ? d.getFullYear() - 1 : d.getFullYear());
-const janelaRetro = ano => [ano === 2027 ? new Date(2026, 9, 24).getTime() : new Date(ano, 0, 1).getTime(), new Date(ano + 1, 0, 1).getTime()];
+const janelaRetro = ano => [ano === 2027 ? new Date(2026, 9, 22).getTime() : new Date(ano, 0, 1).getTime(), new Date(ano + 1, 0, 1).getTime()];
 const retroLiberada = () => location.hash === '#retro' || (d => { const a = anoRetro(d); return d >= new Date(a, 11, 20) && d < new Date(a + 1, 1, 1); })(new Date());
 VIEWS.retro = () => {
   const ano = anoRetro();
@@ -6749,8 +6749,8 @@ function entrarPrevia(quem, dia){
 }
 function viagemHTML(){
   const nv = typeof niverAtual !== 'undefined' ? niverAtual : {}, prox = q => { const b = nv[q]; if(!b) return ''; const y = new Date().getFullYear(); let d = `${y}-${b.slice(5)}`; if(d < hoje()) d = `${y + 1}-${b.slice(5)}`; return d; };
-  const chips = [['2026-10-24','Começo'],['2026-12-25','Natal 2026'],['2027-01-01','Ano Novo'],['2027-01-12','Dia 12'],['2027-04-12','1 ano de namoro'],['2027-06-12','Dia dos Namorados'],[prox('Di'),'Niver do Di'],[prox('Mihzinha'),'Seu niver'],['2027-12-24','Véspera do fim'],['2027-12-25','Natal 2027 (fim)']].filter(c => c[0]);
-  const atual = window.__viagem ? window.__viagem.dia : '2026-10-24', q = window.__viagem ? window.__viagem.quem : 'Mihzinha';
+  const chips = [['2026-10-22','Começo'],['2026-12-25','Natal 2026'],['2027-01-01','Ano Novo'],['2027-01-12','Dia 12'],['2027-04-12','1 ano de namoro'],['2027-06-12','Dia dos Namorados'],[prox('Di'),'Niver do Di'],[prox('Mihzinha'),'Seu niver'],['2027-12-24','Véspera do fim'],['2027-12-25','Natal 2027 (fim)']].filter(c => c[0]);
+  const atual = window.__viagem ? window.__viagem.dia : '2026-10-22', q = window.__viagem ? window.__viagem.quem : 'Mihzinha';
   return `<div class="vg-quem"><span>ver como</span><div class="ed-sw"><button type="button" data-vq="Mihzinha" class="${q === 'Mihzinha' ? 'on' : ''}">Eu</button><button type="button" data-vq="Di" class="${q === 'Di' ? 'on' : ''}">O Di</button></div></div>
     <label class="fz-lab">Ir pro dia<input type="date" id="vgdia" value="${atual}" min="2026-10-01" max="2028-12-31"></label>
     <div class="vg-chips">${chips.map(([d, t]) => `<button type="button" class="ghost" data-vd="${d}">${t}</button>`).join('')}</div>
@@ -6798,11 +6798,11 @@ C.tour = [
 ];
 const ESCRITAS = [
   {grupo:'Do dia a dia'},
-  {k:'mensagens', t:'Bilhetes do dia', d:'um por linha, na ordem dos dias: o 1º aparece em 24/10/2026 e o 364º em 22/10/2027. Nenhum se repete', tipo:'linhas', meta:364},
-  {k:'perguntas', t:'Perguntas do dia', d:'uma por linha, na mesma ordem: a 1ª em 24/10/2026 e a 364ª em 22/10/2027. Nenhuma se repete', tipo:'linhas', meta:364},
-  {k:'textos.antesInicio', t:'Bilhete antes do dia 24/10', d:'aparece até o dia 24 de outubro. {dias} vira "3 dias", "1 dia"…', tipo:'texto', rows:3},
-  {k:'textos.vespera', t:'Bilhete da véspera (23/10/2027)', tipo:'texto', rows:3},
-  {k:'textos.fimDiario', t:'Bilhete depois que acaba (a partir de 24/10/2027)', tipo:'texto', rows:3},
+  {k:'mensagens', t:'Bilhetes do dia', d:'um por linha, na ordem dos dias: o 1º aparece em 22/10/2026 e o 364º em 20/10/2027. Nenhum se repete', tipo:'linhas', meta:364},
+  {k:'perguntas', t:'Perguntas do dia', d:'uma por linha, na mesma ordem: a 1ª em 22/10/2026 e a 364ª em 20/10/2027. Nenhuma se repete', tipo:'linhas', meta:364},
+  {k:'textos.antesInicio', t:'Bilhete antes do dia 22/10', d:'aparece até o dia 22 de outubro. {dias} vira "3 dias", "1 dia"…', tipo:'texto', rows:3},
+  {k:'textos.vespera', t:'Bilhete da véspera (21/10/2027)', tipo:'texto', rows:3},
+  {k:'textos.fimDiario', t:'Bilhete depois que acaba (a partir de 22/10/2027)', tipo:'texto', rows:3},
   {k:'textos.perguntasFim', t:'Pergunta do dia depois que acaba', tipo:'texto', rows:3},
   {k:'mesversarios', t:'Mensagens do dia 12', d:'uma por linha, na ordem dos meses', tipo:'linhas'},
   {k:'mesversarioPadrao', t:'Mensagem do dia 12 depois do primeiro ano', tipo:'texto'},
@@ -6830,11 +6830,11 @@ const ESCRITAS = [
   {k:'textos.natalFestaSub', t:'Embaixo do título da mensagem do dia 25', tipo:'linha'},
   {k:'textos.natal25', t:'Mensagem que abre no dia 25', d:'aparece assim que ele entrar no app no dia de Natal. Linha em branco separa parágrafos', tipo:'texto', rows:6},
   {grupo:'Datas festivas'},
-  {k:'tour', t:'Boas-vindas do primeiro dia', d:'aparece uma vez, na primeira vez que ele entra a partir do dia 24/10. Dá pra ver antes pela viagem no tempo', tipo:'objs', fixo:1, campos:[['t','Título'],['s','Texto']]},
+  {k:'tour', t:'Boas-vindas do primeiro dia', d:'aparece uma vez, na primeira vez que ele entra a partir do dia 22/10. Dá pra ver antes pela viagem no tempo', tipo:'objs', fixo:1, campos:[['t','Título'],['s','Texto']]},
   {k:'textos.dedicatoria', t:'Recadinho da primeira vez', d:'aparece uma vez só, na primeira vez que o Di entra no app', tipo:'texto', rows:3},
-  {k:'festas.fim.titulo', t:'Encerramento (24/10/2027): título', tipo:'linha'},
+  {k:'festas.fim.titulo', t:'Encerramento (22/10/2027): título', tipo:'linha'},
   {k:'festas.fim.sub', t:'Encerramento: embaixo do título', tipo:'linha'},
-  {k:'festas.fim.texto', t:'Encerramento: cartinha', d:'abre em 24/10/2027, quando o app completa um ano', tipo:'texto', rows:6},
+  {k:'festas.fim.texto', t:'Encerramento: cartinha', d:'abre em 22/10/2027, quando o app completa um ano', tipo:'texto', rows:6},
   {k:'festas.anoNovo.titulo', t:'Ano Novo: título', d:'{ano} vira o ano novo, tipo 2027', tipo:'linha'},
   {k:'festas.anoNovo.sub', t:'Ano Novo: embaixo do título', tipo:'linha'},
   {k:'festas.anoNovo.texto', t:'Ano Novo: cartinha', tipo:'texto', rows:5},
@@ -7557,7 +7557,7 @@ VIEWS.pergunta = () => {
   const dj = diaJornada(), ANTESQ = dj < 1, FIMQ = dj >= 365 || ANTESQ, pq = FIMQ ? '' : itemDoDia(C.perguntas, 3);
   const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'Mihzinha' : 'Di';
   shell('hoje','Pergunta do dia','Responde, e aí você vê o que o outro respondeu',
-    `<div class="qcard"><p class="eyebrow">${new Date().toLocaleDateString('pt-BR',{day:'numeric',month:'long'})}${dj >= 1 && dj <= 364 ? ` · pergunta ${dj} de 364` : ''}</p>${ANTESQ ? `<h3>As perguntas começam dia 24 de outubro</h3><p class="lead">A primeira chega no dia 24 de outubro. Faltam ${1 - dj} ${1 - dj === 1 ? 'dia' : 'dias'}.</p>` : FIMQ ? `<h3>Fim das perguntas</h3><p class="lead">${esc(C.textos.perguntasFim)}</p>` : `<h3>${esc(pq)}</h3>`}
+    `<div class="qcard"><p class="eyebrow">${new Date().toLocaleDateString('pt-BR',{day:'numeric',month:'long'})}${dj >= 1 && dj <= 364 ? ` · pergunta ${dj} de 364` : ''}</p>${ANTESQ ? `<h3>As perguntas começam dia 22 de outubro</h3><p class="lead">A primeira chega no dia 22 de outubro. Faltam ${1 - dj} ${1 - dj === 1 ? 'dia' : 'dias'}.</p>` : FIMQ ? `<h3>Fim das perguntas</h3><p class="lead">${esc(C.textos.perguntasFim)}</p>` : `<h3>${esc(pq)}</h3>`}
       <form class="write" id="qf"><textarea id="qta" rows="4" placeholder="Sua resposta…" aria-label="Sua resposta"></textarea><button type="submit">Responder</button><p class="werr" id="qerr" role="status"></p></form>
       <div id="qans"></div></div>
      ${filtroHTML('qflt')}<section class="hqwrap" id="qold"></section>`);
