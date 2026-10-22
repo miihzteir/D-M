@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=125">
-<link rel="apple-touch-icon" href="icon-180.png?v=125">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=125">
+<link rel="manifest" href="manifest.json?v=128">
+<link rel="apple-touch-icon" href="icon-180.png?v=128">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=128">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -3983,7 +3983,7 @@ function maybeInstallPrompt(forcar){
 }
 if('serviceWorker' in navigator && /github\.io$/.test(location.hostname)) addEventListener('load', () => navigator.serviceWorker.register('sw.js').then(r => r.update()).catch(() => {}));
 /* sempre a versão mais nova: se o GitHub tem uma versão diferente da aberta, limpa o guardado e recarrega sozinho */
-const VERSAO_APP = 'versão de 22/10 · 10h55';
+const VERSAO_APP = 'versão de 22/10 · 11h20';
 async function confereVersao(){
   if(!/github\.io$/.test(location.hostname) || !navigator.onLine) return;
   try{ const r = await fetch(location.pathname + '?nc=' + Date.now(), {cache:'no-store'}); if(!r.ok) return; const t = await r.text(), m = t.match(/const VERSAO_APP = '([^']+)'/);
@@ -5103,7 +5103,7 @@ function chocoDoDia(){
   let list = [];
   const off = col.on(l => { list = l; });
   setTimeout(() => { off();
-    if(list.some(c => c.id === `${hoje()}_${eu}`) || !document.querySelector('.home') || document.querySelector('.tk-wrap')) return;
+    if(list.some(c => c.id === `${hoje()}_${eu}`) || !document.querySelector('.home') || document.querySelector('.tk-wrap') || store.get('chFechou', '') === hoje()) return;
     const of = ofensiva(list, eu);
     document.getElementById('chtoast')?.remove();
     const t = document.createElement('div'); t.id = 'chtoast'; t.className = 'chtoast';
@@ -5111,7 +5111,7 @@ function chocoDoDia(){
     t.insertAdjacentHTML('beforeend', `<button type="button" class="ch-x" aria-label="Fechar">${icon('plus')}</button>`);
     document.body.append(t); requestAnimationFrame(() => t.classList.add('in'));
     const fecha = () => { t.classList.remove('in'); setTimeout(() => t.remove(), 450); };
-    t.querySelector('.ch-x').onclick = fecha; const auto = setTimeout(fecha, 9000);
+    t.querySelector('.ch-x').onclick = () => { store.set('chFechou', hoje()); fecha(); }; const auto = setTimeout(fecha, 9000);
     document.getElementById('chget').onclick = async e => { clearTimeout(auto);
       const b = e.currentTarget, r = b.getBoundingClientRect(); burst(r.left + r.width/2, r.top, 24); b.disabled = true;
       let n = of.seguidos + 1; try{ n = (await pegarChocolate(col, list, eu)).seguidos; }catch(x){}
@@ -6027,7 +6027,7 @@ function regrasAviso(eu){
     cartasData: c => c.de === outro && c.para === eu && {titulo:`${Ele} lacrou uma cartinha pra você`, corpo:`Ela abre em ${new Date(c.abreEm + 'T12:00:00').toLocaleDateString('pt-BR')}`, go:'cartadata@cartasData:' + c.id, ic:'envrelogio'},
     abracos: a => a.de === outro && a.para === eu && {titulo:`${Ele} te deu um abraço`, corpo:'Lá na nossa casinha ♥', go:'casinha', tag:'abraco', ic:'hug'},
     missoesEsp: m => m.autor === outro && m.para === eu && !m.feita && {titulo:`${Ele} criou uma missão especial pra você`, corpo:corta(m.t), go:'', ic:'star'},
-    saudade: x => x.quem === outro && {titulo:`${Ele} tá com saudade de você`, corpo:`${x.n || 1}x hoje no termômetro`, go:'saudade', tag:'saudade', k:'n' + (x.n || 1), ic:'termo'},
+    saudade: x => x.quem === outro && {titulo:`${Ele} tá com saudade de você`, corpo:`${x.n || 1}x hoje no termômetro`, go:'saudade', tag:'saudade', ic:'termo'},
     gostos: g => g.autor === outro && g.sobre === eu && {titulo:`${Ele} colocou uma coisa que você ama`, corpo:corta(g.legenda), go:'gostos@gostos:' + g.id, ic:'heart'},
     musicas: m => m.autor === outro && {titulo:`${Ele} colocou uma música na nossa playlist`, corpo:corta(m.titulo || m.nome || ''), go:'playlist@musicas:' + m.id, ic:'music'},
     diario: d => d.autor === outro && {titulo:`${Ele} escreveu no diário de hoje`, corpo:'Vem ler e escrever o seu também', go:'diario@diario:' + d.dia, ic:'livro'},
@@ -6139,7 +6139,7 @@ function caixaAvisos(el){
   const desde = Date.now() - 14 * 864e5; let raf = 0, aberto = false;
   const draw = () => { raf = 0; if(!el.isConnected){ offs.forEach(f => f && f()); return; }
     const l = lidos(), its = [];
-    Object.entries(R).forEach(([nome, f]) => (d[nome] || []).forEach(it => { const n = f(it); if(!n) return; const k = nome + ':' + it.id + ':' + (n.k || ''); if(l.includes(k)) return; if(!n.forte && !(it.criadoEm > desde)) return; its.push(Object.assign({k, em:it.criadoEm || 0}, n)); }));
+    Object.entries(R).forEach(([nome, f]) => (d[nome] || []).forEach(it => { const n = f(it); if(!n) return; const k = nome + ':' + it.id + ':' + (n.k || ''); if(l.includes(k)) return; if(!n.forte && !(it.criadoEm > desde)) return; its.push(Object.assign({}, n, {k, em:it.criadoEm || 0})); }));
     its.sort((a, b) => (b.forte || 0) - (a.forte || 0) || b.em - a.em);
     if(!its.length){ el.innerHTML = ''; return; }
     const mostra = aberto ? its : its.slice(0, 3);
@@ -7067,7 +7067,11 @@ VIEWS.gostos = () => {
     $('gsgrid').querySelectorAll('[data-del]').forEach(d => d.onclick = () => { if(d.dataset.sure) col.remove(d.dataset.del); else { d.dataset.sure = 1; d.textContent = 'toca de novo'; } });
     $('gsgrid').querySelectorAll('[data-ed]').forEach(d => d.onclick = () => { const x = list.find(y => y.id === d.dataset.ed); if(!x) return; editando = x; foto = x.img || ''; formAberto = true; drawForm(); $('gscat').value = x.cat; if($('gscat').value !== x.cat){ $('gscat').insertAdjacentHTML('beforeend', `<option value="${x.cat}">${esc(nomeCat(x.cat))}</option>`); $('gscat').value = x.cat; } $('gsleg').value = x.legenda || ''; $('gssave').textContent = 'Salvar alterações'; $('gsform').scrollIntoView({behavior:'smooth', block:'start'}); });
   };
-  const drawForm = () => { $('gsform').innerHTML = form(); const f = $('gsf'); if(!f) return; $('gsdet').addEventListener('toggle', () => { formAberto = $('gsdet').open; });
+  /* só quem escreve pro outro vê o "adicionar": na aba de si mesmo aparece só o aviso */
+  const ajustaAdd = () => { const g = $('gsform'); if(!g) return; const meu = aba === outro, tg = g._tog || document.querySelector('.view .add-tog'), fab = document.getElementById('addfab');
+    if(tg) tg.style.display = meu ? '' : 'none'; if(fab) fab.style.display = meu ? '' : 'none';
+    if(!meu) g.classList.remove('recolhido'); else if(tg && !tg.classList.contains('aberto')) g.classList.add('recolhido'); };
+  const drawForm = () => { $('gsform').innerHTML = form(); setTimeout(ajustaAdd, 0); const f = $('gsf'); if(!f) return; $('gsdet').addEventListener('toggle', () => { formAberto = $('gsdet').open; });
     $('gspick').onclick = () => { $('gsfile').value = ''; $('gsfile').click(); };
     f.onsubmit = async e => { e.preventDefault(); const leg = $('gsleg').value.trim(), b = $('gssave');
       if(!foto && !leg){ $('gserr').textContent = 'Coloca uma foto ou escreve a legenda.'; return; }
