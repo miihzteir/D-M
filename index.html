@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=133">
-<link rel="apple-touch-icon" href="icon-180.png?v=133">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=133">
+<link rel="manifest" href="manifest.json?v=134">
+<link rel="apple-touch-icon" href="icon-180.png?v=134">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=134">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -4002,7 +4002,7 @@ if('serviceWorker' in navigator && /github\.io$/.test(location.hostname)) addEve
 /* sempre a versão mais nova: se o GitHub tem uma versão diferente da aberta, limpa o guardado e recarrega sozinho */
 let edAberto = false;
 document.addEventListener('click', e => { if(edAberto && !e.target.closest('.ed-modo')){ edAberto = false; document.querySelector('.ed-modo')?.classList.remove('ab'); } });
-const VERSAO_APP = 'versão de 22/10 · 12h50';
+const VERSAO_APP = 'versão de 22/10 · 14h05';
 async function confereVersao(){
   if(!/github\.io$/.test(location.hostname) || !navigator.onLine) return;
   try{ const r = await fetch(location.pathname + '?nc=' + Date.now(), {cache:'no-store'}); if(!r.ok) return; const t = await r.text(), m = t.match(/const VERSAO_APP = '([^']+)'/);
@@ -6171,6 +6171,9 @@ function buscaBox(el, escopo, ph, soConteudo){
   /* clicou fora: apaga a pesquisa */
   inp.addEventListener('blur', () => setTimeout(() => { if(document.activeElement !== inp){ inp.value = ''; draw(); } }, 150));
 }
+/* só vira aviso de novo quando a mudança importa (prêmio trocado, pedido aceito, saudade); reação ou edição não reavisa */
+const AVISA_MUDANCA = ['premios', 'pedidos', 'saudade'];
+const quandoAviso = (nome, it) => AVISA_MUDANCA.includes(nome) ? Math.max(it.criadoEm || 0, it.atualizadoEm || 0) : (it.criadoEm || 0);
 /* avisos na tela inicial, com X pra dispensar */
 function caixaAvisos(el){
   if(!el || PREVIA) return;
@@ -6180,7 +6183,7 @@ function caixaAvisos(el){
   const desde = Date.now() - 14 * 864e5; let raf = 0, aberto = false;
   const draw = () => { raf = 0; if(!el.isConnected){ offs.forEach(f => f && f()); return; }
     const l = lidos(), its = [];
-    Object.entries(R).forEach(([nome, f]) => (d[nome] || []).forEach(it => { const n = f(it); if(!n) return; const k = nome + ':' + it.id + ':' + (n.k || ''); if(l.includes(k)) return; const quando = Math.max(it.criadoEm || 0, it.atualizadoEm || 0); if(!n.forte && !(quando > desde)) return; its.push(Object.assign({}, n, {k, em:quando})); }));
+    Object.entries(R).forEach(([nome, f]) => (d[nome] || []).forEach(it => { const n = f(it); if(!n) return; const k = nome + ':' + it.id + ':' + (n.k || ''); if(l.includes(k)) return; const quando = quandoAviso(nome, it); if(!n.forte && !(quando > desde)) return; its.push(Object.assign({}, n, {k, em:quando})); }));
     its.sort((a, b) => (b.forte || 0) - (a.forte || 0) || b.em - a.em);
     if(!its.length){ el.innerHTML = ''; return; }
     const mostra = aberto ? its : its.slice(0, 3);
@@ -6201,11 +6204,11 @@ let vigiando = false;
 function vigiar(){
   if(vigiando || PREVIA || !Sync.quemReal) return; vigiando = true;
   const eu = Sync.quemReal, outro = eu === 'Di' ? 'Mihzinha' : 'Di', Ele = outro === 'Di' ? 'O ' + apelido('Di', 15) : 'A ' + apelido('Mihzinha', 15), ele = outro === 'Di' ? 'ele' : 'ela';
-  const t0 = Date.now() - 3000, vistos = new Set(), novo = (k, it) => { if(vistos.has(k) || !(Math.max(it.criadoEm || 0, it.atualizadoEm || 0) > t0)) return false; vistos.add(k); return true; };
+  const t0 = Date.now() - 3000, vistos = new Set(), novo = (k, it, nome) => { if(vistos.has(k) || !(quandoAviso(nome, it) > t0)) return false; vistos.add(k); return true; };
   const ok = () => jaComecou();
   const corta = (t, n = 90) => !t ? '' : t.length > n ? t.slice(0, n - 1) + '…' : t;
   const regras = regrasAviso(eu);
-  Object.entries(regras).forEach(([nome, f]) => Sync.col(nome).on(l => { if(!ok()) return; l.forEach(it => { const n = f(it); if(n && novo(nome + it.id + (n.k || ''), it)) avisar(n); }); }));
+  Object.entries(regras).forEach(([nome, f]) => Sync.col(nome).on(l => { if(!ok()) return; l.forEach(it => { const n = f(it); if(n && novo(nome + it.id + (n.k || ''), it, nome)) avisar(n); }); }));
   let pAntes = null;
   Sync.on('state', st => { const v = ((st.pensei || {})[hoje()] || {})[outro] || 0; if(pAntes !== null && v > pAntes && ok()) avisar({titulo:`${Ele} pensou em você ♥`, corpo:`${v}x hoje`, tag:'pensei', go:''}); pAntes = v; });
   presenca(); ligaPresenca(); renovaPush();
