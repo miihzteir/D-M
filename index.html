@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=122">
-<link rel="apple-touch-icon" href="icon-180.png?v=122">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=122">
+<link rel="manifest" href="manifest.json?v=123">
+<link rel="apple-touch-icon" href="icon-180.png?v=123">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=123">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -3514,7 +3514,7 @@ function renderDaily(){
   app.innerHTML = `
     <div class="daily page">
       <div class="dlogo dlogo-pic st" style="--i:0"><img src="${APP_ICON}" alt="D&amp;M"></div>
-      <p class="eyebrow st" style="--i:1">${data}</p>${(d => d >= 1 && d <= 364 ? `<p class="dcount st" style="--i:1">bilhete ${d} de 364</p>` : '')(diaJornada())}
+      <p class="eyebrow st" style="--i:1">${data}</p>
       <h1 class="st" style="--i:2">${saud},<em>${nome}</em></h1>
       <blockquote class="dquote st" style="--i:4">${esc(mensagemDoDia())}</blockquote>
       <span class="st" style="--i:5;display:block;width:70px;margin:-6px auto 0">${LIPS()}</span>
@@ -3778,7 +3778,7 @@ function renderHome(y = 0){
   const offB = Sync.col('bilhetes').on(list => {
     const el = document.getElementById('badge-bilhetes'); if(!el){ setTimeout(() => offB && offB()); return; }
     const seen = store.get('seenBilhetes', 0), n = list.filter(b => b.autor !== Sync.quem && b.criadoEm > seen).length;
-    el.hidden = !n; el.textContent = 'novo';
+    el.hidden = !n; el.textContent = n;
   });
   const offQ = Sync.col('respostas').on(list => {
     const el = document.getElementById('badge-pergunta'); if(!el){ setTimeout(() => offQ && offQ()); return; }
@@ -3971,7 +3971,7 @@ function maybeInstallPrompt(forcar){
 }
 if('serviceWorker' in navigator && /github\.io$/.test(location.hostname)) addEventListener('load', () => navigator.serviceWorker.register('sw.js').then(r => r.update()).catch(() => {}));
 /* sempre a versão mais nova: se o GitHub tem uma versão diferente da aberta, limpa o guardado e recarrega sozinho */
-const VERSAO_APP = 'versão de 22/10 · 10h05';
+const VERSAO_APP = 'versão de 22/10 · 10h10';
 async function confereVersao(){
   if(!/github\.io$/.test(location.hostname) || !navigator.onLine) return;
   try{ const r = await fetch(location.pathname + '?nc=' + Date.now(), {cache:'no-store'}); if(!r.ok) return; const t = await r.text(), m = t.match(/const VERSAO_APP = '([^']+)'/);
