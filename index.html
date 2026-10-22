@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=128">
-<link rel="apple-touch-icon" href="icon-180.png?v=128">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=128">
+<link rel="manifest" href="manifest.json?v=131">
+<link rel="apple-touch-icon" href="icon-180.png?v=131">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=131">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -1841,6 +1841,15 @@ html body .mo-head{display:flex;align-items:center;gap:12px;width:100%;min-heigh
 .mo-body{display:flex;flex-direction:column;gap:10px;padding:0 14px 14px}.mo-carta{position:relative;margin:0}.mo-carta .del{position:absolute;top:8px;right:8px}.mo-quando{font-size:12px;color:var(--muted);text-align:right;margin:4px 0 0}
 .mo-lacre{display:flex;gap:10px;align-items:flex-start;background:#fbf6ee;border-radius:14px;padding:12px;font-size:13.5px;color:#6a5a5a}.mo-lacre svg{width:18px;height:18px;flex:none;color:#9b1630;margin-top:2px}
 .mo-vazio{margin:0;font-size:13.5px;color:var(--muted);text-align:center}html body .mo-marca{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:#fff!important;color:#9a6a12!important;border:1.5px dashed #e7c27a!important;box-shadow:none!important}.mo-marca svg{width:16px;height:16px}.mo-desm{align-self:center;font-size:12px}
+.onl{margin:4px auto 0;display:flex;align-items:center;justify-content:center;gap:6px;font-size:12.5px;font-weight:600;color:var(--muted);min-height:0}.onl:empty{display:none}
+.onl i{width:8px;height:8px;border-radius:50%;background:#c9b8b4;flex:none}.onl.on{color:#2f7a3c}.onl.on i{background:#34a853;box-shadow:0 0 0 0 rgba(52,168,83,.5);animation:onlpulse 1.8s infinite}
+@keyframes onlpulse{0%{box-shadow:0 0 0 0 rgba(52,168,83,.5)}70%{box-shadow:0 0 0 7px rgba(52,168,83,0)}100%{box-shadow:0 0 0 0 rgba(52,168,83,0)}}
+.cmt{white-space:normal}.cmt .cmt-t{margin:0;white-space:pre-line}.cmt-rs{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin-top:3px}
+.cmt-rc{display:inline-grid;place-items:center;min-width:24px;height:22px;padding:0 5px;border-radius:99px;background:#fff;border:1px solid #f0dde0;font-size:13px;line-height:1}.cmt-rc.meu{border-color:#e7a9b8;background:#fbeef0}
+html body .cmt-r{width:auto!important;min-height:0!important;height:22px;padding:0 7px!important;margin:0;border-radius:99px;background:transparent!important;border:1px dashed #e2c9cd!important;box-shadow:none!important;color:#b9a3a8!important;font-size:11.5px;font-weight:700}html body .cmt-r:empty{border-style:solid!important;padding:0 6px!important}html body .cmt-r:empty::before{content:'trocar';font-size:10.5px}
+.cmt-pick{display:flex;gap:4px;margin-top:5px;background:#fff;border-radius:99px;padding:4px 6px;box-shadow:0 8px 18px -10px rgba(74,18,36,.45);width:max-content;max-width:100%}
+html body .cmt-e{width:34px!important;height:34px!important;min-height:0!important;padding:0!important;margin:0;border-radius:50%;background:transparent!important;border:0!important;box-shadow:none!important;font-size:20px;line-height:1;transition:transform .15s}html body .cmt-e:active{transform:scale(1.3)}html body .cmt-e.on{background:#fbeef0!important}
+.cs-prog:empty{display:none}
 .dm-ext{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .alvo-pisca{animation:alvopisca 1.1s ease-in-out 2;border-radius:14px}
 /* busca universal */
@@ -3092,7 +3101,7 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':
 /* prévia: a Mihzinha vê o app do zero, como o Di, sem mexer em nada de verdade */
 
 /* apelidos: varia o nome pra não ficar repetitivo (cada lugar mantém o mesmo no dia) */
-const APELIDOS = {Mihzinha:['Mihzinha', 'Mih', 'Milena'], Di:['Di', 'Diogo']};
+const APELIDOS = {Mihzinha:['Mihzinha', 'Mih'], Di:['Di']};
 function apelido(q, k = 0){ const l = APELIDOS[q] || [q]; const d = new Date(); const n = d.getFullYear() * 400 + d.getMonth() * 32 + d.getDate(); return l[((n * 7 + k * 13) % l.length + l.length) % l.length]; }
 try{ document.documentElement.lang = 'pt-BR'; }catch(e){}
 const PREVIA = /^#previa/.test(location.hash);
@@ -3163,15 +3172,15 @@ const Sync = (() => {
       if(PREVIA){ if(!c.pv && PV && PV.cols){ c.pv = 1; if(localStorage.getItem(PFX + 'col_' + name) == null && PV.cols[name]){ c.items = PV.cols[name]; emit(); } } return; }
       if(!online() || c.unsub || !c.L.length) return;
       c.unsub = fdb.collection(name).onSnapshot(snap => {
-        c.items = snap.docs.map(d => ({id:d.id, ...d.data(), criadoEm: d.data().criadoEm?.toMillis?.() ?? Date.now()})).sort((a,b) => a.criadoEm - b.criadoEm); emit();
+        c.items = snap.docs.map(d => { const x = d.data(); return {id:d.id, ...x, criadoEm: x.criadoEm?.toMillis?.() ?? Date.now(), atualizadoEm: x.atualizadoEm?.toMillis?.() ?? (x.criadoEm?.toMillis?.() ?? Date.now())}; }).sort((a,b) => a.criadoEm - b.criadoEm); emit();
       }, () => {});
     };
     c.api = {
       on(f){ c.L.push(f); f(c.items); ready.then(c.attach); return () => { c.L = c.L.filter(x => x !== f); }; },
       async add(o){ await ready; if(window.bloqueiaPersp && !['conteudo','fotosMem'].includes(name) && bloqueiaPersp()) throw new Error('persp'); if(online()){ o = semUndef(o); let r; try{ r = await fdb.collection(name).add({...o, uid:user.uid, criadoEm:ts()}); }catch(e){ erroSalvar(e); throw e; } try{ window.pushEvento && pushEvento(name, Object.assign({}, o, {id:r.id}), null); }catch(e){} return r; }
         c.items = [...c.items, {...o, id:'l' + Date.now() + Math.random().toString(36).slice(2,6), criadoEm:Date.now()}]; saveLocal(); },
-      async set(id, o){ await ready; if(window.bloqueiaPersp && !['conteudo','fotosMem'].includes(name) && bloqueiaPersp()) throw new Error('persp'); if(online()){ const antes = c.items.find(x => x.id === id) || null; const troca = name === 'conteudo' && /^(telas|posicoes|tx_|cartas$|textos$)/.test(id); o = semUndef(o); let r; try{ r = await fdb.collection(name).doc(id).set({...o, uid:user.uid, criadoEm:ts()}, {merge:!troca}); }catch(e){ erroSalvar(e); throw e; } try{ window.pushEvento && pushEvento(name, Object.assign({}, antes || {}, o, {id}), antes); }catch(e){} return r; }
-        c.items = [...c.items.filter(x => x.id !== id), {...o, id, criadoEm:Date.now()}]; saveLocal(); },
+      async set(id, o){ await ready; if(window.bloqueiaPersp && !['conteudo','fotosMem'].includes(name) && bloqueiaPersp()) throw new Error('persp'); if(online()){ const antes = c.items.find(x => x.id === id) || null; const troca = name === 'conteudo' && /^(telas|posicoes|tx_|cartas$|textos$)/.test(id); o = semUndef(o); let r; try{ const o2 = Object.assign({}, o); delete o2.atualizadoEm; r = await fdb.collection(name).doc(id).set({...o2, uid:user.uid, criadoEm:antes && antes.criadoEm ? firebase.firestore.Timestamp.fromMillis(antes.criadoEm) : ts(), atualizadoEm:ts()}, {merge:!troca}); }catch(e){ erroSalvar(e); throw e; } try{ window.pushEvento && pushEvento(name, Object.assign({}, antes || {}, o, {id}), antes); }catch(e){} return r; }
+        c.items = [...c.items.filter(x => x.id !== id), {...o, id, criadoEm:(c.items.find(x => x.id === id) || {}).criadoEm || Date.now(), atualizadoEm:Date.now()}]; saveLocal(); },
       async remove(id){ await ready; if(window.bloqueiaPersp && !['conteudo','fotosMem'].includes(name) && bloqueiaPersp()) throw new Error('persp'); if(online()) return fdb.collection(name).doc(id).delete();
         c.items = c.items.filter(x => x.id !== id); saveLocal(); }
     };
@@ -3670,7 +3679,7 @@ function renderHome(y = 0){
   <div class="home page">
     <section class="band b-sage hero ${modoEd() ? 'ed-on' : ''}"><span class="deco d1">${RHEART()}</span><span class="deco d2">${RHEART()}</span><span class="deco d3">${RHEART()}</span>
       ${Sync.quemReal === 'Mihzinha' ? `<div class="ed-modo"><div class="ed-sw"><button type="button" data-modo="ver" class="${modoEd() ? '' : 'on'}">Ver</button><button type="button" data-modo="editar" class="${modoEd() ? 'on' : ''}">Editar</button></div>${modoEd() ? `<div class="ed-btrow"><div class="ed-sw ed-persp" title="editar para"><button type="button" data-persp="Di" class="${perspDi() ? 'on' : ''}">p/ Di</button><button type="button" data-persp="Mihzinha" class="${perspDi() ? '' : 'on'}">p/ Mih</button></div><button type="button" class="ed-abrir" data-go="editar">${icon('pencil')} editor</button><button type="button" class="ed-abrir" id="edviajar">${icon('calendar')} viajar</button><button type="button" class="ed-abrir" id="edentrada">${icon('heart')} entrada</button><button type="button" class="ed-abrir ed-zero" id="edzero">${icon('sparkle')} zerar</button></div>` : `<button type="button" class="ed-abrir" id="edprev2">${icon('play')} ver do começo</button>`}</div>` : ''}
-      <p class="hhello">${saud}, <b>${eu}</b></p>
+      <p class="hhello">${saud}, <b>${eu}</b></p><p class="onl" id="onl"></p>
       <h1 class="names" aria-label="Diogo e Milena"><span class="n1">Diogo</span><button class="n2" id="logo" aria-label="coração">${RHEART()}</button><span class="n3">Milena</span></h1>
       <p class="hdate">${TE('hdate', 'desde 12 de abril de 2026', 'Data embaixo dos nomes')}</p>
       <div class="atalhos"><button type="button" data-go="casinha"><span style="--bg:${corDe('casinha')[0]};--fg:${corDe('casinha')[1]}">${icon('house')}</span>${TE('pt_casinha', 'Nossa casinha', 'Nome no botão')}</button><button type="button" data-go="financas"><span style="--bg:${corDe('financas')[0]};--fg:${corDe('financas')[1]}">${icon('wallet')}</span>${TE('pt_financas', 'Nossas finanças', 'Nome no botão')}</button></div>
@@ -3744,7 +3753,7 @@ function renderHome(y = 0){
   document.getElementById('tabbar')?.remove();
   clearInterval(timer); tick(); timer = setInterval(tick, 1000);
   missoesBox(document.getElementById('mdiabox'));  caixaAvisos(document.getElementById('avbox')); buscaBox(document.getElementById('buscabox')); statusSync(); minhaFoto(); convitePush(document.getElementById('ncvbox')); vigiar(); irDoLink(); setTimeout(tourInicio, 1800);
-  setTimeout(chocoDoDia, 1200); setTimeout(avisoAbraco, 400); setTimeout(dedicatoria, 900); setTimeout(avisoRecado, 2600);
+  pintaOnline(); setTimeout(chocoDoDia, 1200); setTimeout(avisoAbraco, 400); setTimeout(dedicatoria, 900); setTimeout(avisoRecado, 2600);
   document.getElementById('edprev2')?.addEventListener('click', () => entrarPrevia());
   document.getElementById('edviajar')?.addEventListener('click', abrirViagem);
   document.getElementById('edentrada')?.addEventListener('click', abrirEntrada);
@@ -3983,7 +3992,7 @@ function maybeInstallPrompt(forcar){
 }
 if('serviceWorker' in navigator && /github\.io$/.test(location.hostname)) addEventListener('load', () => navigator.serviceWorker.register('sw.js').then(r => r.update()).catch(() => {}));
 /* sempre a versão mais nova: se o GitHub tem uma versão diferente da aberta, limpa o guardado e recarrega sozinho */
-const VERSAO_APP = 'versão de 22/10 · 11h20';
+const VERSAO_APP = 'versão de 22/10 · 12h15';
 async function confereVersao(){
   if(!/github\.io$/.test(location.hostname) || !navigator.onLine) return;
   try{ const r = await fetch(location.pathname + '?nc=' + Date.now(), {cache:'no-store'}); if(!r.ok) return; const t = await r.text(), m = t.match(/const VERSAO_APP = '([^']+)'/);
@@ -4066,7 +4075,7 @@ addEventListener('popstate', () => {
   const antes = nivelNav; nivelNav = nivelHist();
   if(nivelNav > antes && location.hash.startsWith('#/')){ document.querySelectorAll('.tk-wrap:not(#inst)').forEach(x => x.remove()); abreLink(location.hash); return; }
   const modal = document.querySelector('.cr-wrap,#edtx,#mesp,#zerokm,#tour,.tk-wrap:not(#inst)');
-  if(modal && !modal.classList.contains('pin-wrap')){ const x = modal.querySelector('#crcan,.inst-x,#tourx,.tk-close,#tkclose'); x ? x.click() : modal.remove(); if(document.getElementById('back')) entradaHistorico(); return; }
+  if(modal && !modal.classList.contains('pin-wrap')){ if(modal.dataset.hist){ modal.dataset.hist = ''; modal.remove(); return; } const x = modal.querySelector('#crcan,.inst-x,#tourx,.tk-close,#tkclose'); x ? x.click() : modal.remove(); if(document.getElementById('back')) entradaHistorico(); return; }
   const xg = document.getElementById('xgo'); if(xg){ porVoltar = true; xg.click(); return; }
   const b = document.getElementById('back'); if(b) b.click();
 });
@@ -4310,11 +4319,13 @@ function poeLista(el, html){
 const quemCls = q => q === 'Di' ? 'nm-di' : q === 'Mihzinha' ? 'nm-mi' : '';
 const quemTag = q => `<b class="nm ${quemCls(q)}">${esc(q || '')}</b>`;
 /* comentários: os dois comentam no que o outro escreveu */
-let CMTS = [], cmtAberto = new Set(), cmtLigado = false;
+let CMTS = [], cmtAberto = new Set(), cmtLigado = false, cmtReage = '';
+const REACOES = ['❤️','😂','😢','😠','😮'];
 function cmtConteudo(alvo){
-  const eu = Sync.quem || 'Di', nm = q => q === 'Di' ? apelido('Di', 41) : q === 'Mihzinha' ? apelido('Mihzinha', 41) : q;
-  const cs = CMTS.filter(c => c.alvo === alvo), ab = cmtAberto.has(alvo), sig = cs.map(c => c.id + (c.texto || '')).join('|') + ab;
-  return [sig, `${cs.map(c => `<p class="cmt"><b class="${quemCls(c.autor)}">${esc(nm(c.autor))}</b> ${esc(c.texto)}${c.autor === eu ? ` <button type="button" class="cmt-x" data-cx="${c.id}" aria-label="apagar">×</button>` : ''}</p>`).join('')}
+  const eu = Sync.quem || 'Di', nm = q => q === 'Di' ? 'Di' : q === 'Mihzinha' ? 'Mih' : q;
+  const cs = CMTS.filter(c => c.alvo === alvo), ab = cmtAberto.has(alvo), sig = cs.map(c => c.id + (c.texto || '') + JSON.stringify(c.reac || {})).join('|') + ab + cmtReage;
+  const reac = c => { const r = c.reac || {}, vals = Object.entries(r).filter(([, v]) => v); return `<span class="cmt-rs">${vals.map(([q, v]) => `<span class="cmt-rc ${q === eu ? 'meu' : ''}" title="${esc(nm(q))}">${v}</span>`).join('')}<button type="button" class="cmt-r" data-cr="${c.id}" aria-label="reagir">${vals.some(([q]) => q === eu) ? '' : '☺︎+'}</button></span>${cmtReage === c.id ? `<span class="cmt-pick">${REACOES.map(e => `<button type="button" class="cmt-e ${r[eu] === e ? 'on' : ''}" data-ce="${c.id}" data-e="${e}">${e}</button>`).join('')}</span>` : ''}`; };
+  return [sig, `${cs.map(c => `<div class="cmt"><p class="cmt-t"><b class="${quemCls(c.autor)}">${esc(nm(c.autor))}</b> ${esc(c.texto)}${c.autor === eu ? ` <button type="button" class="cmt-x" data-cx="${c.id}" aria-label="apagar">×</button>` : ''}</p>${reac(c)}</div>`).join('')}
       ${ab ? `<div class="cmt-f"><textarea rows="1" maxlength="300" placeholder="Escreve um comentário…"></textarea><button type="button" class="cmt-ok">${icon('send')}</button></div>` : `<button type="button" class="cmt-b">${icon('chat')} ${cs.length ? 'responder' : 'comentar'}</button>`}`, ab];
 }
 const cmtBox = (col, id, autor) => { const alvo = col + ':' + id; let sig = '', h = ''; try{ ligaCmts(); [sig, h] = cmtConteudo(alvo); }catch(e){} return `<div class="cmts" data-alvo="${esc(alvo)}" data-autor="${esc(autor || '')}" data-v="${esc(sig)}">${h}</div>`; };
@@ -4330,6 +4341,10 @@ document.addEventListener('click', async e => {
   const b = e.target.closest('.cmts button'); if(!b) return; e.stopPropagation(); e.preventDefault();
   const el = b.closest('.cmts'), alvo = el.dataset.alvo;
   if(b.classList.contains('cmt-b')){ cmtAberto.add(alvo); el.dataset.v = ''; aplicaCmts(); return; }
+  if(b.classList.contains('cmt-r') || b.classList.contains('cmt-rc')){ const id = b.dataset.cr; cmtReage = cmtReage === id ? '' : id; document.querySelectorAll('.cmts').forEach(x => x.dataset.v = ''); aplicaCmts(); return; }
+  if(b.classList.contains('cmt-e')){ const c = CMTS.find(x => x.id === b.dataset.ce); if(!c) return; const eu = Sync.quem || 'Di', r = Object.assign({}, c.reac || {}), e2 = b.dataset.e, tira = r[eu] === e2;
+    r[eu] = tira ? '' : e2; c.reac = r; cmtReage = ''; document.querySelectorAll('.cmts').forEach(x => x.dataset.v = ''); aplicaCmts();
+    try{ await Sync.col('comentarios').set(c.id, Object.assign({}, c, {reac:r})); if(!tira && c.autor !== eu){ const [c0] = String(c.alvo).split(':'), v = ({primeiras:'primeiras', bilhetes:'bilhetes', diario:'diario', musicas:'playlist', lugares:'lugares', gostos:'gostos', filmes:'filmes', datasMarcantes:'datas'})[c0]; evento(`{eu} reagiu ${e2} ao seu comentário`, String(c.texto || '').slice(0, 80), v ? v + '@' + c.alvo : '', 'chat'); } }catch(x){} return; }
   if(b.classList.contains('cmt-x')){ if(!b.dataset.sure){ b.dataset.sure = 1; b.textContent = 'apagar?'; return; } try{ await Sync.col('comentarios').remove(b.dataset.cx); }catch(x){} return; }
   if(b.classList.contains('cmt-ok')){ const ta = el.querySelector('textarea'), t = ta.value.trim(); if(!t){ cmtAberto.delete(alvo); el.dataset.v = ''; aplicaCmts(); return; }
     b.disabled = true; try{ await Sync.col('comentarios').add({alvo, texto:t, autor:Sync.quem || 'Di', para:el.dataset.autor || ''}); cmtAberto.delete(alvo); sparkle(b); }catch(x){ b.disabled = false; } }
@@ -4446,10 +4461,12 @@ function openStop(id){ document.getElementById('xgift')?.remove(); homeY = windo
 VIEWS.fotos = (foco) => {
   const souEla = Sync.quemReal === 'Mihzinha';
   shell('nós dois','Nossas fotos','Todas as nossas fotos num lugar só. Toca numa foto pra ver grandona',
-    `${C.memorias.map((m, k) => `<section class="fm-sec" id="fm-${m.id}"><div class="fm-head"><div><h3>${T('v_memoria2_' + hk(m.titulo), esc(m.titulo))}</h3><p>${T('s_memoria2_' + hk(m.titulo), esc(m.sub || ''))}</p></div>${souEla ? `<button type="button" class="ghost fm-ed" data-mem="${m.id}">${icon('pencil')} fotos</button>` : ''}</div>
+    `${C.memorias.map((m, k) => `<section class="fm-sec" id="fm-${m.id}"><div class="fm-head"><div><h3>${T('v_memoria2_' + hk(m.titulo), esc(m.titulo))}</h3><p>${T('s_memoria2_' + hk(m.titulo), esc(m.sub || ''))}</p></div>${souEla && modoEd() ? `<button type="button" class="ghost fm-ed" data-mem="${m.id}">${icon('pencil')} fotos</button>` : ''}</div>
         <div class="fm-grid" id="fmg-${m.id}">${[0,1,2,3].map(i => `<div class="fm-ph ph ${['','b','c','d'][i]}" style="--r:${[-2,1.5,-1,2][i]}deg"><span>${icon('image')}</span></div>`).join('')}</div></section>`).join('')}`);
   app.querySelectorAll('.fm-ed').forEach(b => b.onclick = () => { VIEWS.memoria2(b.dataset.mem); const bk = document.getElementById('back'), pv = bk.onclick; bk.onclick = () => { pv(); setTimeout(() => { curView = 'fotos'; VIEWS.fotos(b.dataset.mem); }, 30); }; });
-  const zoom = (src, leg) => { const w = document.createElement('div'); w.className = 'tk-wrap fm-zoom'; w.innerHTML = `<figure><img src="${src}" alt="">${leg ? `<figcaption>${esc(leg)}</figcaption>` : ''}</figure>`; w.onclick = () => w.remove(); document.body.append(w); };
+  const zoom = (src, leg) => { const w = document.createElement('div'); w.className = 'tk-wrap fm-zoom'; w.innerHTML = `<figure><img src="${src}" alt="">${leg ? `<figcaption>${esc(leg)}</figcaption>` : ''}</figure>`;
+    try{ history.pushState({dm:1, n:nivelNav + 1, zoom:1}, '', location.href); nivelNav++; w.dataset.hist = '1'; }catch(e){}
+    w.onclick = () => { if(w.dataset.hist){ w.dataset.hist = ''; ignoraPop++; nivelNav = Math.max(0, nivelNav - 1); try{ history.back(); }catch(e){ ignoraPop--; } } w.remove(); }; document.body.append(w); };
   const col = Sync.col('fotosMem');
   const off = col.on(l => { C.memorias.forEach(m => { const g = document.getElementById('fmg-' + m.id); if(!g) return;
       const fs = l.filter(x => x.mem === m.id && x.img).sort((a, b) => a.slot - b.slot);
@@ -5729,7 +5746,7 @@ VIEWS.casinha = () => {
       $('csmis').innerHTML = `<div class="ms-head ms-off"><b>Missões do dia</b><small>começam no dia 22/10</small></div>`; }
     else {
     $('cshoje').innerHTML = (of.hoje ? `<span class="ok">${icon('heart')} o seu de hoje já tá guardado</span>` : `<button type="button" id="cspega">${icon('gift')} Pegar o chocolate de hoje</button>`)
-      + `<small>${outro === 'Di' ? 'O ' + apelido('Di', 7) : 'A ' + apelido('Mihzinha', 7)} ${ofo.hoje ? 'também já pegou hoje' : 'ainda não pegou hoje'}${ofo.seguidos ? ` · ${ofo.seguidos} ${ofo.seguidos === 1 ? 'dia seguido' : 'dias seguidos'}` : ''}</small><small class="cs-dica">a cada 7 dias seguidos, +${CASA.bonusOfensiva} chocolates de bônus</small>`;
+      + `<small>${outro === 'Di' ? 'O ' + apelido('Di', 7) : 'A ' + apelido('Mihzinha', 7)} ${ofo.hoje ? 'também já pegou hoje' : 'ainda não pegou hoje'}${ofo.seguidos ? ` · ${ofo.seguidos} ${ofo.seguidos === 1 ? 'dia seguido' : 'dias seguidos'}` : ''}</small>`;
     $('cspega')?.addEventListener('click', async e => { const r = e.currentTarget.getBoundingClientRect(); burst(r.left + r.width/2, r.top, 24); e.currentTarget.disabled = true; try{ await pegarChocolate(colC, chocs, eu); }catch(x){} });
     }
     if(seqAberta) $('csseq').innerHTML = sequenciaHTML(chocs, eu, outro);
@@ -5756,7 +5773,7 @@ VIEWS.casinha = () => {
     if(cm.lugar && !fechadoAqui) $('csquem').insertAdjacentHTML('afterbegin', `<button type="button" class="cs-juntos" id="csjuntos">${icon('heart')} Levar os dois pra cá</button>`);
     $('csjuntos')?.addEventListener('click', () => { const o = ondeDe(); o.Di = aba; o.Mihzinha = aba; Sync.setFlag('casinha', 'onde', o); });
     const total = CASA.itens.length, comprados = CASA.itens.filter(i => tem(i.id)).length;
-    $('csprog').textContent = `${comprados} de ${total} coisinhas conquistadas`;
+    $('csprog').textContent = '';
     let html = '';
     if(cm.fachada){ const lista = PAL.wall.slice(0, 6), atual = (cs.parede || {})[aba]; html += `<div class="cs-item cs-dec"><span class="cs-nm">Cor da casa</span><div class="cs-sw">${lista.map((p, k) => { const id = `parede_${aba}_${k}`, liv = k === cm.wall || tem(id), sel = (atual ?? cm.wall) === k; return `<button type="button" class="sw ${sel ? 'sel' : ''} ${liv ? '' : 'lock'}" data-kind="parede" data-k="${k}" title="${p[0]}" style="--c:${p[1]}">${liv ? '' : `<b>${CASA.precoParede}</b>`}</button>`; }).join('')}</div></div>`; }
     if(!cm.provador && !cm.out && !cm.fachada && !cm.lugar){
@@ -5779,7 +5796,7 @@ VIEWS.casinha = () => {
       if(i.lugar) return `<div class="cs-item have cs-aberto"><span class="cs-nm">${icon('heart')} ${esc(cm.t)} aberta pra vocês</span></div>`.replace('aberta pra', cm.id === 'cinema' || cm.id === 'parque' ? 'aberto pra' : 'aberta pra');
       return `<div class="cs-item ${ok ? 'have' : ''}"><span class="cs-pr">${CHOCO_SVG}<b>${i.p}</b></span><span class="cs-nm">${esc(i.t)}${i.id === 'bebe' && !ok ? '<small>libera o bebê pra andar pela casa</small>' : ''}${i.id === 'passeio' ? '<small>o bebê passeia nele por qualquer cômodo</small>' : ''}</span>${btn}${cores}</div>`;
     }).join('');
-    if(cm.provador) html = `<p class="cs-sub">Vocês dois já moram aqui. As roupas e os acessórios vão sendo conquistados</p>` + html;
+
     $('csloja').innerHTML = html;
     $('csloja').querySelectorAll('[data-buy]').forEach(b => b.onclick = () => { const i = CASA.itens.find(x => x.id === b.dataset.buy); comprar(b, i.id, i.p, async () => { if(i.roupa) await Sync.setFlag('casinha', 'roupa', i.id); if(['oculos','bone','laco','tiara'].includes(i.id)) await Sync.setFlag('casinha', 'usando', Object.assign({}, cs.usando || {}, {[i.id]:true})); if(i.id === 'bebe'){ const o = ondeDe(); o.Bebe = 'bebe'; await Sync.setFlag('casinha', 'onde', o); } if(i.id === 'passeio') await Sync.setFlag('casinha', 'noCarrinho', true); }); });
     $('csloja').querySelectorAll('[data-vestir]').forEach(b => b.onclick = () => Sync.setFlag('casinha', 'roupa', b.dataset.vestir));
@@ -6055,7 +6072,7 @@ const BUSCA_COLS = {bilhetes:['bilhetes', b => [b.texto], 'note', 'Bilhetinho'],
   comentarios:['', c => [c.texto], 'chat', 'Comentário'], diario:['diario', d => [d.texto], 'livro', 'Diário'], respostas:['pergunta', r => [r.texto, r.pergunta], 'chat', 'Pergunta do dia'], premios:['premios', p => [p.t], 'medalha', 'Prêmio'], cartasFilhos:['filhos', c => [c.texto], 'baby', 'Carta ao filho'], mesversario:['mes', m => [m.texto], 'cal12', 'Mesversário']};
 const BUSCA_DADOS = {}; let buscaLigada = false;
 /* textos do próprio app (títulos, categorias, explicações de cada tela) */
-const INDICE_APP = {"saudade":["Termômetro de saudade","Toca no botão toda vez que bater saudade. O coração vai enchendo","Tô com saudade","A Mih ainda não apertou hoje"],"diario":["Diário do casal","Cada um conta como foi o dia. Você só lê o dela depois de escrever o seu"],"pergunta":["Pergunta do dia","Responde, e aí você vê o que o outro respondeu","Responder","Nosso histórico","A partir de amanhã, as perguntas e as respostas de vocês dois ficam guardadas aqui pra sempre."],"bilhetes":["Bilhetinhos","Deixa um recado pro outro achar"],"mes":["Mesversário"],"primeiras":["Nossas primeiras vezes","Primeiro filme, primeira viagem, primeira briga… vai adicionando"],"playlist":["Nossa playlist","As músicas que lembram a gente"],"planos":["Nossos planos","Tudo que a gente quer viver junto. Marca quando realizar"],"lugares":["Nossos lugares","Cada lugar que a gente foi junto, com foto. Qualquer um dos dois pode colocar","Começa pelo shopping do primeiro encontro?"],"gostos":["O que cada um ama","Você coloca o que o outro ama, com foto e legenda. Assim cada um mostra que presta atenção","O que o Di ama","O que a Mihzinha ama","Mexer nas categorias","Os dois podem criar, renomear e apagar. O que já tá numa categoria apagada vai pra \"sem categoria\"."],"filmes":["Filmes e séries","O que a gente quer ver junto e o que achou depois","Pra ver","Já vimos"],"financas":["Nossas finanças","O que a gente gasta junto, sem conta de quem pagou","gastamos nesse mês","Nenhum gasto nesse mês ainda.","Novo gasto","Obs:","Valor","Data","O que foi","Adicionar gasto","Rolês","Comida","Cinema","Mercado","Viagem","Outros","+ Nova categoria…"],"retromes":[],"retro":["Retrospectiva 2027","Um resumo de tudo que a gente viveu esse ano","Ainda tá sendo escrita","Tudo que vocês fizerem até lá entra na conta."],"datas":["Datas marcantes","Os nossos dias especiais, com foto e legenda","Ainda não tem nenhuma data. Que tal começar pelo dia 12 de abril?"],"comemorativas":["Datas comemorativas","Cada festa que a gente passar junto fica guardada aqui","Nosso primeiro Natal","O presentinho tá balançando lá em cima da tela até o dia 25. Ou abre por aqui.","Abrir o Natal","todo ano","Nossos aniversários","No dia de cada um, a casinha enche de balões, vocês ganham chapéu de festa e aparece um bolo na sala.","Salvar aniversários","as próximas datas vão aparecendo aqui"],"contagem":["Contagem regressiva","Viagem, show, aniversário… tudo que a gente tá esperando"],"numeros":["Nossos números","Tudo que a gente já viveu, contado","juntos há","bilhetinhos no mural","perguntas respondidas","abraços na casinha","beijos na casinha","danças na casinha","chocolates do dia pegos","filmes vistos juntos","lugares que a gente foi","datas marcantes","primeiras vezes","músicas na playlist","cartas escritas","cartas abertas","apertos no termômetro de saudade"],"casinha":["Nossa casinha","Cada dia que vocês entram, ganham um chocolate. Junta e monta a casa de vocês","chocolates","Pegar o chocolate de hoje","A Mihzinha ainda não pegou hoje","Missões de hoje","a primeira vale 1 chocolate, a segunda 2","criar uma missão especial pra Mih","Prêmios de verdade","troca seus chocolates por mimos de verdade","Nós dois","Frente da casa","Sala","Quarto","Cozinha","Banheiro","Sala de jogos","Piscina","Quarto do bebê","passeios","Sorveteria","Cinema","Cafeteria","Praia","Parque","Igreja","Vocês dois já moram aqui. As roupas e os acessórios vão sendo conquistados","Roupa de casamento","precisa de Alianças","Look de inverno","Look de praia","Pijamas combinando","Moletons de casal","Look de domingo","Roupa de festa","Look de Natal","Óculos nerd do Di","Boné do Di","Lacinho da Mihzinha","Tiara de flores da Mihzinha","Alianças"],"roleta":["Roleta do date","Gira e o destino escolhe o nosso próximo programa","Girar","Ideias de date"],"coracoes":["Pegue os corações","Cada coração tem uma coisa que eu amo em você. Pega os 25!","Pronto?","Começar"],"memoria":["Jogo da memória","Encontra todos os pares"],"raspa":["Raspadinha","Passa o dedo pra descobrir","surpresa!","Exemplo: a foto surpresa"],"quiz":["Quanto você me conhece?","Vamos ver se você presta atenção em mim","Qual é a minha comida favorita?","Pizza","Sushi","Hambúrguer","Lasanha"],"provavel":["Quem é mais provável…","Escolhe, depois vê o que a Mihzinha respondeu","Quem dorme primeiro no meio do filme?","A Mihzinha","Os dois"],"abra":["Abra quando…","Cartas pra abrir quando precisar. Cada um escreve pro outro, e cada vez que abrir um envelope sai uma carta diferente","Pra eu abrir","Escrever pra Milena","Escolhe o envelope do jeito que você estiver se sentindo. São as cartas que a Mihzinha escreveu pra você.","Ver o álbum de cartas"],"cartas":["Cartas pro futuro","Cada uma só abre no dia certo","abre quando você precisar","pra abrir no dia em que a gente noivar","pra abrir no dia do nosso casamento"],"filhos":["Ao nosso primeiro filho","Cartas que eu e você vamos escrever pra quem ainda vai chegar. Pode escrever quantas quiser","Assim que descobrirmos","o dia em que a gente soube de você","nenhuma carta ainda","Assim que você nascer","pra ler nos seus primeiros dias","No seu primeiro ano de vida","seu primeiro aniversário","Aos seus 18 anos","quando você virar adulto","No seu casamento","no dia mais bonito da sua vida","Na sua formatura","quando você conquistar isso"],"album":["Álbum de cartas","Um álbum pra cada ano, com todas as cartas que já foram abertas","Quando uma carta do \"Abra quando…\" for aberta, ela vem morar aqui pra sempre","Nossas cartas","ainda vazio","capa","arrasta pro lado ou toca nas setas"],"premios":["Prêmios de verdade","Os chocolates da casinha também viram coisas de verdade. Um escolhe os prêmios do outro","chocolates pra gastar"],"vales":["Vales-presente","Cada vale só pode ser resgatado uma vez. Quando resgatar, me manda o ticket","Vale um cafuné","Vale escolher o filme","Vale um jantar feito por mim","Vale um abraço demorado","Vale um sorvete","Vale ganhar uma discussão"],"fotos":["Nossas fotos","Todas as nossas fotos num lugar só. Toca numa foto pra ver grandona","Nossos primeiros encontros","As fotos daqui a Mihzinha ainda vai colocar.","Aquele dia","um dia que a gente nunca vai esquecer","Eu e você","só nós dois"]};
+const INDICE_APP = {"saudade":["Termômetro de saudade","Toca no botão toda vez que bater saudade. O coração vai enchendo","Tô com saudade","A Mih ainda não apertou hoje"],"diario":["Diário do casal","Cada um conta como foi o dia. Você só lê o dela depois de escrever o seu"],"pergunta":["Pergunta do dia","Responde, e aí você vê o que o outro respondeu","Responder","Nosso histórico","A partir de amanhã, as perguntas e as respostas de vocês dois ficam guardadas aqui pra sempre."],"bilhetes":["Bilhetinhos","Deixa um recado pro outro achar"],"mes":["Mesversário"],"primeiras":["Nossas primeiras vezes","Primeiro filme, primeira viagem, primeira briga… vai adicionando"],"playlist":["Nossa playlist","As músicas que lembram a gente"],"planos":["Nossos planos","Tudo que a gente quer viver junto. Marca quando realizar"],"lugares":["Nossos lugares","Cada lugar que a gente foi junto, com foto. Qualquer um dos dois pode colocar","Começa pelo shopping do primeiro encontro?"],"gostos":["O que cada um ama","Você coloca o que o outro ama, com foto e legenda. Assim cada um mostra que presta atenção","O que o Di ama","O que a Mihzinha ama","Mexer nas categorias","Os dois podem criar, renomear e apagar. O que já tá numa categoria apagada vai pra \"sem categoria\"."],"filmes":["Filmes e séries","O que a gente quer ver junto e o que achou depois","Pra ver","Já vimos"],"financas":["Nossas finanças","O que a gente gasta junto, sem conta de quem pagou","gastamos nesse mês","Nenhum gasto nesse mês ainda.","Novo gasto","Obs:","Valor","Data","O que foi","Adicionar gasto","Rolês","Comida","Cinema","Mercado","Viagem","Outros","+ Nova categoria…"],"retromes":[],"retro":["Retrospectiva 2027","Um resumo de tudo que a gente viveu esse ano","Ainda tá sendo escrita","Tudo que vocês fizerem até lá entra na conta."],"datas":["Datas marcantes","Os nossos dias especiais, com foto e legenda","Ainda não tem nenhuma data. Que tal começar pelo dia 12 de abril?"],"comemorativas":["Datas comemorativas","Cada festa que a gente passar junto fica guardada aqui","Nosso primeiro Natal","O presentinho tá balançando lá em cima da tela até o dia 25. Ou abre por aqui.","Abrir o Natal","todo ano","Nossos aniversários","No dia de cada um, a casinha enche de balões, vocês ganham chapéu de festa e aparece um bolo na sala.","Salvar aniversários","as próximas datas vão aparecendo aqui"],"contagem":["Contagem regressiva","Viagem, show, aniversário… tudo que a gente tá esperando"],"numeros":["Nossos números","Tudo que a gente já viveu, contado","juntos há","bilhetinhos no mural","perguntas respondidas","abraços na casinha","beijos na casinha","danças na casinha","chocolates do dia pegos","filmes vistos juntos","lugares que a gente foi","datas marcantes","primeiras vezes","músicas na playlist","cartas escritas","cartas abertas","apertos no termômetro de saudade"],"casinha":["Nossa casinha","Cada dia que vocês entram, ganham um chocolate. Junta e monta a casa de vocês","chocolates","Pegar o chocolate de hoje","A Mihzinha ainda não pegou hoje","Missões de hoje","a primeira vale 1 chocolate, a segunda 2","criar uma missão especial pra Mih","Prêmios de verdade","troca seus chocolates por mimos de verdade","Nós dois","Frente da casa","Sala","Quarto","Cozinha","Banheiro","Sala de jogos","Piscina","Quarto do bebê","passeios","Sorveteria","Cinema","Cafeteria","Praia","Parque","Igreja","Roupa de casamento","precisa de Alianças","Look de inverno","Look de praia","Pijamas combinando","Moletons de casal","Look de domingo","Roupa de festa","Look de Natal","Óculos nerd do Di","Boné do Di","Lacinho da Mihzinha","Tiara de flores da Mihzinha","Alianças"],"roleta":["Roleta do date","Gira e o destino escolhe o nosso próximo programa","Girar","Ideias de date"],"coracoes":["Pegue os corações","Cada coração tem uma coisa que eu amo em você. Pega os 25!","Pronto?","Começar"],"memoria":["Jogo da memória","Encontra todos os pares"],"raspa":["Raspadinha","Passa o dedo pra descobrir","surpresa!","Exemplo: a foto surpresa"],"quiz":["Quanto você me conhece?","Vamos ver se você presta atenção em mim","Qual é a minha comida favorita?","Pizza","Sushi","Hambúrguer","Lasanha"],"provavel":["Quem é mais provável…","Escolhe, depois vê o que a Mihzinha respondeu","Quem dorme primeiro no meio do filme?","A Mihzinha","Os dois"],"abra":["Abra quando…","Cartas pra abrir quando precisar. Cada um escreve pro outro, e cada vez que abrir um envelope sai uma carta diferente","Pra eu abrir","Escrever pra Milena","Escolhe o envelope do jeito que você estiver se sentindo. São as cartas que a Mihzinha escreveu pra você.","Ver o álbum de cartas"],"cartas":["Cartas pro futuro","Cada uma só abre no dia certo","abre quando você precisar","pra abrir no dia em que a gente noivar","pra abrir no dia do nosso casamento"],"filhos":["Ao nosso primeiro filho","Cartas que eu e você vamos escrever pra quem ainda vai chegar. Pode escrever quantas quiser","Assim que descobrirmos","o dia em que a gente soube de você","nenhuma carta ainda","Assim que você nascer","pra ler nos seus primeiros dias","No seu primeiro ano de vida","seu primeiro aniversário","Aos seus 18 anos","quando você virar adulto","No seu casamento","no dia mais bonito da sua vida","Na sua formatura","quando você conquistar isso"],"album":["Álbum de cartas","Um álbum pra cada ano, com todas as cartas que já foram abertas","Quando uma carta do \"Abra quando…\" for aberta, ela vem morar aqui pra sempre","Nossas cartas","ainda vazio","capa","arrasta pro lado ou toca nas setas"],"premios":["Prêmios de verdade","Os chocolates da casinha também viram coisas de verdade. Um escolhe os prêmios do outro","chocolates pra gastar"],"vales":["Vales-presente","Cada vale só pode ser resgatado uma vez. Quando resgatar, me manda o ticket","Vale um cafuné","Vale escolher o filme","Vale um jantar feito por mim","Vale um abraço demorado","Vale um sorvete","Vale ganhar uma discussão"],"fotos":["Nossas fotos","Todas as nossas fotos num lugar só. Toca numa foto pra ver grandona","Nossos primeiros encontros","As fotos daqui a Mihzinha ainda vai colocar.","Aquele dia","um dia que a gente nunca vai esquecer","Eu e você","só nós dois"]};
 const IDX_FORA = '.rolabox,.busca-wrap,.cmts,[data-id],script,style,template,textarea,input,.edk,.add-tog,#addfab,.ft-bar,.av-box,.vbar,svg,[hidden],.recolhido';
 const IDX_GEN = new Set(['Mihzinha','Milena','Você','abrir','jogar','Resgatar','Comprar','Criar','mais novos primeiro','mais antigos primeiro','só áudios','toca pra ir','Em destaque','EM DESTAQUE','Até','ATÉ','O FAVORITO','Voltar','Salvar','Esconder','Adicionar','Cancelar','Apagar','Editar','Pronto','Enviar','Fechar','Limpar','Ok','Sim','Não','Comentar','Trocar foto']);
 function textosDaTela(raiz){
@@ -6139,7 +6156,7 @@ function caixaAvisos(el){
   const desde = Date.now() - 14 * 864e5; let raf = 0, aberto = false;
   const draw = () => { raf = 0; if(!el.isConnected){ offs.forEach(f => f && f()); return; }
     const l = lidos(), its = [];
-    Object.entries(R).forEach(([nome, f]) => (d[nome] || []).forEach(it => { const n = f(it); if(!n) return; const k = nome + ':' + it.id + ':' + (n.k || ''); if(l.includes(k)) return; if(!n.forte && !(it.criadoEm > desde)) return; its.push(Object.assign({}, n, {k, em:it.criadoEm || 0})); }));
+    Object.entries(R).forEach(([nome, f]) => (d[nome] || []).forEach(it => { const n = f(it); if(!n) return; const k = nome + ':' + it.id + ':' + (n.k || ''); if(l.includes(k)) return; const quando = Math.max(it.criadoEm || 0, it.atualizadoEm || 0); if(!n.forte && !(quando > desde)) return; its.push(Object.assign({}, n, {k, em:quando})); }));
     its.sort((a, b) => (b.forte || 0) - (a.forte || 0) || b.em - a.em);
     if(!its.length){ el.innerHTML = ''; return; }
     const mostra = aberto ? its : its.slice(0, 3);
@@ -6160,16 +6177,35 @@ let vigiando = false;
 function vigiar(){
   if(vigiando || PREVIA || !Sync.quemReal) return; vigiando = true;
   const eu = Sync.quemReal, outro = eu === 'Di' ? 'Mihzinha' : 'Di', Ele = outro === 'Di' ? 'O ' + apelido('Di', 15) : 'A ' + apelido('Mihzinha', 15), ele = outro === 'Di' ? 'ele' : 'ela';
-  const t0 = Date.now() - 3000, vistos = new Set(), novo = (k, it) => { if(vistos.has(k) || !(it.criadoEm > t0)) return false; vistos.add(k); return true; };
+  const t0 = Date.now() - 3000, vistos = new Set(), novo = (k, it) => { if(vistos.has(k) || !(Math.max(it.criadoEm || 0, it.atualizadoEm || 0) > t0)) return false; vistos.add(k); return true; };
   const ok = () => jaComecou();
   const corta = (t, n = 90) => !t ? '' : t.length > n ? t.slice(0, n - 1) + '…' : t;
   const regras = regrasAviso(eu);
   Object.entries(regras).forEach(([nome, f]) => Sync.col(nome).on(l => { if(!ok()) return; l.forEach(it => { const n = f(it); if(n && novo(nome + it.id + (n.k || ''), it)) avisar(n); }); }));
   let pAntes = null;
   Sync.on('state', st => { const v = ((st.pensei || {})[hoje()] || {})[outro] || 0; if(pAntes !== null && v > pAntes && ok()) avisar({titulo:`${Ele} pensou em você ♥`, corpo:`${v}x hoje`, tag:'pensei', go:''}); pAntes = v; });
-  presenca(); renovaPush();
+  presenca(); ligaPresenca(); renovaPush();
 }
 /* avisa o servidor que entrou hoje (pro lembrete das 21h) */
+/* quem tá online agora: cada um avisa a cada 40s enquanto o app tá aberto; o outro vê em cima da tela inicial */
+let presOutro = null, presLigada = false;
+function ligaPresenca(){
+  if(presLigada || PREVIA || Sync.mode !== 'online' || !Sync.user || !window.firebase || !Sync.quemReal) return; presLigada = true;
+  const fdb = firebase.firestore(), eu = Sync.quemReal, outro = eu === 'Di' ? 'Mihzinha' : 'Di';
+  const bate = on => fdb.doc('presenca/' + eu).set({on:on ? Date.now() : 0, em:Date.now()}, {merge:true}).catch(() => {});
+  bate(document.visibilityState === 'visible'); setInterval(() => { if(document.visibilityState === 'visible') bate(true); }, 40000);
+  document.addEventListener('visibilitychange', () => bate(document.visibilityState === 'visible'));
+  addEventListener('pagehide', () => bate(false));
+  fdb.doc('presenca/' + outro).onSnapshot(d => { presOutro = d.data() || null; pintaOnline(); }, () => {});
+  setInterval(pintaOnline, 20000);
+}
+function pintaOnline(){
+  const el = document.getElementById('onl'); if(!el) return; const p = presOutro, outro = (Sync.quemReal || 'Di') === 'Di' ? 'Mihzinha' : 'Di';
+  const nome = outro === 'Di' ? apelido('Di', 42) : apelido('Mihzinha', 42);
+  if(p && p.on && Date.now() - p.on < 80000){ el.className = 'onl on'; el.innerHTML = `<i></i>${esc(nome)} tá online agora`; return; }
+  const ult = p && (p.em || 0); if(ult && hoje(new Date(ult)) === hoje()){ el.className = 'onl'; el.innerHTML = `<i></i>${esc(nome)} esteve aqui hoje às ${new Date(ult).toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'})}`; return; }
+  el.className = 'onl'; el.innerHTML = '';
+}
 function presenca(){ try{ if(Sync.mode !== 'online' || !Sync.user || !window.firebase) return; firebase.firestore().doc('presenca/' + Sync.quemReal).set({dia:hoje(), tz:Intl.DateTimeFormat().resolvedOptions().timeZone || 'America/Cuiaba', em:Date.now()}, {merge:true}).catch(() => {}); }catch(e){} }
 async function ativarPush(){
   if(!notifSuportada()) return 'sem';
