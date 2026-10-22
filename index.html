@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=134">
-<link rel="apple-touch-icon" href="icon-180.png?v=134">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=134">
+<link rel="manifest" href="manifest.json?v=135">
+<link rel="apple-touch-icon" href="icon-180.png?v=135">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=135">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -3453,6 +3453,7 @@ function typeText(el, text, delay){
 let xtimer;
 let xFromY = 0, xVolta = null, xEmpurrou = false;
 function renderXmas(){
+  tituloAba('Nosso Natal');
   document.getElementById('xgift')?.remove(); xEmpurrou = entradaHistorico(null, '#/natal');
   if(document.querySelector('.home')) xFromY = window.scrollY;
   stopGame(); clearInterval(timer); document.getElementById('tabbar')?.remove();
@@ -3671,7 +3672,10 @@ function statusSync(){
   try{ firebase.firestore().waitForPendingWrites().then(() => { if(el.isConnected) pinta('ok', 'sincronizado'); }).catch(() => pinta('ok', 'sincronizado')); }catch(e){ pinta('ok', 'sincronizado'); }
 }
 addEventListener('online', statusSync); addEventListener('offline', statusSync);
+/* nome da aba do navegador acompanha a tela aberta */
+function tituloAba(t){ try{ const x = String(t || '').replace(/<[^>]+>/g, '').replace(/[\u00AD\u200b]/g, '').replace(/\s+/g, ' ').trim(); document.title = x ? `${x} · D&M` : 'D&M'; }catch(e){} }
 function renderHome(y = 0){
+  tituloAba('');
   document.getElementById('addfab')?.remove();
   saiHistorico(); if(vistaAtual) scrollMem[vistaAtual] = window.scrollY; vistaAtual = null;
   if(!restaurou && LINK_INI){ restaurou = true; setTimeout(() => abreLink(LINK_INI), 60); }
@@ -4002,7 +4006,7 @@ if('serviceWorker' in navigator && /github\.io$/.test(location.hostname)) addEve
 /* sempre a versão mais nova: se o GitHub tem uma versão diferente da aberta, limpa o guardado e recarrega sozinho */
 let edAberto = false;
 document.addEventListener('click', e => { if(edAberto && !e.target.closest('.ed-modo')){ edAberto = false; document.querySelector('.ed-modo')?.classList.remove('ab'); } });
-const VERSAO_APP = 'versão de 22/10 · 14h05';
+const VERSAO_APP = 'versão de 22/10 · 14h10';
 async function confereVersao(){
   if(!/github\.io$/.test(location.hostname) || !navigator.onLine) return;
   try{ const r = await fetch(location.pathname + '?nc=' + Date.now(), {cache:'no-store'}); if(!r.ok) return; const t = await r.text(), m = t.match(/const VERSAO_APP = '([^']+)'/);
@@ -4424,7 +4428,7 @@ function shell(eb, title, sub, body){
     <header class="vhead">${(it => it ? (([bg, fg]) => `<span class="vh-ic" style="--bg:${bg};--fg:${fg}">${icon(it.ico)}</span>`)(corDe(it.id)) : '')(Object.values(LISTS).flat().find(x => x.id === curView))}<h2>${TE(chaveTitulo(curView, title), title, 'Título desta tela')}</h2>${sub || modoEd() ? `<p>${TE(chaveSub(curView, title), sub || '', 'Texto embaixo do título')}</p>` : ''}</header>
     ${body}</div>`;
   if(yVolta){ window.scrollTo({top:yVolta, behavior:'instant'}); requestAnimationFrame(() => window.scrollTo({top:yVolta, behavior:'instant'})); }
-  { const nv = hubDe(curView) ? 1 : (hk => hk && curView !== hubAtual && (HUBS[hk].itens().some(r => r.id === curView) || HUBS[hk].extra === curView) ? 2 : 1)(hubDe(hubAtual)); entradaHistorico(nv, urlDe(curView), nv === 2 ? `#/${hubAtual}` : undefined); } listaPrimeiro(); buscaNaTela(title); { const vv = curView; setTimeout(() => colheTela(vv), 900); }
+  { const nv = hubDe(curView) ? 1 : (hk => hk && curView !== hubAtual && (HUBS[hk].itens().some(r => r.id === curView) || HUBS[hk].extra === curView) ? 2 : 1)(hubDe(hubAtual)); entradaHistorico(nv, urlDe(curView), nv === 2 ? `#/${hubAtual}` : undefined); } listaPrimeiro(); buscaNaTela(title); tituloAba((temTx(chaveTitulo(curView, title)) ? TELAS[chaveTitulo(curView, title)] : title)); { const vv = curView; setTimeout(() => colheTela(vv), 900); }
   document.getElementById('back').onclick = () => { stopGame(); const hk = hubDe(hubAtual); if(hk && curView !== hubAtual && (HUBS[hk].itens().some(r => r.id === curView) || HUBS[hk].extra === curView)){ curView = hubAtual; voltandoPara = true; VIEWS[hubAtual](); return; } hubAtual = null; renderHome(homeY); };
 }
 const VIEWS = {};
