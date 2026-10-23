@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=138">
-<link rel="apple-touch-icon" href="icon-180.png?v=138">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=138">
+<link rel="manifest" href="manifest.json?v=139">
+<link rel="apple-touch-icon" href="icon-180.png?v=139">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=139">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -4015,7 +4015,7 @@ if('serviceWorker' in navigator && /github\.io$/.test(location.hostname)) addEve
 /* sempre a versão mais nova: se o GitHub tem uma versão diferente da aberta, limpa o guardado e recarrega sozinho */
 let edAberto = false;
 document.addEventListener('click', e => { if(edAberto && !e.target.closest('.ed-modo')){ edAberto = false; document.querySelector('.ed-modo')?.classList.remove('ab'); } });
-const VERSAO_APP = 'versão de 22/10 · 21h55';
+const VERSAO_APP = 'versão de 22/10 · 22h00';
 async function confereVersao(){
   if(!/github\.io$/.test(location.hostname) || !navigator.onLine) return;
   try{ const r = await fetch(location.pathname + '?nc=' + Date.now(), {cache:'no-store'}); if(!r.ok) return; const t = await r.text(), m = t.match(/const VERSAO_APP = '([^']+)'/);
@@ -4541,7 +4541,10 @@ const memFotos = () => (typeof conteudoAtual !== 'undefined' ? conteudoAtual : [
 /* ---------- caça-palavras: rodada 1 = 1 palavra, até 8; o quadro cresce junto ---------- */
 VIEWS.caca = () => {
   const semA = t => String(t).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase().replace(/[^A-Z]/g, '');
-  let rodada = Math.max(1, store.get('cacaRodada', 1)), grade = [], N = 7, palavras = [], achadas = new Set(), sel = null;
+  /* cada um tem a sua rodada, guardada na conta (não mistura com a do outro) */
+  const eu = Sync.quem || 'Di', chave = 'cacaRodada_' + eu, colJ = Sync.col('jogosProg');
+  const salvaRodada = () => { store.set(chave, rodada); colJ.set('caca_' + eu, {jogo:'caca', quem:eu, rodada}).catch(() => {}); };
+  let rodada = Math.max(1, store.get(chave, 1)), grade = [], N = 7, palavras = [], achadas = new Set(), sel = null;
   shell('jogo','Caça-palavras','Arrasta o dedo por cima da palavra pra marcar',
     `<div class="cc-top"><span class="cc-rod" id="ccrod"></span><button type="button" class="cc-re" id="ccre">Recomeçar</button></div>
      <div class="cc-grid" id="ccgrid"></div><div class="cc-pals" id="ccpals"></div><div id="ccfim"></div>`);
@@ -4550,7 +4553,7 @@ VIEWS.caca = () => {
     const qtd = Math.min(8, rodada), dirs = [[0,1]]; if(rodada >= 2) dirs.push([1,0]); if(rodada >= 4) dirs.push([1,1], [-1,1]);
     N = Math.min(12, 6 + Math.ceil(qtd / 1.4));
     const banco = [...new Set((C.cacaPalavras || []).map(semA).filter(w => w.length >= 2 && w.length <= N))];
-    const ult = store.get('cacaUlt', []);
+    const ult = store.get('cacaUlt_' + eu, []);
     for(let tent = 0; tent < 40; tent++){
       const pool = banco.filter(w => !ult.includes(w)).length >= qtd ? banco.filter(w => !ult.includes(w)) : banco.slice();
       for(let i = pool.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; }
@@ -4563,7 +4566,7 @@ VIEWS.caca = () => {
           palavras.push({w, cells:Array.from({length:w.length}, (_, k) => (r0 + dr * k) * N + (c0 + dc * k))}); ok = true; } }
       if(palavras.length === qtd) break; }
     const AB = 'ABCDEFGHIJLMNOPRSTUVZ'; for(let r = 0; r < N; r++) for(let c = 0; c < N; c++) if(!grade[r][c]) grade[r][c] = AB[Math.floor(Math.random() * AB.length)];
-    store.set('cacaUlt', palavras.map(p => p.w)); achadas = new Set();
+    store.set('cacaUlt_' + eu, palavras.map(p => p.w)); achadas = new Set();
   };
   const desenha = () => {
     $('ccrod').textContent = `Rodada ${rodada}`;
@@ -4584,11 +4587,13 @@ VIEWS.caca = () => {
       if(achadas.size === palavras.length){ jogou('caca'); burst(innerWidth / 2, innerHeight / 3, 60);
         $('ccfim').innerHTML = `<div class="paper unfold cc-ok"><p>Achou ${palavras.length === 1 ? 'a palavra' : 'as ' + palavras.length + ' palavras'}!</p><button type="button" id="ccnext">Próxima rodada</button></div>`;
         setTimeout(() => $('ccfim')?.scrollIntoView({behavior:'smooth', block:'center'}), 200);
-        $('ccnext').onclick = () => { rodada++; store.set('cacaRodada', rodada); nova(); }; } } };
+        $('ccnext').onclick = () => { rodada++; salvaRodada(); nova(); }; } } };
   g.addEventListener('pointerup', solta); g.addEventListener('pointercancel', () => { sel = null; marca([]); });
   const nova = () => { $('ccfim').innerHTML = ''; gera(); desenha(); window.scrollTo({top:0, behavior:'smooth'}); };
-  $('ccre').onclick = () => { rodada = 1; store.set('cacaRodada', 1); nova(); };
+  $('ccre').onclick = () => { rodada = 1; salvaRodada(); nova(); };
   gera(); desenha();
+  let sinc = false; const offJ = colJ.on(l => { const d = l.find(x => x.id === 'caca_' + eu); if(sinc || !d) return; sinc = true; if(+d.rodada && +d.rodada !== rodada && !achadas.size){ rodada = +d.rodada; store.set(chave, rodada); gera(); desenha(); } });
+  const back = document.getElementById('back'), prevB = back.onclick; back.onclick = () => { offJ(); prevB(); };
 };
 VIEWS.memoria = () => {
   const cartas = memFotos().map(x => ({img:x.img})), sym = C.memoria.slice();
@@ -4596,7 +4601,7 @@ VIEWS.memoria = () => {
   const N = cartas.length;
   /* embaralha de verdade e nunca repete a ordem da última partida */
   const mistura = () => { const d = [...cartas.keys(), ...cartas.keys()]; for(let i = d.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [d[i], d[j]] = [d[j], d[i]]; } return d; };
-  let deck = mistura(); const ult = store.get('memUlt', ''); for(let t = 0; t < 5 && deck.join() === ult; t++) deck = mistura(); store.set('memUlt', deck.join());
+  let deck = mistura(); const ult = store.get('memUlt_' + (Sync.quem || 'Di'), ''); for(let t = 0; t < 5 && deck.join() === ult; t++) deck = mistura(); store.set('memUlt_' + (Sync.quem || 'Di'), deck.join());
   const edFotos = modoEd() ? `<div class="mem-ed"><p class="mem-ed-t">Fotos dos pares</p><div class="mem-ed-g">${[0,1,2,3,4,5,6,7].map(k => { const d = conteudoAtual.find(x => x.id === 'memfoto_' + k); return `<span class="mem-ed-s" data-foto="memfoto_${k}">${d && d.img ? `<img src="${d.img}" alt="">` : `<i>${k + 1}</i>`}</span>`; }).join('')}</div></div>` : '';
   shell('jogo','Jogo da memória','Encontra todos os pares',
     `<div class="stats"><span id="mv">0 jogadas</span><span id="pr">0 de ${N} pares</span></div>
@@ -5970,7 +5975,7 @@ function progressoMissoes(eu, d){
 
 
 /* ---------- missões do dia (2 por dia: a primeira vale 1 chocolate, a segunda 2) ---------- */
-const jogou = id => { const j = store.get('jogou', {}); j[hoje() + '_' + id] = 1; store.set('jogou', j); };
+const jogou = id => { const k = 'jogou_' + (Sync.quem || 'Di'), j = store.get(k, {}); j[hoje() + '_' + id] = 1; store.set(k, j); };
 const MIS_DIA = {
   rit: [
     {id:'resp',   t:() => 'Responder a pergunta do dia', go:'pergunta', ic:'chat'},
@@ -6003,7 +6008,7 @@ function progMissao(m, d, eu){
     case 'gostos': return +meu(d.gostos);
     case 'musica': return +meu(d.musicas);
     case 'abraco': return +meu(d.abracos, 'de');
-    default: return store.get('jogou', {})[hj + '_' + m.id] ? 1 : 0;
+    default: return store.get('jogou_' + (Sync.quem || 'Di'), {})[hj + '_' + m.id] ? 1 : 0;
   }
 }
 function missoesBox(el, compacto){
