@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=137">
-<link rel="apple-touch-icon" href="icon-180.png?v=137">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=137">
+<link rel="manifest" href="manifest.json?v=138">
+<link rel="apple-touch-icon" href="icon-180.png?v=138">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=138">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -1859,6 +1859,12 @@ html body .ed-modo.ab .ed-btrow{max-width:none!important;flex-wrap:wrap}html bod
 html body .cmt-tg{display:inline-flex;align-items:center;gap:5px;width:auto;min-height:0;margin:2px 0 0;padding:3px 10px;border-radius:99px;background:transparent;border:1px solid var(--line2);box-shadow:none;color:var(--muted);font-size:12px;font-weight:700;font-family:var(--f-body)}html body .cmt-tg svg{width:13px;height:13px}html body .cmt-tg[data-tgc="0"]{border:0;padding:3px 4px}
 html body button.cmt-rc{min-height:0!important;width:auto!important;margin:0;padding:0 5px!important;box-shadow:none!important;color:inherit!important;cursor:pointer}
 html body .mural,html body .gs-grid{align-items:start}
+.cc-top{display:flex;align-items:center;justify-content:space-between;gap:10px}.cc-rod{font-family:var(--f-display);font-size:18px;color:var(--wine)}html body .cc-re{width:auto!important;min-height:34px!important;padding:0 14px!important;font-size:12.5px!important;background:#fff!important;color:var(--wine)!important;border:1px solid #ecd4d6!important;box-shadow:none!important}
+.cc-grid{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:3px;background:#fff;border-radius:18px;padding:8px;box-shadow:var(--shadow);touch-action:none;-webkit-user-select:none;user-select:none;max-width:460px;width:100%;margin:0 auto}
+.cc-c{aspect-ratio:1;display:grid;place-items:center;border-radius:8px;font-weight:700;font-size:clamp(12px,calc(70vw / var(--n) * .5),20px);color:#3a2a2a;background:#fbf6ee;transition:background .15s,color .15s}
+.cc-c.sel{background:#f7c8d3;color:#7a1424}.cc-c.ok{background:#7a1424;color:#fff}
+.cc-pals{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}.cc-p{padding:4px 10px;border-radius:99px;background:#fff;border:1px solid #ecd4d6;font-size:12.5px;font-weight:700;letter-spacing:.06em;color:#7a1424}.cc-p.ok{text-decoration:line-through;opacity:.5}
+.cc-ok{text-align:center}.cc-ok p{margin:0 0 10px}
 .dm-ext{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .alvo-pisca{animation:alvopisca 1.1s ease-in-out 2;border-radius:14px}
 /* busca universal */
@@ -2197,6 +2203,7 @@ const C = {
   raspadinha: {foto:'', legenda:'Exemplo: a foto surpresa'},
   memoria: ['♥︎','✿︎','☾︎','★︎','♪︎','∞'],
   /* palavras escritas nos corações do jogo (20) */
+  cacaPalavras: ['amor','beijo','abraço','carinho','saudade','namoro','coração','paixão','sorriso','cinema','pizza','viagem','praia','filme','música','dança','aliança','casinha','flores','presente','natal','estrela','lua','sol','café','sonho','futuro','família','noivado','casamento','chocolate','cafuné','risada','encontro','domingo','pôr do sol','chamego','parceria','cuidado','alegria','juntos','eterno','fofura','abraçar','mimo','date','sorvete','cachinhos','olhar','destino'],
   motivos: ['seu sorriso','sua voz','seus cachinhos','seu lado nerd','sua inteligência','sua paciência','sua coragem','sua determinação','seu amor','seu romantismo',
             'seu chamego','seu acolhimento','seu abraço','seu cheiro','nossa intimidade','suas piadas','suas provocações','seu capricho','sua comida','sua proatividade',
             'seu jeito de me olhar','sua fé','seu cuidado comigo','sua risada','seu beijo','seu jeito de me acalmar','sua honestidade','seu jeito protetor','os nossos planos','sua parceria','seu carinho','seu olhar','sua sinceridade','sua companhia','seu jeito bobo','seu coração bom','suas mãos','seu jeito de falar comigo','você inteirinho'],
@@ -3590,6 +3597,7 @@ const LISTS = {
     {id:'coracoes', ico:'heartsfall', t:'Pegue os corações', s:'O que eu amo em você'},
     {id:'memoria',  ico:'cards',    t:'Jogo da memória',     s:'Ache os pares'},
     {id:'raspa',    ico:'sparkle',  t:'Raspadinha',          s:'Tem uma foto escondida'},
+    {id:'caca',     ico:'busca',    t:'Caça-palavras',       s:'Cada rodada, uma palavra a mais'},
     {id:'quiz',     ico:'question', t:'Quanto você me conhece?', s:'Vale nota, hein'},
     {id:'provavel', ico:'duo',      t:'Quem é mais provável', s:'Você ou eu?'}],
   cartas: [
@@ -4007,7 +4015,7 @@ if('serviceWorker' in navigator && /github\.io$/.test(location.hostname)) addEve
 /* sempre a versão mais nova: se o GitHub tem uma versão diferente da aberta, limpa o guardado e recarrega sozinho */
 let edAberto = false;
 document.addEventListener('click', e => { if(edAberto && !e.target.closest('.ed-modo')){ edAberto = false; document.querySelector('.ed-modo')?.classList.remove('ab'); } });
-const VERSAO_APP = 'versão de 22/10 · 19h45';
+const VERSAO_APP = 'versão de 22/10 · 21h55';
 async function confereVersao(){
   if(!/github\.io$/.test(location.hostname) || !navigator.onLine) return;
   try{ const r = await fetch(location.pathname + '?nc=' + Date.now(), {cache:'no-store'}); if(!r.ok) return; const t = await r.text(), m = t.match(/const VERSAO_APP = '([^']+)'/);
@@ -4477,9 +4485,10 @@ function abrirHub(k){
     ${h.extra === 'carta' ? `<button type="button" class="lastbtn" data-hub="carta">${icon('gift')}A última surpresa</button>` : ''}</div>`);
   app.querySelectorAll('[data-hub]').forEach(b => b.onclick = () => { const id = b.dataset.hub; markDone(id); curView = id; VIEWS[id](); });
   buscaBox(document.getElementById('buscahub'), itens.map(r => r.id), 'Pesquisar aqui…');
-  if(dest.id === 'casinha'){ const off = Sync.col('chocolates').on(l => { const el = document.getElementById('jhchips'); if(!el){ setTimeout(() => off && off()); return; }
-    const eu = Sync.quem || 'Di', of = ofensiva(l, eu);
-    el.innerHTML = jaComecou() || PREVIA ? `<i>${CHOCO_SVG} ${chocoInfinito() ? '∞' : l.filter(valeChoco).reduce((t, c) => t + (+c.qtd || 1), 0)}</i><i>${FLAME_SVG} ${of.seguidos} ${of.seguidos === 1 ? 'dia' : 'dias'}</i>` : `<i>começa dia 25</i>`; }); }
+  if(dest.id === 'casinha'){ let ch = [], cp = []; const pinta = () => { const el = document.getElementById('jhchips'); if(!el){ setTimeout(() => { off1 && off1(); off2 && off2(); }); return; }
+    const eu = Sync.quem || 'Di', of = ofensiva(ch, eu);
+    el.innerHTML = `<i>${CHOCO_SVG} ${chocoInfinito() ? '∞' : chocoSaldo(ch, cp)}</i><i>${FLAME_SVG} ${of.seguidos} ${of.seguidos === 1 ? 'dia' : 'dias'}</i>`; };
+    const off1 = Sync.col('chocolates').on(l => { ch = l; pinta(); }), off2 = Sync.col('compras').on(l => { cp = l; pinta(); }); }
 }
 Object.keys(HUBS).forEach(k => { VIEWS[HUBS[k].view] = () => abrirHub(k); });
 function openStop(id){ document.getElementById('xgift')?.remove(); homeY = window.scrollY; markDone(id); curView = id; VIEWS[id](); }
@@ -4529,6 +4538,58 @@ VIEWS.raspa = () => {
 
 /* ---------- memória ---------- */
 const memFotos = () => (typeof conteudoAtual !== 'undefined' ? conteudoAtual : []).filter(x => /^memfoto_\d+$/.test(x.id) && x.img).sort((a, b) => +a.id.split('_')[1] - +b.id.split('_')[1]).slice(0, 8);
+/* ---------- caça-palavras: rodada 1 = 1 palavra, até 8; o quadro cresce junto ---------- */
+VIEWS.caca = () => {
+  const semA = t => String(t).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase().replace(/[^A-Z]/g, '');
+  let rodada = Math.max(1, store.get('cacaRodada', 1)), grade = [], N = 7, palavras = [], achadas = new Set(), sel = null;
+  shell('jogo','Caça-palavras','Arrasta o dedo por cima da palavra pra marcar',
+    `<div class="cc-top"><span class="cc-rod" id="ccrod"></span><button type="button" class="cc-re" id="ccre">Recomeçar</button></div>
+     <div class="cc-grid" id="ccgrid"></div><div class="cc-pals" id="ccpals"></div><div id="ccfim"></div>`);
+  const $ = id => document.getElementById(id);
+  const gera = () => {
+    const qtd = Math.min(8, rodada), dirs = [[0,1]]; if(rodada >= 2) dirs.push([1,0]); if(rodada >= 4) dirs.push([1,1], [-1,1]);
+    N = Math.min(12, 6 + Math.ceil(qtd / 1.4));
+    const banco = [...new Set((C.cacaPalavras || []).map(semA).filter(w => w.length >= 2 && w.length <= N))];
+    const ult = store.get('cacaUlt', []);
+    for(let tent = 0; tent < 40; tent++){
+      const pool = banco.filter(w => !ult.includes(w)).length >= qtd ? banco.filter(w => !ult.includes(w)) : banco.slice();
+      for(let i = pool.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; }
+      grade = Array.from({length:N}, () => Array(N).fill('')); palavras = [];
+      for(const w of pool){ if(palavras.length >= qtd) break; let ok = false;
+        for(let t = 0; t < 120 && !ok; t++){ const [dr, dc] = dirs[Math.floor(Math.random() * dirs.length)], r0 = Math.floor(Math.random() * N), c0 = Math.floor(Math.random() * N), rf = r0 + dr * (w.length - 1), cf = c0 + dc * (w.length - 1);
+          if(rf < 0 || rf >= N || cf < 0 || cf >= N) continue;
+          let cabe = true; for(let k = 0; k < w.length; k++){ const ch = grade[r0 + dr * k][c0 + dc * k]; if(ch && ch !== w[k]){ cabe = false; break; } }
+          if(!cabe) continue; for(let k = 0; k < w.length; k++) grade[r0 + dr * k][c0 + dc * k] = w[k];
+          palavras.push({w, cells:Array.from({length:w.length}, (_, k) => (r0 + dr * k) * N + (c0 + dc * k))}); ok = true; } }
+      if(palavras.length === qtd) break; }
+    const AB = 'ABCDEFGHIJLMNOPRSTUVZ'; for(let r = 0; r < N; r++) for(let c = 0; c < N; c++) if(!grade[r][c]) grade[r][c] = AB[Math.floor(Math.random() * AB.length)];
+    store.set('cacaUlt', palavras.map(p => p.w)); achadas = new Set();
+  };
+  const desenha = () => {
+    $('ccrod').textContent = `Rodada ${rodada}`;
+    $('ccgrid').style.setProperty('--n', N);
+    $('ccgrid').innerHTML = grade.flat().map((ch, i) => `<span class="cc-c ${palavras.some(p => achadas.has(p.w) && p.cells.includes(i)) ? 'ok' : ''}" data-i="${i}">${ch}</span>`).join('');
+    $('ccpals').innerHTML = palavras.map(p => `<span class="cc-p ${achadas.has(p.w) ? 'ok' : ''}">${p.w}</span>`).join('');
+  };
+  const linha = (a, b) => { const r1 = Math.floor(a / N), c1 = a % N, r2 = Math.floor(b / N), c2 = b % N, dr = Math.sign(r2 - r1), dc = Math.sign(c2 - c1), len = Math.max(Math.abs(r2 - r1), Math.abs(c2 - c1));
+    if(!(r1 === r2 || c1 === c2 || Math.abs(r2 - r1) === Math.abs(c2 - c1))) return [a]; return Array.from({length:len + 1}, (_, k) => (r1 + dr * k) * N + (c1 + dc * k)); };
+  const marca = cells => $('ccgrid').querySelectorAll('.cc-c').forEach(el => el.classList.toggle('sel', cells.includes(+el.dataset.i)));
+  const celDe = e => { const el = document.elementFromPoint(e.clientX, e.clientY); return el && el.classList.contains('cc-c') ? +el.dataset.i : null; };
+  const g = $('ccgrid');
+  g.addEventListener('pointerdown', e => { const i = celDe(e); if(i === null) return; e.preventDefault(); sel = {a:i, cells:[i]}; marca(sel.cells); try{ g.setPointerCapture(e.pointerId); }catch(x){} });
+  g.addEventListener('pointermove', e => { if(!sel) return; const i = celDe(e); if(i === null) return; sel.cells = linha(sel.a, i); marca(sel.cells); });
+  const solta = () => { if(!sel) return; const txt = sel.cells.map(i => grade[Math.floor(i / N)][i % N]).join(''), rev = [...txt].reverse().join('');
+    const p = palavras.find(x => !achadas.has(x.w) && (x.w === txt || x.w === rev) && x.cells.length === sel.cells.length); sel = null; marca([]);
+    if(p){ achadas.add(p.w); desenha(); const r = g.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height / 2, 16);
+      if(achadas.size === palavras.length){ jogou('caca'); burst(innerWidth / 2, innerHeight / 3, 60);
+        $('ccfim').innerHTML = `<div class="paper unfold cc-ok"><p>Achou ${palavras.length === 1 ? 'a palavra' : 'as ' + palavras.length + ' palavras'}!</p><button type="button" id="ccnext">Próxima rodada</button></div>`;
+        setTimeout(() => $('ccfim')?.scrollIntoView({behavior:'smooth', block:'center'}), 200);
+        $('ccnext').onclick = () => { rodada++; store.set('cacaRodada', rodada); nova(); }; } } };
+  g.addEventListener('pointerup', solta); g.addEventListener('pointercancel', () => { sel = null; marca([]); });
+  const nova = () => { $('ccfim').innerHTML = ''; gera(); desenha(); window.scrollTo({top:0, behavior:'smooth'}); };
+  $('ccre').onclick = () => { rodada = 1; store.set('cacaRodada', 1); nova(); };
+  gera(); desenha();
+};
 VIEWS.memoria = () => {
   const cartas = memFotos().map(x => ({img:x.img})), sym = C.memoria.slice();
   while(cartas.length < 6 && sym.length) cartas.push({s:sym.shift()});
@@ -6933,6 +6994,7 @@ const ESCRITAS = [
   {grupo:'O que cada um ama'},
   {k:'gostosCats', t:'Categorias', d:'uma por linha. As coisas que já estão numa categoria que você apagar continuam aparecendo', tipo:'linhas'},
   {grupo:'Jogos'},
+  {k:'cacaPalavras', t:'Caça-palavras: palavras', d:'uma por linha. Cada rodada sorteia palavras daqui (sem acento no quadro). Quanto mais, melhor', tipo:'linhas'},
   {k:'textos.memoriaFim', t:'Jogo da memória: mensagem do final', d:'aparece quando ele acha todos os pares. As fotos do jogo ficam na aba Fotos', tipo:'texto', rows:3},
   {k:'motivos', t:'Pegue os corações (motivos)', d:'um por linha. O jogo pede 25 corações e sorteia entre todos daqui, então quanto mais tiver, mais varia', tipo:'linhas'},
   {k:'dates', t:'Roleta do date', d:'uma ideia por linha', tipo:'linhas'},
