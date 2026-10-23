@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=135">
-<link rel="apple-touch-icon" href="icon-180.png?v=135">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=135">
+<link rel="manifest" href="manifest.json?v=137">
+<link rel="apple-touch-icon" href="icon-180.png?v=137">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=137">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -1858,6 +1858,7 @@ html body .ed-modo.ab .ed-btrow{max-width:none!important;flex-wrap:wrap}html bod
 .cmt[data-segura]{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}.cmt-ac{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 html body .cmt-tg{display:inline-flex;align-items:center;gap:5px;width:auto;min-height:0;margin:2px 0 0;padding:3px 10px;border-radius:99px;background:transparent;border:1px solid var(--line2);box-shadow:none;color:var(--muted);font-size:12px;font-weight:700;font-family:var(--f-body)}html body .cmt-tg svg{width:13px;height:13px}html body .cmt-tg[data-tgc="0"]{border:0;padding:3px 4px}
 html body button.cmt-rc{min-height:0!important;width:auto!important;margin:0;padding:0 5px!important;box-shadow:none!important;color:inherit!important;cursor:pointer}
+html body .mural,html body .gs-grid{align-items:start}
 .dm-ext{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .alvo-pisca{animation:alvopisca 1.1s ease-in-out 2;border-radius:14px}
 /* busca universal */
@@ -4006,7 +4007,7 @@ if('serviceWorker' in navigator && /github\.io$/.test(location.hostname)) addEve
 /* sempre a versão mais nova: se o GitHub tem uma versão diferente da aberta, limpa o guardado e recarrega sozinho */
 let edAberto = false;
 document.addEventListener('click', e => { if(edAberto && !e.target.closest('.ed-modo')){ edAberto = false; document.querySelector('.ed-modo')?.classList.remove('ab'); } });
-const VERSAO_APP = 'versão de 22/10 · 14h10';
+const VERSAO_APP = 'versão de 22/10 · 19h45';
 async function confereVersao(){
   if(!/github\.io$/.test(location.hostname) || !navigator.onLine) return;
   try{ const r = await fetch(location.pathname + '?nc=' + Date.now(), {cache:'no-store'}); if(!r.ok) return; const t = await r.text(), m = t.match(/const VERSAO_APP = '([^']+)'/);
@@ -6665,7 +6666,7 @@ VIEWS.filmes = () => {
   const datinha = (f, campo, vazio, pre) => { const v = f[campo] || ''; return `<span class="fl-dt ${v ? 'tem' : ''}"><label>${icon('calendar')}<span>${v ? pre + ' ' + new Date(v + 'T12:00:00').toLocaleDateString('pt-BR') : vazio}</span><input type="date" data-dt="${campo}" data-id="${f.id}" value="${esc(v)}"></label>${v ? `<button type="button" class="fl-dtx" data-dtx="${campo}" data-id="${f.id}" aria-label="tirar a data">×</button>` : ''}</span>`; };
   const draw = () => { if(!$('fll')) return;
     const l = list.filter(f => st(f) === aba);
-    poeLista($('fll'), l.length ? l.map(f => `<article class="fl-card"><div class="fl-row"><div class="fl-capa" style="--s:${f.capaS || 1}"><button type="button" class="fl-cp" data-capa="${f.id}" aria-label="Capa">${f.capa ? `<img src="${f.capa}" alt="">` : `${icon('image')}<small>capa</small>`}</button>${f.capa ? `<span class="fl-sz"><i data-cs="-1" data-id="${f.id}">−</i><i data-cs="1" data-id="${f.id}">+</i></span>` : ''}</div><div class="fl-body"><div class="fl-top"><div class="fl-head"><div class="fl-ht"><span class="fl-k">${esc(f.tipo || 'Filme')}</span><h3>${esc(f.titulo)}</h3></div><div class="fl-tools">${st(f) !== 'ver' ? `<button class="ib" type="button" data-volta="${f.id}" aria-label="Voltar uma etapa" title="${st(f) === 'visto' && ehSerie(f) ? 'Voltar pra vendo' : 'Voltar pra lista'}">${icon('rebobina')}</button>` : ''}<button class="ib" type="button" data-fed="${f.id}" aria-label="Editar">${icon('pencil')}</button><button class="ib" type="button" data-del="${f.id}" aria-label="Apagar">${icon('trash')}</button></div></div>
+    poeLista($('fll'), l.length ? l.map(f => `<article class="fl-card"><div class="fl-row"><div class="fl-capa"><button type="button" class="fl-cp" data-capa="${f.id}" aria-label="Capa">${f.capa ? `<img src="${f.capa}" alt="">` : `${icon('image')}<small>capa</small>`}</button></div><div class="fl-body"><div class="fl-top"><div class="fl-head"><div class="fl-ht"><span class="fl-k">${esc(f.tipo || 'Filme')}</span><h3>${esc(f.titulo)}</h3></div><div class="fl-tools">${st(f) !== 'ver' ? `<button class="ib" type="button" data-volta="${f.id}" aria-label="Voltar uma etapa" title="${st(f) === 'visto' && ehSerie(f) ? 'Voltar pra vendo' : 'Voltar pra lista'}">${icon('rebobina')}</button>` : ''}<button class="ib" type="button" data-fed="${f.id}" aria-label="Editar">${icon('pencil')}</button><button class="ib" type="button" data-del="${f.id}" aria-label="Apagar">${icon('trash')}</button></div></div>
         ${epBox(f)}${f.visto ? datinha(f, 'vistoEm', 'quando a gente viu?', 'vimos em') : ''}${f.visto ? `<div class="fl-notas"><div><small>sua nota</small>${notas(f, eu, true)}</div><div><small>${outro}</small>${notas(f, outro, false)}</div></div>` : ''}</div>
         ${st(f) === 'visto' ? '' : `<div class="fl-act">${st(f) === 'ver' && ehSerie(f) ? `<button type="button" data-com="${f.id}">Começamos</button>` : `<button type="button" data-vi="${f.id}">${st(f) === 'vendo' ? 'Terminamos' : 'Vimos!'}</button>`}</div>`}</div></div><div class="fl-cm">${cmtBox('filmes', f.id, f.autor)}</div></article>`).join('')
       : `<p class="lead hq-empty">${aba === 'ver' ? 'Lista vazia. Bora escolher o próximo?' : aba === 'vendo' ? 'Nada em andamento agora. Quando começarem uma série, toca em "Começamos".' : 'Quando vocês terminarem, toca em "Vimos!" e dão nota.'}</p>`);
