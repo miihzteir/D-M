@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=142">
-<link rel="apple-touch-icon" href="icon-180.png?v=142">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=142">
+<link rel="manifest" href="manifest.json?v=149">
+<link rel="apple-touch-icon" href="icon-180.png?v=149">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=149">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -1331,6 +1331,14 @@ input,textarea,select{font-size:16px!important}
 .cs-item button.poor{opacity:.55}
 .cs-tem{display:inline-flex;gap:5px;align-items:center;font-size:13px;font-weight:600;color:var(--wine);flex:none}
 .cs-req{font-size:12px;color:var(--muted);text-align:right;max-width:110px;flex:none}
+.cs-bts{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px;flex:none;max-width:60%}
+.cs-bts .cs-req{max-width:none;width:100%}
+.cs-item .cs-bts button{padding:0 11px;min-height:34px;font-size:13px}
+.cs-item:has(.cs-bts){flex-wrap:wrap}
+.cs-item:has(.cs-bts){gap:8px}
+.cs-item:has(.cs-bts) .cs-nm{min-width:6.6em;hyphens:manual;-webkit-hyphens:manual}
+.cs-item:has(.cs-bts) .cs-bts{margin-left:auto}
+.cs-item button.ghost.on{background:var(--wine);color:#fff;border-color:var(--wine)}
 
 /* ---------- extras ---------- */
 .hoje2{margin-top:16px}
@@ -1865,6 +1873,8 @@ html body .mural,html body .gs-grid{align-items:start}
 .cc-c.sel{background:#f7c8d3;color:#7a1424}.cc-c.ok{background:#7a1424;color:#fff}
 .cc-pals{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}.cc-p{padding:4px 10px;border-radius:99px;background:#fff;border:1px solid #ecd4d6;font-size:12.5px;font-weight:700;letter-spacing:.06em;color:#7a1424}.cc-p.ok{text-decoration:line-through;opacity:.5}
 .cc-ok{text-align:center}.cc-ok p{margin:0 0 10px}
+.cc-bts{display:flex;gap:6px}.cc-preco{display:inline-flex;align-items:center;gap:2px;margin-left:4px;padding:1px 6px;border-radius:99px;background:#fbeef0;font-size:11px}.cc-preco svg{width:12px;height:12px}html body .cc-dica.sure{background:var(--wine)!important;color:#fff!important}
+.cc-c.dica{background:#f5b301;color:#3a2a2a;animation:ccdica 1.4s ease-in-out infinite}@keyframes ccdica{50%{box-shadow:0 0 0 4px rgba(245,179,1,.35)}}
 .dm-ext{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .alvo-pisca{animation:alvopisca 1.1s ease-in-out 2;border-radius:14px}
 /* busca universal */
@@ -3131,7 +3141,7 @@ function limpaEspaco(){ try{ Object.keys(localStorage).forEach(k => { if(!PREVIA
   Object.keys(localStorage).filter(k => /^diogo_(col_|idxApp)/.test(k)).forEach(k => { if((localStorage.getItem(k) || '').length > 50000) localStorage.removeItem(k); }); }catch(e){} }
 if(!PREVIA) try{ Object.keys(localStorage).filter(k => k.startsWith('previa_')).forEach(k => localStorage.removeItem(k)); }catch(e){}
 /* o que cada um já viu/fez (avisos fechados, bilhetes vistos, jogos…) vale em todos os aparelhos da conta */
-const SYNC_RE = /^(avLidos_|chFechou$|seenBilhetes$|abracosVistos$|moVisto_|leuRecado_|rcDepois_|jogou_|viuTour$|viuDedicatoria$|viuFesta_|viuNatal|done$|mesFesta$|cacaRodada_|cacaUlt_|memUlt_)/;
+const SYNC_RE = /^(cacaJogo_|avLidos_|chFechou$|seenBilhetes$|abracosVistos$|moVisto_|leuRecado_|rcDepois_|jogou_|viuTour$|viuDedicatoria$|viuFesta_|viuNatal|done$|mesFesta$|cacaRodada_|cacaUlt_|memUlt_)/;
 const LEIT = {pend:{}, t:null, on:false};
 const leitT = () => { try{ return JSON.parse(localStorage.getItem('diogo_syncT') || '{}'); }catch(e){ return {}; } };
 function leituraMudou(k, j){ try{ const T = leitT(); T[k] = Date.now(); localStorage.setItem('diogo_syncT', JSON.stringify(T)); }catch(e){} LEIT.pend[k] = {v:j, t:Date.now()}; clearTimeout(LEIT.t); LEIT.t = setTimeout(enviaLeituras, 800); }
@@ -4038,7 +4048,7 @@ if('serviceWorker' in navigator && /github\.io$/.test(location.hostname)) addEve
 /* sempre a versão mais nova: se o GitHub tem uma versão diferente da aberta, limpa o guardado e recarrega sozinho */
 let edAberto = false;
 document.addEventListener('click', e => { if(edAberto && !e.target.closest('.ed-modo')){ edAberto = false; document.querySelector('.ed-modo')?.classList.remove('ab'); } });
-const VERSAO_APP = 'versão de 24/10 · 11h05';
+const VERSAO_APP = 'versão de 24/10 · 13h20';
 async function confereVersao(){
   if(!/github\.io$/.test(location.hostname) || !navigator.onLine) return;
   try{ const r = await fetch(location.pathname + '?nc=' + Date.now(), {cache:'no-store'}); if(!r.ok) return; const t = await r.text(), m = t.match(/const VERSAO_APP = '([^']+)'/);
@@ -4567,9 +4577,13 @@ VIEWS.caca = () => {
   /* cada um tem a sua rodada, guardada na conta (não mistura com a do outro) */
   const eu = Sync.quem || 'Di', chave = 'cacaRodada_' + eu, colJ = Sync.col('jogosProg');
   const salvaRodada = () => { store.set(chave, rodada); colJ.set('caca_' + eu, {jogo:'caca', quem:eu, rodada}).catch(() => {}); };
+  let dicas = new Set(), chocsC = [], comprasC = [];
+  /* a partida fica guardada: saiu e voltou, continua de onde parou */
+  const guarda = () => { const j = {rodada, N, grade:grade.map(r => r.join('')), palavras, achadas:[...achadas], dicas:[...dicas]}; store.set('cacaJogo_' + eu, j); clearTimeout(guarda.t); guarda.t = setTimeout(() => colJ.set('caca_' + eu, {jogo:'caca', quem:eu, rodada, partida:JSON.stringify(j)}).catch(() => {}), 600); };
+  const restaura = j => { if(!j || !j.grade || !j.palavras) return false; rodada = j.rodada; N = j.N; grade = j.grade.map(r => r.split('')); palavras = j.palavras; achadas = new Set(j.achadas || []); dicas = new Set(j.dicas || []); return true; };
   let rodada = Math.max(1, store.get(chave, 1)), grade = [], N = 7, palavras = [], achadas = new Set(), sel = null;
   shell('jogo','Caça-palavras','Arrasta o dedo por cima da palavra pra marcar',
-    `<div class="cc-top"><span class="cc-rod" id="ccrod"></span><button type="button" class="cc-re" id="ccre">Recomeçar</button></div>
+    `<div class="cc-top"><span class="cc-rod" id="ccrod"></span><div class="cc-bts"><button type="button" class="cc-re cc-dica" id="ccdica">Dica <span class="cc-preco">1 ${CHOCO_SVG}</span></button><button type="button" class="cc-re" id="ccre">Recomeçar</button></div></div>
      <div class="cc-grid" id="ccgrid"></div><div class="cc-pals" id="ccpals"></div><div id="ccfim"></div>`);
   const $ = id => document.getElementById(id);
   const gera = () => {
@@ -4589,12 +4603,12 @@ VIEWS.caca = () => {
           palavras.push({w, cells:Array.from({length:w.length}, (_, k) => (r0 + dr * k) * N + (c0 + dc * k))}); ok = true; } }
       if(palavras.length === qtd) break; }
     const AB = 'ABCDEFGHIJLMNOPRSTUVZ'; for(let r = 0; r < N; r++) for(let c = 0; c < N; c++) if(!grade[r][c]) grade[r][c] = AB[Math.floor(Math.random() * AB.length)];
-    store.set('cacaUlt_' + eu, palavras.map(p => p.w)); achadas = new Set();
+    store.set('cacaUlt_' + eu, palavras.map(p => p.w)); achadas = new Set(); dicas = new Set(); guarda();
   };
   const desenha = () => {
     $('ccrod').textContent = `Rodada ${rodada}`;
     $('ccgrid').style.setProperty('--n', N);
-    $('ccgrid').innerHTML = grade.flat().map((ch, i) => `<span class="cc-c ${palavras.some(p => achadas.has(p.w) && p.cells.includes(i)) ? 'ok' : ''}" data-i="${i}">${ch}</span>`).join('');
+    $('ccgrid').innerHTML = grade.flat().map((ch, i) => `<span class="cc-c ${palavras.some(p => achadas.has(p.w) && p.cells.includes(i)) ? 'ok' : palavras.some(p => dicas.has(p.w) && !achadas.has(p.w) && p.cells[0] === i) ? 'dica' : ''}" data-i="${i}">${ch}</span>`).join('');
     $('ccpals').innerHTML = palavras.map(p => `<span class="cc-p ${achadas.has(p.w) ? 'ok' : ''}">${p.w}</span>`).join('');
   };
   const linha = (a, b) => { const r1 = Math.floor(a / N), c1 = a % N, r2 = Math.floor(b / N), c2 = b % N, dr = Math.sign(r2 - r1), dc = Math.sign(c2 - c1), len = Math.max(Math.abs(r2 - r1), Math.abs(c2 - c1));
@@ -4606,17 +4620,32 @@ VIEWS.caca = () => {
   g.addEventListener('pointermove', e => { if(!sel) return; const i = celDe(e); if(i === null) return; sel.cells = linha(sel.a, i); marca(sel.cells); });
   const solta = () => { if(!sel) return; const txt = sel.cells.map(i => grade[Math.floor(i / N)][i % N]).join(''), rev = [...txt].reverse().join('');
     const p = palavras.find(x => !achadas.has(x.w) && (x.w === txt || x.w === rev) && x.cells.length === sel.cells.length); sel = null; marca([]);
-    if(p){ achadas.add(p.w); desenha(); const r = g.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height / 2, 16);
-      if(achadas.size === palavras.length){ jogou('caca'); burst(innerWidth / 2, innerHeight / 3, 60);
+    if(p){ achadas.add(p.w); guarda(); desenha(); const r = g.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height / 2, 16);
+      if(achadas.size === palavras.length){ jogou('caca'); burst(innerWidth / 2, innerHeight / 3, 60); fim(); } } };
+  const fim = () => {
         $('ccfim').innerHTML = `<div class="paper unfold cc-ok"><p>Achou ${palavras.length === 1 ? 'a palavra' : 'as ' + palavras.length + ' palavras'}!</p><button type="button" id="ccnext">Próxima rodada</button></div>`;
         setTimeout(() => $('ccfim')?.scrollIntoView({behavior:'smooth', block:'center'}), 200);
-        $('ccnext').onclick = () => { rodada++; salvaRodada(); nova(); }; } } };
+        $('ccnext').onclick = () => { rodada++; salvaRodada(); nova(); }; };
   g.addEventListener('pointerup', solta); g.addEventListener('pointercancel', () => { sel = null; marca([]); });
   const nova = () => { $('ccfim').innerHTML = ''; gera(); desenha(); window.scrollTo({top:0, behavior:'smooth'}); };
   $('ccre').onclick = () => { rodada = 1; salvaRodada(); nova(); };
-  gera(); desenha();
-  let sinc = false; const offJ = colJ.on(l => { const d = l.find(x => x.id === 'caca_' + eu); if(sinc || !d) return; sinc = true; if(+d.rodada && +d.rodada !== rodada && !achadas.size){ rodada = +d.rodada; store.set(chave, rodada); gera(); desenha(); } });
-  const back = document.getElementById('back'), prevB = back.onclick; back.onclick = () => { offJ(); prevB(); };
+  const comeca = () => { desenha(); if(palavras.length && achadas.size === palavras.length) fim(); };
+  if(!restaura(store.get('cacaJogo_' + eu, null))) gera(); comeca();
+  /* em outro aparelho: pega a partida guardada na conta */
+  let sinc = false; const offJ = colJ.on(l => { const d = l.find(x => x.id === 'caca_' + eu); if(sinc || !d) return; sinc = true;
+    let j = null; try{ j = d.partida ? JSON.parse(d.partida) : null; }catch(x){}
+    const local = store.get('cacaJogo_' + eu, null);
+    if(j && (!local || JSON.stringify(local) !== JSON.stringify(j)) && (!achadas.size || (j.rodada > rodada))){ if(restaura(j)){ store.set('cacaJogo_' + eu, j); store.set(chave, rodada); $('ccfim').innerHTML = ''; comeca(); } } });
+  /* dica: mostra a primeira letra de uma palavra, custa 1 chocolate */
+  const saldoC = () => chocoSaldo(chocsC, comprasC);
+  const o1 = Sync.col('chocolates').on(l => { chocsC = l; }), o2 = Sync.col('compras').on(l => { comprasC = l; });
+  $('ccdica').onclick = async e => { const b = e.currentTarget, falta = palavras.filter(p => !achadas.has(p.w) && !dicas.has(p.w));
+    if(!falta.length){ csToast('Já tem dica em todas as palavras que faltam'); return; }
+    if(saldoC() < 1){ csToast('Sem chocolates pra dica. Pega o de hoje na casinha!'); return; }
+    if(!b.dataset.sure){ b.dataset.sure = 1; b.classList.add('sure'); b.firstChild.textContent = 'Gastar 1? '; setTimeout(() => { if(b.isConnected){ delete b.dataset.sure; b.classList.remove('sure'); b.firstChild.textContent = 'Dica '; } }, 2500); return; }
+    delete b.dataset.sure; b.classList.remove('sure'); b.firstChild.textContent = 'Dica '; b.disabled = true;
+    try{ await Sync.col('compras').add({preco:1, autor:eu, tipo:'dica'}); const w = falta[Math.floor(Math.random() * falta.length)]; dicas.add(w.w); guarda(); desenha(); const c = $('ccgrid').querySelector('.cc-c.dica'); c && c.scrollIntoView({behavior:'smooth', block:'nearest'}); }catch(x){} b.disabled = false; };
+  const back = document.getElementById('back'), prevB = back.onclick; back.onclick = () => { offJ(); o1(); o2(); prevB(); };
 };
 VIEWS.memoria = () => {
   const cartas = memFotos().map(x => ({img:x.img})), sym = C.memoria.slice();
@@ -5521,26 +5550,25 @@ function PixelRoom(cv){
     if(quem === 'Bebe'){
       const sk = '#f0c9a8', on = '#f6dc8a', onS = '#e2c06a';
       const cabeca = (cx, cy) => { EO(cx, cy, 5, 5, sk); R(cx + 2, cy - 3, 2, 6, sh(sk, -.06)); R(cx - 2, cy - 6, 3, 1, '#7a5238'); P(cx, cy - 7, '#7a5238'); P(cx + 1, cy - 8, '#7a5238'); P(cx - 2, cy - 1, '#1f1a17'); P(cx + 2, cy - 1, '#1f1a17'); P(cx - 2, cy - 2, '#3a3030'); P(cx + 2, cy - 2, '#3a3030'); R(cx - 4, cy + 1, 2, 1, '#f2a0a8'); R(cx + 3, cy + 1, 2, 1, '#f2a0a8'); };
-      if(acc.carrinho){ const c = acc.carrinho; shadow(x, y + 1, 10); const w = (cx) => { EO(cx, y - 3, 3, 3, '#2a2420'); E(cx, y - 3, 1, 1, '#c0c0c0'); }; R(x - 6, y - 7, 13, 1, '#6b6b6b'); R(x - 5, y - 7, 1, 4, '#6b6b6b'); R(x + 5, y - 7, 1, 4, '#6b6b6b'); w(x - 6); w(x + 6);
+      if(acc.carrinho){ const c = acc.carrinho; const w = (cx) => { EO(cx, y - 3, 3, 3, '#2a2420'); E(cx, y - 3, 1, 1, '#c0c0c0'); }; R(x - 6, y - 7, 13, 1, '#6b6b6b'); R(x - 5, y - 7, 1, 4, '#6b6b6b'); R(x + 5, y - 7, 1, 4, '#6b6b6b'); w(x - 6); w(x + 6);
         R(x + 8, y - 20, 1, 12, '#6b6b6b'); R(x + 8, y - 20, 4, 1, '#6b6b6b'); R(x + 11, y - 21, 2, 2, '#2a2420');
         cabeca(x + 2, y - 22 + bob);
         R(x - 11, y - 18, 21, 11, OUT); R(x - 10, y - 17, 19, 9, c); R(x - 10, y - 17, 19, 1, sh(c, .35)); R(x - 10, y - 9, 19, 1, sh(c, -.2)); R(x - 2, y - 15, 10, 4, '#fbf8f2'); R(x - 2, y - 15, 10, 1, '#ffffff'); heart(x - 8, y - 15, sh(c, .5));
         for(let k = 0; k < 10; k++){ const w2 = Math.round(Math.sqrt(Math.max(0, 100 - (9 - k) * (9 - k)))); R(x - 11, y - 28 + k, w2 + 2, 1, OUT); R(x - 10, y - 28 + k, w2, 1, k % 3 === 1 ? sh(c, .25) : sh(c, -.1)); } R(x - 10, y - 19, 11, 1, sh(c, -.35)); R(x - 11, y - 29, 6, 1, OUT);
         return; }
-      shadow(x, y + 1, 6); EO(x - 3, y - 1, 2, 1, sk); EO(x + 3, y - 1, 2, 1, sk);
+      EO(x - 3, y - 1, 2, 1, sk); EO(x + 3, y - 1, 2, 1, sk);
       EO(x, y - 5, 5, 4, on); R(x - 3, y - 7, 7, 1, sh(on, .3)); R(x + 3, y - 6, 2, 4, onS); P(x, y - 4, '#e58fa5'); R(x - 6, y - 6 + bob, 2, 3, sk); R(x + 5, y - 6 + bob, 2, 3, sk);
       cabeca(x, y - 13 + bob); return; }
     const skin = mih ? '#f2cfb8' : '#c48a63', skS = sh(skin, -.15), hair = mih ? '#5a3a28' : '#2a1d17', hl = mih ? '#80583c' : '#4a3428';
     const by = y + bob, hy = y - 28 + bob;
     /* peças */
-    const lh = sit ? 5 : 9, legs = (c, sd) => { R(x - 6, y - 11, 12, lh + 1, O); R(x - 5, y - 11, 4, lh, c); R(x + 1, y - 11, 4, lh, c); R(x - 2, y - 11, 1, lh, sd); R(x + 4, y - 11, 1, lh, sd); };
+    const lh = sit ? 5 : 9, legs = (c, sd) => { R(x - 6, y - 11, 5, lh + 1, O); R(x + 1, y - 11, 5, lh + 1, O); R(x - 5, y - 11, 3, lh, c); R(x + 2, y - 11, 3, lh, c); R(x - 3, y - 11, 1, lh, sd); R(x + 4, y - 11, 1, lh, sd); };
     const bareLegs = () => legs(skin, skS);
-    const fy = sit ? y - 4 : y, shoes = (c, sole) => { R(x - 7, fy - 4, 7, 4, O); R(x, fy - 4, 7, 4, O); R(x - 6, fy - 3, 5, 2, c); R(x + 1, fy - 3, 5, 2, c); R(x - 6, fy - 1, 5, 1, sole); R(x + 1, fy - 1, 5, 1, sole); P(x - 5, fy - 3, sh(c, .4)); P(x + 2, fy - 3, sh(c, .4)); };
+    const fy = sit ? y - 4 : y, shoes = (c, sole) => { R(x - 7, fy - 4, 6, 4, O); R(x + 1, fy - 4, 6, 4, O); R(x - 6, fy - 3, 4, 2, c); R(x + 2, fy - 3, 4, 2, c); R(x - 6, fy - 1, 4, 1, sole); R(x + 2, fy - 1, 4, 1, sole); P(x - 5, fy - 3, sh(c, .4)); P(x + 3, fy - 3, sh(c, .4)); };
     const torso = (c, sd, h = 11) => { R(x - 7, by - 21, 14, h + 1, O); R(x - 6, by - 22, 12, 1, O); R(x - 6, by - 21, 12, h, c); R(x - 6, by - 21, 12, 1, sh(c, .28)); R(x + 4, by - 20, 2, h - 1, sd); };
     const arms = (c, sd) => { R(x - 9, by - 20, 3, 9, O); R(x + 6, by - 20, 3, 9, O); R(x - 8, by - 19, 2, 7, c); R(x + 6, by - 19, 2, 7, c); P(x + 7, by - 19, sd); R(x - 8, by - 12, 2, 2, skin); R(x + 6, by - 12, 2, 2, skin); R(x - 9, by - 11, 3, 1, O); R(x + 6, by - 11, 3, 1, O); };
     const dots = (x0, y0, w, h, c, step = 3) => { for(let j = 0; j < h; j += step) for(let i = (j / step) % 2 ? 1 : 0; i < w; i += step) P(x0 + i, y0 + j, c); };
-    if(!sit && !soCabeca) shadow(x, y + 1, 7);
-    if(soCabeca){ if(mih){ EO(x, hy - 1, 8, 8, hair); R(x - 8, hy, 16, 7, hair); } }
+        if(soCabeca){ if(mih){ EO(x, hy - 1, 8, 8, hair); R(x - 8, hy, 16, 7, hair); } }
     else {
     if(mih){ EO(x, hy - 1, 8, 8, hair); R(x - 9, hy, 18, 15, O); R(x - 8, hy, 16, 14, hair); R(x - 8, hy + 11, 16, 2, sh(hair, -.15)); R(x - 9, hy + 14, 18, 1, O); R(x - 8, hy + 14, 16, 1, sh(hair, -.15)); R(x - 4, hy - 8, 6, 1, hl); P(x - 6, hy - 6, hl); }
     if(look === 'moletom'){ R(x - 6, by - 24, 12, 3, O); R(x - 5, by - 24, 10, 3, sh('#c9b8e0', -.2)); }
@@ -5562,7 +5590,7 @@ function PixelRoom(cv){
         else { legs('#1f1a17', '#111'); shoes('#1f1a17', '#111'); torso('#1f1a17', '#111'); R(x - 2, by - 21, 5, 8, '#fbf8f2'); R(x - 3, by - 21, 1, 9, '#2a2626'); R(x + 3, by - 21, 1, 9, '#2a2626'); R(x - 2, by - 21, 5, 1, '#b3122c'); P(x - 3, by - 20, '#b3122c'); P(x + 3, by - 20, '#b3122c'); P(x, by - 16, '#1f1a17'); P(x, by - 14, '#1f1a17'); R(x - 5, by - 19, 2, 2, '#fbf8f2'); P(x - 5, by - 19, '#f4b8c6'); arms('#1f1a17', '#111'); R(x - 8, by - 13, 2, 1, '#fbf8f2'); R(x + 6, by - 13, 2, 1, '#fbf8f2'); }
         break;
       case 'inverno':
-        if(mih){ legs('#3b4466', '#2c3350'); shoes('#6b4a36', '#4a2e22'); R(x - 6, y - 7, 5, 3, '#6b4a36'); R(x + 1, y - 7, 5, 3, '#6b4a36'); torso('#e8b4c0', '#d892a6', 13); R(x - 1, by - 21, 1, 13, '#d892a6'); P(x + 1, by - 17, '#fbf8f2'); P(x + 1, by - 13, '#fbf8f2'); arms('#e8b4c0', '#d892a6'); R(x - 6, by - 23, 12, 3, '#b3122c'); R(x + 2, by - 21, 3, 7, '#b3122c'); R(x + 2, by - 15, 3, 1, '#fbf8f2'); }
+        if(mih){ legs('#3b4466', '#2c3350'); shoes('#6b4a36', '#4a2e22'); R(x - 5, y - 7, 3, 3, '#6b4a36'); R(x + 2, y - 7, 3, 3, '#6b4a36'); torso('#e8b4c0', '#d892a6', 13); R(x - 1, by - 21, 1, 13, '#d892a6'); P(x + 1, by - 17, '#fbf8f2'); P(x + 1, by - 13, '#fbf8f2'); arms('#e8b4c0', '#d892a6'); R(x - 6, by - 23, 12, 3, '#b3122c'); R(x + 2, by - 21, 3, 7, '#b3122c'); R(x + 2, by - 15, 3, 1, '#fbf8f2'); }
         else { legs('#2f3346', '#22263a'); shoes('#2a1d17', '#fbf8f2'); torso('#6b4a36', '#5a3a28', 13); R(x - 1, by - 21, 1, 13, '#4a2e22'); P(x - 3, by - 17, '#e5c15a'); P(x - 3, by - 13, '#e5c15a'); arms('#6b4a36', '#5a3a28'); R(x - 6, by - 23, 12, 3, '#e5c15a'); R(x - 4, by - 21, 3, 7, '#e5c15a'); R(x - 4, by - 15, 3, 1, '#b3122c'); }
         break;
       case 'praiaroupa':
@@ -5573,15 +5601,15 @@ function PixelRoom(cv){
       case 'festa':
         if(mih){ const rows = 13 - bob; for(let k = 0; k <= rows; k++){ const w = 6 + Math.floor(k / 3); R(x - w - 1, by - 13 + k, 2 * w + 2, 1, O); R(x - w, by - 13 + k, 2 * w, 1, k % 4 === 1 ? '#8e1d30' : '#7a1424'); } R(x - 10, by - 13 + rows + 1, 20, 1, O); R(x - 3, by - 10, 1, 10, '#5a1020'); R(x + 4, by - 8, 1, 8, '#5a1020'); P(x - 5 + (t % 5) * 2, by - 6 + (t % 3) * 2, '#ff9fb6'); P(x + 3 - (t % 4), by - 11 + (t % 2) * 3, '#ffd3de'); R(x - 4, y - 1, 2, 1, '#1f1a17'); R(x + 2, y - 1, 2, 1, '#1f1a17');
           torso('#7a1424', '#5a1020', 8); R(x - 6, by - 21, 3, 2, skin); R(x - 6, by - 14, 12, 1, '#e5c15a'); P(x, by - 14, '#fff3c4'); arms(skin, skS); R(x - 1, by - 22, 3, 1, '#e5c15a'); }
-        else { legs('#1f1a17', '#111'); shoes('#1f1a17', '#111'); P(x - 5, y - 3, '#8a8a8a'); P(x + 2, y - 3, '#8a8a8a'); torso('#2a2626', '#1a1717'); R(x - 2, by - 21, 5, 7, '#fbf8f2'); R(x - 3, by - 21, 1, 8, '#3a3434'); R(x + 3, by - 21, 1, 8, '#3a3434'); R(x - 2, by - 21, 5, 1, '#7a1424'); P(x - 2, by - 20, '#7a1424'); P(x + 2, by - 20, '#7a1424'); P(x, by - 17, '#2a2626'); P(x, by - 15, '#2a2626'); R(x + 3, by - 18, 2, 1, '#b3122c'); arms('#2a2626', '#1a1717'); R(x - 8, by - 13, 2, 1, '#fbf8f2'); R(x + 6, by - 13, 2, 1, '#fbf8f2'); }
+        else { legs('#1f1a17', '#111'); shoes('#1f1a17', '#111'); P(x - 5, y - 3, '#8a8a8a'); P(x + 3, y - 3, '#8a8a8a'); torso('#2a2626', '#1a1717'); R(x - 2, by - 21, 5, 7, '#fbf8f2'); R(x - 3, by - 21, 1, 8, '#3a3434'); R(x + 3, by - 21, 1, 8, '#3a3434'); R(x - 2, by - 21, 5, 1, '#7a1424'); P(x - 2, by - 20, '#7a1424'); P(x + 2, by - 20, '#7a1424'); P(x, by - 17, '#2a2626'); P(x, by - 15, '#2a2626'); R(x + 3, by - 18, 2, 1, '#b3122c'); arms('#2a2626', '#1a1717'); R(x - 8, by - 13, 2, 1, '#fbf8f2'); R(x + 6, by - 13, 2, 1, '#fbf8f2'); }
         break;
       case 'natal':
         legs(mih ? '#7a1424' : '#2f3346', mih ? '#5a1020' : '#22263a'); shoes('#6b4a36', '#4a2e22'); torso('#2f5a45', '#234636');
         for(let i = 0; i < 12; i++) P(x - 6 + i, by - 16 + (i % 2), '#fbf8f2'); for(let i = 0; i < 12; i += 3) P(x - 5 + i, by - 13, '#b3122c'); P(x, by - 19, '#e5c15a'); R(x - 6, by - 11, 12, 1, '#b3122c');
         arms('#2f5a45', '#234636'); R(x - 8, by - 13, 2, 1, '#fbf8f2'); R(x + 6, by - 13, 2, 1, '#fbf8f2'); if(mih){ R(x - 5, by - 22, 10, 2, '#b3122c'); R(x + 2, by - 20, 2, 5, '#b3122c'); } break;
       default:
-        if(mih){ legs('#3b4466', '#2c3350'); R(x - 5, y - 4, 4, 1, '#5a6488'); R(x + 1, y - 4, 4, 1, '#5a6488'); shoes('#fbf8f2', '#cfc6bb'); torso('#b3122c', '#8e1d30'); R(x - 2, by - 21, 5, 2, skin); R(x - 6, by - 11, 12, 1, '#8e1d30'); arms('#b3122c', '#8e1d30'); if(!back) heart(x + 1, by - 18, '#f4b8c6'); }
-        else { legs('#2f3346', '#22263a'); R(x - 5, y - 4, 4, 1, '#454a66'); R(x + 1, y - 4, 4, 1, '#454a66'); shoes('#2a1d17', '#fbf8f2'); torso('#f4f2ee', '#d8d3cc'); R(x - 2, by - 21, 5, 1, '#d8d3cc'); if(!back){ R(x - 4, by - 17, 8, 3, '#2f3346'); R(x - 3, by - 16, 6, 1, '#d8d3cc'); } arms('#f4f2ee', '#d8d3cc'); }
+        if(mih){ legs('#3b4466', '#2c3350'); R(x - 5, y - 4, 3, 1, '#5a6488'); R(x + 2, y - 4, 3, 1, '#5a6488'); shoes('#fbf8f2', '#cfc6bb'); torso('#b3122c', '#8e1d30'); R(x - 2, by - 21, 5, 2, skin); R(x - 6, by - 11, 12, 1, '#8e1d30'); arms('#b3122c', '#8e1d30'); if(!back) heart(x + 1, by - 18, '#f4b8c6'); }
+        else { legs('#2f3346', '#22263a'); R(x - 5, y - 4, 3, 1, '#454a66'); R(x + 2, y - 4, 3, 1, '#454a66'); shoes('#2a1d17', '#fbf8f2'); torso('#f4f2ee', '#d8d3cc'); R(x - 2, by - 21, 5, 1, '#d8d3cc'); if(!back){ R(x - 4, by - 17, 8, 3, '#2f3346'); R(x - 3, by - 16, 6, 1, '#d8d3cc'); } arms('#f4f2ee', '#d8d3cc'); }
     }
     if(acc.aliancas) P(mih ? x + 7 : x - 8, by - 11, '#f6d55a');
     }
@@ -5816,7 +5844,7 @@ function sequenciaHTML(chocs, eu, outro){
 VIEWS.casinha = () => {
   document.getElementById('chtoast')?.remove();
   const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'Mihzinha' : 'Di';
-  let aba = store.get('casaAba2', 'nos'), chocs = [], compras = [], cs = {}, seqAberta = false;
+  let aba = store.get('casaAba2', 'nos'), chocs = [], compras = [], cs = {}, seqAberta = false, provando = '';
   if(!CASA.comodos.some(c => c.id === aba)) aba = 'nos';
   shell('a nossa casinha','Nossa casinha','Cada dia que vocês entram, ganham um chocolate. Junta e monta a casa de vocês',
     `<div class="cs-wrap"><div class="cs-top">
@@ -5869,7 +5897,8 @@ VIEWS.casinha = () => {
     if(seqAberta) $('csseq').innerHTML = sequenciaHTML(chocs, eu, outro);
     document.querySelectorAll('#cstabs button').forEach(b => { b.classList.toggle('on', b.dataset.c === aba); if(b.classList.contains('lug')) b.classList.toggle('lock', !tem(b.dataset.c)); });
     const cm = CASA.comodos.find(c => c.id === aba), owned = new Set(compras.map(c => c.id)), onde = ondeDe();
-    const look = tem(cs.roupa) ? cs.roupa : 'base', usa = id => tem(id) && (cs.usando || {})[id] === true, acc = {oculos:usa('oculos'), laco:usa('laco'), aliancas:tem('aliancas'), bone:usa('bone'), tiara:usa('tiara'), carrinho: tem('passeio') && cs.noCarrinho ? ((cs.cor || {}).passeio || PAL.cores[0][1]) : ''};
+    let look = tem(cs.roupa) ? cs.roupa : 'base'; const usa = id => tem(id) && (cs.usando || {})[id] === true, acc = {oculos:usa('oculos'), laco:usa('laco'), aliancas:tem('aliancas'), bone:usa('bone'), tiara:usa('tiara'), carrinho: tem('passeio') && cs.noCarrinho ? ((cs.cor || {}).passeio || PAL.cores[0][1]) : ''};
+    if(cm.provador && provando && !tem(provando)){ const pi = CASA.itens.find(x => x.id === provando); if(pi && pi.roupa) look = pi.id; else if(pi) acc[pi.id] = true; } else provando = '';
     const pessoas = ['Mihzinha','Di'].concat(tem('bebe') ? ['Bebe'] : []);
     const gente = pessoas.filter(q => onde[q] === aba);
     const lookAqui = cm.out ? 'banho' : cm.id === 'praia' ? (look === 'praiaroupa' ? 'praiaroupa' : 'banho') : look;
@@ -5906,6 +5935,7 @@ VIEWS.casinha = () => {
       else if(ok) btn = `<span class="cs-tem">${icon('heart')} conquistado</span>`;
       else if(falta) btn = `<span class="cs-req">${req === "abrir o lugar" ? "abre o lugar antes" : "precisa de " + esc(req)}</span>`;
       else btn = `<button type="button" data-buy="${i.id}" ${saldo < i.p ? 'class="poor"' : ''}>Comprar</button>`;
+      if(!ok && cm.provador) btn = `<span class="cs-bts"><button type="button" class="ghost${provando === i.id ? ' on' : ''}" data-provar="${i.id}">${provando === i.id ? 'Tirar' : 'Provar'}</button>${btn}</span>`;
       let cores = '';
       if(ok && i.v){ const cur = (cs.cor || {})[i.id] || PAL[i.v][0][1]; cores = `<div class="cs-sw">${PAL[i.v].map((p, k) => { const id = `${i.id}__${k}`, liv = !k || tem(id); return `<button type="button" class="sw ${cur === p[1] ? 'sel' : ''} ${liv ? '' : 'lock'}" data-item="${i.id}" data-k="${k}" title="${p[0]}" style="--c:${p[1]}">${liv ? '' : `<b>${CASA.precoCor}</b>`}</button>`; }).join('')}</div>`; }
       if(ok && (i.id === 'cachorro' || i.id === 'gatinho')) cores += `<div class="cs-pet"><input type="text" maxlength="16" placeholder="Dá um nome pra ${i.id === 'cachorro' ? 'ele' : 'ela'}" value="${esc((cs.pets || {})[i.id] || '')}" data-petin="${i.id}"><button type="button" data-pet="${i.id}">Salvar</button></div>`;
@@ -5916,6 +5946,7 @@ VIEWS.casinha = () => {
 
     $('csloja').innerHTML = html;
     $('csloja').querySelectorAll('[data-buy]').forEach(b => b.onclick = () => { const i = CASA.itens.find(x => x.id === b.dataset.buy); comprar(b, i.id, i.p, async () => { if(i.roupa) await Sync.setFlag('casinha', 'roupa', i.id); if(['oculos','bone','laco','tiara'].includes(i.id)) await Sync.setFlag('casinha', 'usando', Object.assign({}, cs.usando || {}, {[i.id]:true})); if(i.id === 'bebe'){ const o = ondeDe(); o.Bebe = 'bebe'; await Sync.setFlag('casinha', 'onde', o); } if(i.id === 'passeio') await Sync.setFlag('casinha', 'noCarrinho', true); }); });
+    $('csloja').querySelectorAll('[data-provar]').forEach(b => b.onclick = () => { provando = provando === b.dataset.provar ? '' : b.dataset.provar; draw(); if(provando) $('csscene').scrollIntoView({behavior:'smooth', block:'center'}); });
     $('csloja').querySelectorAll('[data-vestir]').forEach(b => b.onclick = () => Sync.setFlag('casinha', 'roupa', b.dataset.vestir));
     $('csloja').querySelectorAll('[data-pet]').forEach(b => b.onclick = () => { const v = $('csloja').querySelector(`[data-petin="${b.dataset.pet}"]`).value.trim(); Sync.setFlag('casinha', 'pets', Object.assign({}, cs.pets || {}, {[b.dataset.pet]:v})); sparkle(b); });
     $('csloja').querySelectorAll('[data-carrinho]').forEach(b => b.onclick = () => Sync.setFlag('casinha', 'noCarrinho', b.dataset.carrinho === '1'));
@@ -5931,7 +5962,7 @@ VIEWS.casinha = () => {
     });
   };
   $('csteste')?.addEventListener('click', e => { e.currentTarget.disabled = true; e.currentTarget.textContent = 'Abrindo…'; entrarPrevia('Mihzinha', hoje() < INICIO_STR ? INICIO_STR : hoje()); });
-  $('cstabs').onclick = e => { const b = e.target.closest('button'); if(!b) return; aba = b.dataset.c; store.set('casaAba2', aba); draw(); };
+  $('cstabs').onclick = e => { const b = e.target.closest('button'); if(!b) return; aba = b.dataset.c; provando = ''; store.set('casaAba2', aba); draw(); };
   $('csfogob').onclick = () => { seqAberta = !seqAberta; $('csseq').hidden = !seqAberta; $('csfogob').classList.toggle('on', seqAberta); draw(); if(seqAberta) setTimeout(() => $('csseq').scrollIntoView({behavior:'smooth', block:'nearest'}), 60); };
   const offC = colC.on(l => {
     chocs = l;
@@ -5945,6 +5976,19 @@ VIEWS.casinha = () => {
   const back = document.getElementById('back'), prev = back.onclick; back.onclick = () => { offC(); offP(); offS(); offR(); offB(); offSd(); px.dispose(); prev(); };
 };
 
+const NIVEIS_SDD = [
+  [500, (q, v) => `${q} encheu o coração de saudade de você`],
+  [400, (q, v) => `${q} tá com uma saudade que nem cabe mais`],
+  [300, (q, v) => `${q} tá com saudade demais de você hoje`],
+  [200, (q, v) => `${q} não para de pensar em você hoje`],
+  [150, (q, v) => `${q} tá morrendo de saudade de você`],
+  [100, (q, v) => `Uau, quanta saudade! ${q} queria você aqui agora`],
+  [50,  (q, v) => `${q} tá com muita saudade de você`],
+  [25,  (q, v) => `${q} tá com uma saudade apertada de você`],
+  [10,  (q, v) => `${q} tá com bastante saudade de você`],
+  [1,   (q, v) => `${q} já sentiu saudade ${v} ${v === 1 ? 'vez' : 'vezes'} hoje`]
+];
+const frSaudade = (quem, v) => (NIVEIS_SDD.find(([m]) => v >= m) || NIVEIS_SDD[NIVEIS_SDD.length - 1])[1](quem, v);
 /* ---------- extras: utilidades ---------- */
 const dsStr = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 const inicioSemana = () => { const d = new Date(); const k = (d.getDay() + 6) % 7; d.setDate(d.getDate() - k); d.setHours(0,0,0,0); return d; };
@@ -6162,7 +6206,7 @@ function regrasAviso(eu){
     cartasData: c => c.de === outro && c.para === eu && {titulo:`${Ele} lacrou uma cartinha pra você`, corpo:`Ela abre em ${new Date(c.abreEm + 'T12:00:00').toLocaleDateString('pt-BR')}`, go:'cartadata@cartasData:' + c.id, ic:'envrelogio'},
     abracos: a => a.de === outro && a.para === eu && {titulo:`${Ele} te deu um abraço`, corpo:'Lá na nossa casinha ♥', go:'casinha', tag:'abraco', ic:'hug'},
     missoesEsp: m => m.autor === outro && m.para === eu && !m.feita && {titulo:`${Ele} criou uma missão especial pra você`, corpo:corta(m.t), go:'', ic:'star'},
-    saudade: x => x.quem === outro && {titulo:`${Ele} tá com saudade de você`, corpo:`${x.n || 1}x hoje no termômetro`, go:'saudade', tag:'saudade', ic:'termo'},
+    saudade: x => x.quem === outro && {titulo:frSaudade(Ele, x.n || 1), corpo:`${x.n || 1}x hoje no termômetro`, go:'saudade', tag:'saudade', ic:'termo'},
     gostos: g => g.autor === outro && g.sobre === eu && {titulo:`${Ele} colocou uma coisa que você ama`, corpo:corta(g.legenda), go:'gostos@gostos:' + g.id, ic:'heart'},
     musicas: m => m.autor === outro && {titulo:`${Ele} colocou uma música na nossa playlist`, corpo:corta(m.titulo || m.nome || ''), go:'playlist@musicas:' + m.id, ic:'music'},
     diario: d => d.autor === outro && {titulo:`${Ele} escreveu no diário de hoje`, corpo:'Vem ler e escrever o seu também', go:'diario@diario:' + d.dia, ic:'livro'},
@@ -6677,7 +6721,7 @@ VIEWS.saudade = () => {
       <b>${v}</b><small><strong>${q === eu ? 'Você' : q}</strong> · ${v === 1 ? 'vez' : 'vezes'} hoje</small></div>`; };
   const draw = () => { if(!$('sdh')) return;
     $('sdh').innerHTML = coracao('Mihzinha') + coracao('Di');
-    const vo = n(outro); $("sdm").textContent = vo >= 50 ? `${outro === 'Di' ? 'O ' + apelido('Di', 24) : 'A ' + apelido('Mihzinha', 24)} tá morrendo de saudade de você hoje!` : vo ? `${outro === 'Di' ? 'O ' + apelido('Di', 25) : 'A ' + apelido('Mihzinha', 25)} já sentiu saudade ${vo} ${vo === 1 ? 'vez' : 'vezes'} hoje` : `${outro === 'Di' ? 'O ' + apelido('Di', 26) : 'A ' + apelido('Mihzinha', 26)} ainda não apertou hoje`;
+    const vo = n(outro); $("sdm").textContent = vo ? frSaudade(outro === 'Di' ? 'O ' + apelido('Di', 25) : 'A ' + apelido('Mihzinha', 25), vo) : `${outro === 'Di' ? 'O ' + apelido('Di', 26) : 'A ' + apelido('Mihzinha', 26)} ainda não apertou hoje`;
     const dias = [...Array(7)].map((_, k) => { const d = new Date(); d.setDate(d.getDate() - 6 + k); return dsStr(d); });
     const mx = Math.max(5, ...dias.map(d => n('Di', d) + n('Mihzinha', d)));
     $('sds').innerHTML = `<h3>Últimos 7 dias</h3><div class="sd-bars">${dias.map(d => `<div class="sd-col"><div class="sd-bar"><i style="height:${n('Mihzinha', d) / mx * 100}%" class="mi"></i><i style="height:${n('Di', d) / mx * 100}%" class="di"></i></div><small>${new Date(d + 'T12:00:00').toLocaleDateString('pt-BR', {weekday:'short'}).slice(0,3)}</small></div>`).join('')}</div><p class="sd-leg"><span class="mi"></span>Mihzinha <span class="di"></span>Di</p>`;
