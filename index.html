@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=139">
-<link rel="apple-touch-icon" href="icon-180.png?v=139">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=139">
+<link rel="manifest" href="manifest.json?v=140">
+<link rel="apple-touch-icon" href="icon-180.png?v=140">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=140">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -3130,9 +3130,32 @@ const PFX = PREVIA ? 'previa_' : 'diogo_';
 function limpaEspaco(){ try{ Object.keys(localStorage).forEach(k => { if(!PREVIA && k.startsWith('previa_')) localStorage.removeItem(k); });
   Object.keys(localStorage).filter(k => /^diogo_(col_|idxApp)/.test(k)).forEach(k => { if((localStorage.getItem(k) || '').length > 50000) localStorage.removeItem(k); }); }catch(e){} }
 if(!PREVIA) try{ Object.keys(localStorage).filter(k => k.startsWith('previa_')).forEach(k => localStorage.removeItem(k)); }catch(e){}
+/* o que cada um já viu/fez (avisos fechados, bilhetes vistos, jogos…) vale em todos os aparelhos da conta */
+const SYNC_RE = /^(avLidos_|chFechou$|seenBilhetes$|abracosVistos$|moVisto_|leuRecado_|rcDepois_|jogou_|viuTour$|viuDedicatoria$|viuFesta_|viuNatal|done$|mesFesta$|cacaRodada_|cacaUlt_|memUlt_)/;
+const LEIT = {pend:{}, t:null, on:false};
+const leitT = () => { try{ return JSON.parse(localStorage.getItem('diogo_syncT') || '{}'); }catch(e){ return {}; } };
+function leituraMudou(k, j){ try{ const T = leitT(); T[k] = Date.now(); localStorage.setItem('diogo_syncT', JSON.stringify(T)); }catch(e){} LEIT.pend[k] = {v:j, t:Date.now()}; clearTimeout(LEIT.t); LEIT.t = setTimeout(enviaLeituras, 800); }
+function enviaLeituras(){ try{ if(!LEIT.on || !window.firebase || !Sync.user || !Sync.quemReal) return; const p = LEIT.pend; if(!Object.keys(p).length) return; LEIT.pend = {};
+  const o = {}; Object.entries(p).forEach(([k, x]) => { o[k.replace(/[.\/\[\]*~]/g, '_')] = x; }); firebase.firestore().doc('leituras/' + Sync.quemReal).set(o, {merge:true}).catch(() => { Object.assign(LEIT.pend, p); }); }catch(e){} }
+function ligaLeituras(){
+  if(LEIT.on || PREVIA || Sync.mode !== 'online' || !Sync.user || !window.firebase || !Sync.quemReal) return; LEIT.on = true; let primeira = true;
+  firebase.firestore().doc('leituras/' + Sync.quemReal).onSnapshot(d => { const r = d.data() || {}, T = leitT(); let mudou = false;
+    Object.entries(r).forEach(([k, x]) => { if(!x || typeof x.v !== 'string') return; const loc = localStorage.getItem(PFX + k);
+      let novo = x.v; try{ const a = JSON.parse(x.v), b = loc ? JSON.parse(loc) : null;
+        if(Array.isArray(a) && Array.isArray(b)) novo = JSON.stringify([...new Set([...b, ...a])].slice(-800));
+        else if(a && b && typeof a === 'object' && typeof b === 'object') novo = JSON.stringify(Object.assign({}, b, a));
+        else if((T[k] || 0) > (x.t || 0)) novo = loc; }catch(e){}
+      if(novo !== loc){ try{ localStorage.setItem(PFX + k, novo); mudou = true; }catch(e){} } });
+    /* o que mudou aqui antes de conectar sobe também */
+    Object.keys(T).forEach(k => { const rr = r[k.replace(/[.\/\[\]*~]/g, '_')]; if(SYNC_RE.test(k) && (!rr || (rr.t || 0) < T[k])){ const v = localStorage.getItem(PFX + k); if(v != null) LEIT.pend[k] = {v, t:T[k]}; } });
+    enviaLeituras();
+    if(mudou && document.querySelector('.home') && !document.querySelector('.tk-wrap')) renderHome(window.scrollY);
+    primeira = false; }, () => {});
+  enviaLeituras();
+}
 const store = {
   get(k, d){ try{ return JSON.parse(localStorage.getItem(PFX+k)) ?? d }catch(e){ return d } },
-  set(k, v){ const j = JSON.stringify(v); try{ localStorage.setItem(PFX+k, j); }catch(e){ try{ limpaEspaco(); localStorage.setItem(PFX+k, j); }catch(e2){} } }
+  set(k, v){ const j = JSON.stringify(v); try{ localStorage.setItem(PFX+k, j); }catch(e){ try{ limpaEspaco(); localStorage.setItem(PFX+k, j); }catch(e2){} } if(!PREVIA && SYNC_RE.test(k)) leituraMudou(k, j); }
 };
 const photo = (f, cls, label) => f ? `<img src="${esc(f)}" alt="" style="width:100%;aspect-ratio:1;object-fit:cover;display:block">`
                                   : `<div class="ph ${cls||''}">${label||'sua foto aqui'}</div>`;
@@ -4015,7 +4038,7 @@ if('serviceWorker' in navigator && /github\.io$/.test(location.hostname)) addEve
 /* sempre a versão mais nova: se o GitHub tem uma versão diferente da aberta, limpa o guardado e recarrega sozinho */
 let edAberto = false;
 document.addEventListener('click', e => { if(edAberto && !e.target.closest('.ed-modo')){ edAberto = false; document.querySelector('.ed-modo')?.classList.remove('ab'); } });
-const VERSAO_APP = 'versão de 22/10 · 22h00';
+const VERSAO_APP = 'versão de 23/10 · 21h35';
 async function confereVersao(){
   if(!/github\.io$/.test(location.hostname) || !navigator.onLine) return;
   try{ const r = await fetch(location.pathname + '?nc=' + Date.now(), {cache:'no-store'}); if(!r.ok) return; const t = await r.text(), m = t.match(/const VERSAO_APP = '([^']+)'/);
@@ -6282,7 +6305,7 @@ function vigiar(){
   Object.entries(regras).forEach(([nome, f]) => Sync.col(nome).on(l => { if(!ok()) return; l.forEach(it => { const n = f(it); if(n && novo(nome + it.id + (n.k || ''), it, nome)) avisar(n); }); }));
   let pAntes = null;
   Sync.on('state', st => { const v = ((st.pensei || {})[hoje()] || {})[outro] || 0; if(pAntes !== null && v > pAntes && ok()) avisar({titulo:`${Ele} pensou em você ♥`, corpo:`${v}x hoje`, tag:'pensei', go:''}); pAntes = v; });
-  presenca(); ligaPresenca(); renovaPush();
+  presenca(); ligaPresenca(); ligaLeituras(); renovaPush();
 }
 /* avisa o servidor que entrou hoje (pro lembrete das 21h) */
 /* quem tá online agora: cada um avisa a cada 40s enquanto o app tá aberto; o outro vê em cima da tela inicial */
