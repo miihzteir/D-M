@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=141">
-<link rel="apple-touch-icon" href="icon-180.png?v=141">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=141">
+<link rel="manifest" href="manifest.json?v=142">
+<link rel="apple-touch-icon" href="icon-180.png?v=142">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=142">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -4038,7 +4038,7 @@ if('serviceWorker' in navigator && /github\.io$/.test(location.hostname)) addEve
 /* sempre a versão mais nova: se o GitHub tem uma versão diferente da aberta, limpa o guardado e recarrega sozinho */
 let edAberto = false;
 document.addEventListener('click', e => { if(edAberto && !e.target.closest('.ed-modo')){ edAberto = false; document.querySelector('.ed-modo')?.classList.remove('ab'); } });
-const VERSAO_APP = 'versão de 24/10 · 10h05';
+const VERSAO_APP = 'versão de 24/10 · 11h05';
 async function confereVersao(){
   if(!/github\.io$/.test(location.hostname) || !navigator.onLine) return;
   try{ const r = await fetch(location.pathname + '?nc=' + Date.now(), {cache:'no-store'}); if(!r.ok) return; const t = await r.text(), m = t.match(/const VERSAO_APP = '([^']+)'/);
@@ -4366,7 +4366,7 @@ const quemCls = q => q === 'Di' ? 'nm-di' : q === 'Mihzinha' ? 'nm-mi' : '';
 const quemTag = q => `<b class="nm ${quemCls(q)}">${esc(q || '')}</b>`;
 /* comentários: os dois comentam no que o outro escreveu */
 let CMTS = [], cmtAberto = new Set(), cmtLigado = false, cmtReage = '', cmtMostra = new Set();
-const REACOES = ['❤️','😂','😢','😠','😮'];
+const REACOES = ['❤️','🔥','😂','😢','😠','😮'];
 function cmtConteudo(alvo){
   const eu = Sync.quem || 'Di', nm = q => q === 'Di' ? 'Di' : q === 'Mihzinha' ? 'Mih' : q;
   const cs = CMTS.filter(c => c.alvo === alvo), ab = cmtAberto.has(alvo), mostra = ab || cmtMostra.has(alvo);
@@ -4396,7 +4396,7 @@ document.addEventListener('click', async e => {
   if(b.dataset.rtira){ const c = CMTS.find(x => x.id === b.dataset.rtira); if(!c) return; const eu = Sync.quem || 'Di', r = Object.assign({}, c.reac || {}); r[eu] = ''; c.reac = r; cmtReage = ''; document.querySelectorAll('.cmts').forEach(x => x.dataset.v = ''); aplicaCmts(); try{ await Sync.col('comentarios').set(c.id, Object.assign({}, c, {reac:r})); }catch(x){} return; }
   if(b.classList.contains('cmt-e')){ const c = CMTS.find(x => x.id === b.dataset.ce); if(!c) return; const eu = Sync.quem || 'Di', r = Object.assign({}, c.reac || {}), e2 = b.dataset.e, tira = r[eu] === e2;
     r[eu] = tira ? '' : e2; c.reac = r; cmtReage = ''; document.querySelectorAll('.cmts').forEach(x => x.dataset.v = ''); aplicaCmts();
-    try{ await Sync.col('comentarios').set(c.id, Object.assign({}, c, {reac:r})); if(!tira && c.autor !== eu){ const [c0] = String(c.alvo).split(':'), v = ({primeiras:'primeiras', bilhetes:'bilhetes', diario:'diario', musicas:'playlist', lugares:'lugares', gostos:'gostos', filmes:'filmes', datasMarcantes:'datas'})[c0]; evento(`{eu} reagiu ${e2} ao seu comentário`, String(c.texto || '').slice(0, 80), v ? v + '@' + c.alvo : '', 'chat'); } }catch(x){} return; }
+    try{ await Sync.col('comentarios').set(c.id, Object.assign({}, c, {reac:r})); if(!tira && c.autor !== eu){ const [c0] = String(c.alvo).split(':'), v = ({primeiras:'primeiras', bilhetes:'bilhetes', diario:'diario', musicas:'playlist', lugares:'lugares', gostos:'gostos', filmes:'filmes', datasMarcantes:'datas', respostas:'pergunta'})[c0]; evento(`{eu} reagiu ${e2} ao seu comentário`, String(c.texto || '').slice(0, 80), v ? v + '@' + c.alvo : '', 'chat'); } }catch(x){} return; }
   if(b.classList.contains('cmt-x')){ if(!b.dataset.sure){ b.dataset.sure = 1; b.textContent = 'apagar?'; return; } try{ await Sync.col('comentarios').remove(b.dataset.cx); }catch(x){} return; }
   if(b.classList.contains('cmt-ok')){ const ta = el.querySelector('textarea'), t = ta.value.trim(); if(!t){ cmtAberto.delete(alvo); el.dataset.v = ''; aplicaCmts(); return; }
     b.disabled = true; try{ await Sync.col('comentarios').add({alvo, texto:t, autor:Sync.quem || 'Di', para:el.dataset.autor || ''}); cmtAberto.delete(alvo); sparkle(b); }catch(x){ b.disabled = false; } }
@@ -6174,7 +6174,7 @@ function regrasAviso(eu){
     roleta: r => r.autor === outro && {titulo:`${Ele} colocou uma ideia nova na roleta`, corpo:corta(r.texto), go:'roleta@roleta:' + r.id, ic:'star'},
     planosLista: p => p.autor === outro && {titulo:`${Ele} colocou um plano novo pra gente`, corpo:corta(p.t), go:'planos@planosLista:' + p.id, ic:'mapa'},
     contagens: c => c.autor === outro && {titulo:`${Ele} criou uma contagem regressiva`, corpo:corta(c.titulo), go:'contagem@contagens:' + c.id, ic:'cal12'},
-    comentarios: c => c.autor === outro && {titulo:c.para === eu ? `${Ele} comentou no que você escreveu` : `${Ele} deixou um comentário`, corpo:corta(c.texto), go:(v => v ? v + '@' + c.alvo : '')(({primeiras:'primeiras', bilhetes:'bilhetes', diario:'diario', musicas:'playlist', lugares:'lugares', gostos:'gostos', filmes:'filmes', datasMarcantes:'datas'})[String(c.alvo).split(':')[0]]), ic:'chat'},
+    comentarios: c => c.autor === outro && {titulo:c.para === eu ? `${Ele} comentou no que você escreveu` : `${Ele} deixou um comentário`, corpo:corta(c.texto), go:(v => v ? v + '@' + c.alvo : '')(({primeiras:'primeiras', bilhetes:'bilhetes', diario:'diario', musicas:'playlist', lugares:'lugares', gostos:'gostos', filmes:'filmes', datasMarcantes:'datas', respostas:'pergunta'})[String(c.alvo).split(':')[0]]), ic:'chat'},
     pedidos: p => p.de === outro && p.para === eu && p.status === 'pendente' ? {titulo:`${Ele} te pediu um prêmio`, corpo:corta(p.t), go:'premios', k:'novo', ic:'gift', forte:1}
       : p.de === eu && p.status === 'aceito' ? {titulo:`${Ele} aceitou o seu pedido`, corpo:`${corta(p.t)} já tá nos prêmios pra trocar`, go:'premios', k:'ok', ic:'gift'}
       : p.de === eu && p.status === 'recusado' ? {titulo:`${Ele} não aceitou o seu pedido`, corpo:corta(p.t), go:'premios', k:'no', ic:'gift'} : null,
@@ -6239,7 +6239,7 @@ function buscaTudo(q){
     if(n === 'mesversario' && it.autor !== eu && !(it.mes && hoje(new Date(C.inicioNamoro.getFullYear(), C.inicioNamoro.getMonth() + (+it.mes), 12)) <= hj)) return;
     const campos = f(it).filter(Boolean), achou = campos.find(tem); if(!achou) return;
     let go = v, alvo = n + ':' + (n === 'diario' ? it.dia : it.id);
-    if(n === 'comentarios'){ const [c0] = String(it.alvo).split(':'); go = ({primeiras:'primeiras', bilhetes:'bilhetes', diario:'diario', musicas:'playlist', lugares:'lugares', gostos:'gostos', filmes:'filmes', datasMarcantes:'datas'})[c0] || ''; alvo = it.alvo; }
+    if(n === 'comentarios'){ const [c0] = String(it.alvo).split(':'); go = ({primeiras:'primeiras', bilhetes:'bilhetes', diario:'diario', musicas:'playlist', lugares:'lugares', gostos:'gostos', filmes:'filmes', datasMarcantes:'datas', respostas:'pergunta'})[c0] || ''; alvo = it.alvo; }
     if(!go) return;
     out.push({ic, t:trecho(achou), s:rot, go:['pergunta','abra'].includes(go) ? go : go + '@' + alvo, peso:1});
   }));
@@ -6669,7 +6669,7 @@ VIEWS.saudade = () => {
   const col = Sync.col('saudade'), $ = id => document.getElementById(id);
   let list = [];
   const n = (q, d = hoje()) => (list.find(x => x.id === `${d}_${q}`) || {}).n || 0;
-  const coracao = (q) => { const v = n(q), f = Math.min(10, v) / 10, nome = q === eu ? 'Você' : (q === 'Di' ? 'O ' + apelido('Di', 23) : 'A ' + apelido('Mihzinha', 23));
+  const coracao = (q) => { const v = n(q), f = Math.min(500, v) / 500, nome = q === eu ? 'Você' : (q === 'Di' ? 'O ' + apelido('Di', 23) : 'A ' + apelido('Mihzinha', 23));
     return `<div class="sd-h"><svg viewBox="0 0 100 92"><defs><clipPath id="sdc${q}"><path d="M50 88C20 66 4 50 4 30 4 14 16 4 29 4c9 0 16 5 21 12 5-7 12-12 21-12 13 0 25 10 25 26 0 20-16 36-46 58z"/></clipPath></defs>
       <path d="M50 88C20 66 4 50 4 30 4 14 16 4 29 4c9 0 16 5 21 12 5-7 12-12 21-12 13 0 25 10 25 26 0 20-16 36-46 58z" fill="#fbf2f0" stroke="#7a1424" stroke-width="3"/>
       <rect clip-path="url(#sdc${q})" x="0" y="${92 - 92 * f}" width="100" height="${92 * f}" fill="#b3122c" class="sd-fill"/>
@@ -6677,7 +6677,7 @@ VIEWS.saudade = () => {
       <b>${v}</b><small><strong>${q === eu ? 'Você' : q}</strong> · ${v === 1 ? 'vez' : 'vezes'} hoje</small></div>`; };
   const draw = () => { if(!$('sdh')) return;
     $('sdh').innerHTML = coracao('Mihzinha') + coracao('Di');
-    const vo = n(outro); $('sdm').textContent = vo >= 10 ? `${outro === 'Di' ? 'O ' + apelido('Di', 24) : 'A ' + apelido('Mihzinha', 24)} tá morrendo de saudade de você hoje!` : vo ? `${outro === 'Di' ? 'O ' + apelido('Di', 25) : 'A ' + apelido('Mihzinha', 25)} já sentiu saudade ${vo} ${vo === 1 ? 'vez' : 'vezes'} hoje` : `${outro === 'Di' ? 'O ' + apelido('Di', 26) : 'A ' + apelido('Mihzinha', 26)} ainda não apertou hoje`;
+    const vo = n(outro); $("sdm").textContent = vo >= 50 ? `${outro === 'Di' ? 'O ' + apelido('Di', 24) : 'A ' + apelido('Mihzinha', 24)} tá morrendo de saudade de você hoje!` : vo ? `${outro === 'Di' ? 'O ' + apelido('Di', 25) : 'A ' + apelido('Mihzinha', 25)} já sentiu saudade ${vo} ${vo === 1 ? 'vez' : 'vezes'} hoje` : `${outro === 'Di' ? 'O ' + apelido('Di', 26) : 'A ' + apelido('Mihzinha', 26)} ainda não apertou hoje`;
     const dias = [...Array(7)].map((_, k) => { const d = new Date(); d.setDate(d.getDate() - 6 + k); return dsStr(d); });
     const mx = Math.max(5, ...dias.map(d => n('Di', d) + n('Mihzinha', d)));
     $('sds').innerHTML = `<h3>Últimos 7 dias</h3><div class="sd-bars">${dias.map(d => `<div class="sd-col"><div class="sd-bar"><i style="height:${n('Mihzinha', d) / mx * 100}%" class="mi"></i><i style="height:${n('Di', d) / mx * 100}%" class="di"></i></div><small>${new Date(d + 'T12:00:00').toLocaleDateString('pt-BR', {weekday:'short'}).slice(0,3)}</small></div>`).join('')}</div><p class="sd-leg"><span class="mi"></span>Mihzinha <span class="di"></span>Di</p>`;
@@ -7791,13 +7791,13 @@ VIEWS.pergunta = () => {
     document.getElementById('qf').hidden = !!minha || FIMQ;
     box.innerHTML = (minha ? `<div class="ans mine"><small>você respondeu</small><p>${esc(minha.texto)}</p></div>` : '') +
       (dele ? (minha ? `<div class="ans unfold"><small>${outro} respondeu</small><p>${esc(dele.texto)}</p></div>` : `<p class="lead locked-ans">${icon('lock')} ${outro} já respondeu. Responde pra ver!</p>`)
-            : (minha ? `<p class="lead">${outro} ainda não respondeu. Volta mais tarde!</p>` : ''));
+            : (minha ? `<p class="lead">${outro} ainda não respondeu. Volta mais tarde!</p>` : '')) + (minha && dele ? cmtBox('respostas', hoje(), outro) : '');
     const dias = F.ap([...new Set(list.filter(r => r.dia < hoje()).map(r => r.dia))], d => d);
     const fmtD = d => new Date(d + 'T12:00:00').toLocaleDateString('pt-BR', {day:'numeric', month:'long', year:'numeric'});
     const resp = (rs, nome) => { const r = rs.find(x => x.quem === nome); return `<div class="hq-a ${nome === 'Di' ? 'di' : 'mi'}"><span class="hq-who">${nome}</span>${r ? `<p>${esc(r.texto)}</p>` : `<p class="hq-none">não respondeu</p>`}</div>`; };
     document.getElementById('qold').innerHTML = `<div class="hq-head"><h3>Nosso histórico</h3><span>${dias.length} ${dias.length === 1 ? 'dia' : 'dias'}</span></div>` + (dias.length ? dias.map(d => {
       const rs = list.filter(r => r.dia === d);
-      return `<article class="hq"><p class="hq-date">${fmtD(d)}</p><h4>${esc((rs[0] && rs[0].pergunta) || '')}</h4>${resp(rs,'Di')}${resp(rs,'Mihzinha')}</article>`;
+      return `<article class="hq" data-id="${d}"><p class="hq-date">${fmtD(d)}</p><h4>${esc((rs[0] && rs[0].pergunta) || '')}</h4>${resp(rs,'Di')}${resp(rs,'Mihzinha')}${cmtBox('respostas', d, outro)}</article>`;
     }).join('') : F.ativo() ? F.vazio : `<p class="lead hq-empty">A partir de amanhã, as perguntas e as respostas de vocês dois ficam guardadas aqui pra sempre.</p>`);
   }; const off = col.on(rend);
   document.getElementById('qf').onsubmit = async e => {

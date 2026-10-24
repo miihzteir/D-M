@@ -2,7 +2,7 @@
 const PROJETO = "d-e-m-db466";
 const API_KEY = "AIzaSyCJfh8vBafbuDSa4f1coZNHWQgRUJfgvgc";
 const APP_URL = "https://miihzteir.github.io/D-M/";
-const INICIO = "2026-10-24";
+const INICIO = "2026-10-22";
 const FS = `https://firestore.googleapis.com/v1/projects/${PROJETO}/databases/(default)/documents`;
 
 const outro = q => (q === "Di" ? "Mihzinha" : "Di");
@@ -58,7 +58,7 @@ async function enviar(env, para, titulo, corpo, go, tag) {
   for (const t of tks) {
     const r = await fetch(`https://fcm.googleapis.com/v1/projects/${PROJETO}/messages:send`, { method: "POST", headers: { authorization: "Bearer " + at, "content-type": "application/json" },
       body: JSON.stringify({ message: { token: t.token, notification: { title: titulo, body: corpo || "" }, data: { go: go || "" },
-        webpush: { headers: { Urgency: "high", TTL: "86400" }, notification: { icon: APP_URL + "icon-coracao.png", badge: APP_URL + "icon-badge.png", tag: tag || go || "dm", renotify: true, vibrate: [120, 60, 120] }, fcm_options: { link: APP_URL + (go ? "#ir-" + go : "") } } } }) });
+        webpush: { headers: { Urgency: "high", TTL: "86400" }, notification: { icon: APP_URL + "icon-coracao.png", badge: APP_URL + "icon-badge.png", tag: tag || go || "dm", renotify: true, vibrate: [120, 60, 120] }, fcm_options: { link: APP_URL + (go ? "#ir-" + encodeURIComponent(go) : "") } } } }) });
     if (r.ok) n++;
     else if (r.status === 404 || r.status === 400) await fetch(`https://firestore.googleapis.com/v1/${t.nome}`, { method: "DELETE", headers: { authorization: "Bearer " + at } });
   }
@@ -69,30 +69,39 @@ async function enviar(env, para, titulo, corpo, go, tag) {
 function mensagem(col, d, a, quem) {
   const de = quem;
   switch (col) {
-    case "bilhetes": return d.autor === de && [outro(de), `${Ele(de)} colou um bilhetinho pra você`, d.texto ? corta(d.texto) : "Tem um áudio novo", "bilhetes"];
+    case "bilhetes": return d.autor === de && [outro(de), `${Ele(de)} colou um bilhetinho pra você`, d.texto ? corta(d.texto) : "Tem um áudio novo", "bilhetes" + (d.id ? "@bilhetes:" + d.id : "")];
     case "respostas": return d.quem === de && !a && [outro(de), `${Ele(de)} respondeu a pergunta de hoje`, `Vem ver o que ${ele(de)} disse`, "pergunta"];
     case "abraQuando": return d.autor === de && !a && [outro(de), `${Ele(de)} escreveu uma carta nova pra você`, "Tem envelope novo no Abra quando…", "abra"];
-    case "cartasData": return d.de === de && !a && [outro(de), `${Ele(de)} lacrou uma cartinha pra você`, d.abreEm ? `Ela abre em ${String(d.abreEm).split("-").reverse().join("/")}` : "", "cartadata"];
+    case "cartasData": return d.de === de && !a && [outro(de), `${Ele(de)} lacrou uma cartinha pra você`, d.abreEm ? `Ela abre em ${String(d.abreEm).split("-").reverse().join("/")}` : "", "cartadata" + (d.id ? "@cartasData:" + d.id : "")];
+    case "eventos": return d.autor === de && !a && d.titulo && [outro(de), corta(d.titulo), corta(d.corpo || ""), d.go || ""];
+    case "momCartas": return d.autor === de && !a && [outro(de), `${Ele(de)} escreveu uma carta ${({noivado:"pro nosso noivado", casamento:"pro nosso casamento", filho:"pra quando a gente descobrir o nosso filho", casa:"pra quando a gente for morar junto"})[d.mom] || "pra um momento nosso"}`, "Ela só abre quando esse momento chegar ♥", "momentos"];
+    case "cartasFilhos": return d.autor === de && !a && [outro(de), `${Ele(de)} escreveu uma carta pro nosso primeiro filho`, "Vem ler ♥", "filhos"];
     case "abracos": return d.de === de && d.para && d.para !== de && [d.para, `${Ele(de)} te deu um abraço`, "Lá na nossa casinha ♥", "casinha", "abraco"];
     case "missoesEsp": return d.autor === de && !a && [outro(de), `${Ele(de)} criou uma missão especial pra você`, corta(d.t), ""];
-    case "gostos": return d.autor === de && !a && d.sobre === outro(de) && [outro(de), `${Ele(de)} colocou uma coisa que você ama`, corta(d.legenda), "gostos"];
-    case "musicas": return d.autor === de && !a && [outro(de), `${Ele(de)} colocou uma música na nossa playlist`, corta(d.titulo || ""), "playlist"];
-    case "diario": return d.autor === de && !a && [outro(de), `${Ele(de)} escreveu no diário de hoje`, "Vem ler e escrever o seu também", "diario"];
-    case "filmes": return d.autor === de && !a && [outro(de), `${Ele(de)} colocou um filme na nossa lista`, corta(d.titulo), "filmes"];
-    case "lugares": return d.autor === de && !a && [outro(de), `${Ele(de)} marcou um lugar no nosso mapa`, corta(d.nome || ""), "lugares"];
-    case "primeiras": return d.autor === de && !a && [outro(de), `${Ele(de)} guardou uma primeira vez nossa`, corta(d.titulo || ""), "primeiras"];
-    case "datasMarcantes": return d.autor === de && !a && [outro(de), `${Ele(de)} guardou uma data marcante`, corta(d.titulo || d.legenda), "datas"];
+    case "gostos": return d.autor === de && !a && d.sobre === outro(de) && [outro(de), `${Ele(de)} colocou uma coisa que você ama`, corta(d.legenda), "gostos" + (d.id ? "@gostos:" + d.id : "")];
+    case "musicas": return d.autor === de && !a && [outro(de), `${Ele(de)} colocou uma música na nossa playlist`, corta(d.titulo || ""), "playlist" + (d.id ? "@musicas:" + d.id : "")];
+    case "diario": return d.autor === de && !a && [outro(de), `${Ele(de)} escreveu no diário de hoje`, "Vem ler e escrever o seu também", "diario" + (d.dia ? "@diario:" + d.dia : "")];
+    case "filmes": return d.autor === de && !a && [outro(de), `${Ele(de)} colocou um filme na nossa lista`, corta(d.titulo), "filmes" + (d.id ? "@filmes:" + d.id : "")];
+    case "lugares": return d.autor === de && !a && [outro(de), `${Ele(de)} marcou um lugar no nosso mapa`, corta(d.nome || ""), "lugares" + (d.id ? "@lugares:" + d.id : "")];
+    case "primeiras": return d.autor === de && !a && [outro(de), `${Ele(de)} guardou uma primeira vez nossa`, corta(d.titulo || ""), "primeiras" + (d.id ? "@primeiras:" + d.id : "")];
+    case "datasMarcantes": return d.autor === de && !a && [outro(de), `${Ele(de)} guardou uma data marcante`, corta(d.titulo || d.legenda), "datas" + (d.id ? "@datasMarcantes:" + d.id : "")];
     case "mesversario": return d.autor === de && !a && [outro(de), `${Ele(de)} escreveu pro nosso mesversário`, "Vem ler ♥", "mes"];
     case "capsula": return d.autor === de && !a && [outro(de), `${Ele(de)} guardou algo na cápsula do tempo`, "Só abre lá na frente…", "capsula"];
-    case "roleta": return d.autor === de && !a && [outro(de), `${Ele(de)} colocou uma ideia nova na roleta`, corta(d.texto), "roleta"];
-    case "planosLista": return d.autor === de && !a && [outro(de), `${Ele(de)} colocou um plano novo pra gente`, corta(d.t), "planos"];
-    case "contagens": return d.autor === de && !a && [outro(de), `${Ele(de)} criou uma contagem regressiva`, corta(d.titulo), "contagem"];
+    case "roleta": return d.autor === de && !a && [outro(de), `${Ele(de)} colocou uma ideia nova na roleta`, corta(d.texto), "roleta" + (d.id ? "@roleta:" + d.id : "")];
+    case "planosLista": return d.autor === de && !a && [outro(de), `${Ele(de)} colocou um plano novo pra gente`, corta(d.t), "planos" + (d.id ? "@planosLista:" + d.id : "")];
+    case "contagens": return d.autor === de && !a && [outro(de), `${Ele(de)} criou uma contagem regressiva`, corta(d.titulo), "contagem" + (d.id ? "@contagens:" + d.id : "")];
+    case "comentarios": return d.autor === de && !a && [outro(de), d.para === outro(de) ? `${Ele(de)} comentou no que você escreveu` : `${Ele(de)} deixou um comentário`, corta(d.texto), (v => v ? v + "@" + d.alvo : "")(({primeiras:"primeiras", bilhetes:"bilhetes", diario:"diario", musicas:"playlist", lugares:"lugares", gostos:"gostos", filmes:"filmes", datasMarcantes:"datas", respostas:"pergunta"})[String(d.alvo || "").split(":")[0]])];
     case "saudade": return d.quem === de && (d.n || 1) > ((a && a.n) || 0) && [outro(de), `${Ele(de)} tá com saudade de você`, `${d.n || 1}x hoje no termômetro`, "saudade", "saudade"];
     case "pensei": return [outro(de), `${Ele(de)} pensou em você ♥`, `${d.n || 1}x hoje`, "", "pensei"];
+    case "pedidos":
+      if (!a && d.de === de && d.status === "pendente") return [outro(de), `${Ele(de)} te pediu um prêmio`, corta(d.t), "premios"];
+      if (a && a.status !== d.status && d.para === de && d.status === "aceito") return [d.de, `${Ele(de)} aceitou o seu pedido`, `${corta(d.t)} já tá nos prêmios pra trocar`, "premios"];
+      if (a && a.status !== d.status && d.para === de && d.status === "recusado") return [d.de, `${Ele(de)} não aceitou o seu pedido`, corta(d.t), "premios"];
+      return null;
     case "premios":
-      if (!a && d.autor === de && !d.comprado) return [outro(de), `${Ele(de)} ofereceu um prêmio pra você`, corta(d.t), "premios"];
-      if (a && !a.comprado && d.comprado && d.por === de) return [outro(de), `${Ele(de)} trocou chocolates por um prêmio`, `${corta(d.t)}. Tá esperando você cumprir ♥`, "premios"];
-      if (a && !a.entregue && d.entregue && d.autor === de) return [outro(de), `${Ele(de)} cumpriu o seu prêmio`, corta(d.t), "premios"];
+      if (!a && d.autor === de && !d.comprado && !d.doPedido) return [outro(de), `${Ele(de)} ofereceu um prêmio pra você`, corta(d.t), "premios" + (d.id ? "@premios:" + d.id : "")];
+      if (a && !a.comprado && d.comprado && d.por === de) return [outro(de), `${Ele(de)} trocou chocolates por um prêmio`, `${corta(d.t)}. Tá esperando você cumprir ♥`, "premios" + (d.id ? "@premios:" + d.id : "")];
+      if (a && !a.entregue && d.entregue && d.autor === de) return [outro(de), `${Ele(de)} cumpriu o seu prêmio`, corta(d.t), "premios" + (d.id ? "@premios:" + d.id : "")];
       return null;
   }
   return null;
