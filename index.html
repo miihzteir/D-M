@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=140">
-<link rel="apple-touch-icon" href="icon-180.png?v=140">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=140">
+<link rel="manifest" href="manifest.json?v=141">
+<link rel="apple-touch-icon" href="icon-180.png?v=141">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=141">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -4038,7 +4038,7 @@ if('serviceWorker' in navigator && /github\.io$/.test(location.hostname)) addEve
 /* sempre a versão mais nova: se o GitHub tem uma versão diferente da aberta, limpa o guardado e recarrega sozinho */
 let edAberto = false;
 document.addEventListener('click', e => { if(edAberto && !e.target.closest('.ed-modo')){ edAberto = false; document.querySelector('.ed-modo')?.classList.remove('ab'); } });
-const VERSAO_APP = 'versão de 23/10 · 21h35';
+const VERSAO_APP = 'versão de 24/10 · 10h05';
 async function confereVersao(){
   if(!/github\.io$/.test(location.hostname) || !navigator.onLine) return;
   try{ const r = await fetch(location.pathname + '?nc=' + Date.now(), {cache:'no-store'}); if(!r.ok) return; const t = await r.text(), m = t.match(/const VERSAO_APP = '([^']+)'/);
@@ -6324,7 +6324,10 @@ function pintaOnline(){
   const el = document.getElementById('onl'); if(!el) return; const p = presOutro, outro = (Sync.quemReal || 'Di') === 'Di' ? 'Mihzinha' : 'Di';
   const nome = outro === 'Di' ? apelido('Di', 42) : apelido('Mihzinha', 42);
   if(p && p.on && Date.now() - p.on < 80000){ el.className = 'onl on'; el.innerHTML = `<i></i>${esc(nome)} tá online agora`; return; }
-  const ult = p && (p.em || 0); if(ult && hoje(new Date(ult)) === hoje()){ el.className = 'onl'; el.innerHTML = `<i></i>${esc(nome)} esteve aqui hoje às ${new Date(ult).toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'})}`; return; }
+  const ult = p && (p.em || 0);
+  if(ult){ const d = new Date(ult), hr = d.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'}), ontem = new Date(); ontem.setDate(ontem.getDate() - 1);
+    const dia = hoje(d) === hoje() ? 'hoje' : hoje(d) === hoje(ontem) ? 'ontem' : 'em ' + d.toLocaleDateString('pt-BR', {day:'2-digit', month:'2-digit'});
+    el.className = 'onl'; el.innerHTML = `<i></i>${esc(nome)} esteve aqui ${dia} às ${hr}`; return; }
   el.className = 'onl'; el.innerHTML = '';
 }
 function presenca(){ try{ if(Sync.mode !== 'online' || !Sync.user || !window.firebase) return; firebase.firestore().doc('presenca/' + Sync.quemReal).set({dia:hoje(), tz:Intl.DateTimeFormat().resolvedOptions().timeZone || 'America/Cuiaba', em:Date.now()}, {merge:true}).catch(() => {}); }catch(e){} }
