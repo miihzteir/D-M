@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=149">
-<link rel="apple-touch-icon" href="icon-180.png?v=149">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=149">
+<link rel="manifest" href="manifest.json?v=152">
+<link rel="apple-touch-icon" href="icon-180.png?v=152">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=152">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -327,6 +327,7 @@ textarea:focus,.card-form input:focus,.addopt input:focus{border-color:var(--pin
 .hud i.lost{opacity:.2}
 .overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;text-align:center;background:rgba(255,255,255,.88);backdrop-filter:blur(3px)}
 .overlay h3{font-size:28px}
+.cor-pz{display:inline-flex;align-items:center;gap:4px;margin:-4px 0 8px;font-size:14px;color:var(--wine);font-weight:600}.cor-pz svg{width:18px;height:18px}
 .rules{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;text-align:left;font-size:15px;color:var(--ink)}
 .rules b{display:inline-block;width:22px;color:var(--pink)}
 .caught .chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 10px}
@@ -1867,7 +1868,7 @@ html body .ed-modo.ab .ed-btrow{max-width:none!important;flex-wrap:wrap}html bod
 html body .cmt-tg{display:inline-flex;align-items:center;gap:5px;width:auto;min-height:0;margin:2px 0 0;padding:3px 10px;border-radius:99px;background:transparent;border:1px solid var(--line2);box-shadow:none;color:var(--muted);font-size:12px;font-weight:700;font-family:var(--f-body)}html body .cmt-tg svg{width:13px;height:13px}html body .cmt-tg[data-tgc="0"]{border:0;padding:3px 4px}
 html body button.cmt-rc{min-height:0!important;width:auto!important;margin:0;padding:0 5px!important;box-shadow:none!important;color:inherit!important;cursor:pointer}
 html body .mural,html body .gs-grid{align-items:start}
-.cc-top{display:flex;align-items:center;justify-content:space-between;gap:10px}.cc-rod{font-family:var(--f-display);font-size:18px;color:var(--wine)}html body .cc-re{width:auto!important;min-height:34px!important;padding:0 14px!important;font-size:12.5px!important;background:#fff!important;color:var(--wine)!important;border:1px solid #ecd4d6!important;box-shadow:none!important}
+.cc-top{display:flex;align-items:center;justify-content:space-between;gap:10px}.cc-rod{display:flex;flex-direction:column;font-family:var(--f-display);font-size:18px;color:var(--wine);line-height:1.15}.cc-prox{display:flex;align-items:center;gap:3px;font-family:var(--f-body,inherit);font-size:12px;color:var(--muted);font-weight:500}.cc-prox svg{width:15px;height:15px}html body .cc-re{width:auto!important;min-height:34px!important;padding:0 14px!important;font-size:12.5px!important;background:#fff!important;color:var(--wine)!important;border:1px solid #ecd4d6!important;box-shadow:none!important}
 .cc-grid{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:3px;background:#fff;border-radius:18px;padding:8px;box-shadow:var(--shadow);touch-action:none;-webkit-user-select:none;user-select:none;max-width:460px;width:100%;margin:0 auto}
 .cc-c{aspect-ratio:1;display:grid;place-items:center;border-radius:8px;font-weight:700;font-size:clamp(12px,calc(70vw / var(--n) * .5),20px);color:#3a2a2a;background:#fbf6ee;transition:background .15s,color .15s}
 .cc-c.sel{background:#f7c8d3;color:#7a1424}.cc-c.ok{background:#7a1424;color:#fff}
@@ -3141,7 +3142,7 @@ function limpaEspaco(){ try{ Object.keys(localStorage).forEach(k => { if(!PREVIA
   Object.keys(localStorage).filter(k => /^diogo_(col_|idxApp)/.test(k)).forEach(k => { if((localStorage.getItem(k) || '').length > 50000) localStorage.removeItem(k); }); }catch(e){} }
 if(!PREVIA) try{ Object.keys(localStorage).filter(k => k.startsWith('previa_')).forEach(k => localStorage.removeItem(k)); }catch(e){}
 /* o que cada um já viu/fez (avisos fechados, bilhetes vistos, jogos…) vale em todos os aparelhos da conta */
-const SYNC_RE = /^(cacaJogo_|avLidos_|chFechou$|seenBilhetes$|abracosVistos$|moVisto_|leuRecado_|rcDepois_|jogou_|viuTour$|viuDedicatoria$|viuFesta_|viuNatal|done$|mesFesta$|cacaRodada_|cacaUlt_|memUlt_)/;
+const SYNC_RE = /^(corNivel_|cacaJogo_|avLidos_|chFechou$|seenBilhetes$|abracosVistos$|moVisto_|leuRecado_|rcDepois_|jogou_|viuTour$|viuDedicatoria$|viuFesta_|viuNatal|done$|mesFesta$|cacaRodada_|cacaUlt_|memUlt_)/;
 const LEIT = {pend:{}, t:null, on:false};
 const leitT = () => { try{ return JSON.parse(localStorage.getItem('diogo_syncT') || '{}'); }catch(e){ return {}; } };
 function leituraMudou(k, j){ try{ const T = leitT(); T[k] = Date.now(); localStorage.setItem('diogo_syncT', JSON.stringify(T)); }catch(e){} LEIT.pend[k] = {v:j, t:Date.now()}; clearTimeout(LEIT.t); LEIT.t = setTimeout(enviaLeituras, 800); }
@@ -4048,7 +4049,7 @@ if('serviceWorker' in navigator && /github\.io$/.test(location.hostname)) addEve
 /* sempre a versão mais nova: se o GitHub tem uma versão diferente da aberta, limpa o guardado e recarrega sozinho */
 let edAberto = false;
 document.addEventListener('click', e => { if(edAberto && !e.target.closest('.ed-modo')){ edAberto = false; document.querySelector('.ed-modo')?.classList.remove('ab'); } });
-const VERSAO_APP = 'versão de 24/10 · 13h20';
+const VERSAO_APP = 'versão de 25/10 · 17h50';
 async function confereVersao(){
   if(!/github\.io$/.test(location.hostname) || !navigator.onLine) return;
   try{ const r = await fetch(location.pathname + '?nc=' + Date.now(), {cache:'no-store'}); if(!r.ok) return; const t = await r.text(), m = t.match(/const VERSAO_APP = '([^']+)'/);
@@ -4572,6 +4573,7 @@ VIEWS.raspa = () => {
 /* ---------- memória ---------- */
 const memFotos = () => (typeof conteudoAtual !== 'undefined' ? conteudoAtual : []).filter(x => /^memfoto_\d+$/.test(x.id) && x.img).sort((a, b) => +a.id.split('_')[1] - +b.id.split('_')[1]).slice(0, 8);
 /* ---------- caça-palavras: rodada 1 = 1 palavra, até 8; o quadro cresce junto ---------- */
+const premioCaca = r => Math.min(8, 1 + r / 5);
 VIEWS.caca = () => {
   const semA = t => String(t).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase().replace(/[^A-Z]/g, '');
   /* cada um tem a sua rodada, guardada na conta (não mistura com a do outro) */
@@ -4587,7 +4589,7 @@ VIEWS.caca = () => {
      <div class="cc-grid" id="ccgrid"></div><div class="cc-pals" id="ccpals"></div><div id="ccfim"></div>`);
   const $ = id => document.getElementById(id);
   const gera = () => {
-    const qtd = Math.min(8, rodada), dirs = [[0,1]]; if(rodada >= 2) dirs.push([1,0]); if(rodada >= 4) dirs.push([1,1], [-1,1]);
+    const qtd = rodada <= 8 ? rodada : Math.min(11, 8 + Math.floor((rodada - 8) / 3)), dirs = [[0,1]]; if(rodada >= 2) dirs.push([1,0]); if(rodada >= 4) dirs.push([1,1], [-1,1]); if(rodada >= 7) dirs.push([0,-1]); if(rodada >= 9) dirs.push([-1,0]); if(rodada >= 11) dirs.push([-1,-1], [1,-1]);
     N = Math.min(12, 6 + Math.ceil(qtd / 1.4));
     const banco = [...new Set((C.cacaPalavras || []).map(semA).filter(w => w.length >= 2 && w.length <= N))];
     const ult = store.get('cacaUlt_' + eu, []);
@@ -4606,7 +4608,7 @@ VIEWS.caca = () => {
     store.set('cacaUlt_' + eu, palavras.map(p => p.w)); achadas = new Set(); dicas = new Set(); guarda();
   };
   const desenha = () => {
-    $('ccrod').textContent = `Rodada ${rodada}`;
+    const prox = Math.ceil(rodada / 5) * 5; $('ccrod').innerHTML = `Rodada ${rodada}<small class="cc-prox">${prox === rodada ? 'essa vale' : `na ${prox}ª ganha`} ${premioCaca(prox)} ${CHOCO_SVG}</small>`;
     $('ccgrid').style.setProperty('--n', N);
     $('ccgrid').innerHTML = grade.flat().map((ch, i) => `<span class="cc-c ${palavras.some(p => achadas.has(p.w) && p.cells.includes(i)) ? 'ok' : palavras.some(p => dicas.has(p.w) && !achadas.has(p.w) && p.cells[0] === i) ? 'dica' : ''}" data-i="${i}">${ch}</span>`).join('');
     $('ccpals').innerHTML = palavras.map(p => `<span class="cc-p ${achadas.has(p.w) ? 'ok' : ''}">${p.w}</span>`).join('');
@@ -4623,6 +4625,7 @@ VIEWS.caca = () => {
     if(p){ achadas.add(p.w); guarda(); desenha(); const r = g.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height / 2, 16);
       if(achadas.size === palavras.length){ jogou('caca'); burst(innerWidth / 2, innerHeight / 3, 60); fim(); } } };
   const fim = () => {
+        if(rodada % 5 === 0) ganhaChoco('jogo_caca_r' + rodada, premioCaca(rodada), `chegou na rodada ${rodada} do caça-palavras`);
         $('ccfim').innerHTML = `<div class="paper unfold cc-ok"><p>Achou ${palavras.length === 1 ? 'a palavra' : 'as ' + palavras.length + ' palavras'}!</p><button type="button" id="ccnext">Próxima rodada</button></div>`;
         setTimeout(() => $('ccfim')?.scrollIntoView({behavior:'smooth', block:'center'}), 200);
         $('ccnext').onclick = () => { rodada++; salvaRodada(); nova(); }; };
@@ -4668,7 +4671,7 @@ VIEWS.memoria = () => {
     if(first.dataset.v === b.dataset.v){
       first.classList.add('got'); b.classList.add('got'); first = null; pairs++;
       document.getElementById('pr').textContent = `${pairs} de ${N} pares`;
-      if(pairs === N){ burst(innerWidth/2, innerHeight/2); jogou('memoria');
+      if(pairs === N){ burst(innerWidth/2, innerHeight/2); jogou('memoria'); ganhaChoco('jogo_mem_' + hoje(), 1, 'primeiro jogo da memória de hoje');
         document.getElementById('memEnd').innerHTML = `<div class="paper unfold"><p>Achou todos em ${moves} jogadas!</p>${C.textos.memoriaFim ? `<p>${esc(C.textos.memoriaFim)}</p>` : ''}<button type="button" id="memde">${icon('wheel')} Jogar de novo</button></div>`;
         setTimeout(() => document.getElementById('memEnd')?.scrollIntoView({behavior:'smooth', block:'center'}), 250);
         document.getElementById('memde').onclick = () => { const y = window.scrollY; voltandoPara = true; scrollMem.memoria = 0; VIEWS.memoria(); }; }
@@ -4680,12 +4683,13 @@ VIEWS.memoria = () => {
 let gameRAF = null;
 function stopGame(){ if(gameRAF) cancelAnimationFrame(gameRAF); gameRAF = null; }
 VIEWS.coracoes = () => {
-  const META = Math.min(30, C.motivos.length), VIDAS = 4;
+  const META = Math.min(30, C.motivos.length), VIDAS = 4, euC = Sync.quem || 'Di', chN = 'corNivel_' + euC;
+  let nivel = Math.max(1, store.get(chN, 1)); const premioCor = n => Math.min(6, n + 1);
   shell('jogo','Pegue os corações',`Cada coração tem uma coisa que eu amo em você. Pega os ${META}!`,
     `<div class="game" id="game"><canvas id="gc"></canvas>
       <div class="hud" aria-live="polite"><span id="hp"></span><span id="hs">♥︎ 0 / ${META}</span></div>
-      <div class="overlay" id="ov"><h3>Pronto?</h3>
-        <ul class="rules"><li><b>♥︎</b>pega os ${META} corações pra ganhar</li><li><b>↑</b>cada coração pego deixa tudo mais rápido</li><li><b>↓</b>deixou cair 5? perdeu</li><li><b>✕︎</b>pegou um coração partido? perdeu na hora</li></ul>
+      <div class="overlay" id="ov"><h3>Nível ${nivel}</h3><p class="cor-pz">vale ${premioCor(nivel)} ${CHOCO_SVG}</p>
+        <ul class="rules"><li><b>♥︎</b>pega os ${META} corações pra ganhar</li><li><b>↑</b>cada coração pego deixa tudo mais rápido</li><li><b>↓</b>deixou cair ${VIDAS}? perdeu</li><li><b>✕︎</b>pegou um coração partido? perdeu na hora</li></ul>
         <button id="start">Começar</button></div></div>
      <div id="won"></div>`);
   const box = document.getElementById('game'), cv = document.getElementById('gc'), x = cv.getContext('2d');
@@ -4757,20 +4761,21 @@ VIEWS.coracoes = () => {
   function end(win, why){
     stopGame(); jogou('coracoes');
     const ov = document.getElementById('ov'); ov.hidden = false;
-    if(win){ burst(innerWidth/2, innerHeight/2, 70);
-      ov.innerHTML = `<h3>Pegou todos!</h3><p class="lead">Olha embaixo tudo o que eu amo em você.</p><button id="start">Jogar de novo</button>`; }
-    else ov.innerHTML = `<h3>Perdeu! kkkkk</h3><p class="lead">${why}<br>Você pegou ${caught.length} de ${META}.</p><button id="start">Tentar de novo</button>`;
+    if(win){ burst(innerWidth/2, innerHeight/2, 70); const nv = nivel; ganhaChoco('jogo_cor_n' + nv, premioCor(nv), `passou do nível ${nv} dos corações`); nivel++; store.set(chN, nivel);
+      ov.innerHTML = `<h3>Pegou todos!</h3><p class="lead">Olha embaixo tudo o que eu amo em você.</p><p class="cor-pz">nível ${nivel} vale ${premioCor(nivel)} ${CHOCO_SVG} e é mais rápido</p><button id="start">Ir pro nível ${nivel}</button>`; }
+    else ov.innerHTML = `<h3>Perdeu! kkkkk</h3><p class="lead">${why}<br>Você pegou ${caught.length} de ${META} no nível ${nivel}.</p><button id="start">Tentar de novo</button>`;
     document.getElementById('start').onclick = start;
     showCaught(win);
   }
   function loop(t){
     const dt = Math.min(40, t - last); last = t;
     const lvl = caught.length / META;
-    const speed = 1.2 + lvl * 2.4;
-    const every = 820 - lvl * 480;
+    const dif = nivel - 1;
+    const speed = (1.2 + lvl * 2.4) * (1 + dif * .12);
+    const every = (820 - lvl * 480) * Math.max(.6, 1 - dif * .06);
     spawn -= dt;
     if(spawn <= 0){
-      let bad = Math.random() < .2 + lvl * .18;
+      let bad = Math.random() < Math.min(.5, .2 + lvl * .18 + dif * .025);
       if(!bad && !pool.length) bad = true;
       const it = {x:0, y:-30, v:(.11+Math.random()*.06)*speed, bad, w:Math.random()*6};
       if(!bad){ it.word = pool.shift(); x.font = FONT; it.r = Math.max(28, x.measureText(splitWord(it.word)[1]).width * .62 + 10); }
@@ -4797,7 +4802,7 @@ VIEWS.coracoes = () => {
       if(!it.hit && it.y - it.r > H){
         it.hit = true;
         if(!it.bad){ pool.push(it.word); lives--; shakeT = 250; pops.push({x:ix, y:H-24, t:0, txt:'−1 ♥︎', c:'#8e1730'}); hud();
-          if(lives <= 0){ x.restore(); end(false, 'Deixou cair 5 corações.'); return; } }
+          if(lives <= 0){ x.restore(); end(false, `Deixou cair ${VIDAS} corações.`); return; } }
       }
     }
     for(const p of pops){ p.t += dt; x.globalAlpha = Math.max(0, 1 - p.t/700); x.font = '600 16px Jost, system-ui'; x.fillStyle = p.c; x.fillText(p.txt, p.x, p.y - p.t*.06); }
@@ -6086,15 +6091,15 @@ function missoesBox(el, compacto){
   let raf = 0;
   const sair = () => { offs.forEach(f => f && f()); offs.length = 0; };
   const draw = () => { raf = 0; if(!el.isConnected){ sair(); return; }
-    const hj = hoje(), ms = missoesHoje(), chocs = d.chocolates || [], esp = missaoEspHoje(d.missoesEsp, eu);
-    if(esp) ms[1] = {id:'esp_' + esp.id, t:() => esp.t, ic:'star', premio:2, esp, manual:1};
-    const info = ms.map(m => { const v = m.manual ? (m.esp.feita ? 1 : 0) : progMissao(m, d, eu), meta = m.meta || 1, pego = chocs.some(c => c.id === `missao_${hj}_${m.id}_${eu}`); return {m, v:Math.min(v, meta), meta, feito:v >= meta, pego}; });
-    const pegas = info.filter(x => x.pego).length, tot = info.length;
+    const hj = hoje(), ms = missoesHoje(), chocs = d.chocolates || [];
+    const esps = missoesEspAbertas(d.missoesEsp, eu).map(e => ({id:'esp_' + e.id, t:() => e.t, ic:'star', premio:2, esp:e, manual:1}));
+    const info = ms.concat(esps).map(m => { const v = m.manual ? (m.esp.feita ? 1 : 0) : progMissao(m, d, eu), meta = m.meta || 1, pego = m.manual ? !!m.esp.feita : chocs.some(c => c.id === `missao_${hj}_${m.id}_${eu}`); return {m, v:Math.min(v, meta), meta, feito:v >= meta, pego}; });
+    const pegas = info.filter(x => x.pego && !x.m.manual).length, tot = ms.length;
     el.innerHTML = `<div class="mdia ${compacto ? 'mdia-c' : ''}">
       <div class="mdia-h"><span class="mdia-ic">${icon('gift')}</span><div class="mdia-ht"><b>Missões de hoje</b><small>${pegas === tot ? 'as duas feitas, amanhã tem mais' : 'a primeira vale 1 chocolate, a segunda 2'}</small></div><span class="mdia-n">${pegas}/${tot}</span></div>
       ${info.map(x => `<button type="button" class="mdia-row ${x.pego ? 'pego' : x.feito ? 'pronta' : ''}" data-mid="${x.m.id}">
         <span class="mr-ic">${icon(x.m.ic)}</span>
-        <span class="mr-t">${x.m.esp ? `<em class="mr-esp">missão especial ${x.m.esp.autor === 'Di' ? 'do ' + apelido('Di', 13) : 'da ' + apelido('Mihzinha', 13)}</em>` : ''}${esc(x.m.t(outro))}<small>${x.pego ? 'feita' : x.m.manual && !x.feito ? 'quando fizer, toca aqui' : x.feito ? `toca pra pegar ${x.m.premio === 1 ? 'o chocolate' : `os ${x.m.premio} chocolates`}` : x.meta > 1 ? `${x.v} de ${x.meta} · toca pra ir` : 'toca pra ir'}</small></span>
+        <span class="mr-t">${x.m.esp ? `<em class="mr-esp">missão especial ${x.m.esp.autor === 'Di' ? 'do ' + apelido('Di', 13) : 'da ' + apelido('Mihzinha', 13)}</em>` : ''}${esc(x.m.t(outro))}<small>${x.pego ? 'feita' : x.m.manual && !x.feito ? 'fez? toca aqui' : x.feito ? `toca pra pegar ${x.m.premio === 1 ? 'o chocolate' : `os ${x.m.premio} chocolates`}` : x.meta > 1 ? `${x.v} de ${x.meta} · toca pra ir` : 'toca pra ir'}</small></span>
         <span class="mr-r">${x.pego ? '♥︎' : x.feito ? `+${x.m.premio}` : `+${x.m.premio} ›`}</span></button>`).join('')}
       <button type="button" class="mdia-esp" id="mdesp">${icon('star')} criar uma missão especial ${outro === 'Di' ? 'pro ' + apelido('Di', 14) : 'pra ' + apelido('Mihzinha', 14)}</button></div>`;
     el.querySelector('#mdesp').onclick = abrirMissoesEsp;
@@ -6104,7 +6109,7 @@ function missoesBox(el, compacto){
         try{ await Sync.col('chocolates').set(`missao_${hj}_${x.m.id}_${eu}`, {qtd:x.m.premio, autor:eu, dia:hj}); parabensChoco(x.m.premio); }catch(e){ b.disabled = false; } return; }
       if(x.m.manual){ if(!b.dataset.sure){ b.dataset.sure = 1; b.querySelector('small').textContent = 'fez mesmo? toca de novo'; setTimeout(() => { if(b.isConnected){ delete b.dataset.sure; pede(); } }, 2500); return; }
         const r = b.getBoundingClientRect(); burst(r.left + r.width - 30, r.top + r.height / 2, 30); b.disabled = true;
-        try{ await Sync.col('missoesEsp').set(x.m.esp.id, Object.assign({}, x.m.esp, {feita:true, feitaDia:hj})); evento('{eu} cumpriu a missão que você criou', x.m.esp.t || '', 'casinha', 'star'); await Sync.col('chocolates').set(`missao_${hj}_${x.m.id}_${eu}`, {qtd:x.m.premio, autor:eu, dia:hj}); parabensChoco(x.m.premio); }catch(e){ b.disabled = false; } return; }
+        try{ const c = Object.assign({}, x.m.esp, {feita:true, feitaDia:hj}); delete c.id; await Sync.col('missoesEsp').set(x.m.esp.id, c); evento('{eu} cumpriu a missão que você criou', x.m.esp.t || '', 'casinha', 'star'); await Sync.col('chocolates').set(`missao_${hj}_${x.m.id}_${eu}`, {qtd:x.m.premio, autor:eu, dia:hj}); parabensChoco(x.m.premio, 'missão especial cumprida ♥'); }catch(e){ b.disabled = false; } return; }
       if(x.m.go.startsWith('#')){ const alvo = document.querySelector(x.m.go); if(alvo){ alvo.scrollIntoView({behavior:'smooth', block:'center'}); alvo.classList.remove('mpulse'); void alvo.offsetWidth; alvo.classList.add('mpulse'); } else { renderHome(0); setTimeout(() => { const a = document.querySelector(x.m.go); a && a.scrollIntoView({behavior:'smooth', block:'center'}); a && a.classList.add('mpulse'); }, 400); } return; }
       openStop(x.m.go);
     });
@@ -6580,26 +6585,25 @@ function abrirMissoesEsp(){
   document.getElementById('mesp')?.remove();
   const w = document.createElement('div'); w.className = 'tk-wrap'; w.id = 'mesp';
   w.innerHTML = `<div class="sheet2"><button class="inst-x" id="mespx" aria-label="Fechar">${icon('plus')}</button>
-    <h3>Missões especiais ${pro}</h3><p class="lead">Coisas que só ${outro === 'Di' ? 'ele' : 'ela'} entenderia. Com data, ela aparece naquele dia. Sem data, aparece num domingo. Vale 2 chocolates.</p>
+    <h3>Missões especiais ${pro}</h3><p class="lead">Aparece nas missões ${outro === 'Di' ? 'dele' : 'dela'}. Quando ${outro === 'Di' ? 'ele' : 'ela'} cumprir, ganha 2 chocolates e você fica sabendo.</p>
     <form class="write" id="mespf"><textarea id="mespt" rows="2" maxlength="140" placeholder="Qual é a missão?"></textarea>
-      <label class="fz-lab">Dia (opcional)<input type="date" id="mespd"></label><button type="submit">Criar missão</button><p class="werr" id="mespe"></p></form>
+      <label class="fz-lab">A partir do dia (opcional)<input type="date" id="mespd"></label><button type="submit">Criar missão</button><p class="werr" id="mespe"></p></form>
     <div id="mespl" class="mesp-l"></div></div>`;
   document.body.append(w);
   w.onclick = e => { if(e.target === w) fecha(); };
   const fecha = () => { off(); w.remove(); };
   w.querySelector('#mespx').onclick = fecha;
   const off = col.on(l => { const box = document.getElementById('mespl'); if(!box) return; const minhas = l.filter(m => m.autor === eu);
-    box.innerHTML = minhas.length ? minhas.map(m => `<div class="mesp-it ${m.feita ? 'ok' : ''}"><div><b>${esc(m.t)}</b><small>${m.feita ? 'já fez ♥︎' : m.dia ? `no dia ${new Date(m.dia + 'T12:00:00').toLocaleDateString('pt-BR')}` : 'num domingo'}</small></div><button class="ib" type="button" data-del="${m.id}" aria-label="Apagar">${icon('trash')}</button></div>`).join('') : `<p class="lead hq-empty">Nenhuma criada ainda.</p>`;
+    box.innerHTML = minhas.length ? minhas.map(m => `<div class="mesp-it ${m.feita ? 'ok' : ''}"><div><b>${esc(m.t)}</b><small>${m.feita ? `cumpriu${m.feitaDia ? ' em ' + new Date(m.feitaDia + 'T12:00:00').toLocaleDateString('pt-BR', {day:'2-digit', month:'2-digit'}) : ''} ♥︎` : m.dia && m.dia > hoje() ? `aparece a partir de ${new Date(m.dia + 'T12:00:00').toLocaleDateString('pt-BR')}` : 'esperando cumprir'}</small></div><button class="ib" type="button" data-del="${m.id}" aria-label="Apagar">${icon('trash')}</button></div>`).join('') : `<p class="lead hq-empty">Nenhuma criada ainda.</p>`;
     box.querySelectorAll('[data-del]').forEach(b => b.onclick = () => { if(!b.dataset.sure){ b.dataset.sure = 1; b.classList.add('sure'); setTimeout(() => { delete b.dataset.sure; b.classList.remove('sure'); }, 2500); return; } col.remove(b.dataset.del); }); });
   w.querySelector('#mespf').onsubmit = async e => { e.preventDefault(); const t = document.getElementById('mespt').value.trim(), d = document.getElementById('mespd').value;
     if(!t){ document.getElementById('mespe').textContent = 'Escreve a missão.'; return; }
     const b = e.target.querySelector('button'); b.disabled = true; try{ await col.add({t, dia:d || '', para:outro, autor:eu}); e.target.reset(); sparkle(b); }catch(x){ document.getElementById('mespe').textContent = 'Não deu pra criar.'; } b.disabled = false; };
 }
-function missaoEspHoje(lista, eu){
-  const hj = hoje(), minhas = (lista || []).filter(m => m.para === eu);
-  const doDia = minhas.find(m => m.dia === hj); if(doDia) return doDia;
-  if(new Date().getDay() !== 0) return null;
-  return minhas.filter(m => !m.dia && (!m.feita || m.feitaDia === hj)).sort((a, b) => a.criadoEm - b.criadoEm)[0] || null;
+/* missões especiais: aparecem assim que criadas (ou a partir do dia escolhido) e ficam até serem cumpridas */
+function missoesEspAbertas(lista, eu){
+  const hj = hoje();
+  return (lista || []).filter(m => m.para === eu && (!m.dia || m.dia <= hj) && (!m.feita || m.feitaDia === hj)).sort((a, b) => (a.criadoEm || 0) - (b.criadoEm || 0));
 }
 
 /* ---------- hoje com o outro: o que ele(a) já fez ---------- */
@@ -8306,10 +8310,17 @@ function heart(c, r){
 }
 let parts = [];
 /* parabéns quando completa uma missão */
-function parabensChoco(n = 1){
+/* prêmio de jogo: cada id só paga uma vez */
+async function ganhaChoco(id, qtd, sub){
+  const eu = Sync.quem || 'Di', col = Sync.col('chocolates'), doc = id + '_' + eu;
+  const l = await new Promise(ok => { let off = null, feito = false; off = col.on(x => { if(feito) return; feito = true; ok(x); setTimeout(() => off && off(), 0); }); });
+  if(l.some(c => c.id === doc)) return false;
+  try{ await col.set(doc, {qtd, autor:eu, dia:hoje(), tipo:'jogo'}); parabensChoco(qtd, sub); return true; }catch(e){ return false; }
+}
+function parabensChoco(n = 1, sub = 'missão cumprida ♥'){
   document.getElementById('pchoc')?.remove();
   const w = document.createElement('div'); w.id = 'pchoc'; w.className = 'pchoc';
-  w.innerHTML = `<div class="pchoc-c"><span class="pchoc-ic">${CHOCO_SVG}</span><b>Parabéns!</b><p>${n === 1 ? '1 chocolate recebido' : n + ' chocolates recebidos'}</p><small>missão cumprida ♥</small></div>`;
+  w.innerHTML = `<div class="pchoc-c"><span class="pchoc-ic">${CHOCO_SVG}</span><b>Parabéns!</b><p>${n === 1 ? '1 chocolate recebido' : n + ' chocolates recebidos'}</p><small>${sub}</small></div>`;
   document.body.append(w); requestAnimationFrame(() => w.classList.add('in'));
   setTimeout(() => burst(innerWidth / 2, innerHeight / 2 - 40, 50), 150);
   const sai = () => { w.classList.remove('in'); setTimeout(() => w.remove(), 300); };
