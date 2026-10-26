@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=152">
-<link rel="apple-touch-icon" href="icon-180.png?v=152">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=152">
+<link rel="manifest" href="manifest.json?v=153">
+<link rel="apple-touch-icon" href="icon-180.png?v=153">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=153">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -2217,7 +2217,8 @@ const C = {
   cacaPalavras: ['amor','beijo','abraço','carinho','saudade','namoro','coração','paixão','sorriso','cinema','pizza','viagem','praia','filme','música','dança','aliança','casinha','flores','presente','natal','estrela','lua','sol','café','sonho','futuro','família','noivado','casamento','chocolate','cafuné','risada','encontro','domingo','pôr do sol','chamego','parceria','cuidado','alegria','juntos','eterno','fofura','abraçar','mimo','date','sorvete','cachinhos','olhar','destino'],
   motivos: ['seu sorriso','sua voz','seus cachinhos','seu lado nerd','sua inteligência','sua paciência','sua coragem','sua determinação','seu amor','seu romantismo',
             'seu chamego','seu acolhimento','seu abraço','seu cheiro','nossa intimidade','suas piadas','suas provocações','seu capricho','sua comida','sua proatividade',
-            'seu jeito de me olhar','sua fé','seu cuidado comigo','sua risada','seu beijo','seu jeito de me acalmar','sua honestidade','seu jeito protetor','os nossos planos','sua parceria','seu carinho','seu olhar','sua sinceridade','sua companhia','seu jeito bobo','seu coração bom','suas mãos','seu jeito de falar comigo','você inteirinho'],
+            'seu jeito de me olhar','sua fé','seu cuidado comigo','sua risada','seu beijo','seu jeito de me acalmar','sua honestidade','seu jeito protetor','os nossos planos','sua parceria','seu carinho','seu olhar','sua sinceridade','sua companhia','seu jeito bobo','seu coração bom','suas mãos','seu jeito de falar comigo','você inteirinho',
+    /* novos */ 'seu bom humor','sua calma','sua força','sua lealdade','seu abraço apertado','seus conselhos','sua gentileza','seu jeito de dançar','sua bondade','seu esforço','sua humildade','sua generosidade','seu companheirismo','sua presença','suas manias','seu cafuné','seu bom dia','seu boa noite','seu jeito de me ouvir','sua alegria','sua maturidade','suas ideias','seus sonhos','seu jeito de me mimar','seu ciúme bobo','suas mensagens','sua dedicação','seu respeito','seu jeito de me apoiar','seu jeitinho','suas brincadeiras','suas caretas','sua teimosia','sua mão na minha','seu jeito de me chamar','seus elogios','sua confiança','seu jeito de me defender','nossas conversas','nossas risadas','nossos dates','nossos sonhos','seu sono pesado','seu jeito de me provocar','sua voz de manhã'],
   quiz: [
     {p:'Qual é a minha comida favorita?', o:['Pizza','Sushi','Hambúrguer','Lasanha'], c:1},
     {p:'Qual é a minha cor preferida?', o:['Azul','Rosa','Roxo','Vermelho'], c:2},
@@ -4049,7 +4050,7 @@ if('serviceWorker' in navigator && /github\.io$/.test(location.hostname)) addEve
 /* sempre a versão mais nova: se o GitHub tem uma versão diferente da aberta, limpa o guardado e recarrega sozinho */
 let edAberto = false;
 document.addEventListener('click', e => { if(edAberto && !e.target.closest('.ed-modo')){ edAberto = false; document.querySelector('.ed-modo')?.classList.remove('ab'); } });
-const VERSAO_APP = 'versão de 25/10 · 17h50';
+const VERSAO_APP = 'versão de 26/10 · 09h50';
 async function confereVersao(){
   if(!/github\.io$/.test(location.hostname) || !navigator.onLine) return;
   try{ const r = await fetch(location.pathname + '?nc=' + Date.now(), {cache:'no-store'}); if(!r.ok) return; const t = await r.text(), m = t.match(/const VERSAO_APP = '([^']+)'/);
@@ -4683,9 +4684,12 @@ VIEWS.memoria = () => {
 let gameRAF = null;
 function stopGame(){ if(gameRAF) cancelAnimationFrame(gameRAF); gameRAF = null; }
 VIEWS.coracoes = () => {
-  const META = Math.min(30, C.motivos.length), VIDAS = 4, euC = Sync.quem || 'Di', chN = 'corNivel_' + euC;
-  let nivel = Math.max(1, store.get(chN, 1)); const premioCor = n => Math.min(6, n + 1);
-  shell('jogo','Pegue os corações',`Cada coração tem uma coisa que eu amo em você. Pega os ${META}!`,
+  const euC = Sync.quem || 'Di', chN = 'corNivel_' + euC, NMAX = 50;
+  let nivel = Math.min(NMAX, Math.max(1, store.get(chN, 1))), META, VIDAS; const premioCor = n => Math.min(6, n + 1);
+  /* começa com poucos corações e vai apertando a cada nível */
+  const ajusta = () => { META = Math.max(1, Math.min(C.motivos.length, 10 + Math.floor((nivel - 1) * 1.25))); VIDAS = nivel < 15 ? 4 : nivel < 35 ? 3 : 2; };
+  ajusta();
+  shell('jogo','Pegue os corações','Cada coração tem uma coisa que eu amo em você',
     `<div class="game" id="game"><canvas id="gc"></canvas>
       <div class="hud" aria-live="polite"><span id="hp"></span><span id="hs">♥︎ 0 / ${META}</span></div>
       <div class="overlay" id="ov"><h3>Nível ${nivel}</h3><p class="cor-pz">vale ${premioCor(nivel)} ${CHOCO_SVG}</p>
@@ -4702,7 +4706,7 @@ VIEWS.coracoes = () => {
     document.getElementById('hs').textContent = `♥︎ ${caught.length} / ${META}`;
   };
   const FONT = '600 12px Jost, system-ui, sans-serif';
-  const splitWord = w => { const m = w.match(/^(seu|sua|seus|suas|nosso|nossa)\s+(.+)$/i); return m ? [m[1], m[2]] : ['', w]; };
+  const splitWord = w => { const m = w.match(/^(seu|sua|seus|suas|nosso|nossa|nossos|nossas)\s+(.+)$/i); return m ? [m[1], m[2]] : ['', w]; };
   function drawHeart(cx, cy, r, word){
     x.save(); x.translate(cx, cy);
     x.shadowColor = 'rgba(142,23,48,.35)'; x.shadowBlur = 8; x.shadowOffsetY = 3;
@@ -4743,7 +4747,7 @@ VIEWS.coracoes = () => {
   }
   document.getElementById('start').onclick = start;
   function start(){
-    fit(); px = W/2; items = []; pops = []; caught = []; lives = VIDAS; spawn = 400; shakeT = 0; last = performance.now();
+    ajusta(); fit(); px = W/2; items = []; pops = []; caught = []; lives = VIDAS; spawn = 400; shakeT = 0; last = performance.now();
     pool = [...C.motivos].sort(() => Math.random() - .5);
     document.getElementById('won').innerHTML = ''; document.getElementById('ov').hidden = true; hud();
     stopGame(); gameRAF = requestAnimationFrame(loop);
@@ -4761,8 +4765,8 @@ VIEWS.coracoes = () => {
   function end(win, why){
     stopGame(); jogou('coracoes');
     const ov = document.getElementById('ov'); ov.hidden = false;
-    if(win){ burst(innerWidth/2, innerHeight/2, 70); const nv = nivel; ganhaChoco('jogo_cor_n' + nv, premioCor(nv), `passou do nível ${nv} dos corações`); nivel++; store.set(chN, nivel);
-      ov.innerHTML = `<h3>Pegou todos!</h3><p class="lead">Olha embaixo tudo o que eu amo em você.</p><p class="cor-pz">nível ${nivel} vale ${premioCor(nivel)} ${CHOCO_SVG} e é mais rápido</p><button id="start">Ir pro nível ${nivel}</button>`; }
+    if(win){ burst(innerWidth/2, innerHeight/2, 70); const nv = nivel; ganhaChoco('jogo_cor_n' + nv, premioCor(nv), `passou do nível ${nv} dos corações`); const sobe = nivel < NMAX; if(sobe){ nivel++; store.set(chN, nivel); }
+      ov.innerHTML = `<h3>Pegou todos!</h3><p class="lead">Olha embaixo tudo o que eu amo em você.</p>${sobe ? `<p class="cor-pz">nível ${nivel}: ${Math.min(C.motivos.length, 10 + Math.floor((nivel - 1) * 1.25))} corações, vale ${premioCor(nivel)} ${CHOCO_SVG}</p>` : ''}<button id="start">${sobe ? 'Ir pro nível ' + nivel : 'Jogar de novo'}</button>`; }
     else ov.innerHTML = `<h3>Perdeu! kkkkk</h3><p class="lead">${why}<br>Você pegou ${caught.length} de ${META} no nível ${nivel}.</p><button id="start">Tentar de novo</button>`;
     document.getElementById('start').onclick = start;
     showCaught(win);
@@ -4771,11 +4775,11 @@ VIEWS.coracoes = () => {
     const dt = Math.min(40, t - last); last = t;
     const lvl = caught.length / META;
     const dif = nivel - 1;
-    const speed = (1.2 + lvl * 2.4) * (1 + dif * .12);
-    const every = (820 - lvl * 480) * Math.max(.6, 1 - dif * .06);
+    const speed = (1.2 + lvl * 2.4) * Math.min(2.4, 1 + dif * .035);
+    const every = (820 - lvl * 480) * Math.max(.5, 1 - dif * .012);
     spawn -= dt;
     if(spawn <= 0){
-      let bad = Math.random() < Math.min(.5, .2 + lvl * .18 + dif * .025);
+      let bad = Math.random() < Math.min(.55, .2 + lvl * .18 + dif * .007);
       if(!bad && !pool.length) bad = true;
       const it = {x:0, y:-30, v:(.11+Math.random()*.06)*speed, bad, w:Math.random()*6};
       if(!bad){ it.word = pool.shift(); x.font = FONT; it.r = Math.max(28, x.measureText(splitWord(it.word)[1]).width * .62 + 10); }
@@ -7075,7 +7079,7 @@ const ESCRITAS = [
   {grupo:'Jogos'},
   {k:'cacaPalavras', t:'Caça-palavras: palavras', d:'uma por linha. Cada rodada sorteia palavras daqui (sem acento no quadro). Quanto mais, melhor', tipo:'linhas'},
   {k:'textos.memoriaFim', t:'Jogo da memória: mensagem do final', d:'aparece quando ele acha todos os pares. As fotos do jogo ficam na aba Fotos', tipo:'texto', rows:3},
-  {k:'motivos', t:'Pegue os corações (motivos)', d:'um por linha. O jogo pede 25 corações e sorteia entre todos daqui, então quanto mais tiver, mais varia', tipo:'linhas'},
+  {k:'motivos', t:'Pegue os corações (motivos)', d:'um por linha. O jogo sorteia entre todos daqui, então quanto mais tiver, mais varia', tipo:'linhas'},
   {k:'dates', t:'Roleta do date', d:'uma ideia por linha', tipo:'linhas'},
   {k:'quiz', t:'Quanto você me conhece?', tipo:'objs', campos:[['p','Pergunta'],['o','Opções (separa com |)','arr'],['c','Qual é a certa (1, 2, 3…)','idx']]},
   {k:'provavel', t:'Quem é mais provável', tipo:'objs', campos:[['p','Pergunta'],['r','Resposta certa','quem'],['obs','Comentário depois']]},
@@ -7110,6 +7114,7 @@ function aplicarConteudo(list){
   C.mesversarios = BASE.mesversarios.map((m, k) => (tx.mes && tx.mes[k]) || m);
   ESCRITAS.forEach(e => { if(!e.k) return; const d = doc('tx_' + e.k), base = JSON.parse(JSON.stringify(BASE_TX[e.k]));
     if(!d || d.v === undefined){ if(['cartaNatal','cartaRetro','segredo','mesversarios'].includes(e.k)) return; setP(C, e.k, base); return; }
+    if(e.k === 'motivos' && Array.isArray(d.v) && (d.atualizadoEm || d.criadoEm || 0) < Date.UTC(2026, 9, 26, 14)){ const ja = new Set(d.v.map(x => String(x).trim().toLowerCase())); setP(C, e.k, d.v.concat(base.slice(39).filter(x => !ja.has(x.toLowerCase())))); return; }
     if(e.tipo === 'objs' && e.fixo) setP(C, e.k, base.map((b, i) => Object.assign({}, b, (d.v || [])[i] || {})));
     else setP(C, e.k, d.v); });
   const sig = (C.fotoInicio || '').length + '|' + (C.fotoEncontro || '').length + '|' + (C.fotoInicio || '').slice(-40) + (C.fotoEncontro || '').slice(-40);
