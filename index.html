@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=153">
-<link rel="apple-touch-icon" href="icon-180.png?v=153">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=153">
+<link rel="manifest" href="manifest.json?v=156">
+<link rel="apple-touch-icon" href="icon-180.png?v=156">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=156">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -416,7 +416,7 @@ form.editando{outline:2px solid #e8798f;outline-offset:2px}
 .gs-card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:var(--shadow);text-align:left;display:flex;flex-direction:column}
 .gs-card img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
 .gs-sem{display:grid;place-items:center;aspect-ratio:1;background:#fbeef0;color:#e58fa5;font-size:26px}
-.gs-card > div{padding:7px 8px 9px;min-width:0}.gs-card .cmts{margin-top:5px}html body .gs-card .cmt-b{padding:2px 8px;font-size:11px;max-width:100%}.gs-card .cmt-b svg{width:12px;height:12px}.gs-card .cmt{font-size:11.5px;padding:4px 7px}.gs-card .cmt-f{flex-wrap:wrap}.gs-card .cmt-f textarea{flex:1 1 100%;min-width:0}.gs-card small{display:block;line-height:1.3;font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#b3707e}
+.gs-card > div{padding:7px 8px 9px;min-width:0}.gs-card .cmts{margin-top:5px}html body .gs-card .cmt-b,html body .gs-card .cmt-tg{padding:2px 8px;font-size:11px;max-width:100%;gap:4px;white-space:nowrap}.gs-card .cmt-b svg,.gs-card .cmt-tg svg{width:12px;height:12px;flex:none}html body .gs-card .cmt-tg[data-tgc="0"]{border:0;padding:2px 4px}.gs-card .cmt-rs{flex-wrap:wrap}.gs-card .cmt-pick{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px;max-width:100%;width:100%;box-sizing:border-box;border-radius:12px;padding:4px}html body .gs-card .cmt-e{width:auto;min-height:0;flex:none;font-size:17px;padding:3px 0;margin:0}.gs-card .cmt-pal{display:none}html body .cmt-tg,html body .cmt-b{max-width:100%}.gs-card .cmt{font-size:11.5px;padding:4px 7px}.gs-card .cmt-f{flex-wrap:wrap}.gs-card .cmt-f textarea{flex:1 1 100%;min-width:0}.gs-card small{display:block;line-height:1.3;font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#b3707e}
 .gs-card p{margin:3px 0 0;font-size:12.5px;font-weight:600;color:#3a2a2a;line-height:1.25}.gs-card .linkbtn{margin-top:4px;font-size:11px}
 .cstoast{position:fixed!important;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 86px);transform:translate(-50%,20px);z-index:9400;width:auto!important;max-width:86vw;margin:0!important;padding:10px 16px;border-radius:999px;background:#1f1a17;color:#fbf6ec;font-size:13px;font-weight:600;text-align:center;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s}
 .cstoast.in{opacity:1;transform:translate(-50%,0)}
@@ -4050,7 +4050,7 @@ if('serviceWorker' in navigator && /github\.io$/.test(location.hostname)) addEve
 /* sempre a versão mais nova: se o GitHub tem uma versão diferente da aberta, limpa o guardado e recarrega sozinho */
 let edAberto = false;
 document.addEventListener('click', e => { if(edAberto && !e.target.closest('.ed-modo')){ edAberto = false; document.querySelector('.ed-modo')?.classList.remove('ab'); } });
-const VERSAO_APP = 'versão de 26/10 · 09h50';
+const VERSAO_APP = 'versão de 28/10 · 10h10';
 async function confereVersao(){
   if(!/github\.io$/.test(location.hostname) || !navigator.onLine) return;
   try{ const r = await fetch(location.pathname + '?nc=' + Date.now(), {cache:'no-store'}); if(!r.ok) return; const t = await r.text(), m = t.match(/const VERSAO_APP = '([^']+)'/);
@@ -4386,7 +4386,7 @@ function cmtConteudo(alvo){
   /* reage só no comentário do outro: toca em "☺+" (ou segura no comentário) pra escolher; toca na sua reação pra tirar */
   const reac = c => { const r = c.reac || {}, vals = Object.entries(r).filter(([, v]) => v), doOutro = c.autor !== eu, minha = r[eu];
     return `<span class="cmt-rs">${vals.map(([q, v]) => q === eu ? `<button type="button" class="cmt-rc meu" data-rtira="${c.id}" title="tocar pra tirar">${v}</button>` : `<span class="cmt-rc" title="${esc(nm(q))}">${v}</span>`).join('')}${doOutro && !minha ? `<button type="button" class="cmt-r" data-cr="${c.id}" aria-label="reagir">☺︎+</button>` : ''}</span>${doOutro && cmtReage === c.id ? `<span class="cmt-pick">${REACOES.map(e => `<button type="button" class="cmt-e ${minha === e ? 'on' : ''}" data-ce="${c.id}" data-e="${e}">${e}</button>`).join('')}</span>` : ''}`; };
-  if(!mostra) return [sig, cs.length ? `<button type="button" class="cmt-tg" data-tgc="1">${icon('chat')} ${cs.length} ${cs.length === 1 ? 'comentário' : 'comentários'}</button>` : `<button type="button" class="cmt-b">${icon('chat')} comentar</button>`, ab];
+  if(!mostra) return [sig, cs.length ? `<button type="button" class="cmt-tg" data-tgc="1" aria-label="ver comentários">${icon('chat')} ${cs.length}<span class="cmt-pal"> ${cs.length === 1 ? 'comentário' : 'comentários'}</span></button>` : `<button type="button" class="cmt-b">${icon('chat')} comentar</button>`, ab];
   return [sig, `${cs.map(c => `<div class="cmt" ${c.autor !== eu ? `data-segura="${c.id}"` : ''}><p class="cmt-t"><b class="${quemCls(c.autor)}">${esc(nm(c.autor))}</b> ${esc(c.texto)}${c.autor === eu ? ` <button type="button" class="cmt-x" data-cx="${c.id}" aria-label="apagar">×</button>` : ''}</p>${reac(c)}</div>`).join('')}
       <div class="cmt-ac">${ab ? `<div class="cmt-f"><textarea rows="1" maxlength="300" placeholder="Escreve um comentário…"></textarea><button type="button" class="cmt-ok">${icon('send')}</button></div>` : `<button type="button" class="cmt-b">${icon('chat')} ${cs.length ? 'responder' : 'comentar'}</button>${cs.length ? `<button type="button" class="cmt-tg" data-tgc="0">esconder</button>` : ''}`}</div>`, ab];
 }
