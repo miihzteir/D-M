@@ -9,9 +9,9 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=156">
-<link rel="apple-touch-icon" href="icon-180.png?v=156">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=156">
+<link rel="manifest" href="manifest.json?v=160">
+<link rel="apple-touch-icon" href="icon-180.png?v=160">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=160">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -4050,7 +4050,7 @@ if('serviceWorker' in navigator && /github\.io$/.test(location.hostname)) addEve
 /* sempre a versão mais nova: se o GitHub tem uma versão diferente da aberta, limpa o guardado e recarrega sozinho */
 let edAberto = false;
 document.addEventListener('click', e => { if(edAberto && !e.target.closest('.ed-modo')){ edAberto = false; document.querySelector('.ed-modo')?.classList.remove('ab'); } });
-const VERSAO_APP = 'versão de 28/10 · 10h10';
+const VERSAO_APP = 'versão de 31/10 · 18h50';
 async function confereVersao(){
   if(!/github\.io$/.test(location.hostname) || !navigator.onLine) return;
   try{ const r = await fetch(location.pathname + '?nc=' + Date.now(), {cache:'no-store'}); if(!r.ok) return; const t = await r.text(), m = t.match(/const VERSAO_APP = '([^']+)'/);
@@ -4765,7 +4765,7 @@ VIEWS.coracoes = () => {
   function end(win, why){
     stopGame(); jogou('coracoes');
     const ov = document.getElementById('ov'); ov.hidden = false;
-    if(win){ burst(innerWidth/2, innerHeight/2, 70); const nv = nivel; ganhaChoco('jogo_cor_n' + nv, premioCor(nv), `passou do nível ${nv} dos corações`); const sobe = nivel < NMAX; if(sobe){ nivel++; store.set(chN, nivel); }
+    if(win){ jogou('corWin'); burst(innerWidth/2, innerHeight/2, 70); const nv = nivel; ganhaChoco('jogo_cor_n' + nv, premioCor(nv), `passou do nível ${nv} dos corações`); const sobe = nivel < NMAX; if(sobe){ nivel++; store.set(chN, nivel); }
       ov.innerHTML = `<h3>Pegou todos!</h3><p class="lead">Olha embaixo tudo o que eu amo em você.</p>${sobe ? `<p class="cor-pz">nível ${nivel}: ${Math.min(C.motivos.length, 10 + Math.floor((nivel - 1) * 1.25))} corações, vale ${premioCor(nivel)} ${CHOCO_SVG}</p>` : ''}<button id="start">${sobe ? 'Ir pro nível ' + nivel : 'Jogar de novo'}</button>`; }
     else ov.innerHTML = `<h3>Perdeu! kkkkk</h3><p class="lead">${why}<br>Você pegou ${caught.length} de ${META} no nível ${nivel}.</p><button id="start">Tentar de novo</button>`;
     document.getElementById('start').onclick = start;
@@ -4836,7 +4836,7 @@ VIEWS.quiz = () => {
     });
   }
   function end(){
-    const p = pts / C.quiz.length;
+    jogou('quiz'); const p = pts / C.quiz.length;
     const title = p === 1 ? 'Namorado nível: aprovado pela sogra' : p >= .5 ? 'Bom, mas pode melhorar…' : 'Di… a gente precisa conversar kkkk';
     if(p === 1) burst(innerWidth/2, innerHeight/2);
     qz.innerHTML = `<div class="qcard center page"><p class="score">${pts}/${C.quiz.length}</p><p class="yay" style="font-size:34px">${title}</p><button id="again" class="ghost">Tentar de novo</button></div>`;
@@ -4863,7 +4863,7 @@ VIEWS.provavel = () => {
       pv.querySelector(`[data-r="${certa}"]`)?.classList.add('certa');
       const rv = document.getElementById('rv'); rv.classList.add('unfold');
       rv.innerHTML = `${ok ? 'Acertou!' : 'Hmm, não…'} A resposta é: ${({diogo:'o Di', milena:'a Mihzinha', ambos:'os dois', nenhum:'nenhum dos dois'})[certa] || esc(it.r)}<br><small style="font-size:19px;color:var(--muted)">${esc(it.obs)}</small>`;
-      setTimeout(()=>{ i++; i < C.provavel.length ? q() : pv.innerHTML = `<div class="qcard center page"><p class="score">${hits}/${C.provavel.length}</p><p class="lead">respostas iguais às da Mihzinha</p></div>`; }, 2300);
+      setTimeout(()=>{ i++; if(i >= C.provavel.length) jogou('provavel'); i < C.provavel.length ? q() : pv.innerHTML = `<div class="qcard center page"><p class="score">${hits}/${C.provavel.length}</p><p class="lead">respostas iguais às da Mihzinha</p></div>`; }, 2300);
     });
   }
   q();
@@ -6052,32 +6052,81 @@ function progressoMissoes(eu, d){
 
 /* ---------- missões do dia (2 por dia: a primeira vale 1 chocolate, a segunda 2) ---------- */
 const jogou = id => { const k = 'jogou_' + (Sync.quem || 'Di'), j = store.get(k, {}); j[hoje() + '_' + id] = 1; store.set(k, j); };
+const pro_ = o => o === 'Di' ? 'pro ' + apelido('Di', 9) : 'pra ' + apelido('Mihzinha', 9), oa_ = (o, k) => o === 'Di' ? 'o ' + apelido('Di', k) : 'a ' + apelido('Mihzinha', k);
+/* 1 chocolate: coisas rápidas · 2 chocolates: coisas que dão mais trabalho */
 const MIS_DIA = {
-  rit: [
-    {id:'resp',   t:() => 'Responder a pergunta do dia', go:'pergunta', ic:'chat'},
-    {id:'saud',   t:() => 'Marcar o termômetro de saudade', go:'saudade', ic:'heart'},
-    {id:'pensei', t:() => 'Apertar "pensei em você" 3 vezes', go:'#pbtn', ic:'heart', meta:3},
-    {id:'diario', t:() => 'Contar no diário como foi o seu dia', go:'diario', ic:'note'}],
-  esc: [
-    {id:'bilh',   t:o => `Mandar um bilhetinho ${o === 'Di' ? 'pro ' + apelido('Di', 9) : 'pra ' + apelido('Mihzinha', 9)}`, go:'bilhetes', ic:'note'},
-    {id:'gostos', t:o => `Colocar uma coisa que ${o === 'Di' ? 'o ' + apelido('Di', 11) : 'a ' + apelido('Mihzinha', 11)} ama`, go:'gostos', ic:'star'},
-    {id:'musica', t:() => 'Colocar uma música na nossa playlist', go:'playlist', ic:'music'}],
-  brin: [
-    {id:'abraco',   t:o => `Dar um abraço ${o === 'Di' ? 'no ' + apelido('Di', 12) : 'na ' + apelido('Mihzinha', 12)} na casinha`, go:'casinha', ic:'hug'},
+  leve: [
+    {id:'resp',     t:() => 'Responder a pergunta do dia', go:'pergunta', ic:'chat'},
+    {id:'saud',     t:() => 'Marcar o termômetro de saudade', go:'saudade', ic:'heart'},
+    {id:'saud10',   t:() => 'Apertar o termômetro de saudade 10 vezes', go:'saudade', ic:'heart', meta:10},
+    {id:'pensei3',  t:() => 'Apertar "pensei em você" 3 vezes', go:'#pbtn', ic:'heart', meta:3},
+    {id:'choco',    t:() => 'Pegar o chocolate de hoje na casinha', go:'casinha', ic:'gift'},
+    {id:'cmt',      t:o => `Comentar alguma coisa ${o === 'Di' ? 'do ' + apelido('Di', 9) : 'da ' + apelido('Mihzinha', 9)}`, go:'bilhetes', ic:'chat'},
+    {id:'roleta',   t:() => 'Girar a roleta do date', go:'roleta', ic:'wheel'},
+    {id:'memoria',  t:() => 'Terminar um jogo da memória', go:'memoria', ic:'cards'},
     {id:'coracoes', t:() => 'Jogar uma partida de Pegue os corações', go:'coracoes', ic:'heartsfall'},
-    {id:'memoria',  t:() => 'Terminar um jogo da memória', go:'memoria', ic:'cards'}]
+    {id:'caca',     t:() => 'Terminar uma rodada do caça-palavras', go:'caca', ic:'busca'},
+    {id:'cmtResp',  t:o => `Comentar a resposta ${o === 'Di' ? 'do ' + apelido('Di', 9) : 'da ' + apelido('Mihzinha', 9)} na pergunta do dia`, go:'pergunta', ic:'chat'},
+    {id:'cmtGosto', t:o => `Comentar uma coisa que ${oa_(o, 11)} ama`, go:'gostos', ic:'chat'}],
+  forte: [
+    {id:'diario',   t:() => 'Contar no diário como foi o seu dia', go:'diario', ic:'note'},
+    {id:'bilh',     t:o => `Mandar um bilhetinho ${pro_(o)}`, go:'bilhetes', ic:'note'},
+    {id:'gostos',   t:o => `Colocar uma coisa que ${oa_(o, 11)} ama`, go:'gostos', ic:'star'},
+    {id:'musica',   t:() => 'Colocar uma música na nossa playlist', go:'playlist', ic:'music'},
+    {id:'abraco',   t:o => `Dar um abraço ${o === 'Di' ? 'no ' + apelido('Di', 12) : 'na ' + apelido('Mihzinha', 12)} na casinha`, go:'casinha', ic:'hug'},
+    {id:'filme',    t:() => 'Colocar um filme ou série pra gente ver', go:'filmes', ic:'film'},
+    {id:'lugar',    t:() => 'Guardar um lugar nosso', go:'lugares', ic:'pin'},
+    {id:'momcarta', t:() => 'Escrever uma carta pros nossos momentos', go:'momentos', ic:'mail'},
+    {id:'corWin',   t:() => 'Passar de nível no Pegue os corações', go:'coracoes', ic:'heartsfall'},
+    {id:'pensei10', t:() => 'Apertar "pensei em você" 10 vezes', go:'#pbtn', ic:'heart', meta:10},
+    {id:'compra',   t:() => 'Comprar uma coisa nova pra casinha', go:'casinha', ic:'house'},
+    {id:'provavel', t:() => 'Jogar o Quem é mais provável', go:'provavel', ic:'duo'},
+    {id:'quiz',     t:() => 'Fazer o Quanto você me conhece?', go:'quiz', ic:'question', so:'Di'},
+    {id:'bilh2',    t:o => `Mandar 2 bilhetinhos ${pro_(o)}`, go:'bilhetes', ic:'note', meta:2},
+    {id:'abraq',    t:o => `Escrever uma carta de Abra quando ${pro_(o)}`, go:'abra', ic:'mail'},
+    {id:'filho',    t:() => 'Escrever uma carta pro nosso futuro filho', go:'filhos', ic:'baby'},
+    {id:'plano',    t:() => 'Colocar um plano novo pra gente', go:'planos', ic:'star'},
+    {id:'datam',    t:() => 'Guardar uma data marcante nossa', go:'datas', ic:'star'},
+    {id:'premio',   t:o => `Oferecer um prêmio ${pro_(o)}`, go:'premios', ic:'gift'},
+    {id:'missEsp',  t:o => `Criar uma missão especial ${pro_(o)}`, go:'#mdesp', ic:'star'}]
 };
+/* sorteio do dia: cada um tem as suas, e a mesma só volta depois de passar por todas */
+const semente = t => { let h = 2166136261; for(const ch of String(t)) h = Math.imul(h ^ ch.charCodeAt(0), 16777619); return h >>> 0; };
+const rnd = a => () => { a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+function ciclo(lista, n, chave){
+  const L = lista.length, emb = b => { const r = rnd(semente(chave + ':' + b)), a = lista.slice(); for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const n0 = 20362, rel = Math.max(0, n - n0), B = Math.floor(rel / L), k = rel % L;
+  let at = emb(0);
+  for(let b = 1; b <= B; b++){ const ant = at.slice(-Math.min(3, L - 1)).map(x => x.id), nv = emb(b); at = nv.filter(x => !ant.includes(x.id)).concat(nv.filter(x => ant.includes(x.id))); }
+  return at[k];
+}
 function missoesHoje(){
-  const n = Math.round(new Date(hoje() + 'T12:00:00').getTime() / 86400000);
-  const dois = [...MIS_DIA.esc, ...MIS_DIA.brin];
-  return [Object.assign({premio:1}, MIS_DIA.rit[n % 4]), Object.assign({premio:2}, dois[(n * 3 + 1) % dois.length])];
+  const eu = Sync.quem || 'Di', n = Math.round(new Date(hoje() + 'T12:00:00').getTime() / 86400000);
+  const ok = m => !m.so || m.so === eu;
+  return [Object.assign({premio:1}, ciclo(MIS_DIA.leve.filter(ok), n, 'leve' + eu)), Object.assign({premio:2}, ciclo(MIS_DIA.forte.filter(ok), n, 'forte' + eu))];
 }
 function progMissao(m, d, eu){
   const hj = hoje(), ini = new Date(hj + 'T00:00:00').getTime(), meu = (l, k = 'autor') => (l || []).some(x => x[k] === eu && (x.dia ? x.dia === hj : x.criadoEm >= ini));
   switch(m.id){
     case 'resp': return +meu(d.respostas, 'quem');
     case 'saud': return +meu(d.saudade, 'quem');
-    case 'pensei': return ((d.pensei[hj] || {})[eu] || 0);
+    case 'pensei': case 'pensei3': case 'pensei10': return ((d.pensei[hj] || {})[eu] || 0);
+    case 'saud10': return ((d.saudade || []).find(x => x.id === hj + '_' + eu) || {}).n || 0;
+    case 'choco': return +(d.chocolates || []).some(c => c.id === hj + '_' + eu);
+    case 'cmt': return +meu(d.comentarios);
+    case 'filme': return +meu(d.filmes);
+    case 'momcarta': return +meu(d.momCartas);
+    case 'bilh2': return (d.bilhetes || []).filter(x => x.autor === eu && (x.criadoEm || 0) >= ini).length;
+    case 'abraq': return +meu(d.abraQuando);
+    case 'filho': return +meu(d.cartasFilhos);
+    case 'plano': return +meu(d.planosLista);
+    case 'datam': return +meu(d.datasMarcantes);
+    case 'premio': return +(d.premios || []).some(x => x.autor === eu && !x.doPedido && (x.criadoEm || 0) >= ini);
+    case 'missEsp': return +(d.missoesEsp || []).some(x => x.autor === eu && (x.criadoEm || 0) >= ini);
+    case 'cmtResp': return +(d.comentarios || []).some(x => x.autor === eu && String(x.alvo).startsWith('respostas:') && (x.criadoEm || 0) >= ini);
+    case 'cmtGosto': return +(d.comentarios || []).some(x => x.autor === eu && String(x.alvo).startsWith('gostos:') && (x.criadoEm || 0) >= ini);
+    case 'lugar': return +meu(d.lugares);
+    case 'compra': return +(d.compras || []).some(c => c.autor === eu && c.tipo !== 'dica' && (c.criadoEm || 0) >= ini);
     case 'diario': return +meu(d.diario);
     case 'bilh': return +meu(d.bilhetes);
     case 'cartad': return +meu(d.cartasData, 'de');
@@ -6091,7 +6140,7 @@ function missoesBox(el, compacto){
   if(!el) return;
   if(!jaComecou() && !PREVIA){ el.innerHTML = ''; return; }
   const eu = Sync.quem || 'Di', outro = eu === 'Di' ? 'Mihzinha' : 'Di', d = {pensei:{}}, offs = [];
-  const cols = ['respostas','saudade','diario','bilhetes','cartasData','gostos','musicas','abracos','chocolates','missoesEsp'];
+  const cols = ['respostas','saudade','diario','bilhetes','cartasData','gostos','musicas','abracos','chocolates','missoesEsp','comentarios','filmes','lugares','compras','momCartas','abraQuando','cartasFilhos','planosLista','datasMarcantes','premios'];
   let raf = 0;
   const sair = () => { offs.forEach(f => f && f()); offs.length = 0; };
   const draw = () => { raf = 0; if(!el.isConnected){ sair(); return; }
@@ -6114,6 +6163,7 @@ function missoesBox(el, compacto){
       if(x.m.manual){ if(!b.dataset.sure){ b.dataset.sure = 1; b.querySelector('small').textContent = 'fez mesmo? toca de novo'; setTimeout(() => { if(b.isConnected){ delete b.dataset.sure; pede(); } }, 2500); return; }
         const r = b.getBoundingClientRect(); burst(r.left + r.width - 30, r.top + r.height / 2, 30); b.disabled = true;
         try{ const c = Object.assign({}, x.m.esp, {feita:true, feitaDia:hj}); delete c.id; await Sync.col('missoesEsp').set(x.m.esp.id, c); evento('{eu} cumpriu a missão que você criou', x.m.esp.t || '', 'casinha', 'star'); await Sync.col('chocolates').set(`missao_${hj}_${x.m.id}_${eu}`, {qtd:x.m.premio, autor:eu, dia:hj}); parabensChoco(x.m.premio, 'missão especial cumprida ♥'); }catch(e){ b.disabled = false; } return; }
+      if(x.m.go === '#mdesp'){ abrirMissoesEsp(); return; }
       if(x.m.go.startsWith('#')){ const alvo = document.querySelector(x.m.go); if(alvo){ alvo.scrollIntoView({behavior:'smooth', block:'center'}); alvo.classList.remove('mpulse'); void alvo.offsetWidth; alvo.classList.add('mpulse'); } else { renderHome(0); setTimeout(() => { const a = document.querySelector(x.m.go); a && a.scrollIntoView({behavior:'smooth', block:'center'}); a && a.classList.add('mpulse'); }, 400); } return; }
       openStop(x.m.go);
     });
@@ -8271,7 +8321,7 @@ VIEWS.roleta = () => {
       const p = Math.min(1, (t - t0)/dur), e = 1 - Math.pow(1 - p, 4);
       ang = start + total*e; draw();
       if(p < 1) return requestAnimationFrame(step);
-      spinning = false; const r = document.getElementById('spin').getBoundingClientRect(); burst(r.left + r.width/2, r.top, 40);
+      spinning = false; jogou('roleta'); const r = document.getElementById('spin').getBoundingClientRect(); burst(r.left + r.width/2, r.top, 40);
       const txt = `Mihzinha, a roleta escolheu o nosso próximo date: ${opts[pick]}! Quando a gente vai? ♥`;
       document.getElementById('wres').innerHTML = `<div class="qcard center page"><p class="eyebrow">nosso próximo date</p><h3>${esc(opts[pick])}</h3>
         ${eu === 'Mihzinha' ? '' : `<a class="wlink" href="https://wa.me/${C.whatsMihzinha}?text=${encodeURIComponent(txt)}" target="_blank" rel="noopener">${icon('whats')}Combinar com a Mihzinha</a>`}</div>`;
