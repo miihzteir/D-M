@@ -9,9 +9,13 @@
 <meta name="application-name" content="D&amp;M">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<link rel="manifest" href="manifest.json?v=160">
-<link rel="apple-touch-icon" href="icon-180.png?v=160">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=160">
+<link rel="manifest" href="manifest.json?v=162">
+<script>/* projeto antigo (GitHub): só pra baixar a cópia dos dados */
+self.FIREBASE_CONFIG = {apiKey:"AIzaSyCJfh8vBafbuDSa4f1coZNHWQgRUJfgvgc", authDomain:"d-e-m-db466.firebaseapp.com", projectId:"d-e-m-db466", storageBucket:"d-e-m-db466.firebasestorage.app", messagingSenderId:"560661900030", appId:"1:560661900030:web:6fd16de3afc9a212e813af"};
+self.DM_VAPID = "BIyzh52hPlGVpLQR3kFJZi2FFv7aJdTzRnfvNe8ik4RexrFLYR-r5XaJLIcCTH9Uy4cgs8vhhvdnFnwXG0lhnx4";
+self.DM_WORKER = "https://dm-avisos.miihzteir.workers.dev";</script>
+<link rel="apple-touch-icon" href="icon-180.png?v=162">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=162">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -487,6 +491,8 @@ button.cs-saldo{background:var(--paper,#fffaf6);color:inherit;box-shadow:0 10px 
 .rs-op span{display:flex;flex-direction:column;gap:2px}.rs-op b{font-size:14.5px}.rs-op small{font-size:12.5px;color:#8a6a6f;line-height:1.35}
 .rs-btn{width:calc(100% - 32px);margin-top:14px;margin-bottom:6px;background:#7a1424!important}
 .ed-reset .msg{margin-bottom:14px;text-align:center}
+#edcopia .ed-d{margin:2px 16px 0!important}
+html body .rs-btn.ghost{background:#fff!important;color:#7a1424!important;border:1.5px solid #7a1424;box-shadow:none;margin-top:8px}
 .vale.used button{background:var(--pink-3);color:var(--pink);box-shadow:none}
 
 /* presente */
@@ -2178,18 +2184,14 @@ html *::-webkit-scrollbar,html::-webkit-scrollbar{display:none!important;width:0
    CONTEÚDO — tudo que for trocar fica aqui
    ========================================================= */
 /* =========================================================
-   FIREBASE — cole aqui o firebaseConfig do seu projeto
-   (Configurações do projeto → Seus apps → app da Web)
-   Vazio = salva só neste aparelho.
+   FIREBASE, chave de push e servidor de avisos: ficam no firebase-config.js
+   (o mesmo arquivo serve o app e o sw.js). Vazio = salva só neste aparelho.
    ========================================================= */
-const FIREBASE = {
-  apiKey: "AIzaSyCJfh8vBafbuDSa4f1coZNHWQgRUJfgvgc",
-  authDomain: "d-e-m-db466.firebaseapp.com",
-  projectId: "d-e-m-db466",
-  storageBucket: "d-e-m-db466.firebasestorage.app",
-  messagingSenderId: "560661900030",
-  appId: "1:560661900030:web:6fd16de3afc9a212e813af"
-};
+const FIREBASE = Object.assign({apiKey:''}, self.FIREBASE_CONFIG || {});
+const VAPID_PADRAO = self.DM_VAPID || '';
+const WORKER_PADRAO = self.DM_WORKER || '';
+/* onde o app pode registrar o service worker, se atualizar sozinho e ligar push */
+const hospedado = () => /(^|\.)almeia\.com\.br$|\.pages\.dev$|\.github\.io$/.test(location.hostname);
 
 const C = {
   nome: 'diogo',
@@ -3195,7 +3197,8 @@ const Sync = (() => {
   const loadScript = src => new Promise((ok, no) => { const sc = document.createElement('script'); sc.src = src; sc.onload = ok; sc.onerror = no; document.head.append(sc); });
   state = {planos:store.get('planos', {}), vales:store.get('vales', {}), pensei:store.get('pensei', {}), lidas:store.get('lidas', {}), datesEdit:store.get('datesEdit', {}), planosEdit:store.get('planosEdit', {}), cats:store.get('cats', {}), casinha:store.get('casinha', {}), niver:store.get('niver', {})};
   let verif = false;
-  async function whoAmI(){ const local = store.get('quem', ''); try{ const d = await fdb.doc('pessoas/' + user.uid).get(); verif = !!(d.exists && d.data().verificado); quem = (d.exists && d.data().quem) || local; if(local && !(d.exists && d.data().quem)) fdb.doc('pessoas/' + user.uid).set({quem:local, email:user.email || ''}, {merge:true}).catch(() => {}); }catch(e){ quem = local; } if(quem && !local) store.set('quem', quem); }
+  async function whoAmI(){ const local = store.get('quem', ''); try{ let d = await fdb.doc('pessoas/' + user.uid).get();
+      if(!d.exists && user.email){ try{ const m = ((await fdb.doc('migracao/pessoas').get()).data() || {}).mapa || {}, p = m[user.email.toLowerCase()]; if(p){ await fdb.doc('pessoas/' + user.uid).set(Object.assign({quem:p.quem, email:user.email}, p.verificado ? {verificado:true} : {}), {merge:true}); d = await fdb.doc('pessoas/' + user.uid).get(); } }catch(e){} } verif = !!(d.exists && d.data().verificado); quem = (d.exists && d.data().quem) || local; if(local && !(d.exists && d.data().quem)) fdb.doc('pessoas/' + user.uid).set({quem:local, email:user.email || ''}, {merge:true}).catch(() => {}); }catch(e){ quem = local; } if(quem && !local) store.set('quem', quem); }
   function attachAll(){
     if(!online()) return;
     if(!stateUnsub) stateUnsub = fdb.doc('compartilhado/estado').onSnapshot(d => { const v = d.data() || {}; state = {planos:v.planos || {}, vales:v.vales || {}, pensei:v.pensei || {}, lidas:v.lidas || {}, datesEdit:v.datesEdit || {}, planosEdit:v.planosEdit || {}, cats:v.cats || {}, casinha:v.casinha || {}, niver:v.niver || {}}; emitState(); }, () => {});
@@ -4046,13 +4049,13 @@ function maybeInstallPrompt(forcar){
   document.getElementById('instcopy')?.addEventListener('click', async e => { try{ await navigator.clipboard.writeText(location.origin + location.pathname); e.currentTarget.textContent = 'Link copiado!'; }catch(x){ e.currentTarget.textContent = location.origin + location.pathname; } });
   w.addEventListener('click', e => { if(e.target === w) close(); });
 }
-if('serviceWorker' in navigator && /github\.io$/.test(location.hostname)) addEventListener('load', () => navigator.serviceWorker.register('sw.js').then(r => r.update()).catch(() => {}));
-/* sempre a versão mais nova: se o GitHub tem uma versão diferente da aberta, limpa o guardado e recarrega sozinho */
+if('serviceWorker' in navigator && hospedado()) addEventListener('load', () => navigator.serviceWorker.register('sw.js').then(r => r.update()).catch(() => {}));
+/* sempre a versão mais nova: se o servidor tem uma versão diferente da aberta, limpa o guardado e recarrega sozinho */
 let edAberto = false;
 document.addEventListener('click', e => { if(edAberto && !e.target.closest('.ed-modo')){ edAberto = false; document.querySelector('.ed-modo')?.classList.remove('ab'); } });
-const VERSAO_APP = 'versão de 31/10 · 18h50';
+const VERSAO_APP = 'versão de 05/11 · 14h30';
 async function confereVersao(){
-  if(!/github\.io$/.test(location.hostname) || !navigator.onLine) return;
+  if(!hospedado() || !navigator.onLine) return;
   try{ const r = await fetch(location.pathname + '?nc=' + Date.now(), {cache:'no-store'}); if(!r.ok) return; const t = await r.text(), m = t.match(/const VERSAO_APP = '([^']+)'/);
     if(!m || m[1] === VERSAO_APP) return;
     const ja = sessionStorage.getItem('dm_atualizou'); if(ja === m[1]) return; sessionStorage.setItem('dm_atualizou', m[1]);
@@ -6176,8 +6179,34 @@ function missoesBox(el, compacto){
 
 
 
+/* ---------- cópia dos dados (levar de um endereço/projeto pro outro) ---------- */
+const COLS_COPIA = ['abraQuando','abracos','audios','bilhetes','capsula','cartasData','cartasFilhos','chocolates','comentarios','compras','compartilhado','contagens','conteudo','datasMarcantes','diario','eventos','filmes','fotosMem','gastos','gostos','gostosCats','jogosProg','leituras','lugares','marcos','mesversario','missoesEsp','momCartas','musicas','pedidos','pessoas','planosLista','premios','presenca','primeiras','recados','respostas','roleta','saudade'];
+const paraJSON = v => v && typeof v.toMillis === 'function' ? {__ts:v.toMillis()} : Array.isArray(v) ? v.map(paraJSON) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, paraJSON(x)])) : v;
+const deJSON = v => v && typeof v === 'object' && !Array.isArray(v) && Object.keys(v).length === 1 && typeof v.__ts === 'number' ? firebase.firestore.Timestamp.fromMillis(v.__ts) : Array.isArray(v) ? v.map(deJSON) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, deJSON(x)])) : v;
+async function copiaDados(av){
+  const db = firebase.firestore(), out = {app:'D&M', em:Date.now(), de:location.host, cols:{}, total:0};
+  for(const c of COLS_COPIA){ av && av(`Copiando ${c}…`); const sn = await db.collection(c).get(); if(!sn.size) continue; out.cols[c] = {}; sn.forEach(d => { out.cols[c][d.id] = paraJSON(d.data()); out.total++; }); }
+  return out;
+}
+async function colocaDados(d, av){
+  const db = firebase.firestore(); let lote = db.batch(), n = 0, tam = 0, feitos = 0;
+  const manda = async () => { if(!n) return; await lote.commit(); feitos += n; av && av(`Colocando… ${feitos} de ${d.total}`); lote = db.batch(); n = 0; tam = 0; };
+  for(const [c, docs] of Object.entries(d.cols)){
+    if(c === 'tokens') continue;
+    if(c === 'pessoas'){ /* o login novo tem outro código: guarda por e-mail e cada um é religado sozinho quando entrar */
+      const mapa = {}; Object.values(docs).forEach(p => { if(p && p.email && p.quem) mapa[String(p.email).toLowerCase()] = {quem:p.quem, verificado:!!p.verificado}; });
+      await db.doc('migracao/pessoas').set({mapa}, {merge:true}); continue; }
+    for(const [id, v] of Object.entries(docs)){
+      let o = v; if(c === 'conteudo' && id === 'config'){ o = Object.assign({}, v); delete o.vapid; delete o.worker; if(!Object.keys(o).length) continue; }
+      const t = JSON.stringify(o).length; if(n >= 400 || tam + t > 7000000) await manda();
+      lote.set(db.doc(c + '/' + id), deJSON(o)); n++; tam += t; }
+  }
+  await manda();
+}
+
 /* ---------- notificações ---------- */
-const APP_URL = 'https://miihzteir.github.io/D-M/';
+/* endereço do app: sai sozinho de onde ele está hospedado */
+const APP_URL = location.origin + location.pathname.replace(/[^/]*$/, '');
 const carregaJS = src => new Promise((ok, no) => { if(document.querySelector(`script[src="${src}"]`)) return ok(); const sc = document.createElement('script'); sc.src = src; sc.onload = ok; sc.onerror = no; document.head.append(sc); });
 const SONS = [
   {id:'sistema', t:'Som do celular', notas:[]},
@@ -6201,7 +6230,7 @@ function tocaSom(id = store.get('notifSom', 'sistema')){
 }
 const notifSuportada = () => 'Notification' in window;
 const pushAtivo = () => !!store.get('pushToken', '') && notifSuportada() && Notification.permission === 'granted' && !!workerURL();
-const vapidChave = () => ((conteudoAtual || []).find(x => x.id === 'config') || {}).vapid || 'BIyzh52hPlGVpLQR3kFJZi2FFv7aJdTzRnfvNe8ik4RexrFLYR-r5XaJLIcCTH9Uy4cgs8vhhvdnFnwXG0lhnx4';
+const vapidChave = () => ((conteudoAtual || []).find(x => x.id === 'config') || {}).vapid || VAPID_PADRAO;
 /* toca pelo canal de notificação do celular (som e volume de notificação) */
 async function somSistema(n = {titulo:'D&M', corpo:'É assim que vai chegar ♥'}){
   if(!notifSuportada() || Notification.permission !== 'granted') return;
@@ -6238,7 +6267,7 @@ async function avisar(n){
 
 /* avisa o servidor (Cloudflare) pra mandar notificação pro outro celular */
 const EVENTOS_PUSH = ['eventos','pedidos','momCartas','bilhetes','respostas','abraQuando','cartasData','cartasFilhos','abracos','missoesEsp','gostos','musicas','saudade','premios','pensei','diario','filmes','lugares','primeiras','datasMarcantes','mesversario','capsula','roleta','planosLista','contagens','comentarios','teste'];
-const workerURL = () => ((conteudoAtual || []).find(x => x.id === 'config') || {}).worker || 'https://dm-avisos.miihzteir.workers.dev';
+const workerURL = () => ((conteudoAtual || []).find(x => x.id === 'config') || {}).worker || WORKER_PADRAO;
 /* coisas que não viram documento próprio (vale resgatado, plano realizado…) avisam o outro por aqui */
 function evento(titulo, corpo, go, ic){ try{ if(PREVIA || perspDi()) return; const eu = Sync.quem || 'Di', Eu = eu === 'Di' ? 'O ' + apelido('Di', 15) : 'A ' + apelido('Mihzinha', 15);
   Sync.col('eventos').add({autor:eu, titulo:titulo.replace('{eu}', Eu), corpo:corpo || '', go:go || '', ic:ic || 'heart'}).catch(() => {}); }catch(e){} }
@@ -6439,7 +6468,7 @@ async function ativarPush(){
   const perm = await Notification.requestPermission(); if(perm !== 'granted') return perm;
   store.set('notifOn', true);
   const vapid = vapidChave();
-  if(!vapid || Sync.mode !== 'online' || !Sync.user || !('serviceWorker' in navigator) || !/github\.io$/.test(location.hostname)) return 'local';
+  if(!vapid || Sync.mode !== 'online' || !Sync.user || !('serviceWorker' in navigator) || !hospedado()) return 'local';
   try{ await carregaJS('https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js');
     const reg = await navigator.serviceWorker.register('sw.js'); await navigator.serviceWorker.ready;
     const tk = await firebase.messaging().getToken({vapidKey:vapid, serviceWorkerRegistration:reg}); if(!tk) return 'local';
@@ -6465,7 +6494,7 @@ VIEWS.notificacoes = () => {
     const estado = perm === 'granted' ? (pushAtivo() ? ['ok', 'Ligadas, até com o app fechado'] : ['meio', 'Ligadas enquanto o app estiver aberto']) : perm === 'denied' ? ['nao', 'Notificações bloqueadas'] : perm === 'sem' ? ['nao', 'Esse navegador não tem notificações'] : ['nao', 'Desligadas'];
     $('ntbox').innerHTML = `<div class="nt-card"><div class="nt-st ${estado[0]}"><span class="nt-dot"></span><b>${estado[1]}</b></div>
         ${perm === 'granted' ? `<button type="button" class="ghost" id="nttest">${icon('bell')} Testar</button>` : perm === 'denied' ? `<p class="nt-aj">Libera em: <b>Configurações</b> › <b>Aplicativos</b> › <b>D&amp;M</b> › <b>Permitir notificações</b>. Depois recarrega o app.</p><button type="button" class="ghost" id="ntrec">Recarregar o app</button>` : perm === 'sem' ? (ios ? `<p class="nt-aj">No iPhone, só funciona com o app instalado na tela de início.</p>` : '') : `<button type="button" id="ntligar">${icon('bell')} Ligar notificações</button>`}
-        ${perm === 'granted' && !pushAtivo() && /github\.io$/.test(location.hostname) && vapidChave() && workerURL() ? `<button type="button" class="ghost" id="ntligar">Ligar com o app fechado também</button>` : ''}
+        ${perm === 'granted' && !pushAtivo() && hospedado() && vapidChave() && workerURL() ? `<button type="button" class="ghost" id="ntligar">Ligar com o app fechado também</button>` : ''}
         ${msg ? `<p class="nt-msg">${msg}</p>` : ''}</div>
       <p class="ct-sep">Som</p>
       <div class="nt-sons">${SONS.map(x => `<button type="button" class="${x.id === som ? 'on' : ''}" data-som="${x.id}"><span class="nt-r"></span>${x.t}</button>`).join('')}</div>
@@ -7195,6 +7224,11 @@ VIEWS.editar = (foco, origem, abaIni) => {
        <p class="ed-d">Marca o que quer zerar. Tudo que você escreveu e colocou no Editar (os bilhetes do dia, cartas, fotos, perguntas, quiz, vales) continua igualzinho.</p>
        <div class="rs-list">${RESET_OPC.map(o => `<label class="rs-op"><input type="checkbox" data-rs="${o.id}" ${o.on ? 'checked' : ''}><span><b>${o.t}</b><small>${o.d}</small></span></label>`).join('')}</div>
        <button type="button" id="edzerar" class="rs-btn">Zerar o que marquei</button><p class="msg" id="rsmsg" role="status"></p></details>
+     <details class="ed-card ed-reset" id="edcopia"><summary><span><b>Cópia dos dados</b><small>levar tudo de vocês pra outro endereço</small></span>${icon('plus')}</summary>
+       <p class="ed-d">No app antigo, baixa a cópia. No app novo, escolhe esse arquivo. Vai tudo: cartas, fotos, áudios, chocolates, jogos e o que vocês escreveram.</p>
+       <button type="button" id="edbaixa" class="rs-btn">Baixar cópia de tudo</button>
+       <button type="button" id="edpoe" class="rs-btn ghost">Colocar uma cópia aqui</button><input type="file" id="edpoef" accept=".json,application/json" hidden>
+       <p class="msg" id="cpmsg" role="status"></p></details>
      <div class="fz-tabs ed-tabs"><button type="button" data-a="fotos">Fotos</button><button type="button" data-a="cartas">Cartas</button><button type="button" data-a="textos">Escritas</button></div>
      <div id="edb"></div><input type="file" id="edfile" accept="image/*" hidden>`);
   const col = Sync.col('conteudo'), $ = id => document.getElementById(id);
@@ -7274,6 +7308,19 @@ VIEWS.editar = (foco, origem, abaIni) => {
       if(!btn) return; clearTimeout(tms.get(btn)); tms.set(btn, setTimeout(() => btn.isConnected && btn.click(), 900)); };
     $('edb').addEventListener('input', auto); $('edb').addEventListener('change', auto); }
   ligarViagem($('edvgbox'));
+  $('edbaixa').onclick = async e => { const b = e.currentTarget, msg = $('cpmsg'); if(Sync.mode !== 'online' || !Sync.user){ msg.textContent = 'Entra com o Google primeiro.'; return; }
+    b.disabled = true; try{ const d = await copiaDados(t => { msg.textContent = t; }); const url = URL.createObjectURL(new Blob([JSON.stringify(d)], {type:'application/json'}));
+      const a = document.createElement('a'); a.href = url; a.download = `D&M-copia-${hoje()}.json`; document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 60000);
+      msg.textContent = `Pronto! ${d.total} coisas na cópia. O arquivo foi pros Downloads.`; }catch(x){ msg.textContent = 'Não deu: ' + (x.message || x); } b.disabled = false; };
+  const poe = async d => { const msg = $('cpmsg'), b = $('edpoe'); b.disabled = true; delete b.dataset.sure; b._d = null;
+    try{ await colocaDados(d, t => { msg.textContent = t; }); msg.textContent = 'Pronto! Tudo colocado. Recarregando…'; setTimeout(() => location.reload(), 1800); }
+    catch(x){ msg.textContent = 'Parou no meio: ' + (x.message || x) + '. Escolhe o arquivo de novo que ele continua.'; b.disabled = false; b.textContent = 'Colocar uma cópia aqui'; } };
+  $('edpoe').onclick = () => { const b = $('edpoe'); if(Sync.mode !== 'online' || !Sync.user){ $('cpmsg').textContent = 'Entra com o Google primeiro.'; return; }
+    if(b.dataset.sure && b._d) return poe(b._d); $('edpoef').click(); };
+  $('edpoef').onchange = async e => { const f = e.target.files[0], msg = $('cpmsg'), b = $('edpoe'); e.target.value = ''; if(!f) return;
+    let d; try{ d = JSON.parse(await f.text()); }catch(x){ msg.textContent = 'Esse arquivo não é uma cópia do D&M.'; return; }
+    if(!d || d.app !== 'D&M' || !d.cols){ msg.textContent = 'Esse arquivo não é uma cópia do D&M.'; return; }
+    b.dataset.sure = 1; b._d = d; b.textContent = `Colocar ${d.total} coisas aqui`; msg.textContent = `Cópia de ${new Date(d.em).toLocaleDateString('pt-BR')}. Toca no botão pra confirmar.`; };
   $('edzerar').onclick = async e => { const b = e.currentTarget, msg = $('rsmsg'), sel = [...document.querySelectorAll('[data-rs]:checked')].map(x => x.dataset.rs);
     if(!sel.length){ msg.textContent = 'Marca pelo menos uma coisa.'; return; }
     if(!b.dataset.sure){ b.dataset.sure = 1; b.textContent = 'Tem certeza? Toca de novo'; setTimeout(() => { if(b.isConnected){ delete b.dataset.sure; b.textContent = 'Zerar o que marquei'; } }, 3500); return; }
